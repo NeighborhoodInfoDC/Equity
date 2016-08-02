@@ -135,7 +135,7 @@ data Acs_2010_14;
   
 run;
 
-data Equity.Acs_tables;
+data Equity.Acs_tables (Label="iPUMS 2010-14 ACS for Racial Equity Profiles");
 
   set Acs_2010_14;
   where put( upuma, $pumctyb. ) ~= '' 
@@ -160,28 +160,29 @@ data Equity.Acs_tables;
   /*if gq = 0 then occunit = 0; **vacant housing unit**;
   else occunit = 1; **occupied housing unit**;*/
 
-  	if racwht=2 then racew=1;
+  	if racwht=2 then raceW=1;
 		else racew=0;
-	if hispan^=0 then raceh=1;
+	if hispan^=0 then raceH=1;
 		else raceh=0;
-	if racamind=2 then racei=1;
+	if racamind=2 then raceI=1;
 		else racei=0;
-	if racblk=2 then raceb=1;
+	if racblk=2 then raceB=1;
 		else raceb=0;
-	if racasian=2 or racpacis=2 then racea=1;
+	if racasian=2 or racpacis=2 then raceA=1;
 		else racea=0;
-	if racother=2 then raceo=1;
-		else raceo=0;
-	if racnum>1 then racem=1;
+	if racother=2 then raceO=1;
+		else raceo=0;	
+	if racnum>1 then raceM=1;
 		else racem=0;
-	if race in (3,7,8,9) then raceiom=1;
+	if race in (3,7,8,9) then raceIOM=1;
 		else raceiom=0;
-	if racei=1 or raceo=1 or racem=1 then raceiom2=1;
+	if racei=1 or raceo=1 or racem=1 then raceiom2=1; /*WHY IS THIS NEEDED?*/
 		else raceiom2=0;
-	if race >2 then raceaiom=1;
+	if race >2 then raceAIOM=1;
 		else raceaiom=0;
-	if racea=1 or racei=1 or raceo=1 or racem=1 then raceaiom2=1;
+	if racea=1 or racei=1 or raceo=1 or racem=1 then raceaiom2=1; /*WHY IS THIS NEEDED?*/
 		else raceaiom2=0;
+
 	if citizen in (1,2,3,4,5) then foreign=1;
 		else foreign=0;
 
