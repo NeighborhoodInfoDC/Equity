@@ -35,9 +35,21 @@
   merge  
           ACS.acs_2010_14_dc_sum_bg_&geosuf
         (keep=&geo TotPop: mTotPop: PopUnder18Years: mPopUnder18Years: Pop65andOverYears: mPop65andOverYears:
-		   PopWithRace: PopBlackNonHispBridge:
-           PopWhiteNonHispBridge: PopHisp: PopAsianPINonHispBridge:
-           PopOtherRaceNonHispBridg: 
+		   PopWithRace: mPopWithRace:
+		   PopBlackNonHispBridge: mPopBlackNonHispBridge:
+           PopWhiteNonHispBridge: mPopWhiteNonHispBridge:
+		   PopHisp: mPopHisp:
+		   PopAsianPINonHispBridge: mPopAsianPINonHispBridge:
+		   PopOtherRaceNonHispBridg: mPopOtherRaceNonHispBr:
+		   PopAloneB: mPopAloneB:
+		   PopAloneW: mPopAloneW:
+		   PopAloneH: mPopAloneH:
+		   PopAloneA: mPopAloneA:
+		   PopAloneI: mPopAloneI:
+		   PopAloneO: mPopAloneO:
+		   PopAloneM: mPopAloneM:
+		   PopAloneIOM: mPopAloneIOM:
+		   PopAloneAIOM: mPopAloneAIOM:
            Pop25andOverYears: mPop25andOverYears: 
            NumOccupiedHsgUnits: mNumOccupiedHsgUnits:
            Pop25andOverWoutHS: mPop25andOverWoutHS: 
@@ -94,7 +106,7 @@
     %Moe_prop_a( var=PctPop65andOverYears_m_2010_14, mult=100, num=Pop65andOverYears_2010_14, den=TotPop_2010_14, 
                        num_moe=mPop65andOverYears_2010_14, den_moe=mTotPop_2010_14 );
     
-  %Pct_calc( var=PctForeignBorn, label=% foreign born, num=PopForeignBorn, den=TotPop_tr, years=2010_14 )
+    %Pct_calc( var=PctForeignBorn, label=% foreign born, num=PopForeignBorn, den=TotPop_tr, years=2010_14 )
 
     %Moe_prop_a( var=PctForeignBorn_m_2010_14, mult=100, num=PopForeignBorn_2010_14, den=TotPop_tr_2010_14, 
                        num_moe=mPopForeignBorn_2010_14, den_moe=mTotPop_tr_2010_14 );
@@ -111,7 +123,63 @@
     %Pct_calc( var=PctOtherRaceNonHispBridge, label=% other race non-Hispanic, num=PopOtherRaceNonHispBridge, den=PopWithRace, years=1990 2000 2010 )
     %Pct_calc( var=PctOtherRaceNonHispBridg, label=% other race non-Hispanic, num=PopOtherRaceNonHispBridg, den=PopWithRace, years=2010_14 )
 
-    ** Family Risk Factors **;
+    %Moe_prop_a( var=PctBlackNonHispBridge_m_2010_14, mult=100, num=PopBlackNonHispBridge_2010_14, den=PopWithRace_2010_14, 
+                       num_moe=mPopBlackNonHispBridge_2010_14, den_moe=mPopWithRace2010_14 );
+
+    %Moe_prop_a( var=PctWhiteNonHispBridge_m_2010_14, mult=100, num=PopWhiteNonHispBridge_2010_14, den=PopWithRace_2010_14, 
+                       num_moe=mPopWhiteNonHispBridge_2010_14, den_moe=mPopWithRace2010_14 );
+
+    %Moe_prop_a( var=PctHisp_m_2010_14, mult=100, num=PopHisp_2010_14, den=PopWithRace_2010_14, 
+                       num_moe=mPopHisp_2010_14, den_moe=mPopWithRace2010_14 );
+
+	%Moe_prop_a( var=PctAsianPINonHispBridge_m_2010_14, mult=100, num=PopAsianPINonHispBridge_2010_14, den=PopWithRace_2010_14, 
+                       num_moe=mPopAsianPINonHispBridge_2010_14, den_moe=mPopWithRace2010_14 );
+
+    %Moe_prop_a( var=PctOtherRaceNonHispBridg_m_2010_14, mult=100, num=PopOtherRaceNonHispBridg_2010_14, den=PopWithRace_2010_14, 
+                       num_moe=mPopOtherRaceNonHispBridg_2010_14, den_moe=mPopWithRace2010_14 );
+
+	** Population by race/ethnicity alone**;
+
+    %Pct_calc( var=PctAloneB, label=% black alone non-Hispanic, num=PopAloneB, den=PopWithRace, years=1990 2000 2010_14 2010 )
+	%Pct_calc( var=PctAloneW, label=% white alone non-Hispanic, num=PopAloneW, den=PopWithRace, years=1990 2000 2010_14 2010 )
+	%Pct_calc( var=PctAloneH, label=% Hispanic alone non-Hispanic, num=PopAloneH, den=PopWithRace, years=1990 2000 2010_14 2010 )
+	%Pct_calc( var=PctAloneA, label=% Asian/P.I. alone non-Hispanic, num=PopAloneA, den=PopWithRace, years=1990 2000 2010_14 2010 )
+	%Pct_calc( var=PctAloneI, label=% Indigenous alone non-Hispanic, num=PopAloneI, den=PopWithRace, years=1990 2000 2010_14 2010 )
+	%Pct_calc( var=PctAloneO, label=% Other race alone non-Hispanic, num=PopAloneO, den=PopWithRace, years=1990 2000 2010_14 2010 )
+	%Pct_calc( var=PctAloneM, label=% Multiracial alone non-Hispanic, num=PopAloneM, den=PopWithRace, years=1990 2000 2010_14 2010 )
+	%Pct_calc( var=PctAloneIOM, label=% Indigienous, other, multi alone non-Hispanic, num=PopAloneIOM, den=PopWithRace, years=1990 2000 2010_14 2010 )
+	%Pct_calc( var=PctAloneAIOM, label=% All other than Black, White, Hispanic alone non-Hispanic, num=PopAloneAIOM, den=PopWithRace, years=1990 2000 2010_14 2010 )
+
+
+	%Moe_prop_a( var=PctAloneB_m_2010_14, mult=100, num=PopAloneB_2010_14, den=PopWithRace_2010_14, 
+                       num_moe=mPopAloneB_2010_14, den_moe=mPopWithRace2010_14 );
+
+	%Moe_prop_a( var=PctAloneW_m_2010_14, mult=100, num=PopAloneW_2010_14, den=PopWithRace_2010_14, 
+                       num_moe=mPopAloneW_2010_14, den_moe=mPopWithRace2010_14 );
+
+	%Moe_prop_a( var=PctAloneH_m_2010_14, mult=100, num=PopAloneH_2010_14, den=PopWithRace_2010_14, 
+                       num_moe=mPopAloneH_2010_14, den_moe=mPopWithRace2010_14 );
+
+	%Moe_prop_a( var=PctAloneA_m_2010_14, mult=100, num=PopAloneA_2010_14, den=PopWithRace_2010_14, 
+                       num_moe=mPopAloneA_2010_14, den_moe=mPopWithRace2010_14 );
+					   
+	%Moe_prop_a( var=PctAloneI_m_2010_14, mult=100, num=PopAloneI_2010_14, den=PopWithRace_2010_14, 
+                       num_moe=mPopAloneI_2010_14, den_moe=mPopWithRace2010_14 );
+
+	%Moe_prop_a( var=PctAloneO_m_2010_14, mult=100, num=PopAloneO_2010_14, den=PopWithRace_2010_14, 
+                       num_moe=mPopAloneO_2010_14, den_moe=mPopWithRace2010_14 );
+
+	%Moe_prop_a( var=PctAloneM_m_2010_14, mult=100, num=PopAloneM_2010_14, den=PopWithRace_2010_14, 
+                       num_moe=mPopAloneM_2010_14, den_moe=mPopWithRace2010_14 );
+
+	%Moe_prop_a( var=PctAloneIOM_m_2010_14, mult=100, num=PopAloneIOM_2010_14, den=PopWithRace_2010_14, 
+                       num_moe=mPopAloneIOM_2010_14, den_moe=mPopWithRace2010_14 );
+
+	%Moe_prop_a( var=PctAloneAIOM_m_2010_14, mult=100, num=PopAloneAIOM_2010_14, den=PopWithRace_2010_14, 
+                       num_moe=mPopAloneAIOM_2010_14, den_moe=mPopWithRace2010_14 );
+
+
+	** Family Risk Factors **;
 
     %Pct_calc( var=PctPoorPersons, label=Poverty rate (%), num=PopPoorPersons, den=PersonsPovertyDefined, years=1980 1990 2000 2010_14 )
     %Pct_calc( var=PctUnemployed, label=Unemployment rate (%), num=PopUnemployed, den=PopInCivLaborForce, years=1980 1990 2000 2010_14 )
