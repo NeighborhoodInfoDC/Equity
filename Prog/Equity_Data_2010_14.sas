@@ -15,17 +15,12 @@
  07/22/16 MW Updated for ACS 2010-14, SAS1 Server, and for the Equity library. 
 **************************************************************************/
 
-*%include "K:\Metro\PTatian\DCData\SAS\Inc\Stdhead.sas";
-*%include "K:\Metro\PTatian\Libraries\IPUMS\Prog\Ipums_formats_2009_11.sas"; 
-
 %include "L:\SAS\Inc\StdLocal.sas";
 %include "L:\Libraries\IPUMS\Prog\Download_ipums_formats.sas";
 
 ** Define libraries **;
 %DCData_lib( IPUMS );
 %DCData_lib( EQUITY );
-
-libname equity "D:\DCDATA\Libraries\Equity\Data";
 
 %include "L:\Libraries\Equity\Prog\Equity_formats_2010_14.sas";
 
