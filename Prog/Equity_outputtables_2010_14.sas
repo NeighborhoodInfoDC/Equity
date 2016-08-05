@@ -30,12 +30,18 @@
 *%include "K:\Metro\PTatian\DCData\Libraries\Equity\Prog\Equity_macros_2009_11.sas";
 
 *%include "L:\Libraries\IPUMS\Prog\Ipums_formats_2010_14.sas"; 
-%include "L:\Libraries\Equity\Prog\Equity_formats_2010_14.sas";
-%include "L:\Libraries\Equity\Prog\Equity_macros_2010_14.sas";
+%include "D:\DCData\Libraries\Equity\Prog\Equity_formats_2010_14.sas";
+%include "D:\DCData\Libraries\Equity\Prog\Equity_macros_2010_14.sas";
 
 proc freq data=equity.acs_tables (where=(pernum=1 and GQ in (1,2) and ownershp=2));
 tables racew raceh raceb racea racei raceo racem raceiom raceiom2 raceaiom raceaiom2/list missing;
 weight perwt;
+run;
+
+
+proc freq data=equity.acs_tables (where=(city=7230));
+tables city*upuma/list missing ;
+tables city*puma/list missing;
 run;
 
 ***** Tables *****;
@@ -45,7 +51,7 @@ options nospool;
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 1. Total Number of Renters.xls" style=Minimal;
 
 %Count_table( 
-  where= %str( pernum=1 and GQ in (1,2) and ownershp = 2 ),
+  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 ),
   row_var= ,
   row_fmt= ,
   weight = perwt,
@@ -57,7 +63,7 @@ run;
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 2. Cost Burden for All Renters.xls" style=Minimal;
 
 %Count_table( 
-  where= %str( pernum=1 and GQ in (1,2) and ownershp = 2 ),
+  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 ),
   row_var= costburden,
   row_fmt= costburden.,
   weight = perwt,
@@ -69,7 +75,7 @@ run;
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 3. Cost Burden for White-Non Hispanic Renters.xls" style=Minimal;
 
 %Count_table( 
-  where= %str( pernum=1 and GQ in (1,2) and ownershp = 2 and racew=1),
+  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and racew=1),
   row_var= costburden,
   row_fmt= costburden.,
   weight= perwt, 
@@ -81,7 +87,7 @@ run;
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 4. Cost Burden for Hispanic Renters.xls" style=Minimal;
 
 %Count_table( 
-  where= %str( pernum=1 and GQ in (1,2) and ownershp = 2 and raceh=1),
+  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and raceh=1),
   row_var= costburden,
   row_fmt= costburden.,
   weight= perwt, 
@@ -93,7 +99,7 @@ run;
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 5. Cost Burden for Black Renters.xls" style=Minimal;
 
 %Count_table( 
-  where= %str( pernum=1 and GQ in (1,2) and ownershp = 2 and raceb=1),
+  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and raceb=1),
   row_var= costburden,
   row_fmt= costburden.,
   weight= perwt, 
@@ -105,7 +111,7 @@ run;
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 6. Cost Burden for Asian, Pacific Islander Renters.xls" style=Minimal;
 
 %Count_table( 
-  where= %str( pernum=1 and GQ in (1,2) and ownershp = 2 and racea=1),
+  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and racea=1),
   row_var= costburden,
   row_fmt= costburden.,
   weight= perwt, 
@@ -117,7 +123,7 @@ run;
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 7. Cost Burden for American Indian, Alaskan Native Renters.xls" style=Minimal;
 
 %Count_table( 
-  where= %str( pernum=1 and GQ in (1,2) and ownershp = 2 and racei=1),
+  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and racei=1),
   row_var= costburden,
   row_fmt= costburden.,
   weight= perwt, 
@@ -129,7 +135,7 @@ run;
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 8. Cost Burden for Other Race Renters.xls" style=Minimal;
 
 %Count_table( 
-  where= %str( pernum=1 and GQ in (1,2) and ownershp = 2 and raceo=1),
+  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and raceo=1),
   row_var= costburden,
   row_fmt= costburden.,
   weight= perwt, 
@@ -141,7 +147,7 @@ run;
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 9. Cost Burden for Renters of Two of More Races.xls" style=Minimal;
 
 %Count_table( 
-  where= %str( pernum=1 and GQ in (1,2) and ownershp = 2 and racem=1),
+  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and racem=1),
   row_var= costburden,
   row_fmt= costburden.,
   weight= perwt, 
@@ -153,7 +159,7 @@ run;
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 10. Cost Burden for Renters of American Indian, Alaskan Native Descent, Other, Two or More Races.xls" style=Minimal;
 
 %Count_table( 
-  where= %str( pernum=1 and GQ in (1,2) and ownershp = 2 and raceiom=1),
+  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and raceiom=1),
   row_var= costburden,
   row_fmt= costburden.,
   weight= perwt, 
@@ -165,7 +171,7 @@ run;
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 11. Cost Burden for Renters of Asian, Pacific Islander, American Indian, Alaskan Native Descent, Other, Two or More Races.xls" style=Minimal;
 
 %Count_table( 
-  where= %str( pernum=1 and GQ in (1,2) and ownershp = 2 and raceaiom=1),
+  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and raceaiom=1),
   row_var= costburden,
   row_fmt= costburden.,
   weight= perwt, 
@@ -177,7 +183,7 @@ run;
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 12. Cost Burden for Renters Who are Foreign-Born.xls" style=Minimal;
 
 %Count_table( 
-  where= %str( pernum=1 and GQ in (1,2) and ownershp = 2 and foreign=1),
+  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and foreign=1),
   row_var= costburden,
   row_fmt= costburden.,
   weight= perwt, 
@@ -189,7 +195,7 @@ run;
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 13. Severe Cost Burden for All Renters.xls" style=Minimal;
 
 %Count_table( 
-  where= %str( pernum=1 and GQ in (1,2) and ownershp = 2 ),
+  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 ),
   row_var= sevcostburden,
   row_fmt= sevcostburden.,
   weight = perwt,
@@ -201,7 +207,7 @@ run;
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 14. Severe Cost Burden for White-Non Hispanic Renters.xls" style=Minimal;
 
 %Count_table( 
-  where= %str( pernum=1 and GQ in (1,2) and ownershp = 2 and racew=1),
+  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and racew=1),
   row_var= sevcostburden,
   row_fmt= sevcostburden.,
   weight= perwt, 
@@ -213,7 +219,7 @@ run;
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 15. Severe Cost Burden for Hispanic Renters.xls" style=Minimal;
 
 %Count_table( 
-  where= %str( pernum=1 and GQ in (1,2) and ownershp = 2 and raceh=1),
+  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and raceh=1),
   row_var= sevcostburden,
   row_fmt= sevcostburden.,
   weight= perwt, 
@@ -225,7 +231,7 @@ run;
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 16. Severe Cost Burden for Black Renters.xls" style=Minimal;
 
 %Count_table( 
-  where= %str( pernum=1 and GQ in (1,2) and ownershp = 2 and raceb=1),
+  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and raceb=1),
   row_var= sevcostburden,
   row_fmt= sevcostburden.,
   weight= perwt, 
@@ -237,7 +243,7 @@ run;
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 17. Severe Cost Burden for Asian, Pacific Islander Renters.xls" style=Minimal;
 
 %Count_table( 
-  where= %str( pernum=1 and GQ in (1,2) and ownershp = 2 and racea=1),
+  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and racea=1),
   row_var= sevcostburden,
   row_fmt= sevcostburden.,
   weight= perwt, 
@@ -249,7 +255,7 @@ run;
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 18. Severe Cost Burden for American Indian, Alaskan Native Renters.xls" style=Minimal;
 
 %Count_table( 
-  where= %str( pernum=1 and GQ in (1,2) and ownershp = 2 and racei=1),
+  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and racei=1),
   row_var= sevcostburden,
   row_fmt= sevcostburden.,
   weight= perwt, 
@@ -261,7 +267,7 @@ run;
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 19. Severe Cost Burden for Other Race Renters.xls" style=Minimal;
 
 %Count_table( 
-  where= %str( pernum=1 and GQ in (1,2) and ownershp = 2 and raceo=1),
+  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and raceo=1),
   row_var= sevcostburden,
   row_fmt= sevcostburden.,
   weight= perwt, 
@@ -273,7 +279,7 @@ run;
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 20. Severe Cost Burden for Renters of Two of More Races.xls" style=Minimal;
 
 %Count_table( 
-  where= %str( pernum=1 and GQ in (1,2) and ownershp = 2 and racem=1),
+  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and racem=1),
   row_var= sevcostburden,
   row_fmt= sevcostburden.,
   weight= perwt, 
@@ -285,7 +291,7 @@ run;
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 21. Severe Cost Burden for Renters of American Indian, Alaskan Native Descent, Other, Two or More Races.xls" style=Minimal;
 
 %Count_table( 
-  where= %str( pernum=1 and GQ in (1,2) and ownershp = 2 and raceiom=1),
+  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and raceiom=1),
   row_var= sevcostburden,
   row_fmt= sevcostburden.,
   weight= perwt, 
@@ -297,7 +303,7 @@ run;
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 22. Severe Cost Burden for Renters of Asian, Pacific Islander, American Indian, Alaskan Native Descent, Other, Two or More Races.xls" style=Minimal;
 
 %Count_table( 
-  where= %str( pernum=1 and GQ in (1,2) and ownershp = 2 and raceaiom=1),
+  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and raceaiom=1),
   row_var= sevcostburden,
   row_fmt= sevcostburden.,
   weight= perwt, 
@@ -309,7 +315,7 @@ run;
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 23. Severe Cost Burden for Renters Who are Foreign-Born.xls" style=Minimal;
 
 %Count_table( 
-  where= %str( pernum=1 and GQ in (1,2) and ownershp = 2 and foreign=1),
+  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and foreign=1),
   row_var= sevcostburden,
   row_fmt= sevcostburden.,
   weight= perwt, 
@@ -321,7 +327,7 @@ run;
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 24. Share of Population Ages 25-64 that is Employed for All .xls" style=Minimal;
 
 %Count_table( 
-  where= %str( age25to64=1 ),
+  where= %str(city=7230 and age25to64=1 ),
   row_var= emp25to64,
   row_fmt= emp25to64_f.,
   weight = perwt,
@@ -333,7 +339,7 @@ run;
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 25. Share of Population Ages 25-64 that is Employed for White-Non Hispanic .xls" style=Minimal;
 
 %Count_table( 
-  where= %str( age25to64=1 and racew=1),
+  where= %str(city=7230 and age25to64=1 and racew=1),
   row_var= emp25to64,
   row_fmt= emp25to64_f.,
   weight= perwt, 
@@ -345,7 +351,7 @@ run;
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 26. Share of Population Ages 25-64 that is Employed for Hispanic .xls" style=Minimal;
 
 %Count_table( 
-  where= %str( age25to64=1 and raceh=1),
+  where= %str(city=7230 and age25to64=1 and raceh=1),
   row_var= emp25to64,
   row_fmt= emp25to64_f.,
   weight= perwt, 
@@ -357,7 +363,7 @@ run;
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 27. Share of Population Ages 25-64 that is Employed for Black .xls" style=Minimal;
 
 %Count_table( 
-  where= %str( age25to64=1 and raceb=1),
+  where= %str(city=7230 and age25to64=1 and raceb=1),
   row_var= emp25to64,
   row_fmt= emp25to64_f.,
   weight= perwt, 
@@ -369,7 +375,7 @@ run;
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 28. Share of Population Ages 25-64 that is Employed for Asian, Pacific Islanders.xls" style=Minimal;
 
 %Count_table( 
-  where= %str( age25to64=1 and racea=1),
+  where= %str(city=7230 and age25to64=1 and racea=1),
   row_var= emp25to64,
   row_fmt= emp25to64_f.,
   weight= perwt, 
@@ -381,7 +387,7 @@ run;
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 29. Share of Population Ages 25-64 that is Employed for American Indian, Alaskan Natives.xls" style=Minimal;
 
 %Count_table( 
-  where= %str( age25to64=1 and racei=1),
+  where= %str(city=7230 and age25to64=1 and racei=1),
   row_var= emp25to64,
   row_fmt= emp25to64_f.,
   weight= perwt, 
@@ -393,7 +399,7 @@ run;
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 30. Share of Population Ages 25-64 that is Employed for Other Race Individuals.xls" style=Minimal;
 
 %Count_table( 
-  where= %str( age25to64=1 and raceo=1),
+  where= %str(city=7230 and age25to64=1 and raceo=1),
   row_var= emp25to64,
   row_fmt= emp25to64_f.,
   weight= perwt, 
@@ -405,7 +411,7 @@ run;
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 31. Share of Population Ages 25-64 that is Employed for Individuals of Two of More Races.xls" style=Minimal;
 
 %Count_table( 
-  where= %str( age25to64=1 and racem=1),
+  where= %str(city=7230 and age25to64=1 and racem=1),
   row_var= emp25to64,
   row_fmt= emp25to64_f.,
   weight= perwt, 
@@ -417,7 +423,7 @@ run;
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 32. Share of Population Ages 25-64 that is Employed for Individuals of American Indian, Alaskan Native Descent, Other, and Two or More Races.xls" style=Minimal;
 
 %Count_table( 
-  where= %str( age25to64=1 and raceiom=1),
+  where= %str(city=7230 and age25to64=1 and raceiom=1),
   row_var= emp25to64,
   row_fmt= emp25to64_f.,
   weight= perwt, 
@@ -429,7 +435,7 @@ run;
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 33. Share of Population Ages 25-64 that is Employed for Individuals of Asian, Pacific Islander, American Indian, Alaskan Native Descent, Other, and Two or More Races.xls" style=Minimal;
 
 %Count_table( 
-  where= %str( age25to64=1 and raceaiom=1),
+  where= %str(city=7230 and age25to64=1 and raceaiom=1),
   row_var= emp25to64,
   row_fmt= emp25to64_f.,
   weight= perwt, 
@@ -441,7 +447,7 @@ run;
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 34. Share of Population Ages 25-64 that is Employed Who are Foreign-Born.xls" style=Minimal;
 
 %Count_table( 
-  where= %str( age25to64=1 and foreign=1),
+  where= %str(city=7230 and age25to64=1 and foreign=1),
   row_var= emp25to64,
   row_fmt= emp25to64_f.,
   weight= perwt, 

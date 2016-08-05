@@ -31,7 +31,7 @@
       where &where;
     %end;
     class &row_var;
-    class upuma /order=data preloadfmt;
+    class puma /order=data preloadfmt;
     var total;
     weight &weight;
     table 
@@ -42,7 +42,7 @@
       all='Total' &row_var
       ,
       /** Columns (do not change) **/
-      total = "&universe" * sum=' ' * ( upuma=' ' all='Washington Region' )
+      total = "&universe" * sum=' ' * ( puma=' ' all='Washington Region' )
       / condense
     ;
     table 
@@ -53,10 +53,10 @@
       all='Total' &row_var
       ,
       /** Columns (do not change) **/
-      total = "% &universe" * colpctsum=' ' * f=comma10.1 * ( upuma=' ' all='Washington Region' )
+      total = "% &universe" * colpctsum=' ' * f=comma10.1 * ( puma=' ' all='Washington Region' )
       / condense
     ;
-    format upuma $pumctyb. &row_var &row_fmt;
+    format puma puma. &row_var &row_fmt;
     title2 &title;
     title3 "Universe: &universe";
     footnote1 "Source: ACS IPUMS data, 2010-14 (&fdate)";

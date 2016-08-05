@@ -160,31 +160,32 @@ data Equity.Acs_tables (Label="iPUMS 2010-14 ACS for Racial Equity Profiles");
   /*if gq = 0 then occunit = 0; **vacant housing unit**;
   else occunit = 1; **occupied housing unit**;*/
 
-  	if racwht=2 then raceW=1;
-		else racew=0;
+  	if race=1 and hispan=0 then raceW=1;
+		else raceW=0;
 	if hispan^=0 then raceH=1;
-		else raceh=0;
-	if racamind=2 then raceI=1;
-		else racei=0;
-	if racblk=2 then raceB=1;
-		else raceb=0;
-	if racasian=2 or racpacis=2 then raceA=1;
-		else racea=0;
-	if racother=2 then raceO=1;
-		else raceo=0;	
-	if racnum>1 then raceM=1;
-		else racem=0;
+		else raceH=0;
+	if race=3 then raceI=1;
+		else raceI=0;
+	if race=2 then raceB=1;
+		else raceB=0;
+	if race in (4,5,6) then raceA=1;
+		else raceA=0;
+	if race=7 then raceO=1;
+		else raceO=0;	
+	if race in  then raceM=1;
+		else raceM=0;
 	if race in (3,7,8,9) then raceIOM=1;
-		else raceiom=0;
-	if racei=1 or raceo=1 or racem=1 then raceiom2=1; /*WHY IS THIS NEEDED?*/
-		else raceiom2=0;
+		else raceIOM=0;
 	if race >2 then raceAIOM=1;
-		else raceaiom=0;
-	if racea=1 or racei=1 or raceo=1 or racem=1 then raceaiom2=1; /*WHY IS THIS NEEDED?*/
-		else raceaiom2=0;
+		else raceAIOM=0;
 
 	if citizen in (1,2,3,4,5) then foreign=1;
 		else foreign=0;
+
+	if ownershpd=13 then ownmortgage=1;
+		else mortgage=0;
+	if ownershpd=12 then ownnomortgage=1;
+		else ownnomortgage=0;
 
     if 025 =< age <= 64 then age25to64=1;
 		else age25to64=0;
@@ -206,7 +207,7 @@ data Equity.Acs_tables (Label="iPUMS 2010-14 ACS for Racial Equity Profiles");
 
     if cost_burden >= 50 then sevcostburden = 1;
   		else sevcostburden=0;
-    if 30 <= cost_burden < 50 then costburden=1;
+    if 30 <= cost_burden then costburden=1;
 		else costburden=0;
  	if 0 <= cost_burden < 30 then nocostburden=1;
 		else nocostburden=0;
@@ -228,7 +229,9 @@ data Equity.Acs_tables (Label="iPUMS 2010-14 ACS for Racial Equity Profiles");
 			sevcostburden = "Severely Cost Burdened"
 			costburden = "Cost Burdened"
 			nocostburden = "No Cost Burdened"
-			housing_costs = "Housing Costs";
+			housing_costs = "Housing Costs"
+			ownmortgage = "Owned with mortgage or loan"
+			ownnomortgage="Owned free and clear";
 
   /*if is_sfemwkids = 1 then fam_ui=1; **Women-headed household with related children**;
   if is_sngfem = 1 then fam_ui=2; **Women-headed household without related children**;
