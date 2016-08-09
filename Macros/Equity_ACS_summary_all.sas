@@ -1,5 +1,5 @@
 /**************************************************************************
- Program:  ACS_summary_all.sas
+ Program:  Equity_ACS_summary_all.sas
  Library:  ACS
  Project:  NeighborhoodInfo DC
  Author:   P. Tatian
@@ -9,16 +9,17 @@
  
  Description:  Main macro for generating all ACS summary files.
 
- Modifications:
+ Modifications: 
+	7/29/2016 - renamed macros by add "Equity_" in front of original macro names.
 **************************************************************************/
 
-%macro ACS_summary_all( 
+%macro Equity_ACS_summary_all( 
 
   /** State abbreviation. Ex: DC **/
-  state_ab = ,
+  state_ab = DC,
 
   /** Year range (xxxx_yy). Ex: 2005_09 **/
-  years = ,
+  years = 2010_14,
   
   finalize = Y,
   revisions = New file.
@@ -41,12 +42,12 @@
   %** Check if OK to run finalized data sets **;
 
   %if %mparam_is_yes( &_finalize ) and not &_remote_batch_submit %then %do;
-    %warn_mput( macro=ACS_summary_all, msg=%str(Not a remote batch submit session. Finalize will be set to N.) )
+    %warn_mput( macro=Equity_ACS_summary_all, msg=%str(Not a remote batch submit session. Finalize will be set to N.) )
     %let _finalize = N;
   %end;
 
   %if %mparam_is_yes( &_finalize ) %then %do;
-    %let _out_lib = ACS;
+    %let _out_lib = Equity;
   %end;
   %else %do;
     %let _out_lib = WORK;
@@ -55,13 +56,13 @@
 
   **** Create summary files from block group source ****;
 
-  %ACS_summary_geo_source( bg10 )
+  %Equity_ACS_summary_geo_source( bg10 )
 
 
   **** Create summary files from census tract source ****;
 
-  %ACS_summary_geo_source( tr10 )
+  %Equity_ACS_summary_geo_source( tr10 )
 
 
-%mend ACS_summary_all;
+%mend Equity_ACS_summary_all;
 
