@@ -9,7 +9,7 @@
  
  Description:  Creates calculated statistics for ACS by geography to feed into Equity Profiles. 
 
- Modifications: 8/8/16 - SD wrote formulas for Equity indicators
+ Modifications:
  **************************************************************************/
 %include "L:\SAS\Inc\StdLocal.sas";
 
@@ -92,7 +92,7 @@
   
     set Nbr_profile&geosuf._A;
     
-    /* Population 
+    ** Population **;
     
     %Label_var_years( var=TotPop, label=Population, years= 2010_14 )
     
@@ -136,7 +136,7 @@
                        num_moe=mPopAsianPINonHispBridge_2010_14, den_moe=mPopWithRace2010_14 );
 
     %Moe_prop_a( var=PctOtherRaceNonHispBridg_m_2010_14, mult=100, num=PopOtherRaceNonHispBridg_2010_14, den=PopWithRace_2010_14, 
-                       num_moe=mPopOtherRaceNonHispBridg_2010_14, den_moe=mPopWithRace2010_14 );*/
+                       num_moe=mPopOtherRaceNonHispBridg_2010_14, den_moe=mPopWithRace2010_14 );
 
 	** Population by race/ethnicity alone**;
 
@@ -147,8 +147,8 @@
 	%Pct_calc( var=PctAloneI, label=% Indigenous alone non-Hispanic, num=PopAloneI, den=PopWithRace, years=1990 2000 2010_14 2010 )
 	%Pct_calc( var=PctAloneO, label=% Other race alone non-Hispanic, num=PopAloneO, den=PopWithRace, years=1990 2000 2010_14 2010 )
 	%Pct_calc( var=PctAloneM, label=% Multiracial alone non-Hispanic, num=PopAloneM, den=PopWithRace, years=1990 2000 2010_14 2010 )
-	%Pct_calc( var=PctAloneIOM, label=% Indigienous-other-multi-alone non-Hispanic, num=PopAloneIOM, den=PopWithRace, years=1990 2000 2010_14 2010 )
-	%Pct_calc( var=PctAloneAIOM, label=% All other than Black-White-Hispanic alone non-Hispanic, num=PopAloneAIOM, den=PopWithRace, years=1990 2000 2010_14 2010 )
+	%Pct_calc( var=PctAloneIOM, label=% Indigienous, other, multi alone non-Hispanic, num=PopAloneIOM, den=PopWithRace, years=1990 2000 2010_14 2010 )
+	%Pct_calc( var=PctAloneAIOM, label=% All other than Black, White, Hispanic alone non-Hispanic, num=PopAloneAIOM, den=PopWithRace, years=1990 2000 2010_14 2010 )
 
 
 	%Moe_prop_a( var=PctAloneB_m_2010_14, mult=100, num=PopAloneB_2010_14, den=PopWithRace_2010_14, 
@@ -179,7 +179,7 @@
                        num_moe=mPopAloneAIOM_2010_14, den_moe=mPopWithRace2010_14 );
 
 
-	/* Family Risk Factors **;
+	** Family Risk Factors **;
 
     %Pct_calc( var=PctPoorPersons, label=Poverty rate (%), num=PopPoorPersons, den=PersonsPovertyDefined, years=1980 1990 2000 2010_14 )
     %Pct_calc( var=PctUnemployed, label=Unemployment rate (%), num=PopUnemployed, den=PopInCivLaborForce, years=1980 1990 2000 2010_14 )
@@ -276,7 +276,7 @@
                        num_moe=mNumVacantHUForRent_2010_14, den_moe=mNumRenterHsgUnits_2010_14 );
     
     %Moe_prop_a( var=PctOwnerOccupiedHU_m_2010_14, mult=100, num=NumOwnerOccupiedHsgUnits_2010_14, den=NumOccupiedHsgUnits_2010_14, 
-                       num_moe=mNumOwnerOccupiedHU_2010_14, den_moe=mNumOccupiedHsgUnits_2010_14 );*/
+                       num_moe=mNumOwnerOccupiedHU_2010_14, den_moe=mNumOccupiedHsgUnits_2010_14 );
     
    
     ** Create flag for generating profile **;
