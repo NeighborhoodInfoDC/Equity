@@ -141,15 +141,15 @@
 
 	** Population by race/ethnicity alone**; 
 
-    %Pct_calc( var=PctAloneB, label=% black alone non-Hispanic, num=PopAloneB, den=PopWithRace, years=2010_14 )
-	%Pct_calc( var=PctAloneW, label=% white alone non-Hispanic, num=PopAloneW, den=PopWithRace, years=2010_14 )
-	%Pct_calc( var=PctAloneH, label=% Hispanic alone non-Hispanic, num=PopAloneH, den=PopWithRace, years=2010_14 )
-	%Pct_calc( var=PctAloneA, label=% Asian/P.I. alone non-Hispanic, num=PopAloneA, den=PopWithRace, years=2010_14 )
-	%Pct_calc( var=PctAloneI, label=% Indigenous alone non-Hispanic, num=PopAloneI, den=PopWithRace, years=2010_14 )
-	%Pct_calc( var=PctAloneO, label=% Other race alone non-Hispanic, num=PopAloneO, den=PopWithRace, years=2010_14 )
-	%Pct_calc( var=PctAloneM, label=% Multiracial alone non-Hispanic, num=PopAloneM, den=PopWithRace, years=2010_14 )
-	%Pct_calc( var=PctAloneIOM, label=% Indigienous-other-multi-alone non-Hispanic, num=PopAloneIOM, den=PopWithRace, years=2010_14 )
-	%Pct_calc( var=PctAloneAIOM, label=% All other than Black-White-Hispanic alone non-Hispanic, num=PopAloneAIOM, den=PopWithRace, years=2010_14 )
+    %Pct_calc( var=PctAloneB, label=% black alone, num=PopAloneB, den=PopWithRace, years=2010_14 )
+	%Pct_calc( var=PctAloneW, label=% white alone, num=PopAloneW, den=PopWithRace, years=2010_14 )
+	%Pct_calc( var=PctAloneH, label=% Hispanic alone, num=PopAloneH, den=PopWithRace, years=2010_14 )
+	%Pct_calc( var=PctAloneA, label=% Asian/P.I. alone, num=PopAloneA, den=PopWithRace, years=2010_14 )
+	%Pct_calc( var=PctAloneI, label=% Indigenous alone, num=PopAloneI, den=PopWithRace, years=2010_14 )
+	%Pct_calc( var=PctAloneO, label=% Other race alone, num=PopAloneO, den=PopWithRace, years=2010_14 )
+	%Pct_calc( var=PctAloneM, label=% Multiracial alone, num=PopAloneM, den=PopWithRace, years=2010_14 )
+	%Pct_calc( var=PctAloneIOM, label=% Indigienous-other-multi-alone, num=PopAloneIOM, den=PopWithRace, years=2010_14 )
+	%Pct_calc( var=PctAloneAIOM, label=% All other than Black-White-Hispanic, num=PopAloneAIOM, den=PopWithRace, years=2010_14 )
 
 
 	%Moe_prop_a( var=PctAloneB_m_2010_14, mult=100, num=PopAloneB_2010_14, den=PopWithRace_2010_14, 
