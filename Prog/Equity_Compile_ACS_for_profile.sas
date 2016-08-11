@@ -19,6 +19,7 @@
 
 %let geography=city Ward2012 cluster_tr2000;
 
+
 /** Macro Add_Percents- Start Definition **/
 
 %macro add_percents;
@@ -33,7 +34,7 @@
 
   data Equity_profile&geosuf._A (compress=no);  
   merge  
-          ACS.acs_2010_14_dc_sum_bg_&geosuf
+          equity.acs_2010_14_dc_sum_bg&geosuf
         (keep=&geo TotPop: mTotPop: PopUnder18Years: mPopUnder18Years: Pop65andOverYears: mPop65andOverYears:
 		   PopWithRace: mPopWithRace:
 		   PopBlackNonHispBridge: mPopBlackNonHispBridge:
@@ -53,14 +54,14 @@
            Pop25andOverYears: mPop25andOverYears: 
            NumOccupiedHsgUnits: mNumOccupiedHsgUnits:
            Pop25andOverWoutHS: mPop25andOverWoutHS: 
-           NumHshldPhone: mNumHshldPhone: 
+           /*NumHshldPhone: mNumHshldPhone: 
            NumHshldCar: mNumHshldCar: 
-           NumFamilies_: mNumFamilies_:
+           NumFamilies_: mNumFamilies_:*/
            AggFamilyIncome: mAggFamilyIncome: 
            NumRenterHsgUnits: mNumRenterHsgUnits:
            NumVacantHsgUnitsForRent: mNumVacantHUForRent: 
-           NumOwnerOccupiedHsgUnits: mNumOwnerOccupiedHU: )
-      ACS.Acs_2010_14_dc_sum_tr&geosuf
+           /*NumOwnerOccupiedHsgUnits: mNumOwnerOccupiedHU: */)
+      equity.Acs_2010_14_dc_sum_tr&geosuf
         (keep=&geo TotPop: mTotPop: 
            PopForeignBorn: mPopForeignBorn: 
            PersonsPovertyDefined: mPersonsPovertyDefined:
@@ -90,7 +91,7 @@
   run;*/
   data equity.Equity_profile&geosuf (compress=no); /*NEED TO REMOVE 1990, 2000, 2010 from formulas*/
   
-    set Nbr_profile&geosuf._A;
+    set Equity_profile&geosuf._A;
     
     /* Population 
     
@@ -138,7 +139,8 @@
     %Moe_prop_a( var=PctOtherRaceNonHispBridg_m_2010_14, mult=100, num=PopOtherRaceNonHispBridg_2010_14, den=PopWithRace_2010_14, 
                        num_moe=mPopOtherRaceNonHispBridg_2010_14, den_moe=mPopWithRace2010_14 );*/
 
-	** Population by race/ethnicity alone**;
+	** Population by race/ethnicity alone**; 
+	/*SOMALA - take out 1990, 2000, and 2010*/
 
     %Pct_calc( var=PctAloneB, label=% black alone non-Hispanic, num=PopAloneB, den=PopWithRace, years=1990 2000 2010_14 2010 )
 	%Pct_calc( var=PctAloneW, label=% white alone non-Hispanic, num=PopAloneW, den=PopWithRace, years=1990 2000 2010_14 2010 )
@@ -152,31 +154,31 @@
 
 
 	%Moe_prop_a( var=PctAloneB_m_2010_14, mult=100, num=PopAloneB_2010_14, den=PopWithRace_2010_14, 
-                       num_moe=mPopAloneB_2010_14, den_moe=mPopWithRace2010_14 );
+                       num_moe=mPopAloneB_2010_14, den_moe=mPopWithRace_2010_14 );
 
 	%Moe_prop_a( var=PctAloneW_m_2010_14, mult=100, num=PopAloneW_2010_14, den=PopWithRace_2010_14, 
-                       num_moe=mPopAloneW_2010_14, den_moe=mPopWithRace2010_14 );
+                       num_moe=mPopAloneW_2010_14, den_moe=mPopWithRace_2010_14 );
 
 	%Moe_prop_a( var=PctAloneH_m_2010_14, mult=100, num=PopAloneH_2010_14, den=PopWithRace_2010_14, 
-                       num_moe=mPopAloneH_2010_14, den_moe=mPopWithRace2010_14 );
+                       num_moe=mPopAloneH_2010_14, den_moe=mPopWithRace_2010_14 );
 
 	%Moe_prop_a( var=PctAloneA_m_2010_14, mult=100, num=PopAloneA_2010_14, den=PopWithRace_2010_14, 
-                       num_moe=mPopAloneA_2010_14, den_moe=mPopWithRace2010_14 );
+                       num_moe=mPopAloneA_2010_14, den_moe=mPopWithRace_2010_14 );
 					   
 	%Moe_prop_a( var=PctAloneI_m_2010_14, mult=100, num=PopAloneI_2010_14, den=PopWithRace_2010_14, 
-                       num_moe=mPopAloneI_2010_14, den_moe=mPopWithRace2010_14 );
+                       num_moe=mPopAloneI_2010_14, den_moe=mPopWithRace_2010_14);
 
 	%Moe_prop_a( var=PctAloneO_m_2010_14, mult=100, num=PopAloneO_2010_14, den=PopWithRace_2010_14, 
-                       num_moe=mPopAloneO_2010_14, den_moe=mPopWithRace2010_14 );
+                       num_moe=mPopAloneO_2010_14, den_moe=mPopWithRace_2010_14 );
 
 	%Moe_prop_a( var=PctAloneM_m_2010_14, mult=100, num=PopAloneM_2010_14, den=PopWithRace_2010_14, 
-                       num_moe=mPopAloneM_2010_14, den_moe=mPopWithRace2010_14 );
+                       num_moe=mPopAloneM_2010_14, den_moe=mPopWithRace_2010_14);
 
 	%Moe_prop_a( var=PctAloneIOM_m_2010_14, mult=100, num=PopAloneIOM_2010_14, den=PopWithRace_2010_14, 
-                       num_moe=mPopAloneIOM_2010_14, den_moe=mPopWithRace2010_14 );
+                       num_moe=mPopAloneIOM_2010_14, den_moe=mPopWithRace_2010_14 );
 
 	%Moe_prop_a( var=PctAloneAIOM_m_2010_14, mult=100, num=PopAloneAIOM_2010_14, den=PopWithRace_2010_14, 
-                       num_moe=mPopAloneAIOM_2010_14, den_moe=mPopWithRace2010_14 );
+                       num_moe=mPopAloneAIOM_2010_14, den_moe=mPopWithRace_2010_14 );
 
 
 	/* Family Risk Factors **;
@@ -296,3 +298,13 @@
 /** End Macro Definition **/
 
 %add_percents; 
+
+
+proc print data=equity.equity_profile_wd12;
+var ward2012 PctAloneB_2010_14 PctAloneB_m_2010_14 PctAloneW_2010_14 PctAloneW_m_2010_14 PctAloneH_2010_14 PctAloneH_m_2010_14  PctAloneA_2010_14 PctAloneA_m_2010_14 
+PctAloneI_2010_14 PctAloneI_m_2010_14 PctAloneO_2010_14 PctAloneO_m_2010_14 PctAloneM_2010_14 PctAloneM_m_2010_14  PctAloneIOM_2010_14 PctAloneIOM_m_2010_14 
+PctAloneAIOM_2010_14 PctAloneAIOM_m_2010_14 
+
+
+;
+run; 
