@@ -443,7 +443,7 @@
 		mPop35_64YearsB_&_years. = "Persons 35-64 years old, Black/African American, MOE, &_years_dash "
 		mPop35_64YearsW_&_years. = "Persons 35-64 years old,Non-Hispanic White, MOE, &_years_dash "
 		mPop35_64YearsH_&_years. = "Persons 35-64 years old, Hispanic/Latino, MOE, &_years_dash "
-		mPop18_34YearsA_&_years. = "Persons 35-64 years old, Asian, Hawaiian and other Pacific Islander, MOE, &_years_dash "
+		mPop35_64YearsA_&_years. = "Persons 35-64 years old, Asian, Hawaiian and other Pacific Islander, MOE, &_years_dash "
 		mPop35_64YearsIOM_&_years. = "Persons 35-64 years old, American Indian/Alask Native, other race, two or more races, MOE, &_years_dash "
 		mPop35_64YearsAIOM_&_years. = "Persons 35-64 years old, All remaining groups other than Black, Non-Hispanic White, Hispanic, MOE, &_years_dash "
 		mPop65andOverYearsB_&_years. = "Persons 65 years old and over,Black/African American, MOE, &_years_dash "
@@ -2262,12 +2262,12 @@
 				B19101Ge2, B19101Ge3, B19101Ge4, B19101Ge5, B19101Ge6, B19101Ge7, 
 				B19101Ge8, B19101Ge9, B19101Ge10, B19101Ge11, B19101Ge12 );
 
-		FamIncomeMT200kB_&_years. = B19101Be17;
-		FamIncomeMT200kW_&_years. = B19101He17;
-		FamIncomeMT200kH_&_years. = B19101Ie17;
-		FamIncomeMT200kA_&_years. = sum(B19101De17, B19101Ee17 );
-		FamIncomeMT200kIOM_&_years. = sum(B19101Ce17, B19101Fe17, B19101Ge17 );
-		FamIncomeMT200kAIOM_&_years. = sum(B19101Ce17, B19101De17, B19101Ee17, B19101Fe17, B19101Ge17 );
+		FamIncomeGT200kB_&_years. = B19101Be17;
+		FamIncomeGT200kW_&_years. = B19101He17;
+		FamIncomeGT200kH_&_years. = B19101Ie17;
+		FamIncomeGT200kA_&_years. = sum(B19101De17, B19101Ee17 );
+		FamIncomeGT200kIOM_&_years. = sum(B19101Ce17, B19101Fe17, B19101Ge17 );
+		FamIncomeGT200kAIOM_&_years. = sum(B19101Ce17, B19101De17, B19101Ee17, B19101Fe17, B19101Ge17 );
 
 		mFamIncomeB_&_years. = B19101Bm1;
 		mFamIncomeW_&_years. = B19101Hm1;
@@ -2309,12 +2309,12 @@
 			B19101Gm2 B19101Gm3 B19101Gm4 B19101Gm5 B19101Gm6 B19101Gm7 
 			B19101Gm8 B19101Gm9 B19101Gm10 B19101Gm11 B19101Gm12);
 
-		mFamIncomeMT200kB_&_years. = B19101Bm17;
-		mFamIncomeMT200kW_&_years. = B19101Hm17;
-		mFamIncomeMT200kH_&_years. = B19101Im17;
-		mFamIncomeMT200kA_&_years. = %moe_sum( var=B19101Dm17 B19101Em17);
-		mFamIncomeMT200kIOM_&_years. = %moe_sum( var=B19101Cm17 B19101Fm17 B19101Gm17);
-		mFamIncomeMT200kAIOM_&_years. = %moe_sum( var=B19101Cm17 B19101Dm17 B19101Em17 B19101Fm17 B19101Gm17);
+		mFamIncomeGT200kB_&_years. = B19101Bm17;
+		mFamIncomeGT200kW_&_years. = B19101Hm17;
+		mFamIncomeGT200kH_&_years. = B19101Im17;
+		mFamIncomeGT200kA_&_years. = %moe_sum( var=B19101Dm17 B19101Em17);
+		mFamIncomeGT200kIOM_&_years. = %moe_sum( var=B19101Cm17 B19101Fm17 B19101Gm17);
+		mFamIncomeGT200kAIOM_&_years. = %moe_sum( var=B19101Cm17 B19101Dm17 B19101Em17 B19101Fm17 B19101Gm17);
 
 		label
 			FamIncomeB_&_years. = "Family income, Black/African American, &_years_dash "
@@ -2329,12 +2329,12 @@
 			FamIncomeLT75kA_&_years. = "Family income less than $75000, Asian, Hawaiian, and other Pacific Islander, &_years_dash "
 			FamIncomeLT75kIOM_&_years. = "Family income less than $75000, American Indian/Alaska Native, other race, two or more races, &_years_dash "
 			FamIncomeLT75kAIOM_&_years. = "Family income less than $75000,All remaining groups other than Black, Non-Hispanic White, Hispanic, &_years_dash "
-			FamIncomeMT200kB_&_years. = "Family income more than $200,000, Black or African American, &_years_dash "
-			FamIncomeMT200kW_&_years. = "Family income more than $200,000, Non-Hispanic White, &_years_dash "
-			FamIncomeMT200kH_&_years. = "Family income more than $200,000, Hispanic or Latino, &_years_dash "
-			FamIncomeMT200kA_&_years. = "Family income more than $200,000, Asian, Native Hawaiian, and other Pacific Islander, &_years_dash "
-			FamIncomeMT200kIOM_&_years. = "Family income more than $200,000, American Indian/Alaska Native, other race, two or more races, &_years_dash "
-			FamIncomeMT200kAIOM_&_years. = "Family income more than $200,000, All remaining groups other than Black, Non-Hispanic White, Hispanic, &_years_dash "
+			FamIncomeGT200kB_&_years. = "Family income more than $200,000, Black or African American, &_years_dash "
+			FamIncomeGT200kW_&_years. = "Family income more than $200,000, Non-Hispanic White, &_years_dash "
+			FamIncomeGT200kH_&_years. = "Family income more than $200,000, Hispanic or Latino, &_years_dash "
+			FamIncomeGT200kA_&_years. = "Family income more than $200,000, Asian, Native Hawaiian, and other Pacific Islander, &_years_dash "
+			FamIncomeGT200kIOM_&_years. = "Family income more than $200,000, American Indian/Alaska Native, other race, two or more races, &_years_dash "
+			FamIncomeGT200kAIOM_&_years. = "Family income more than $200,000, All remaining groups other than Black, Non-Hispanic White, Hispanic, &_years_dash "
 			mFamIncomeB_&_years. = "Family income, Black/African American, MOE, &_years_dash "
 			mFamIncomeW_&_years. = "Family income, Non-Hispanic White, MOE, &_years_dash "
 			mFamIncomeH_&_years. = "Family income, Hispanic/Latino, MOE, &_years_dash "
@@ -2347,12 +2347,12 @@
 			mFamIncomeLT75kA_&_years. = "Family income less than $75000, Asian, Hawaiian, and other Pacific Islander, MOE, &_years_dash "
 			mFamIncomeLT75kIOM_&_years. = "Family income less than $75000, American Indian/Alaska Native, other race, two or more races, MOE, &_years_dash "
 			mFamIncomeLT75kAIOM_&_years. = "Family income less than $75000,All remaining groups other than Black, Non-Hispanic White, Hispanic, MOE, &_years_dash "
-			mFamIncomeMT200kB_&_years. = "Family income more than $200,000, Black or African American, MOE, &_years_dash "
-			mFamIncomeMT200kW_&_years. = "Family income more than $200,000, Non-Hispanic White, MOE, &_years_dash "
-			mFamIncomeMT200kH_&_years. = "Family income more than $200,000, Hispanic or Latino, MOE, &_years_dash "
-			mFamIncomeMT200kA_&_years. = "Family income more than $200,000, Asian, Native Hawaiian, and other Pacific Islander, MOE, &_years_dash "
-			mFamIncomeMT200kIOM_&_years. = "Family income more than $200,000, American Indian/Alaska Native, other race, two or more races, MOE, &_years_dash "
-			mFamIncomeMT200kAIOM_&_years. = "Family income more than $200,000, All remaining groups other than Black, Non-Hispanic White, Hispanic, MOE, &_years_dash "
+			mFamIncomeGT200kB_&_years. = "Family income more than $200,000, Black or African American, MOE, &_years_dash "
+			mFamIncomeGT200kW_&_years. = "Family income more than $200,000, Non-Hispanic White, MOE, &_years_dash "
+			mFamIncomeGT200kH_&_years. = "Family income more than $200,000, Hispanic or Latino, MOE, &_years_dash "
+			mFamIncomeGT200kA_&_years. = "Family income more than $200,000, Asian, Native Hawaiian, and other Pacific Islander, MOE, &_years_dash "
+			mFamIncomeGT200kIOM_&_years. = "Family income more than $200,000, American Indian/Alaska Native, other race, two or more races, MOE, &_years_dash "
+			mFamIncomeGT200kAIOM_&_years. = "Family income more than $200,000, All remaining groups other than Black, Non-Hispanic White, Hispanic, MOE, &_years_dash "
 			;
 
 	%end;
@@ -2367,7 +2367,7 @@
 		sum(B19101e2, B19101e3, B19101e4, B19101e5, B19101e6, B19101e7, 
 			B19101e8, B19101e9, B19101e10, B19101e11, B19101e12 );
 
-	FamIncomeMT200k_&_years. = B19101e17;
+	FamIncomeGT200k_&_years. = B19101e17;
 
 	MedFamIncm_&_years. = B19113e1;
 		MedFamIncmB_&_years. = B19113Be1;
@@ -2394,7 +2394,7 @@
 		%moe_sum( var=B19101m2 B19101m3 B19101m4 B19101m5 B19101m6 B19101m7 
 		B19101m8 B19101m9 B19101m10 B19101m11 B19101m12);
 
-	mFamIncomeMT200k_&_years. = B19101m17;
+	mFamIncomeGT200k_&_years. = B19101m17;
 
 	mMedFamIncm_&_years. = B19113m1;
 			mMedFamIncmB_&_years. = B19113Bm1;
@@ -2417,7 +2417,7 @@
       AggFamilyIncome_&_years. = "Aggregate family income ($ &_last_year), &_years_dash "
 	  FamIncome_&_years. = "Family income, &_years_dash "
 	  FamIncomeLT75k_&_years. = "Family income less than $75000, &_years_dash "
-	  FamIncomeMT200k_&_years. = "Family income more than $200,000, &_years_dash "
+	  FamIncomeGT200k_&_years. = "Family income more than $200,000, &_years_dash "
 	  MedFamIncm_&_years. = "Median family income, &_years_dash "
 			MedFamIncmB_&_years. = "Median family income, Black/African American, &_years_dash "
 			MedFamIncmW_&_years. = "Median family income, Non-Hispanic White, &_years_dash "
@@ -2435,7 +2435,7 @@
 	  mAggFamilyIncome_&_years. = "Aggregate family income ($ &_last_year), MOE, &_years_dash "
 	  mFamIncome_&_years. = "Family income, MOE, &_years_dash "
 	  mFamIncomeLT75k_&_years. = "Family income less than $75000, MOE, &_years_dash "
-	  mFamIncomeMT200k_&_years. = "Family income more than $200,000, MOE, &_years_dash "
+	  mFamIncomeGT200k_&_years. = "Family income more than $200,000, MOE, &_years_dash "
 	  mMedFamIncm_&_years. = "Median family income, MOE, &_years_dash "
 			mMedFamIncmB_&_years. = "Median family income, Black/African American, MOE, &_years_dash "
 			mMedFamIncmW_&_years. = "Median family income, Non-Hispanic White, MOE, &_years_dash "

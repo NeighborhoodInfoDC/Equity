@@ -35,6 +35,7 @@
            PopWithRace: PopBlack: PopWhite: PopHisp: PopAsian: PopOther: PopMulti: 
            PopEmployed:
            NumHshlds: NumOccupied: NumOwner: NumRenter: NumVacant: Agg: Med:
+		   NumFamilies_&_years.
 
 		   PopUnder5Years_&_years. PopUnder18Years_&_years. 
 		   Pop18_34Years_&_years. Pop35_64Years_&_years. 
@@ -43,7 +44,7 @@
 		   Pop25andOverYears_&_years. Pop25andOverWoutHS_&_years. Pop25andOverWHS_&_years. 
 		   Pop25andOverWSC_&_years. Pop25andOverWCollege_&_years.
 
-		   FamIncome_&_years. FamIncomeLT75k_&_years. FamIncomeMT200k_&_years.
+		   FamIncome_&_years. FamIncomeLT75k_&_years. FamIncomeGT200k_&_years.
 		   ;
            
     %let moe_vars =
@@ -328,10 +329,10 @@
 		   mFamIncomeLT75kA_&_years. mFamIncomeLT75kIOM_&_years.
 		   mFamIncomeLT75kAIOM_&_years.
 
-		   mFamIncomeMT200k_&_years. mFamIncomeMT200kB_&_years.
-		   mFamIncomeMT200kW_&_years. mFamIncomeMT200kH_&_years.
-		   mFamIncomeMT200kA_&_years. mFamIncomeMT200kIOM_&_years.
-		   mFamIncomeMT200kAIOM_&_years.
+		   mFamIncomeGT200k_&_years. mFamIncomeGT200kB_&_years.
+		   mFamIncomeGT200kW_&_years. mFamIncomeGT200kH_&_years.
+		   mFamIncomeGT200kA_&_years. mFamIncomeGT200kIOM_&_years.
+		   mFamIncomeGT200kAIOM_&_years.
 
 		   mMedFamIncm_&_years. mMedFamIncmB_&_years.
 		   mMedFamIncmW_&_years. mMedFamIncmH_&_years.
