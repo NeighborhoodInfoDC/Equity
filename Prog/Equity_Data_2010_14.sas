@@ -270,3 +270,8 @@ proc freq data=equity.acs_tables (where=(city=7230 and empstat^=1 and empstat^=2
 tables empstat*age/list missing;
 weight perwt;
 run;
+
+proc freq data=equity.acs_tables (where=(city=7230 and ownershp=1));
+tables mortgage/list missing;
+tables mortgage*ownfreeclear*ownmortgage/list missing;
+run;

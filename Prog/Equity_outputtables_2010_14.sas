@@ -279,6 +279,77 @@ ods html file="D:\DCData\Libraries\Equity\Prog\Table 20. Share of Population Age
 
 run;
 
+ods html file="D:\DCData\Libraries\Equity\Prog\Table 21. Mortgage Status for All Homeowners.xls" style=Minimal;
+
+%Count_table2( 
+  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 1 ),
+  row_var= ownmortgage,
+  row_fmt= ownmortgage.,
+  weight = hhwt,
+  universe= Homeowners,
+  title= "Table 21. Mortgage Status for All Homeowners" );
+
+run;
+
+ods html file="D:\DCData\Libraries\Equity\Prog\Table 22. Mortgage Status for White-Non Hispanic Homeowners.xls" style=Minimal;
+
+%Count_table2( 
+  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 1 and racew=1),
+  row_var= ownmortgage,
+  row_fmt= ownmortgage.,
+  weight= hhwt, 
+  universe= White-Non Hispanic Homeowners,
+  title= "Table 22. Mortgage Status for White-Non Hispanic Homeowners" );
+
+run;
+
+ods html file="D:\DCData\Libraries\Equity\Prog\Table 23. Mortgage Status for Hispanic Homeowners.xls" style=Minimal;
+
+%Count_table2( 
+  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 1 and raceh=1),
+  row_var= ownmortgage,
+  row_fmt= ownmortgage.,
+  weight= hhwt, 
+  universe= Hispanic Homeowners,
+  title= "Table 23. Mortgage Status for Hispanic Homeowners" );
+
+run;
+
+ods html file="D:\DCData\Libraries\Equity\Prog\Table 24. Mortgage Status for Black Homeowners.xls" style=Minimal;
+
+%Count_table2( 
+  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 1 and raceb=1),
+  row_var= ownmortgage,
+  row_fmt= ownmortgage.,
+  weight= hhwt, 
+  universe= Black Homeowners,
+  title= "Table 24. Mortgage Status for Black Homeowners" );
+
+run;
+
+ods html file="D:\DCData\Libraries\Equity\Prog\Table 25. Mortgage Status for Homeowners of Asian, Pacific Islander, American Indian, Alaskan Native Descent, Other, Two or More Races.xls" style=Minimal;
+
+%Count_table2( 
+  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 1 and raceaiom=1),
+  row_var= ownmortgage,
+  row_fmt= ownmortgage.,
+  weight= hhwt, 
+  universe= Homeowners of Asian/Pacific Islander or American Indian/Alaskan Native Descent or Other or and Two or More Races,
+  title= "Table 25. Mortgage Status for Homeowners of Asian, Pacific Islander, American Indian, Alaskan Native Descent, Other, Two or More Races" );
+
+run;
+
+ods html file="D:\DCData\Libraries\Equity\Prog\Table 26. Mortgage Status for Homeowners Who are Foreign-Born.xls" style=Minimal;
+
+%Count_table2( 
+  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 1 and foreign=1),
+  row_var= ownmortgage,
+  row_fmt= ownmortgage.,
+  weight= hhwt, 
+  universe= Homeowners Who are Foreign-Born,
+  title= "Table 26. Mortgage Status for Homeowners Who are Foreign-Born" );
+
+run;
 
 /*ods html file="D:\DCData\Libraries\Equity\Prog\Table 6. Cost Burden for Asian, Pacific Islander Renters.xls" style=Minimal;
 

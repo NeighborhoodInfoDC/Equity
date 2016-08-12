@@ -471,14 +471,14 @@ proc format;
 	. = "Cost Burdened"
 	1 = "No Cost Burdened";
 
-	value ownfreeclear
+	/*value ownfreeclear
 	. = "Not owners"
 	0 = "Do Not Own Free and Clear"
-	1 = "Own Free and Clear";
+	1 = "Own Free and Clear";*/
 
 	value ownmortgage
 	. = "Not Owners"
-	0 = "Not Owned with Mortgage"
+	0 = "Own Free and Clear"
 	1 = "Own With Mortgage";
 
 run;
