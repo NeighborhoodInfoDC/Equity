@@ -211,7 +211,6 @@ data Equity.Acs_tables (Label="iPUMS 2010-14 ACS for Racial Equity Profiles");
 	  else if hhincome > 0 then cost_burden = ( 100 * 12 * housing_costs ) / hhincome;
 	  else cost_burden = 100;
 
-
     if cost_burden >= 50 then sevcostburden = 1;
   		else sevcostburden=.;
     if cost_burden >=30 then costburden=1;

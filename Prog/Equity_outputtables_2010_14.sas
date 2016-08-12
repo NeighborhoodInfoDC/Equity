@@ -98,7 +98,189 @@ ods html file="D:\DCData\Libraries\Equity\Prog\Table 5. Cost Burden for Black Re
 
 run;
 
-ods html file="D:\DCData\Libraries\Equity\Prog\Table 6. Cost Burden for Asian, Pacific Islander Renters.xls" style=Minimal;
+ods html file="D:\DCData\Libraries\Equity\Prog\Table 6. Cost Burden for Renters of Asian, Pacific Islander, American Indian, Alaskan Native Descent, Other, Two or More Races.xls" style=Minimal;
+
+%Count_table2( 
+  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and raceaiom=1),
+  row_var= costburden,
+  row_fmt= costburden.,
+  weight= hhwt, 
+  universe= Renters of Asian/Pacific Islander or American Indian/Alaskan Native Descent or Other or Two or More Races,
+  title= "Table 6. Cost Burden for Renters of Asian, Pacific Islander, American Indian, Alaskan Native Descent, Other, Two or More Races" );
+
+run;
+
+ods html file="D:\DCData\Libraries\Equity\Prog\Table 7. Cost Burden for Renters Who are Foreign-Born.xls" style=Minimal;
+
+%Count_table2( 
+  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and foreign=1),
+  row_var= costburden,
+  row_fmt= costburden.,
+  weight= hhwt, 
+  universe= Renters Who are Foreign-Born,
+  title= "Table 7. Cost Burden for Renters Who are Foreign-Born" );
+
+run;
+
+ods html file="D:\DCData\Libraries\Equity\Prog\Table 8. Severe Cost Burden for All Renters.xls" style=Minimal;
+
+%Count_table2( 
+  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 ),
+  row_var= sevcostburden,
+  row_fmt= sevcostburden.,
+  weight = hhwt,
+  universe= Renters,
+  title= "Table 8. Severe Cost Burden for All Renters" );
+
+run;
+
+ods html file="D:\DCData\Libraries\Equity\Prog\Table 9. Severe Cost Burden for White-Non Hispanic Renters.xls" style=Minimal;
+
+%Count_table2( 
+  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and racew=1),
+  row_var= sevcostburden,
+  row_fmt= sevcostburden.,
+  weight= hhwt, 
+  universe= White-Non Hispanic Renters,
+  title= "Table 9. Severe Cost Burden for White-Non Hispanic Renters" );
+
+run;
+
+ods html file="D:\DCData\Libraries\Equity\Prog\Table 10. Severe Cost Burden for Hispanic Renters.xls" style=Minimal;
+
+%Count_table2( 
+  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and raceh=1),
+  row_var= sevcostburden,
+  row_fmt= sevcostburden.,
+  weight= hhwt, 
+  universe= Hispanic Renters,
+  title= "Table 10. Severe Cost Burden for Hispanic Renters" );
+
+run;
+
+ods html file="D:\DCData\Libraries\Equity\Prog\Table 11. Severe Cost Burden for Black Renters.xls" style=Minimal;
+
+%Count_table2( 
+  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and raceb=1),
+  row_var= sevcostburden,
+  row_fmt= sevcostburden.,
+  weight= hhwt, 
+  universe= Black Renters,
+  title= "Table 11. Severe Cost Burden for Black Renters" );
+
+run;
+
+ods html file="D:\DCData\Libraries\Equity\Prog\Table 12. Severe Cost Burden for Renters of Asian, Pacific Islander, American Indian, Alaskan Native Descent, Other, Two or More Races.xls" style=Minimal;
+
+%Count_table2( 
+  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and raceaiom=1),
+  row_var= sevcostburden,
+  row_fmt= sevcostburden.,
+  weight= hhwt, 
+  universe= Renters of Asian/Pacific Islander or American Indian/Alaskan Native Descent or Other or and Two or More Races,
+  title= "Table 12. Severe Cost Burden for Renters of Asian, Pacific Islander, American Indian, Alaskan Native Descent, Other, Two or More Races" );
+
+run;
+
+ods html file="D:\DCData\Libraries\Equity\Prog\Table 13. Severe Cost Burden for Renters Who are Foreign-Born.xls" style=Minimal;
+
+%Count_table2( 
+  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and foreign=1),
+  row_var= sevcostburden,
+  row_fmt= sevcostburden.,
+  weight= hhwt, 
+  universe= Renters Who are Foreign-Born,
+  title= "Table 13. Severe Cost Burden for Renters Who are Foreign-Born" );
+
+run;
+
+ods html file="D:\DCData\Libraries\Equity\Prog\Table 14. Share of Population Ages 25-64 that is Employed for All Races.xls" style=Minimal;
+
+%Count_table( 
+  where= %str(city=7230 and age25to64=1 ),
+  row_var= emp25to64,
+  row_fmt= emp25to64_f.,
+  weight = perwt,
+  universe= Individuals Ages 25 to 64,
+  title= "Table 14. Share of Population Ages 25-64 that is Employed for All Races" );
+
+run;
+
+ods html file="D:\DCData\Libraries\Equity\Prog\Table 15. Share of Population Ages 25-64 that is Employed for White-Non Hispanic .xls" style=Minimal;
+
+%Count_table( 
+  where= %str(city=7230 and age25to64=1 and racew=1),
+  row_var= emp25to64,
+  row_fmt= emp25to64_f.,
+  weight= perwt, 
+  universe= White-Non Hispanic Individuals Ages 25 to 64,
+  title= "Table 15. Share of Population Ages 25-64 that is Employed for White-Non Hispanic " );
+
+run;
+
+ods html file="D:\DCData\Libraries\Equity\Prog\Table 16. Share of Population Ages 25-64 that is Employed for Hispanic .xls" style=Minimal;
+
+%Count_table( 
+  where= %str(city=7230 and age25to64=1 and raceh=1),
+  row_var= emp25to64,
+  row_fmt= emp25to64_f.,
+  weight= perwt, 
+  universe= Hispanic Individuals Ages 25 to 64,
+  title= "Table 16. Share of Population Ages 25-64 that is Employed for Hispanic " );
+
+run;
+
+ods html file="D:\DCData\Libraries\Equity\Prog\Table 17. Share of Population Ages 25-64 that is Employed for Black .xls" style=Minimal;
+
+%Count_table( 
+  where= %str(city=7230 and age25to64=1 and raceb=1),
+  row_var= emp25to64,
+  row_fmt= emp25to64_f.,
+  weight= perwt, 
+  universe= Black Individuals Ages 25 to 64,
+  title= "Table 17. Share of Population Ages 25-64 that is Employed for Black " );
+
+run;
+
+ods html file="D:\DCData\Libraries\Equity\Prog\Table 18. Share of Population Ages 25-64 that is Employed for Asian, Pacific Islanders.xls" style=Minimal;
+
+%Count_table( 
+  where= %str(city=7230 and age25to64=1 and racea=1),
+  row_var= emp25to64,
+  row_fmt= emp25to64_f.,
+  weight= perwt, 
+  universe=Asian/Pacific Islander Individuals Ages 25 to 64,
+  title= "Table 18. Share of Population Ages 25-64 that is Employed for Asian, Pacific Islanders" );
+
+run;
+
+
+ods html file="D:\DCData\Libraries\Equity\Prog\Table 19. Share of Population Ages 25-64 that is Employed for Individuals of Asian, Pacific Islander, American Indian, Alaskan Native Descent, Other, and Two or More Races.xls" style=Minimal;
+
+%Count_table( 
+  where= %str(city=7230 and age25to64=1 and raceaiom=1),
+  row_var= emp25to64,
+  row_fmt= emp25to64_f.,
+  weight= perwt, 
+  universe=Individuals of Asian/Pacific Islander or American Indian/Alaskan Native Descent or Other or Two or More Races Ages 25 to 64,
+  title= "Table 19. Share of Population Ages 25-64 that is Employed for Individuals of Asian, Pacific Islander, American Indian, Alaskan Native Descent, Other, and Two or More Races" );
+
+run;
+
+ods html file="D:\DCData\Libraries\Equity\Prog\Table 20. Share of Population Ages 25-64 that is Employed Who are Foreign-Born.xls" style=Minimal;
+
+%Count_table( 
+  where= %str(city=7230 and age25to64=1 and foreign=1),
+  row_var= emp25to64,
+  row_fmt= emp25to64_f.,
+  weight= perwt, 
+  universe= Individuals who are Foreign-Born Ages 25 to 64,
+  title= "Table 20. Share of Population Ages 25-64 that is Employed Who are Foreign-Born" );
+
+run;
+
+
+/*ods html file="D:\DCData\Libraries\Equity\Prog\Table 6. Cost Burden for Asian, Pacific Islander Renters.xls" style=Minimal;
 
 %Count_table2( 
   where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and racea=1),
@@ -156,81 +338,9 @@ ods html file="D:\DCData\Libraries\Equity\Prog\Table 10. Cost Burden for Renters
   universe= Renters of American Indian/Alaskan Native Descent or Other or Two or More Races,
   title= "Table 10. Cost Burden for Renters of American Indian, Alaskan Native Descent, Other, Two or More Races" );
 
-run;
+run;*/
 
-ods html file="D:\DCData\Libraries\Equity\Prog\Table 11. Cost Burden for Renters of Asian, Pacific Islander, American Indian, Alaskan Native Descent, Other, Two or More Races.xls" style=Minimal;
-
-%Count_table2( 
-  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and raceaiom=1),
-  row_var= costburden,
-  row_fmt= costburden.,
-  weight= hhwt, 
-  universe= Renters of Asian/Pacific Islander or American Indian/Alaskan Native Descent or Other or Two or More Races,
-  title= "Table 11. Cost Burden for Renters of Asian, Pacific Islander, American Indian, Alaskan Native Descent, Other, Two or More Races" );
-
-run;
-
-ods html file="D:\DCData\Libraries\Equity\Prog\Table 12. Cost Burden for Renters Who are Foreign-Born.xls" style=Minimal;
-
-%Count_table2( 
-  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and foreign=1),
-  row_var= costburden,
-  row_fmt= costburden.,
-  weight= hhwt, 
-  universe= Renters Who are Foreign-Born,
-  title= "Table 12. Cost Burden for Renters Who are Foreign-Born" );
-
-run;
-
-ods html file="D:\DCData\Libraries\Equity\Prog\Table 13. Severe Cost Burden for All Renters.xls" style=Minimal;
-
-%Count_table2( 
-  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 ),
-  row_var= sevcostburden,
-  row_fmt= sevcostburden.,
-  weight = hhwt,
-  universe= Renters,
-  title= "Table 13. Severe Cost Burden for All Renters" );
-
-run;
-
-ods html file="D:\DCData\Libraries\Equity\Prog\Table 14. Severe Cost Burden for White-Non Hispanic Renters.xls" style=Minimal;
-
-%Count_table2( 
-  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and racew=1),
-  row_var= sevcostburden,
-  row_fmt= sevcostburden.,
-  weight= hhwt, 
-  universe= White-Non Hispanic Renters,
-  title= "Table 14. Severe Cost Burden for White-Non Hispanic Renters" );
-
-run;
-
-ods html file="D:\DCData\Libraries\Equity\Prog\Table 15. Severe Cost Burden for Hispanic Renters.xls" style=Minimal;
-
-%Count_table2( 
-  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and raceh=1),
-  row_var= sevcostburden,
-  row_fmt= sevcostburden.,
-  weight= hhwt, 
-  universe= Hispanic Renters,
-  title= "Table 15. Severe Cost Burden for Hispanic Renters" );
-
-run;
-
-ods html file="D:\DCData\Libraries\Equity\Prog\Table 16. Severe Cost Burden for Black Renters.xls" style=Minimal;
-
-%Count_table2( 
-  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and raceb=1),
-  row_var= sevcostburden,
-  row_fmt= sevcostburden.,
-  weight= hhwt, 
-  universe= Black Renters,
-  title= "Table 16. Severe Cost Burden for Black Renters" );
-
-run;
-
-ods html file="D:\DCData\Libraries\Equity\Prog\Table 17. Severe Cost Burden for Asian, Pacific Islander Renters.xls" style=Minimal;
+/*ods html file="D:\DCData\Libraries\Equity\Prog\Table 17. Severe Cost Burden for Asian, Pacific Islander Renters.xls" style=Minimal;
 
 %Count_table2( 
   where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and racea=1),
@@ -288,93 +398,9 @@ ods html file="D:\DCData\Libraries\Equity\Prog\Table 21. Severe Cost Burden for 
   universe= Renters of American Indian/Alaskan Native Descent or Other or and Two or More Races,
   title= "Table 21. Severe Cost Burden for Renters of American Indian, Alaskan Native Descent, Other, Two or More Races" );
 
-run;
+run;*/
 
-ods html file="D:\DCData\Libraries\Equity\Prog\Table 22. Severe Cost Burden for Renters of Asian, Pacific Islander, American Indian, Alaskan Native Descent, Other, Two or More Races.xls" style=Minimal;
-
-%Count_table2( 
-  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and raceaiom=1),
-  row_var= sevcostburden,
-  row_fmt= sevcostburden.,
-  weight= hhwt, 
-  universe= Renters of Asian/Pacific Islander or American Indian/Alaskan Native Descent or Other or and Two or More Races,
-  title= "Table 22. Severe Cost Burden for Renters of Asian, Pacific Islander, American Indian, Alaskan Native Descent, Other, Two or More Races" );
-
-run;
-
-ods html file="D:\DCData\Libraries\Equity\Prog\Table 23. Severe Cost Burden for Renters Who are Foreign-Born.xls" style=Minimal;
-
-%Count_table2( 
-  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and foreign=1),
-  row_var= sevcostburden,
-  row_fmt= sevcostburden.,
-  weight= hhwt, 
-  universe= Renters Who are Foreign-Born,
-  title= "Table 23. Severe Cost Burden for Renters Who are Foreign-Born" );
-
-run;
-
-ods html file="D:\DCData\Libraries\Equity\Prog\Table 24. Share of Population Ages 25-64 that is Employed for All .xls" style=Minimal;
-
-%Count_table( 
-  where= %str(city=7230 and age25to64=1 ),
-  row_var= emp25to64,
-  row_fmt= emp25to64_f.,
-  weight = perwt,
-  universe= Individuals Ages 25 to 64,
-  title= "Table 24. Share of Population Ages 25-64 that is Employed for All " );
-
-run;
-
-ods html file="D:\DCData\Libraries\Equity\Prog\Table 25. Share of Population Ages 25-64 that is Employed for White-Non Hispanic .xls" style=Minimal;
-
-%Count_table( 
-  where= %str(city=7230 and age25to64=1 and racew=1),
-  row_var= emp25to64,
-  row_fmt= emp25to64_f.,
-  weight= perwt, 
-  universe= White-Non Hispanic Individuals Ages 25 to 64,
-  title= "Table 25. Share of Population Ages 25-64 that is Employed for White-Non Hispanic " );
-
-run;
-
-ods html file="D:\DCData\Libraries\Equity\Prog\Table 26. Share of Population Ages 25-64 that is Employed for Hispanic .xls" style=Minimal;
-
-%Count_table( 
-  where= %str(city=7230 and age25to64=1 and raceh=1),
-  row_var= emp25to64,
-  row_fmt= emp25to64_f.,
-  weight= perwt, 
-  universe= Hispanic Individuals Ages 25 to 64,
-  title= "Table 26. Share of Population Ages 25-64 that is Employed for Hispanic " );
-
-run;
-
-ods html file="D:\DCData\Libraries\Equity\Prog\Table 27. Share of Population Ages 25-64 that is Employed for Black .xls" style=Minimal;
-
-%Count_table( 
-  where= %str(city=7230 and age25to64=1 and raceb=1),
-  row_var= emp25to64,
-  row_fmt= emp25to64_f.,
-  weight= perwt, 
-  universe= Black Individuals Ages 25 to 64,
-  title= "Table 27. Share of Population Ages 25-64 that is Employed for Black " );
-
-run;
-
-ods html file="D:\DCData\Libraries\Equity\Prog\Table 28. Share of Population Ages 25-64 that is Employed for Asian, Pacific Islanders.xls" style=Minimal;
-
-%Count_table( 
-  where= %str(city=7230 and age25to64=1 and racea=1),
-  row_var= emp25to64,
-  row_fmt= emp25to64_f.,
-  weight= perwt, 
-  universe=Asian/Pacific Islander Individuals Ages 25 to 64,
-  title= "Table 28. Share of Population Ages 25-64 that is Employed for Asian, Pacific Islanders" );
-
-run;
-
-ods html file="D:\DCData\Libraries\Equity\Prog\Table 29. Share of Population Ages 25-64 that is Employed for American Indian, Alaskan Natives.xls" style=Minimal;
+/*ods html file="D:\DCData\Libraries\Equity\Prog\Table 29. Share of Population Ages 25-64 that is Employed for American Indian, Alaskan Natives.xls" style=Minimal;
 
 %Count_table( 
   where= %str(city=7230 and age25to64=1 and racei=1),
@@ -420,30 +446,4 @@ ods html file="D:\DCData\Libraries\Equity\Prog\Table 32. Share of Population Age
   universe=Individuals of American Indian/Alaskan Native Descent or Other or and Two or More Races Ages 25 to 64,
   title= "Table 32. Share of Population Ages 25-64 that is Employed for Individuals of American Indian, Alaskan Native Descent, Other, and Two or More Races" );
 
-run;
-
-ods html file="D:\DCData\Libraries\Equity\Prog\Table 33. Share of Population Ages 25-64 that is Employed for Individuals of Asian, Pacific Islander, American Indian, Alaskan Native Descent, Other, and Two or More Races.xls" style=Minimal;
-
-%Count_table( 
-  where= %str(city=7230 and age25to64=1 and raceaiom=1),
-  row_var= emp25to64,
-  row_fmt= emp25to64_f.,
-  weight= perwt, 
-  universe=Individuals of Asian/Pacific Islander or American Indian/Alaskan Native Descent or Other or Two or More Races Ages 25 to 64,
-  title= "Table 33. Share of Population Ages 25-64 that is Employed for Individuals of Asian, Pacific Islander, American Indian, Alaskan Native Descent, Other, and Two or More Races" );
-
-run;
-
-ods html file="D:\DCData\Libraries\Equity\Prog\Table 34. Share of Population Ages 25-64 that is Employed Who are Foreign-Born.xls" style=Minimal;
-
-%Count_table( 
-  where= %str(city=7230 and age25to64=1 and foreign=1),
-  row_var= emp25to64,
-  row_fmt= emp25to64_f.,
-  weight= perwt, 
-  universe= Individuals who are Foreign-Born Ages 25 to 64,
-  title= "Table 34. Share of Population Ages 25-64 that is Employed Who are Foreign-Born" );
-
-run;
-
-
+run;*/
