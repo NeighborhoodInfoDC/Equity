@@ -1,14 +1,29 @@
-/*MAIA - insert standard DC data header*/
-
-*Methodology for affordability adapted from Zhong Yi Tong paper 
+/**************************************************************************
+ Program:  Sales_Affordability.sas
+ Library:  Equity
+ Project:  NeighborhoodInfo DC
+ Author:   M. Woluchem	
+ Created:  8/12/16
+ Version:  SAS 9.2
+ Environment:  Windows with SAS/Connect
+ 
+ Description: *Methodology for affordability adapted from Zhong Yi Tong paper 
 http://content.knowledgeplex.org/kp2/cache/documents/22736.pdf
 Homeownership Affordability in Urban America: Past and Future;
 
-%dcdata_lib( realprop );
-%dcdata_lib( equity );
+ Modifications: 
+
+**************************************************************************/
+
+%include "L:\SAS\Inc\StdLocal.sas";
+
+
+** Define libraries **;
+%DCData_lib( realprop );
+%DCData_lib( equity );
 
 data create_flags;
-  set realpr_r.sales_master (where=(ui_proptype in ('10' '11') and /*add code for saledate [between 1/1/10 and 12/31/14]*/));
+  set realpr_r.sales_master (where=(ui_proptype in ('10' '11') and/*add code for saledate [between 1/1/10 and 12/31/14]*/));
   
   /*pull in effective interest rates - for example: 
   http://www.fhfa.gov/DataTools/Downloads/Documents/Historical-Summary-Tables/Table15_2015_by_State_and_Year.xls*/
