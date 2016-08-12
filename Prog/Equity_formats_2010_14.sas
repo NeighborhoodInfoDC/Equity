@@ -448,7 +448,7 @@ proc format;
 
 	value age25to64_f 
 	. = "Not 25 to 64"
-	1 = "Age: 25 to 64";
+	1 = "Age 25 to 64";
 
 	value employed
 	. = "Not Employed"
@@ -457,7 +457,7 @@ proc format;
 	value emp25to64_f 
 	0 = "Ages 25 to 64 and Unemployed"
 	1 = "Ages 25 to 64 and Employed"
-	. = "N/A";
+	. = "Ages 25 to 64 and Not in the Labor Force";
 
 	value sevcostburden
 	. = "Not Severely Cost Burdened"

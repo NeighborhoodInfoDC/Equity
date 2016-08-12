@@ -243,6 +243,8 @@ data Equity.Acs_tables (Label="iPUMS 2010-14 ACS for Racial Equity Profiles");
 
 %File_info( data= Equity.Acs_tables, contents=n );
 
+/*Quality Control*/
+
 proc freq data=equity.acs_tables;
 tables race*hispan*racew*raceh*racei*raceb*racea*raceo*racem*raceiom*raceaiom/list missing;
 run;
@@ -254,6 +256,17 @@ tables age25to64*employed*emp25to64/list missing;
 tables costburden*sevcostburden*nocostburden/list missing;
 run;
 
-proc freq data=equity.acs_tables (where=(costburden=. and sevcostburden=. and nocostburden=.));
-tables cost_burden/list missing;
+proc freq data=equity.acs_tables (where=(city=7230 and age25to64=1));
+tables empstat*age25to64*employed*emp25to64/list missing;
+weight perwt;
+run;
+
+proc freq data=equity.acs_tables(where=(city=7230 and 25<= age<=64));
+tables empstat*employed/list missing;
+weight perwt;
+run;
+
+proc freq data=equity.acs_tables (where=(city=7230 and empstat^=1 and empstat^=2));
+tables empstat*age/list missing;
+weight perwt;
 run;
