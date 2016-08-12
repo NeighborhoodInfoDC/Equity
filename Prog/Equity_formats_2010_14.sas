@@ -407,51 +407,51 @@ proc format;
 	3 = "At Least One Member with a Full-Time Job";
 
 	value racew 
-	0 = "N/A"
-	1 = "Race: White-Non Hispanic";
+	. = "Not White-Non Hispanic"
+	1 = "White-Non Hispanic";
 
 	value raceh 
-	0 = "N/A"
-	1 = "Race: Hispanic";
+	. = "Not Hispanic"
+	1 = "Hispanic";
 
 	value racei
-	0 = "N/A"
-	1 = "Race: American Indian/Alaskan Native";
+	. = "Not American Indian/Alaskan Native"
+	1 = "American Indian/Alaskan Native";
 
 	value raceb 
-	0 = "N/A"
-	1 = "Race: Black";
+	. = "Not Black"
+	1 = "Black";
 
 	value racea 
-	0 = "N/A"
-	1 = "Race: Asian/Pacific Islander";
+	. = "Not Asian/Pacific Islander"
+	1 = "Asian/Pacific Islander";
 
 	value raceo 
-	0 = "N/A"
-	1 = "Race: Other Race";
+	. = "Not 'Other' Race"
+	1 = "Other Race";
 
 	value racem 
-	0 = "N/A"
-	1 = "Race: Two or More Races";
+	. = "Not Two or More Races"
+	1 = "Two or More Races";
 
 	value raceiom 
-	0 = "N/A"
-	1 = "Race: American Indian/Alaskan Native, Other, and Two or More";
+	. = "Not American Indian/Alaskan Native, Other, and Two or More"
+	1 = "American Indian/Alaskan Native, Other, and Two or More";
 
 	value raceaiom 
-	0 = "N/A"
-	1 = "Race: Asian/Pacific Islander, American Indian/Alaskan Native, Other, and Two or More";
+	. = "Not Asian/Pacific Islander, American Indian/Alaskan Native, Other, and Two or More"
+	1 = "Asian/Pacific Islander, American Indian/Alaskan Native, Other, and Two or More";
 
 	value foreign 
-	0 = "N/A"
+	. = "Not Foreign Born"
 	1 = "Foreign Born";
 
 	value age25to64_f 
-	0 = "N/A"
+	. = "Not 25 to 64"
 	1 = "Age: 25 to 64";
 
 	value employed
-	0 = "N/A"
+	. = "Not Employed"
 	1 = "Employed";
 
 	value emp25to64_f 
@@ -460,16 +460,26 @@ proc format;
 	. = "N/A";
 
 	value sevcostburden
-	0 = "N/A"
+	. = "Not Severely Cost Burdened"
 	1 = "Severely Cost Burdened";
 
 	value costburden
-	0 = "N/A"
+	. = "Not Cost Burdened"
 	1 = "Cost Burdened";
 
 	value nocostburden 
-	0 = "N/A"
+	. = "Cost Burdened"
 	1 = "No Cost Burdened";
+
+	value ownfreeclear
+	. = "Not owners"
+	0 = "Do Not Own Free and Clear"
+	1 = "Own Free and Clear";
+
+	value ownmortgage
+	. = "Not Owners"
+	0 = "Not Owned with Mortgage"
+	1 = "Own With Mortgage";
 
 run;
 

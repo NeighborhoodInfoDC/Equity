@@ -33,16 +33,6 @@
 %include "D:\DCData\Libraries\Equity\Prog\Equity_formats_2010_14.sas";
 %include "D:\DCData\Libraries\Equity\Prog\Equity_macros_2010_14.sas";
 
-proc freq data=equity.acs_tables (where=(pernum=1 and GQ in (1,2) and ownershp=2));
-tables racew raceh raceb racea racei raceo racem raceiom raceiom2 raceaiom raceaiom2/list missing;
-weight perwt;
-run;
-
-
-proc freq data=equity.acs_tables (where=(city=7230));
-tables city*upuma/list missing ;
-tables city*puma/list missing;
-run;
 
 ***** Tables *****;
 
@@ -50,11 +40,11 @@ options nospool;
 
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 1. Total Number of Renters.xls" style=Minimal;
 
-%Count_table( 
+%Count_table2( 
   where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 ),
   row_var= ,
   row_fmt= ,
-  weight = perwt,
+  weight = hhwt,
   universe= Renters,
   title= "Table 1. Total Renters" );
 
@@ -62,11 +52,11 @@ run;
 
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 2. Cost Burden for All Renters.xls" style=Minimal;
 
-%Count_table( 
+%Count_table2( 
   where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 ),
   row_var= costburden,
   row_fmt= costburden.,
-  weight = perwt,
+  weight = hhwt,
   universe= Renters,
   title= "Table 2. Cost Burden for All Renters" );
 
@@ -74,11 +64,11 @@ run;
 
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 3. Cost Burden for White-Non Hispanic Renters.xls" style=Minimal;
 
-%Count_table( 
+%Count_table2( 
   where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and racew=1),
   row_var= costburden,
   row_fmt= costburden.,
-  weight= perwt, 
+  weight= hhwt, 
   universe= White-Non Hispanic Renters,
   title= "Table 3. Cost Burden for White-Non Hispanic Renters" );
 
@@ -86,11 +76,11 @@ run;
 
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 4. Cost Burden for Hispanic Renters.xls" style=Minimal;
 
-%Count_table( 
+%Count_table2( 
   where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and raceh=1),
   row_var= costburden,
   row_fmt= costburden.,
-  weight= perwt, 
+  weight= hhwt, 
   universe= Hispanic Renters,
   title= "Table 4. Cost Burden for Hispanic Renters" );
 
@@ -98,11 +88,11 @@ run;
 
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 5. Cost Burden for Black Renters.xls" style=Minimal;
 
-%Count_table( 
+%Count_table2( 
   where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and raceb=1),
   row_var= costburden,
   row_fmt= costburden.,
-  weight= perwt, 
+  weight= hhwt, 
   universe= Black Renters,
   title= "Table 5. Cost Burden for Black Renters" );
 
@@ -110,11 +100,11 @@ run;
 
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 6. Cost Burden for Asian, Pacific Islander Renters.xls" style=Minimal;
 
-%Count_table( 
+%Count_table2( 
   where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and racea=1),
   row_var= costburden,
   row_fmt= costburden.,
-  weight= perwt, 
+  weight= hhwt, 
   universe= Asian/Pacific Islander Renters,
   title= "Table 6. Cost Burden for Asian, Pacific Islander Renters" );
 
@@ -122,11 +112,11 @@ run;
 
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 7. Cost Burden for American Indian, Alaskan Native Renters.xls" style=Minimal;
 
-%Count_table( 
+%Count_table2( 
   where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and racei=1),
   row_var= costburden,
   row_fmt= costburden.,
-  weight= perwt, 
+  weight= hhwt, 
   universe= American Indian/Alaskan Native Renters,
   title= "Table 7. Cost Burden for American Indian, Alaskan Native Renters" );
 
@@ -134,11 +124,11 @@ run;
 
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 8. Cost Burden for Other Race Renters.xls" style=Minimal;
 
-%Count_table( 
+%Count_table2( 
   where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and raceo=1),
   row_var= costburden,
   row_fmt= costburden.,
-  weight= perwt, 
+  weight= hhwt, 
   universe= Other Race Renters,
   title= "Table 8. Cost Burden for Other Race Renters" );
 
@@ -146,11 +136,11 @@ run;
 
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 9. Cost Burden for Renters of Two of More Races.xls" style=Minimal;
 
-%Count_table( 
+%Count_table2( 
   where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and racem=1),
   row_var= costburden,
   row_fmt= costburden.,
-  weight= perwt, 
+  weight= hhwt, 
   universe= Renters of Two of More Races,
   title= "Table 9. Cost Burden for Renters of Two of More Races" );
 
@@ -158,11 +148,11 @@ run;
 
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 10. Cost Burden for Renters of American Indian, Alaskan Native Descent, Other, Two or More Races.xls" style=Minimal;
 
-%Count_table( 
+%Count_table2( 
   where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and raceiom=1),
   row_var= costburden,
   row_fmt= costburden.,
-  weight= perwt, 
+  weight= hhwt, 
   universe= Renters of American Indian/Alaskan Native Descent or Other or Two or More Races,
   title= "Table 10. Cost Burden for Renters of American Indian, Alaskan Native Descent, Other, Two or More Races" );
 
@@ -170,11 +160,11 @@ run;
 
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 11. Cost Burden for Renters of Asian, Pacific Islander, American Indian, Alaskan Native Descent, Other, Two or More Races.xls" style=Minimal;
 
-%Count_table( 
+%Count_table2( 
   where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and raceaiom=1),
   row_var= costburden,
   row_fmt= costburden.,
-  weight= perwt, 
+  weight= hhwt, 
   universe= Renters of Asian/Pacific Islander or American Indian/Alaskan Native Descent or Other or Two or More Races,
   title= "Table 11. Cost Burden for Renters of Asian, Pacific Islander, American Indian, Alaskan Native Descent, Other, Two or More Races" );
 
@@ -182,11 +172,11 @@ run;
 
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 12. Cost Burden for Renters Who are Foreign-Born.xls" style=Minimal;
 
-%Count_table( 
+%Count_table2( 
   where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and foreign=1),
   row_var= costburden,
   row_fmt= costburden.,
-  weight= perwt, 
+  weight= hhwt, 
   universe= Renters Who are Foreign-Born,
   title= "Table 12. Cost Burden for Renters Who are Foreign-Born" );
 
@@ -194,11 +184,11 @@ run;
 
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 13. Severe Cost Burden for All Renters.xls" style=Minimal;
 
-%Count_table( 
+%Count_table2( 
   where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 ),
   row_var= sevcostburden,
   row_fmt= sevcostburden.,
-  weight = perwt,
+  weight = hhwt,
   universe= Renters,
   title= "Table 13. Severe Cost Burden for All Renters" );
 
@@ -206,11 +196,11 @@ run;
 
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 14. Severe Cost Burden for White-Non Hispanic Renters.xls" style=Minimal;
 
-%Count_table( 
+%Count_table2( 
   where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and racew=1),
   row_var= sevcostburden,
   row_fmt= sevcostburden.,
-  weight= perwt, 
+  weight= hhwt, 
   universe= White-Non Hispanic Renters,
   title= "Table 14. Severe Cost Burden for White-Non Hispanic Renters" );
 
@@ -218,11 +208,11 @@ run;
 
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 15. Severe Cost Burden for Hispanic Renters.xls" style=Minimal;
 
-%Count_table( 
+%Count_table2( 
   where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and raceh=1),
   row_var= sevcostburden,
   row_fmt= sevcostburden.,
-  weight= perwt, 
+  weight= hhwt, 
   universe= Hispanic Renters,
   title= "Table 15. Severe Cost Burden for Hispanic Renters" );
 
@@ -230,11 +220,11 @@ run;
 
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 16. Severe Cost Burden for Black Renters.xls" style=Minimal;
 
-%Count_table( 
+%Count_table2( 
   where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and raceb=1),
   row_var= sevcostburden,
   row_fmt= sevcostburden.,
-  weight= perwt, 
+  weight= hhwt, 
   universe= Black Renters,
   title= "Table 16. Severe Cost Burden for Black Renters" );
 
@@ -242,11 +232,11 @@ run;
 
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 17. Severe Cost Burden for Asian, Pacific Islander Renters.xls" style=Minimal;
 
-%Count_table( 
+%Count_table2( 
   where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and racea=1),
   row_var= sevcostburden,
   row_fmt= sevcostburden.,
-  weight= perwt, 
+  weight= hhwt, 
   universe= Asian/Pacific Islander Renters,
   title= "Table 17. Severe Cost Burden for Asian, Pacific Islander Renters" );
 
@@ -254,11 +244,11 @@ run;
 
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 18. Severe Cost Burden for American Indian, Alaskan Native Renters.xls" style=Minimal;
 
-%Count_table( 
+%Count_table2( 
   where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and racei=1),
   row_var= sevcostburden,
   row_fmt= sevcostburden.,
-  weight= perwt, 
+  weight= hhwt, 
   universe= American Indian/Alaskan Native Renters,
   title= "Table 18. Severe Cost Burden for American Indian, Alaskan Native Renters" );
 
@@ -266,11 +256,11 @@ run;
 
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 19. Severe Cost Burden for Other Race Renters.xls" style=Minimal;
 
-%Count_table( 
+%Count_table2( 
   where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and raceo=1),
   row_var= sevcostburden,
   row_fmt= sevcostburden.,
-  weight= perwt, 
+  weight= hhwt, 
   universe= Other Race Renters,
   title= "Table 19. Severe Cost Burden for Other Race Renters" );
 
@@ -278,11 +268,11 @@ run;
 
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 20. Severe Cost Burden for Renters of Two of More Races.xls" style=Minimal;
 
-%Count_table( 
+%Count_table2( 
   where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and racem=1),
   row_var= sevcostburden,
   row_fmt= sevcostburden.,
-  weight= perwt, 
+  weight= hhwt, 
   universe= Renters of Two of More Races,
   title= "Table 20. Severe Cost Burden for Renters of Two of More Races" );
 
@@ -290,11 +280,11 @@ run;
 
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 21. Severe Cost Burden for Renters of American Indian, Alaskan Native Descent, Other, Two or More Races.xls" style=Minimal;
 
-%Count_table( 
+%Count_table2( 
   where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and raceiom=1),
   row_var= sevcostburden,
   row_fmt= sevcostburden.,
-  weight= perwt, 
+  weight= hhwt, 
   universe= Renters of American Indian/Alaskan Native Descent or Other or and Two or More Races,
   title= "Table 21. Severe Cost Burden for Renters of American Indian, Alaskan Native Descent, Other, Two or More Races" );
 
@@ -302,11 +292,11 @@ run;
 
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 22. Severe Cost Burden for Renters of Asian, Pacific Islander, American Indian, Alaskan Native Descent, Other, Two or More Races.xls" style=Minimal;
 
-%Count_table( 
+%Count_table2( 
   where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and raceaiom=1),
   row_var= sevcostburden,
   row_fmt= sevcostburden.,
-  weight= perwt, 
+  weight= hhwt, 
   universe= Renters of Asian/Pacific Islander or American Indian/Alaskan Native Descent or Other or and Two or More Races,
   title= "Table 22. Severe Cost Burden for Renters of Asian, Pacific Islander, American Indian, Alaskan Native Descent, Other, Two or More Races" );
 
@@ -314,11 +304,11 @@ run;
 
 ods html file="D:\DCData\Libraries\Equity\Prog\Table 23. Severe Cost Burden for Renters Who are Foreign-Born.xls" style=Minimal;
 
-%Count_table( 
+%Count_table2( 
   where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and foreign=1),
   row_var= sevcostburden,
   row_fmt= sevcostburden.,
-  weight= perwt, 
+  weight= hhwt, 
   universe= Renters Who are Foreign-Born,
   title= "Table 23. Severe Cost Burden for Renters Who are Foreign-Born" );
 

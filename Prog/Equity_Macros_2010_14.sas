@@ -42,7 +42,7 @@
       all='Total' &row_var
       ,
       /** Columns (do not change) **/
-      total = "&universe" * sum=' ' * ( puma=' ' all='Washington Region' )
+      total = "&universe" * sum=' ' * ( puma=' ' all='District of Columbia' )
       / condense
     ;
     table 
@@ -53,7 +53,7 @@
       all='Total' &row_var
       ,
       /** Columns (do not change) **/
-      total = "% &universe" * colpctsum=' ' * f=comma10.1 * ( puma=' ' all='Washington Region' )
+      total = "% &universe" * colpctsum=' ' * f=comma10.1 * ( puma=' ' all='District of Columbia' )
       / condense
     ;
     format puma puma. &row_var &row_fmt;
@@ -70,16 +70,16 @@
 
 ** Count table for households**;
 
-%macro Count_table2( where=, row_var=, row_fmt=, title=, weight=perwt, universe=Persons, out= );
+%macro Count_table2( where=, row_var=, row_fmt=, title=, weight=hhwt, universe=Households, out= );
 
   %fdate()
 
-  proc tabulate data=Equity.Acs_tables format=comma10.0 noseps missing  out=&out.;
+  proc tabulate data=Equity.Acs_tables format=comma10.0 noseps missing  out=test;
     %if "&where. "~= "" %then %do;
       where &where;
     %end;
     class &row_var;
-    class upuma sex /order=data preloadfmt;
+    class puma /order=data preloadfmt;
     var total;
     weight &weight;
     table 
@@ -90,7 +90,7 @@
       all='Total' &row_var
       ,
       /** Columns (do not change) **/
-      total = "&universe" * sum=' ' * ( upuma=' ' all='Washington Region' )
+      total = "&universe" * sum=' ' * ( puma=' ' all='District of Columbia' )
       / condense
     ;
     table 
@@ -101,10 +101,10 @@
       all='Total' &row_var
       ,
       /** Columns (do not change) **/
-      total = "% &universe" * colpctsum=' ' * f=comma10.1 * ( upuma=' ' all='Washington Region' )
+      total = "% &universe" * colpctsum=' ' * f=comma10.1 * ( puma=' ' all='District of Columbia' )
       / condense
     ;
-    format upuma $pumctyb. sex sex. &row_var &row_fmt;
+    format puma puma. &row_var &row_fmt;
     title2 &title;
     title3 "Universe: &universe";
     footnote1 "Source: ACS IPUMS data, 2010-14 (&fdate)";
