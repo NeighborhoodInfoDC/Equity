@@ -90,8 +90,13 @@ proc sort data = pre_tables; by uniquehh; run;
 
 proc sort data = acs_nchild; by uniquehh; run;
 
+proc freq data=pre_tables;
+tables uniquehh/list missing out=count_hh;
+run;
+
+
 data pre_acs_tables;
-	merge pre_tables (drop = ischild iselderly isdis elddis isft ispt isadult ispoor) acs_nchild;
+	merge pre_tables (drop = ischild iselderly isdis elddis isft ispt isadult ispoor) acs_nchild count_hh (drop = percent);
 	by uniquehh;
 	if haveownchild > 0 then areownchild = 1;
 	else areownchild = 0;
@@ -124,6 +129,7 @@ data pre_acs_tables;
 	singleadult = "Indicator if the Houshold has only One Adult"
 	ispoor = "Total Number of People Living in Poverty (200% or below) in the Household"
 	haspoor = "At Least One Person in the Household Living in Poverty (200% or below)"
+	count = "Number of Individuals per Household"
 	;
 run;
 
@@ -218,6 +224,29 @@ data Equity.Acs_tables (Label="iPUMS 2010-14 ACS for Racial Equity Profiles");
  	if 0 < cost_burden < 30 then nocostburden=1;
 		else nocostburden=.;
 
+%macro setlimits;
+
+	%let counts = 1 2 3 4 5 6 7 8;
+	%let limitone = 22500 25700 28900 32100 34700 37250 39850 42400;
+	%let limittwo = 37450 42800 48150 53500 57800 62100 66350 70650;
+	%let limitthree = 47950 54800 61650 68500 74000 79500 84950 90450;
+		%do i = 1 %to 8;
+		%do j = 1 %to 8;
+			%let limit1=%scan(&limitone., &j., " ");
+			%let limit2=%scan(&limittwo., &j., " ");
+			%let limit3=%scan(&limitthree., &j., " ");
+			%let count=%scan(&counts., &i., " ");
+				if count = &count. then do;
+					if (rent*12) < .30*&limit1. then aff_unit=1;**Aff to ELI**;
+					if .30*&limit1.<=(rent*12)<.30*&limit2. then aff_unit=2;**Aff to VLI**;
+					if .30*&limit2.<=(rent*12)<.30*&limit3. then aff_unit=3;**Aff to LI**;
+					if .30*&limit3.<=(rent*12) then aff_unit=4;**Aff at 80 pct and above**;
+					end;
+		%end;
+		%end;
+%mend;
+%setlimits;
+
 	label 	racew = "Race: White-Non Hispanic"
 			raceh = "Race: Hispanic"
 			racei = "Race: American Indian/Alaskan Native"
@@ -237,13 +266,19 @@ data Equity.Acs_tables (Label="iPUMS 2010-14 ACS for Racial Equity Profiles");
 			nocostburden = "No Cost Burdened"
 			housing_costs = "Housing Costs"
 			ownmortgage = "Owned with mortgage or loan"
-			ownfreeclear="Owned free and clear";
+			ownfreeclear="Owned free and clear"
+			aff_unit="Affordability Level";
 
   run; 
 
+
+proc freq data=equity.acs_tables (where=(city=7230));
+tables count*rent*aff_unit/list missing;
+run;
 %File_info( data= Equity.Acs_tables, contents=n );
 
 /*Quality Control*/
+
 
 proc freq data=equity.acs_tables;
 tables race*hispan*racew*raceh*racei*raceb*racea*raceo*racem*raceiom*raceaiom/list missing;
@@ -275,3 +310,13 @@ proc freq data=equity.acs_tables (where=(city=7230 and ownershp=1));
 tables mortgage/list missing;
 tables mortgage*ownfreeclear*ownmortgage/list missing;
 run;
+
+proc freq data=equity.acs_tables (where=(city=7230 and ownershp=2 and rent^=0000));
+tables rent/list missing;
+tables hud_inc/list missing;
+run;
+
+proc freq data=equity.acs_tables (where=(city=7230));
+tables count/list missing;
+run;
+
