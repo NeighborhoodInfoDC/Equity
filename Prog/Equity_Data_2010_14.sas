@@ -269,14 +269,13 @@ data Equity.Acs_tables (Label="iPUMS 2010-14 ACS for Racial Equity Profiles");
 
   run; 
 
-
-proc freq data=test (where=(count=4 and city=7230));
-tables count*rent*aff_unit/list missing;
-run;
 %File_info( data= Equity.Acs_tables, contents=n );
 
 /*Quality Control*/
 
+proc freq data=equity.acs_tables (where=(aff_unit=. and raceB=1 and city=7230));
+tables aff_unit*rent*count/list missing;
+run;
 
 proc freq data=equity.acs_tables;
 tables race*hispan*racew*raceh*racei*raceb*racea*raceo*racem*raceiom*raceaiom/list missing;

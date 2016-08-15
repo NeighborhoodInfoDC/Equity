@@ -481,6 +481,13 @@ proc format;
 	0 = "Own Free and Clear"
 	1 = "Own With Mortgage";
 
+	value aff_unit
+	. = "Household is larger than 8 people"
+	1 = "Unit is Affordable at ELI (Below 30% of Income Limit)"
+	2 = "Unit is Affordable at VLI (Between 30% and 49.9% of Income Limit)"
+	3 = "Unit is Affordable at LI (Between 50% and 79.9% of Income Limit)"
+	4 = "Unit is Affordable at 80 percent AMI and above";
+
 run;
 
 

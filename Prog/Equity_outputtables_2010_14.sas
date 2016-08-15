@@ -351,6 +351,78 @@ ods html file="D:\DCData\Libraries\Equity\Prog\Table 26. Mortgage Status for Hom
 
 run;
 
+ods html file="D:\DCData\Libraries\Equity\Prog\Table 27. Housing Affordability for All Renters.xls" style=Minimal;
+
+%Count_table2( 
+  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 ),
+  row_var= aff_unit,
+  row_fmt= aff_unit.,
+  weight = hhwt,
+  universe= Renters,
+  title= "Table 27. Housing Affordability for All Renters" );
+
+run;
+
+ods html file="D:\DCData\Libraries\Equity\Prog\Table 28. Housing Affordability for White-Non Hispanic Renters.xls" style=Minimal;
+
+%Count_table2( 
+  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and racew=1),
+  row_var= aff_unit,
+  row_fmt= aff_unit.,
+  weight= hhwt, 
+  universe= White-Non Hispanic Renters,
+  title= "Table 28. Housing Affordability for White-Non Hispanic Renters" );
+
+run;
+
+ods html file="D:\DCData\Libraries\Equity\Prog\Table 29. Housing Affordability for Hispanic Renters.xls" style=Minimal;
+
+%Count_table2( 
+  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and raceh=1),
+  row_var= aff_unit,
+  row_fmt= aff_unit.,
+  weight= hhwt, 
+  universe= Hispanic Renters,
+  title= "Table 29. Housing Affordability for Hispanic Renters" );
+
+run;
+
+ods html file="D:\DCData\Libraries\Equity\Prog\Table 30. Housing Affordability for Black Renters.xls" style=Minimal;
+
+%Count_table2( 
+  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and raceb=1),
+  row_var= aff_unit,
+  row_fmt= aff_unit.,
+  weight= hhwt, 
+  universe= Black Renters,
+  title= "Table 30. Housing Affordability for Black Renters" );
+
+run;
+
+ods html file="D:\DCData\Libraries\Equity\Prog\Table 31. Housing Affordability for Renters of Asian, Pacific Islander, American Indian, Alaskan Native Descent, Other, Two or More Races.xls" style=Minimal;
+
+%Count_table2( 
+  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and raceaiom=1),
+  row_var= aff_unit,
+  row_fmt= aff_unit.,
+  weight= hhwt, 
+  universe= Renters of Asian/Pacific Islander or American Indian/Alaskan Native Descent or Other or Two or More Races,
+  title= "Table 31. Housing Affordability for Renters of Asian, Pacific Islander, American Indian, Alaskan Native Descent, Other, Two or More Races" );
+
+run;
+
+ods html file="D:\DCData\Libraries\Equity\Prog\Table 32. Housing Affordability for Renters Who are Foreign-Born.xls" style=Minimal;
+
+%Count_table2( 
+  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and foreign=1),
+  row_var= aff_unit,
+  row_fmt= aff_unit.,
+  weight= hhwt, 
+  universe= Renters Who are Foreign-Born,
+  title= "Table 32. Housing Affordability for Renters Who are Foreign-Born" );
+
+run;
+
 /*ods html file="D:\DCData\Libraries\Equity\Prog\Table 6. Cost Burden for Asian, Pacific Islander Renters.xls" style=Minimal;
 
 %Count_table2( 
