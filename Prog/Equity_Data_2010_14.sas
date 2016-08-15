@@ -245,6 +245,13 @@ data Equity.Acs_tables (Label="iPUMS 2010-14 ACS for Racial Equity Profiles");
 %mend;
 %setlimits;
 
+	if count >8 then do;
+		if (rent*12) < .30*42400 then aff_unit=1;**Aff to ELI**;
+		if .30*42400<=(rent*12)<.30*70650 then aff_unit=2;**Aff to VLI**;
+		if .30*70650<=(rent*12)<.30*90450 then aff_unit=3;**Aff to LI**;
+		if .30*90450<=(rent*12) then aff_unit=4;**Aff at 80 pct and above**;
+		end;
+
 	label 	racew = "Race: White-Non Hispanic"
 			raceh = "Race: Hispanic"
 			racei = "Race: American Indian/Alaskan Native"
