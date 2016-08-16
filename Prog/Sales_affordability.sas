@@ -23,7 +23,7 @@ Homeownership Affordability in Urban America: Past and Future;
 %DCData_lib( equity );
 
 data create_flags;
-  set realpr_r.sales_master (where=(ui_proptype in ('10' '11') and/*add code for saledate [between 1/1/10 and 12/31/14]*/));
+  set realpr_r.sales_master (where=(ui_proptype in ('10' '11') and '01/01/2010'd <=saledate<= '12/31/14'd))/*add code for saledate [between 1/1/10 and 12/31/14]*/));
   
   /*pull in effective interest rates - for example: 
   http://www.fhfa.gov/DataTools/Downloads/Documents/Historical-Summary-Tables/Table15_2015_by_State_and_Year.xls*/
