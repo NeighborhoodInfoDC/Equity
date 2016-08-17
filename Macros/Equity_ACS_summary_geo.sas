@@ -32,23 +32,25 @@
 
     %let count_vars = 
            Unwtd: TotPop: PopAlone:
-           PopWithRace: PopBlack: PopWhite: PopHisp: PopAsian: PopOther: PopMulti: 
-           PopEmployed:
-           NumHshlds: NumOccupied: NumOwner: NumRenter: NumVacant: Agg: Med:
-		   NumFamilies_&_years.
+           PopWithRace: PopBlack: PopWhite: PopHisp: PopAsian: PopOther: PopMulti: PopEmployed: 
+		   NumHshldPhone_: NumHshldCar_: NumOccupied: NumOwner: NumRenter: NumVacant: Med:
+		   AggIncome: AggHshldIncome:
 
-		   PopUnder5Years_&_years. PopUnder18Years_&_years. 
-		   Pop18_34Years_&_years. Pop35_64Years_&_years. 
-		   Pop65andOverYears_&_years. 
+		   NumFamilies_: NumHshlds_:
 
-		   Pop25andOverYears_&_years. Pop25andOverWoutHS_&_years. Pop25andOverWHS_&_years. 
-		   Pop25andOverWSC_&_years. Pop25andOverWCollege_&_years.
+		   PopUnder5Years_: PopUnder18Years_:
+		   Pop18_34Years_: Pop35_64Years_:
+		   Pop65andOverYears_:
 
-		   FamIncome_&_years. FamIncomeLT75k_&_years. FamIncomeGT200k_&_years.
+		   Pop25andOverYears_: Pop25andOverWoutHS_: Pop25andOverWHS_:
+		   Pop25andOverWSC_: Pop25andOverWCollege_:
+
+		   FamIncomeLT75k_: FamIncomeGT200k_:
 		   ;
            
     %let moe_vars =
-           mTotPop_&_years. mPopUnder18Years_&_years. mPop18_34Years_&_years.
+           mTotPop_&_years. mPopUnder5Years_&_years. 
+		   mPopUnder18Years_&_years. mPop18_34Years_&_years.
 		   mPop35_64Years_&_years. mPop65andOverYears_&_years.
 		   mPop25andOverYears_&_years.
 
@@ -101,7 +103,7 @@
 
 		   mAggFamilyIncome_&_years. 
 
-		   mFamIncome_&_years. mFamIncomeLT75k_&_years. mFamIncomeMT200k_&_years.
+		   mFamIncomeLT75k_&_years. mFamIncomeGT200k_&_years.
 
 		   mMedFamIncm_&_years. mMedFamIncmB_&_years.
 		   mMedFamIncmW_&_years. mMedFamIncmH_&_years.
@@ -112,6 +114,11 @@
 		   mAggIncomeW_&_years. mAggIncomeH_&_years.
 		   mAggIncomeA_&_years. mAggIncomeIOM_&_years.
 		   mAggIncomeAIOM_&_years.
+
+		   mAggHshldIncome_&_years. mAggHshldIncomeB_&_years.
+		   mAggHshldIncomeW_&_years. mAggHshldIncomeH_&_years.
+		   mAggHshldIncomeA_&_years. mAggHshldIncomeIOM_&_years.
+		   mAggHshldIncomeAIOM_&_years.
 
 		   mNumOccupiedHsgUnits_&_years. mNumOccupiedHsgUnitsB_&_years.
 		   mNumOccupiedHsgUnitsW_&_years. mNumOccupiedHsgUnitsH_&_years.
@@ -140,7 +147,17 @@
            Persons: Children: Elderly: Num: Agg: Fam: Med:;
            
     %let moe_vars =
-           mTotPop_&_years. mNumHshlds_&_years. mNumFamilies_&_years.
+           mTotPop_&_years. 
+
+		   mNumHshlds_&_years. mNumHshldsB_&_years.
+		   mNumHshldsW_&_years. mNumHshldsH_&_years.
+		   mNumHshldsA_&_years. mNumHshldsIOM_&_years.
+		   mNumHshldsAIOM_&_years.
+
+		   mNumFamilies_&_years. mNumFamiliesB_&_years.
+		   mNumFamiliesW_&_years. mNumFamiliesH_&_years.
+		   mNumFamiliesA_&_years. mNumFamiliesIOM_&_years.
+		   mNumFamiliesAIOM_&_years.
 
 		   mPopUnder5Years_&_years. mPop5andOverYears_&_years. 
 
@@ -216,7 +233,10 @@
 		   mPopInCivLaborForceA_&_years. mPopInCivLaborForceIOM_&_years.
 		   mPopInCivLaborForceAIOM_&_years.
 
-           mPop16andOverEmployed_&_years. 
+           mPop16andOverEmployed_&_years. mPop16andOverEmployedB_&_years.
+		   mPop16andOverEmployedW_&_years. mPop16andOverEmployedH_&_years.
+		   mPop16andOverEmployedA_&_years. mPop16andOverEmployIOM_&_years.
+		   mPop16andOverEmployAIOM_&_years.
 
 		   mPop16_64Employed_&_years. mPop16_64EmployedB_&_years.
 		   mPop16_64EmployedW_&_years. mPop16_64EmployedH_&_years.
@@ -319,11 +339,6 @@
 
 		   mAggFamilyIncome_&_years. 
 
-		   mFamIncome_&_years. mFamIncomeB_&_years. 
-		   mFamIncomeW_&_years. mFamIncomeH_&_years.
-		   mFamIncomeA_&_years. mFamIncomeIOM_&_years.
-		   mFamIncomeAIOM_&_years.
-
 		   mFamIncomeLT75k_&_years. mFamIncomeLT75kB_&_years.
 		   mFamIncomeLT75kW_&_years. mFamIncomeLT75kH_&_years.
 		   mFamIncomeLT75kA_&_years. mFamIncomeLT75kIOM_&_years.
@@ -343,6 +358,11 @@
 		   mAggIncomeW_&_years. mAggIncomeH_&_years.
 		   mAggIncomeA_&_years. mAggIncomeIOM_&_years.
 		   mAggIncomeAIOM_&_years.
+
+		   mAggHshldIncome_&_years. mAggHshldIncomeB_&_years.
+		   mAggHshldIncomeW_&_years. mAggHshldIncomeH_&_years.
+		   mAggHshldIncomeA_&_years. mAggHshldIncomeIOM_&_years.
+		   mAggHshldIncomeAIOM_&_years.
 
 		   mNumOccupiedHsgUnits_&_years. mNumOccupiedHsgUnitsB_&_years.
 		   mNumOccupiedHsgUnitsW_&_years. mNumOccupiedHsgUnitsH_&_years.
