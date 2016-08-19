@@ -10,15 +10,17 @@
  Description:  Create all standard summary files from ACS 5-year data.
  
  Modifications:
+	7/29/2016: Changed DCData_lib to Equity; renamed ACS_summary_all macro to "Equity_ACS_summary_all"
 **************************************************************************/
 
 %include "L:\SAS\Inc\StdLocal.sas";
 
 ** Define libraries **;
 %DCData_lib( ACS )
+%DCData_lib( Equity )
 
 
-%ACS_summary_all( 
+%Equity_ACS_summary_all( 
 
   /** State abbreviation. Ex: DC **/
   state_ab = DC,
