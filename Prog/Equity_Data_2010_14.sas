@@ -236,20 +236,20 @@ data Equity.Acs_tables (Label="iPUMS 2010-14 ACS for Racial Equity Profiles");
 			%let limit3=%scan(&limitthree., &i., " ");
 			%let count=%scan(&counts., &i., " ");
 				if count = &count. then do;
-					if (rent*12) < .30*&limit1. then aff_unit=1;**Aff to ELI**;
-					if .30*&limit1.<=(rent*12)<.30*&limit2. then aff_unit=2;**Aff to VLI**;
-					if .30*&limit2.<=(rent*12)<.30*&limit3. then aff_unit=3;**Aff to LI**;
-					if .30*&limit3.<=(rent*12) then aff_unit=4;**Aff at 80 pct and above**;
+					if (rentgrs*12) < .30*&limit1. then aff_unit=1;**Aff to ELI**;
+					if .30*&limit1.<=(rentgrs*12)<.30*&limit2. then aff_unit=2;**Aff to VLI**;
+					if .30*&limit2.<=(rentgrs*12)<.30*&limit3. then aff_unit=3;**Aff to LI**;
+					if .30*&limit3.<=(rentgrs*12) then aff_unit=4;**Aff at 80 pct and above**;
 					end;
 		%end;
 %mend;
 %setlimits;
 
 	if count >8 then do;
-		if (rent*12) < .30*42400 then aff_unit=1;**Aff to ELI**;
-		if .30*42400<=(rent*12)<.30*70650 then aff_unit=2;**Aff to VLI**;
-		if .30*70650<=(rent*12)<.30*90450 then aff_unit=3;**Aff to LI**;
-		if .30*90450<=(rent*12) then aff_unit=4;**Aff at 80 pct and above**;
+		if (rentgrs*12) < .30*42400 then aff_unit=1;**Aff to ELI**;
+		if .30*42400<=(rentgrs*12)<.30*70650 then aff_unit=2;**Aff to VLI**;
+		if .30*70650<=(rentgrs*12)<.30*90450 then aff_unit=3;**Aff to LI**;
+		if .30*90450<=(rentgrs*12) then aff_unit=4;**Aff at 80 pct and above**;
 		end;
 
 	label 	racew = "Race: White-Non Hispanic"
