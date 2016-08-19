@@ -80,7 +80,7 @@
     NumHshlds_&_years. = B11001e1;
 
     NumFamilies_&_years. = B11003e1;
-
+	
     PopUnder5Years_&_years. = sum( B01001e3, B01001e27 );
 
 	PopUnder18Years_&_years. = 
@@ -146,9 +146,22 @@
 
 	%if %upcase( &source_geo ) = TR00 or %upcase( &source_geo ) = TR10 %then %do;
 
+	NumFamiliesB_&_years. = B19101Be1;
+	NumFamiliesW_&_years. = B19101He1;
+	NumFamiliesH_&_years. = B19101Ie1;
+	NumFamiliesA_&_years. = sum(B19101De1, B19101Ee1 );
+	NumFamiliesIOM_&_years. = sum(B19101Ce1, B19101Fe1, B19101Ge1 );
+	NumFamiliesAIOM_&_years. = sum(B19101Ce1, B19101De1, B19101Ee1, B19101Fe1, B19101Ge1 );
+
+	NumHshldsB_&_years. = B19001Be1;
+	NumHshldsW_&_years. = B19001He1;
+	NumHshldsH_&_years. = B19001Ie1;
+	NumHshldsA_&_years. = sum(B19001De1, B19001Ee1 );
+	NumHshldsIOM_&_years. = sum(B19001Ce1, B19001Fe1, B19001Ge1 );
+	NumHshldsAIOM_&_years. = sum(B19001Ce1, B19001De1, B19001Ee1, B19001Fe1, B19001Ge1 );
+
 	Pop5andOverYears_&_years. = B06007e1;
     
-
 	PopUnder18YearsB_&_years. =  
 		sum( B01001Be3, B01001Be4, B01001Be5, B01001Be6, 
 			 B01001Be18, B01001Be19, B01001Be20, B01001Be21 );
@@ -270,9 +283,21 @@
 			B01001Fe14, B01001Fe15, B01001Fe16, B01001Fe29, B01001Fe30, B01001Fe31, 
 			B01001Ge14, B01001Ge15, B01001Ge16, B01001Ge29, B01001Ge30, B01001Ge31 );
 
-    
-	mPop5andOverYears_&_years. = B06007m1; 
+    mNumFamiliesB_&_years. = B19101Bm1;
+	mNumFamiliesW_&_years. = B19101Hm1;
+	mNumFamiliesH_&_years. = B19101Im1;
+	mNumFamiliesA_&_years. = %moe_sum( var=B19101Dm1 B19101Em1);
+	mNumFamiliesIOM_&_years. = %moe_sum( var=B19101Cm1 B19101Fm1 B19101Gm1);
+	mNumFamiliesAIOM_&_years. = %moe_sum( var=B19101Cm1 B19101Dm1 B19101Em1 B19101Fm1 B19101Gm1);
 
+	mNumHshldsB_&_years. = B19001Bm1;
+	mNumHshldsW_&_years. = B19001Hm1;
+	mNumHshldsH_&_years. = B19001Im1;
+	mNumHshldsA_&_years. = %moe_sum( var=B19001Dm1 B19001Em1);
+	mNumHshldsIOM_&_years. = %moe_sum( var=B19001Cm1 B19001Fm1 B19001Gm1);
+	mNumHshldsAIOM_&_years. = %moe_sum( var=B19001Cm1 B19001Dm1 B19001Em1 B19001Fm1 B19001Gm1);
+
+	mPop5andOverYears_&_years. = B06007m1; 
 
 	mPopUnder18YearsB_&_years. = 
 		%moe_sum( var= B01001Bm3 B01001Bm4 B01001Bm5 B01001Bm6 
@@ -375,7 +400,6 @@
 					B01001Fm11 B01001Fm12 B01001Fm13 B01001Fm26 B01001Fm27 B01001Fm28 
 					B01001Gm11 B01001Gm12 B01001Gm13 B01001Gm26 B01001Gm27 B01001Gm28 );
 
-
 	mPop65andOverYearsB_&_years. = 
 		%moe_sum( var=B01001Bm14 B01001Bm15 B01001Bm16 B01001Bm29 B01001Bm30 B01001Bm31 );
 
@@ -402,6 +426,18 @@
 					 B01001Gm14 B01001Gm15 B01001Gm16 B01001Gm29 B01001Gm30 B01001Gm31 );
 
     label
+		NumFamiliesB_&_years. = "Family HHs, Black/African American, &_years_dash "
+		NumFamiliesW_&_years. = "Family HHs, Non-Hispanic White, &_years_dash "
+		NumFamiliesH_&_years. = "Family HHs, Hispanic/Latino, &_years_dash "
+		NumFamiliesA_&_years. = "Family HHs, Asian, Hawaiian, and other Pacific Islander, &_years_dash "
+		NumFamiliesIOM_&_years. = "Family HHs, American Indian/Alaska Native, other race, two or more races, &_years_dash "
+		NumFamiliesAIOM_&_years. = "Family HHs,All remaining groups other than Black, Non-Hispanic White, Hispanic, &_years_dash "
+		NumHshldsB_&_years. = "Total HHs, Black/African American, &_years_dash "
+		NumHshldsW_&_years. = "Total HHs, Non-Hispanic White, &_years_dash "
+		NumHshldsH_&_years. = "Total HHs, Hispanic/Latino, &_years_dash "
+		NumHshldsA_&_years. = "Total HHs, Asian, Hawaiian, and other Pacific Islander, &_years_dash "
+		NumHshldsIOM_&_years. = "Total HHs, American Indian/Alaska Native, other race, two or more races, &_years_dash "
+		NumHshldsAIOM_&_years. = "Total HHs,All remaining groups other than Black, Non-Hispanic White, Hispanic, &_years_dash "
 	    Pop5andOverYears_&_years. = "Persons 5 years old and over, &_years_dash"
 		PopUnder18YearsB_&_years. = "Persons under 18 years old, Black/African American, &_years_dash "
 		PopUnder18YearsW_&_years. = "Persons under 18 years old,Non-Hispanic White, &_years_dash "
@@ -427,6 +463,18 @@
 		Pop65andOverYearsA_&_years. = "Persons 65 years old and over, Asian, Hawaiian and other Pacific Islander, &_years_dash "
 		Pop65andOverYearsIOM_&_years. = "Persons 65 years old and over, American Indian/Alaska Native, other race, two or more races, &_years_dash "
 		Pop65andOverYearsAIOM_&_years. = "Persons 65 years old and over, All remaining groups other than Black, Non-Hispanic White, Hispanic, &_years_dash "
+		NumFamiliesB_&_years. = "Family HHs, Black/African American, MOE, &_years_dash "
+		mNumFamiliesW_&_years. = "Family HHs, Non-Hispanic White, MOE, &_years_dash "
+		mNumFamiliesH_&_years. = "Family HHs, Hispanic/Latino, MOE, &_years_dash "
+		mNumFamiliesA_&_years. = "Family HHs, Asian, Hawaiian, and other Pacific Islander, MOE, &_years_dash "
+		mNumFamiliesIOM_&_years. = "Family HHs, American Indian/Alaska Native, other race, two or more races, MOE, &_years_dash "
+		mNumFamiliesAIOM_&_years. = "Family HHs,All remaining groups other than Black, Non-Hispanic White, Hispanic, MOE, &_years_dash "
+		mNumHshldsB_&_years. = "Total HHs, Black/African American, MOE, &_years_dash "
+		mNumHshldsW_&_years. = "Total HHs, Non-Hispanic White, MOE, &_years_dash "
+		mNumHshldsH_&_years. = "Total HHs, Hispanic/Latino, MOE, &_years_dash "
+		mNumHshldsA_&_years. = "Total HHs, Asian, Hawaiian, and other Pacific Islander, MOE, &_years_dash "
+		mNumHshldsIOM_&_years. = "Total HHs, American Indian/Alaska Native, other race, two or more races, MOE, &_years_dash "
+		mNumHshldsAIOM_&_years. = "Total HHs,All remaining groups other than Black, Non-Hispanic White, Hispanic, MOE, &_years_dash "
 	    mPop5andOverYears_&_years. = "Persons 5 years old and over, &_years_dash "
 	  	mPopUnder18YearsB_&_years. = "Persons under 18 years old, Black/African American, MOE, &_years_dash "
 		mPopUnder18YearsW_&_years. = "Persons under 18 years old, Non-Hispanic Non-Hispanic White, MOE, &_years_dash "
@@ -443,7 +491,7 @@
 		mPop35_64YearsB_&_years. = "Persons 35-64 years old, Black/African American, MOE, &_years_dash "
 		mPop35_64YearsW_&_years. = "Persons 35-64 years old,Non-Hispanic White, MOE, &_years_dash "
 		mPop35_64YearsH_&_years. = "Persons 35-64 years old, Hispanic/Latino, MOE, &_years_dash "
-		mPop18_34YearsA_&_years. = "Persons 35-64 years old, Asian, Hawaiian and other Pacific Islander, MOE, &_years_dash "
+		mPop35_64YearsA_&_years. = "Persons 35-64 years old, Asian, Hawaiian and other Pacific Islander, MOE, &_years_dash "
 		mPop35_64YearsIOM_&_years. = "Persons 35-64 years old, American Indian/Alask Native, other race, two or more races, MOE, &_years_dash "
 		mPop35_64YearsAIOM_&_years. = "Persons 35-64 years old, All remaining groups other than Black, Non-Hispanic White, Hispanic, MOE, &_years_dash "
 		mPop65andOverYearsB_&_years. = "Persons 65 years old and over,Black/African American, MOE, &_years_dash "
@@ -980,6 +1028,15 @@
              B23001e91, B23001e98, B23001e105, B23001e112, B23001e119, B23001e126, 
              B23001e133, B23001e140, B23001e147, B23001e154 );
 
+		Pop16andOverEmployedB_&_years. = PopCivilianEmployedB_&_years. + sum(C23002Be5, C23002Be18);
+		Pop16andOverEmployedW_&_years. = PopCivilianEmployedW_&_years. + sum(C23002He5, C23002He18);
+		Pop16andOverEmployedH_&_years. = PopCivilianEmployedH_&_years. + sum(C23002Ie5, C23002Ie18);
+		Pop16andOverEmployedA_&_years. = PopCivilianEmployedA_&_years. + sum(C23002De5, C23002De18, C23002Ee5, C23002Ee18);
+		Pop16andOverEmployIOM_&_years. = PopCivilianEmployedIOM_&_years. + 
+			sum(C23002Ce5, C23002Ce18, C23002Fe5, C23002Fe18, C23002Ge5, C23002Ge18);
+		Pop16andOverEmployAIOM_&_years. = PopCivilianEmployedAIOM_&_years. + 
+			sum(C23002Ce5, C23002Ce18, C23002De5, C23002De18, C23002Ee5, C23002Ee18, C23002Fe5, C23002Fe18, C23002Ge5, C23002Ge18);
+
 	  Pop16_64Employed_&_years. = 
 			sum(B23001e5, B23001e7, B23001e12, B23001e14, B23001e19, B23001e21, B23001e26, B23001e28, 
 				B23001e33, B23001e35, B23001e40, B23001e42, B23001e47, B23001e49, B23001e54, B23001e56, 
@@ -1300,6 +1357,19 @@
              B23001m91 B23001m98 B23001m105 B23001m112 B23001m119 B23001m126 
              B23001m133 B23001m140 B23001m147 B23001m154 );
 
+		mPop16andOverEmployedB_&_years. = %moe_sum( var=mPopCivilianEmployedB_&_years. C23002Bm5 C23002Bm18 );
+		mPop16andOverEmployedW_&_years. =
+		        %moe_sum( var=mPopCivilianEmployedW_&_years. C23002Hm5 C23002Hm18 );
+		mPop16andOverEmployedH_&_years. =
+		        %moe_sum( var=mPopCivilianEmployedH_&_years. C23002Im5 C23002Im18 );
+		mPop16andOverEmployedA_&_years. = 
+				%moe_sum( var=mPopCivilianEmployedA_&_years. C23002Dm5 C23002Dm18 C23002Em5 C23002Em18 );
+		mPop16andOverEmployIOM_&_years. =
+		        %moe_sum( var=mPopCivilianEmployedIOM_&_years. C23002Cm5 C23002Cm18 C23002Fm5 C23002Fm18 C23002Gm5 C23002Gm18 );
+		mPop16andOverEmployAIOM_&_years. =
+		        %moe_sum( var=mPopCivilianEmployedAIOM_&_years. C23002Cm5 C23002Cm18 C23002Dm5 C23002Dm18 
+								C23002Em5 C23002Em18 C23002Fm5 C23002Fm18 C23002Gm5 C23002Gm18 );
+
 	  mPop16_64Employed_&_years. = 
 		%moe_sum( var=B23001m5 B23001m7 B23001m12 B23001m14 B23001m19 B23001m21 B23001m26 B23001m28 
 					B23001m33 B23001m35 B23001m40 B23001m42 B23001m47 B23001m49 B23001m54 B23001m56 
@@ -1577,6 +1647,12 @@
 			PopInCivLaborForceIOM_&_years. = "Persons 16+ years old in the civilian labor force, American Indian/Alaska Native, Some other race, Two or more races, &_years_dash "
 			PopInCivLaborForceAIOM_&_years. = "Persons 16+ years old in the civilian labor force, All remaining groups other than Black, Non-Hispanic White, Hispanic/Latino, &_years_dash "
         Pop16andOverEmployed_&_years. = "Persons 16+ years old who are employed (includes armed forces), &_years_dash "
+			Pop16andOverEmployedB_&_years. = "Persons 16+ years old who are employed (includes armed forces), Black/African American, &_years_dash "
+			Pop16andOverEmployedW_&_years. = "Persons 16+ years old who are employed (includes armed forces), Non-Hispanic White, &_years_dash "
+			Pop16andOverEmployedH_&_years. = "Persons 16+ years old who are employed (includes armed forces), Hispanic/Latino, &_years_dash "
+			Pop16andOverEmployedA_&_years. = "Persons 16+ years old who are employed (includes armed forces), Asian and Native Hawaiian and Other Pacific Islander, &_years_dash "
+			Pop16andOverEmployIOM_&_years. = "Persons 16+ years old who are employed (includes armed forces), American Indian/Alaska Native, Some other race, Two or more races, &_years_dash "
+			Pop16andOverEmployAIOM_&_years. = "Persons 16+ years old who are employed (includes armed forces), All remaining groups other than Black, Non-Hispanic White, Hispanic/Latino, &_years_dash "
 		Pop16_64Employed_&_years. = "Persons 16-64 years old who are employed (includes armed forces), &_years_dash "
 			Pop16_64EmployedB_&_years. = "Persons 16-64 years old who are employed (includes armed forces), Black/African American, &_years_dash "
 			Pop16_64EmployedW_&_years. = "Persons 16-64 years old who are employed (includes armed forces), Non-Hispanic White, &_years_dash "
@@ -1656,6 +1732,12 @@
 			mPopInCivLaborForceIOM_&_years. = "Persons 16+ years old in the civilian labor force, American Indian/Alaska Native, Some other race, Two or more races, MOE, &_years_dash "
 			mPopInCivLaborForceAIOM_&_years. = "Persons 16+ years old in the civilian labor force, All remaining groups other than Black, Non-Hispanic White, Hispanic/Latino, MOE, &_years_dash "
         mPop16andOverEmployed_&_years. = "Persons 16+ years old who are employed (includes armed forces), MOE, &_years_dash "
+			mPop16andOverEmployedB_&_years. = "Persons 16+ years old who are employed (includes armed forces), Black/African American, MOE, &_years_dash "
+			mPop16andOverEmployedW_&_years. = "Persons 16+ years old who are employed (includes armed forces), Non-Hispanic White, MOE, &_years_dash "
+			mPop16andOverEmployedH_&_years. = "Persons 16+ years old who are employed (includes armed forces), Hispanic/Latino, MOE, &_years_dash "
+			mPop16andOverEmployedA_&_years. = "Persons 16+ years old who are employed (includes armed forces), Asian and Native Hawaiian and Other Pacific Islander, MOE, &_years_dash "
+			mPop16andOverEmployIOM_&_years. = "Persons 16+ years old who are employed (includes armed forces), American Indian/Alaska Native, Some other race, Two or more races, MOE, &_years_dash "
+			mPop16andOverEmployAIOM_&_years. = "Persons 16+ years old who are employed (includes armed forces), All remaining groups other than Black, Non-Hispanic White, Hispanic/Latino, MOE, &_years_dash "
 		mPop16_64Employed_&_years. = "Persons 16-64 years old who are employed (includes armed forces), MOE, &_years_dash "
 			mPop16_64EmployedB_&_years. = "Persons 16-64 years old who are employed (includes armed forces), Black/African American, MOE, &_years_dash "
 			mPop16_64EmployedW_&_years. = "Persons 16-64 years old who are employed (includes armed forces), Non-Hispanic White, MOE, &_years_dash "
@@ -1833,85 +1915,85 @@
 			PopEmployedServ_&_years. = "Persons 16+ years old employed in service occupations, &_years_dash "
 			PopEmployedSales_&_years. = "Persons 16+ years old employed in sales and office occupations, &_years_dash "
 			PopEmployedNatRes_&_years. = "Persons 16+ years old employed in natural resources, construction, and maintenance occupations, &_years_dash "
-			PopEmployedProd_&_years. = "Persons 16+ years old employed in production, transporation, and material moving occupations, &_years_dash "
+			PopEmployedProd_&_years. = "Persons 16+ years old employed in production, transportation, and material moving occupations, &_years_dash "
 		PopEmployedByOccB_&_years. = "Persons 16+ years old employed in civilian occupations, Black/African American, &_years_dash "
 			PopEmployedMngmtB_&_years. = "Persons 16+ years old employed in management, business, science and arts occupations, Black/African American, &_years_dash "
 			PopEmployedServB_&_years. = "Persons 16+ years old employed in service occupations, Black/African American, &_years_dash "
 			PopEmployedSalesB_&_years. = "Persons 16+ years old employed in sales and office occupations, Black/African American, &_years_dash "
 			PopEmployedNatResB_&_years. = "Persons 16+ years old employed in natural resources, construction, and maintenance occupations, Black/African American, &_years_dash "
-			PopEmployedProdB_&_years. = "Persons 16+ years old employed in production, transporation, and material moving occupations, Black/African American, &_years_dash "
+			PopEmployedProdB_&_years. = "Persons 16+ years old employed in production, transportation, and material moving occupations, Black/African American, &_years_dash "
 		PopEmployedByOccW_&_years. = "Persons 16+ years old employed in civilian occupations, Non-Hispanic White, &_years_dash "
 			PopEmployedMngmtW_&_years. = "Persons 16+ years old employed in management, business, science and arts occupations, Non-Hispanic White, &_years_dash "
 			PopEmployedServW_&_years. = "Persons 16+ years old employed in service occupations, Non-Hispanic White, &_years_dash "
 			PopEmployedSalesW_&_years. = "Persons 16+ years old employed in sales and office occupations, Non-Hispanic White, &_years_dash "
 			PopEmployedNatResW_&_years. = "Persons 16+ years old employed in natural resources, construction, and maintenance occupations, Non-Hispanic White, &_years_dash "
-			PopEmployedProdW_&_years. = "Persons 16+ years old employed in production, transporation, and material moving occupations, Non-Hispanic White, &_years_dash "
+			PopEmployedProdW_&_years. = "Persons 16+ years old employed in production, transportation, and material moving occupations, Non-Hispanic White, &_years_dash "
 		PopEmployedByOccH_&_years. = "Persons 16+ years old employed in civilian occupations, Hispanic/Latino, &_years_dash "
 			PopEmployedMngmtH_&_years. = "Persons 16+ years old employed in management, business, science and arts occupations, Hispanic/Latino, &_years_dash "
 			PopEmployedServH_&_years. = "Persons 16+ years old employed in service occupations, Hispanic/Latino, &_years_dash "
 			PopEmployedSalesH_&_years. = "Persons 16+ years old employed in sales and office occupations, Hispanic/Latino, &_years_dash "
 			PopEmployedNatResH_&_years. = "Persons 16+ years old employed in natural resources, construction, and maintenance occupations, Hispanic/Latino, &_years_dash "
-			PopEmployedProdH_&_years. = "Persons 16+ years old employed in production, transporation, and material moving occupations, Hispanic/Latino, &_years_dash "
+			PopEmployedProdH_&_years. = "Persons 16+ years old employed in production, transportation, and material moving occupations, Hispanic/Latino, &_years_dash "
 		PopEmployedByOccA_&_years. = "Persons 16+ years old employed in civilian occupations, Asian, Native Hawaiian, or Other Pacific Islander, &_years_dash "
 			PopEmployedMngmtA_&_years. = "Persons 16+ years old employed in management, business, science and arts occupations, Asian, Native Hawaiian, or Other Pacific Islander, &_years_dash "
 			PopEmployedServA_&_years. = "Persons 16+ years old employed in service occupations, Asian, Native Hawaiian, or Other Pacific Islander, &_years_dash "
 			PopEmployedSalesA_&_years. = "Persons 16+ years old employed in sales and office occupations, Asian, Native Hawaiian, or Other Pacific Islander, &_years_dash "
 			PopEmployedNatResA_&_years. = "Persons 16+ years old employed in natural resources, construction, and maintenance occupations, Asian, Native Hawaiian, or Other Pacific Islander, &_years_dash "
-			PopEmployedProdA_&_years. = "Persons 16+ years old employed in production, transporation, and material moving occupations, Asian, Native Hawaiian, or Other Pacific Islander, &_years_dash "
+			PopEmployedProdA_&_years. = "Persons 16+ years old employed in production, transportation, and material moving occupations, Asian, Native Hawaiian, or Other Pacific Islander, &_years_dash "
 		PopEmployedByOccIOM_&_years. = "Persons 16+ years old employed in civilian occupations, American Indian/Alaska Native, other race, two or more races, &_years_dash "
 			PopEmployedMngmtIOM_&_years. = "Persons 16+ years old employed in management, business, science and arts occupations, American Indian/Alaska Native, other race, two or more races, &_years_dash "
 			PopEmployedServIOM_&_years. = "Persons 16+ years old employed in service occupations, American Indian/Alaska Native, other race, two or more races, &_years_dash "
 			PopEmployedSalesIOM_&_years. = "Persons 16+ years old employed in sales and office occupations, American Indian/Alaska Native, other race, two or more races, &_years_dash "
 			PopEmployedNatResIOM_&_years. = "Persons 16+ years old employed in natural resources, construction, and maintenance occupations, American Indian/Alaska Native, other race, two or more races, &_years_dash "
-			PopEmployedProdIOM_&_years. = "Persons 16+ years old employed in production, transporation, and material moving occupations, American Indian/Alaska Native, other race, two or more races, &_years_dash "
+			PopEmployedProdIOM_&_years. = "Persons 16+ years old employed in production, transportation, and material moving occupations, American Indian/Alaska Native, other race, two or more races, &_years_dash "
 		PopEmployedByOccAIOM_&_years. = "Persons 16+ years old employed in civilian occupations, All remaining groups other than Black, Non-Hispanic White, Hispanic, &_years_dash "
 			PopEmployedMngmtAIOM_&_years. = "Persons 16+ years old employed in management, business, science and arts occupations, All remaining groups other than Black, Non-Hispanic White, Hispanic, &_years_dash "
 			PopEmployedServAIOM_&_years. = "Persons 16+ years old employed in service occupations, All remaining groups other than Black, Non-Hispanic White, Hispanic, &_years_dash "
 			PopEmployedSalesAIOM_&_years. = "Persons 16+ years old employed in sales and office occupations, All remaining groups other than Black, Non-Hispanic White, Hispanic, &_years_dash "
 			PopEmployedNatResAIOM_&_years. = "Persons 16+ years old employed in natural resources, construction, and maintenance occupations, All remaining groups other than Black, Non-Hispanic White, Hispanic, &_years_dash "
-			PopEmployedProdAIOM_&_years. = "Persons 16+ years old employed in production, transporation, and material moving occupations, All remaining groups other than Black, Non-Hispanic White, Hispanic, &_years_dash "
+			PopEmployedProdAIOM_&_years. = "Persons 16+ years old employed in production, transportation, and material moving occupations, All remaining groups other than Black, Non-Hispanic White, Hispanic, &_years_dash "
 		mPopEmployedByOcc_&_years. = "Persons 16+ years old employed in civilian occupations, MOE, &_years_dash "
 			mPopEmployedMngmt_&_years. = "Persons 16+ years old employed in management, business, science and arts occupations, MOE, &_years_dash "
 			mPopEmployedServ_&_years. = "Persons 16+ years old employed in service occupations, MOE, &_years_dash "
 			mPopEmployedSales_&_years. = "Persons 16+ years old employed in sales and office occupations, MOE, &_years_dash "
 			mPopEmployedNatRes_&_years. = "Persons 16+ years old employed in natural resources, construction, and maintenance occupations, MOE, &_years_dash "
-			mPopEmployedProd_&_years. = "Persons 16+ years old employed in production, transporation, and material moving occupations, MOE, &_years_dash "
+			mPopEmployedProd_&_years. = "Persons 16+ years old employed in production, transportation, and material moving occupations, MOE, &_years_dash "
 		mPopEmployedByOccB_&_years. = "Persons 16+ years old employed in civilian occupations, Black/African American, MOE, &_years_dash "
 			mPopEmployedMngmtB_&_years. = "Persons 16+ years old employed in management, business, science and arts occupations, Black/African American, MOE, &_years_dash "
 			mPopEmployedServB_&_years. = "Persons 16+ years old employed in service occupations, Black/African American, MOE, &_years_dash "
 			mPopEmployedSalesB_&_years. = "Persons 16+ years old employed in sales and office occupations, Black/African American, MOE, &_years_dash "
 			mPopEmployedNatResB_&_years. = "Persons 16+ years old employed in natural resources, construction, and maintenance occupations, Black/African American, MOE, &_years_dash "
-			mPopEmployedProdB_&_years. = "Persons 16+ years old employed in production, transporation, and material moving occupations, Black/African American, MOE, &_years_dash "
+			mPopEmployedProdB_&_years. = "Persons 16+ years old employed in production, transportation, and material moving occupations, Black/African American, MOE, &_years_dash "
 		mPopEmployedByOccW_&_years. = "Persons 16+ years old employed in civilian occupations, Non-Hispanic White, MOE, &_years_dash "
 			mPopEmployedMngmtW_&_years. = "Persons 16+ years old employed in management, business, science and arts occupations, Non-Hispanic White, MOE, &_years_dash "
 			mPopEmployedServW_&_years. = "Persons 16+ years old employed in service occupations, Non-Hispanic White, MOE, &_years_dash "
 			mPopEmployedSalesW_&_years. = "Persons 16+ years old employed in sales and office occupations, Non-Hispanic White, MOE, &_years_dash "
 			mPopEmployedNatResW_&_years. = "Persons 16+ years old employed in natural resources, construction, and maintenance occupations, Non-Hispanic White, MOE, &_years_dash "
-			mPopEmployedProdW_&_years. = "Persons 16+ years old employed in production, transporation, and material moving occupations, Non-Hispanic White, MOE, &_years_dash "
+			mPopEmployedProdW_&_years. = "Persons 16+ years old employed in production, transportation, and material moving occupations, Non-Hispanic White, MOE, &_years_dash "
 		mPopEmployedByOccH_&_years. = "Persons 16+ years old employed in civilian occupations, Hispanic/Latino, MOE, &_years_dash "
 			mPopEmployedMngmtH_&_years. = "Persons 16+ years old employed in management, business, science and arts occupations, Hispanic/Latino, MOE, &_years_dash "
 			mPopEmployedServH_&_years. = "Persons 16+ years old employed in service occupations, Hispanic/Latino, MOE, &_years_dash "
 			mPopEmployedSalesH_&_years. = "Persons 16+ years old employed in sales and office occupations, Hispanic/Latino, MOE, &_years_dash "
 			mPopEmployedNatResH_&_years. = "Persons 16+ years old employed in natural resources, construction, and maintenance occupations, Hispanic/Latino, MOE, &_years_dash "
-			mPopEmployedProdH_&_years. = "Persons 16+ years old employed in production, transporation, and material moving occupations, Hispanic/Latino, MOE, &_years_dash "
+			mPopEmployedProdH_&_years. = "Persons 16+ years old employed in production, transportation, and material moving occupations, Hispanic/Latino, MOE, &_years_dash "
 	  	mPopEmployedByOccA_&_years. = "Persons 16+ years old employed in civilian occupations, Asian, Native Hawaiian, or Other Pacific Islander, MOE, &_years_dash "
 			mPopEmployedMngmtA_&_years. = "Persons 16+ years old employed in management, business, science and arts occupations, Asian, Native Hawaiian, or Other Pacific Islander, MOE, &_years_dash "
 			mPopEmployedServA_&_years. = "Persons 16+ years old employed in service occupations, Asian, Native Hawaiian, or Other Pacific Islander, MOE, &_years_dash "
 			mPopEmployedSalesA_&_years. = "Persons 16+ years old employed in sales and office occupations, Asian, Native Hawaiian, or Other Pacific Islander, MOE, &_years_dash "
 			mPopEmployedNatResA_&_years. = "Persons 16+ years old employed in natural resources, construction, and maintenance occupations, Asian, Native Hawaiian, or Other Pacific Islander, MOE, &_years_dash "
-			mPopEmployedProdA_&_years. = "Persons 16+ years old employed in production, transporation, and material moving occupations, Asian, Native Hawaiian, or Other Pacific Islander, MOE, &_years_dash "
+			mPopEmployedProdA_&_years. = "Persons 16+ years old employed in production, transportation, and material moving occupations, Asian, Native Hawaiian, or Other Pacific Islander, MOE, &_years_dash "
 	  	mPopEmployedByOccIOM_&_years. = "Persons 16+ years old employed in civilian occupations, American Indian/Alaska Native, other race, two or more races, MOE, &_years_dash "
 			mPopEmployedMngmtIOM_&_years. = "Persons 16+ years old employed in management, business, science and arts occupations, American Indian/Alaska Native, other race, two or more races, MOE, &_years_dash "
 			mPopEmployedServIOM_&_years. = "Persons 16+ years old employed in service occupations, American Indian/Alaska Native, other race, two or more races, MOE, &_years_dash "
 			mPopEmployedSalesIOM_&_years. = "Persons 16+ years old employed in sales and office occupations, American Indian/Alaska Native, other race, two or more races, MOE, &_years_dash "
 			mPopEmployedNatResIOM_&_years. = "Persons 16+ years old employed in natural resources, construction, and maintenance occupations, American Indian/Alaska Native, other race, two or more races, MOE, &_years_dash "
-			mPopEmployedProdIOM_&_years. = "Persons 16+ years old employed in production, transporation, and material moving occupations, American Indian/Alaska Native, other race, two or more races, MOE, &_years_dash "
+			mPopEmployedProdIOM_&_years. = "Persons 16+ years old employed in production, transportation, and material moving occupations, American Indian/Alaska Native, other race, two or more races, MOE, &_years_dash "
 	  	mPopEmployedByOccAIOM_&_years. = "Persons 16+ years old employed in civilian occupations, All remaining groups other than Black, Non-Hispanic White, Hispanic, MOE, &_years_dash "
 			mPopEmployedMngmtAIOM_&_years. = "Persons 16+ years old employed in management, business, science and arts occupations, All remaining groups other than Black, Non-Hispanic White, Hispanic, MOE, &_years_dash "
 			mPopEmployedServAIOM_&_years. = "Persons 16+ years old employed in service occupations, All remaining groups other than Black, Non-Hispanic White, Hispanic, MOE, &_years_dash "
 			mPopEmployedSalesAIOM_&_years. = "Persons 16+ years old employed in sales and office occupations, All remaining groups other than Black, Non-Hispanic White, Hispanic, MOE, &_years_dash "
 			mPopEmployedNatResAIOM_&_years. = "Persons 16+ years old employed in natural resources, construction, and maintenance occupations, All remaining groups other than Black, Non-Hispanic White, Hispanic, MOE, &_years_dash "
-			mPopEmployedProdAIOM_&_years. = "Persons 16+ years old employed in production, transporation, and material moving occupations, All remaining groups other than Black, Non-Hispanic White, Hispanic, MOE, &_years_dash "
+			mPopEmployedProdAIOM_&_years. = "Persons 16+ years old employed in production, transportation, and material moving occupations, All remaining groups other than Black, Non-Hispanic White, Hispanic, MOE, &_years_dash "
 			;
 
     ** Education **;
@@ -2222,12 +2304,6 @@
 
 	** Income - tract-level variables **;
     
-		FamIncomeB_&_years. = B19101Be1;
-		FamIncomeW_&_years. = B19101He1;
-		FamIncomeH_&_years. = B19101Ie1;
-		FamIncomeA_&_years. = sum(B19101De1, B19101Ee1 );
-		FamIncomeIOM_&_years. = sum(B19101Ce1, B19101Fe1, B19101Ge1 );
-		FamIncomeAIOM_&_years. = sum(B19101Ce1, B19101De1, B19101Ee1, B19101Fe1, B19101Ge1 );
 
 		FamIncomeLT75kB_&_years. = 
 			sum(B19101Be2, B19101Be3, B19101Be4, B19101Be5, B19101Be6, B19101Be7, 
@@ -2262,19 +2338,12 @@
 				B19101Ge2, B19101Ge3, B19101Ge4, B19101Ge5, B19101Ge6, B19101Ge7, 
 				B19101Ge8, B19101Ge9, B19101Ge10, B19101Ge11, B19101Ge12 );
 
-		FamIncomeMT200kB_&_years. = B19101Be17;
-		FamIncomeMT200kW_&_years. = B19101He17;
-		FamIncomeMT200kH_&_years. = B19101Ie17;
-		FamIncomeMT200kA_&_years. = sum(B19101De17, B19101Ee17 );
-		FamIncomeMT200kIOM_&_years. = sum(B19101Ce17, B19101Fe17, B19101Ge17 );
-		FamIncomeMT200kAIOM_&_years. = sum(B19101Ce17, B19101De17, B19101Ee17, B19101Fe17, B19101Ge17 );
-
-		mFamIncomeB_&_years. = B19101Bm1;
-		mFamIncomeW_&_years. = B19101Hm1;
-		mFamIncomeH_&_years. = B19101Im1;
-		mFamIncomeA_&_years. = %moe_sum( var=B19101Dm1 B19101Em1);
-		mFamIncomeIOM_&_years. = %moe_sum( var=B19101Cm1 B19101Fm1 B19101Gm1);
-		mFamIncomeAIOM_&_years. = %moe_sum( var=B19101Cm1 B19101Dm1 B19101Em1 B19101Fm1 B19101Gm1);
+		FamIncomeGT200kB_&_years. = B19101Be17;
+		FamIncomeGT200kW_&_years. = B19101He17;
+		FamIncomeGT200kH_&_years. = B19101Ie17;
+		FamIncomeGT200kA_&_years. = sum(B19101De17, B19101Ee17 );
+		FamIncomeGT200kIOM_&_years. = sum(B19101Ce17, B19101Fe17, B19101Ge17 );
+		FamIncomeGT200kAIOM_&_years. = sum(B19101Ce17, B19101De17, B19101Ee17, B19101Fe17, B19101Ge17 );
 
 		mFamIncomeLT75kB_&_years. = 
 			%moe_sum( var=B19101Bm2 B19101Bm3 B19101Bm4 B19101Bm5 B19101Bm6 B19101Bm7 
@@ -2309,50 +2378,39 @@
 			B19101Gm2 B19101Gm3 B19101Gm4 B19101Gm5 B19101Gm6 B19101Gm7 
 			B19101Gm8 B19101Gm9 B19101Gm10 B19101Gm11 B19101Gm12);
 
-		mFamIncomeMT200kB_&_years. = B19101Bm17;
-		mFamIncomeMT200kW_&_years. = B19101Hm17;
-		mFamIncomeMT200kH_&_years. = B19101Im17;
-		mFamIncomeMT200kA_&_years. = %moe_sum( var=B19101Dm17 B19101Em17);
-		mFamIncomeMT200kIOM_&_years. = %moe_sum( var=B19101Cm17 B19101Fm17 B19101Gm17);
-		mFamIncomeMT200kAIOM_&_years. = %moe_sum( var=B19101Cm17 B19101Dm17 B19101Em17 B19101Fm17 B19101Gm17);
+		mFamIncomeGT200kB_&_years. = B19101Bm17;
+		mFamIncomeGT200kW_&_years. = B19101Hm17;
+		mFamIncomeGT200kH_&_years. = B19101Im17;
+		mFamIncomeGT200kA_&_years. = %moe_sum( var=B19101Dm17 B19101Em17);
+		mFamIncomeGT200kIOM_&_years. = %moe_sum( var=B19101Cm17 B19101Fm17 B19101Gm17);
+		mFamIncomeGT200kAIOM_&_years. = %moe_sum( var=B19101Cm17 B19101Dm17 B19101Em17 B19101Fm17 B19101Gm17);
 
 		label
-			FamIncomeB_&_years. = "Family income, Black/African American, &_years_dash "
-			FamIncomeW_&_years. = "Family income, Non-Hispanic White, &_years_dash "
-			FamIncomeH_&_years. = "Family income, Hispanic/Latino, &_years_dash "
-			FamIncomeA_&_years. = "Family income, Asian, Hawaiian, and other Pacific Islander, &_years_dash "
-			FamIncomeIOM_&_years. = "Family income, American Indian/Alaska Native, other race, two or more races, &_years_dash "
-			FamIncomeAIOM_&_years. = "Family income,All remaining groups other than Black, Non-Hispanic White, Hispanic, &_years_dash "
+
 			FamIncomeLT75kB_&_years. = "Family income less than $75000, Black/African American, &_years_dash "
 			FamIncomeLT75kW_&_years. = "Family income less than $75000, Non-Hispanic White, &_years_dash "
 			FamIncomeLT75kH_&_years. = "Family income less than $75000, Hispanic/Latino, &_years_dash "
 			FamIncomeLT75kA_&_years. = "Family income less than $75000, Asian, Hawaiian, and other Pacific Islander, &_years_dash "
 			FamIncomeLT75kIOM_&_years. = "Family income less than $75000, American Indian/Alaska Native, other race, two or more races, &_years_dash "
 			FamIncomeLT75kAIOM_&_years. = "Family income less than $75000,All remaining groups other than Black, Non-Hispanic White, Hispanic, &_years_dash "
-			FamIncomeMT200kB_&_years. = "Family income more than $200,000, Black or African American, &_years_dash "
-			FamIncomeMT200kW_&_years. = "Family income more than $200,000, Non-Hispanic White, &_years_dash "
-			FamIncomeMT200kH_&_years. = "Family income more than $200,000, Hispanic or Latino, &_years_dash "
-			FamIncomeMT200kA_&_years. = "Family income more than $200,000, Asian, Native Hawaiian, and other Pacific Islander, &_years_dash "
-			FamIncomeMT200kIOM_&_years. = "Family income more than $200,000, American Indian/Alaska Native, other race, two or more races, &_years_dash "
-			FamIncomeMT200kAIOM_&_years. = "Family income more than $200,000, All remaining groups other than Black, Non-Hispanic White, Hispanic, &_years_dash "
-			mFamIncomeB_&_years. = "Family income, Black/African American, MOE, &_years_dash "
-			mFamIncomeW_&_years. = "Family income, Non-Hispanic White, MOE, &_years_dash "
-			mFamIncomeH_&_years. = "Family income, Hispanic/Latino, MOE, &_years_dash "
-			mFamIncomeA_&_years. = "Family income, Asian, Hawaiian, and other Pacific Islander, MOE, &_years_dash "
-			mFamIncomeIOM_&_years. = "Family income, American Indian/Alaska Native, other race, two or more races, MOE, &_years_dash "
-			mFamIncomeAIOM_&_years. = "Family income,All remaining groups other than Black, Non-Hispanic White, Hispanic, MOE, &_years_dash "
+			FamIncomeGT200kB_&_years. = "Family income more than $200,000, Black or African American, &_years_dash "
+			FamIncomeGT200kW_&_years. = "Family income more than $200,000, Non-Hispanic White, &_years_dash "
+			FamIncomeGT200kH_&_years. = "Family income more than $200,000, Hispanic or Latino, &_years_dash "
+			FamIncomeGT200kA_&_years. = "Family income more than $200,000, Asian, Native Hawaiian, and other Pacific Islander, &_years_dash "
+			FamIncomeGT200kIOM_&_years. = "Family income more than $200,000, American Indian/Alaska Native, other race, two or more races, &_years_dash "
+			FamIncomeGT200kAIOM_&_years. = "Family income more than $200,000, All remaining groups other than Black, Non-Hispanic White, Hispanic, &_years_dash "
 			mFamIncomeLT75kB_&_years. = "Family income less than $75000, Black/African American, MOE, &_years_dash "
 			mFamIncomeLT75kW_&_years. = "Family income less than $75000, Non-Hispanic White, MOE, &_years_dash "
 			mFamIncomeLT75kH_&_years. = "Family income less than $75000, Hispanic/Latino, MOE, &_years_dash "
 			mFamIncomeLT75kA_&_years. = "Family income less than $75000, Asian, Hawaiian, and other Pacific Islander, MOE, &_years_dash "
 			mFamIncomeLT75kIOM_&_years. = "Family income less than $75000, American Indian/Alaska Native, other race, two or more races, MOE, &_years_dash "
 			mFamIncomeLT75kAIOM_&_years. = "Family income less than $75000,All remaining groups other than Black, Non-Hispanic White, Hispanic, MOE, &_years_dash "
-			mFamIncomeMT200kB_&_years. = "Family income more than $200,000, Black or African American, MOE, &_years_dash "
-			mFamIncomeMT200kW_&_years. = "Family income more than $200,000, Non-Hispanic White, MOE, &_years_dash "
-			mFamIncomeMT200kH_&_years. = "Family income more than $200,000, Hispanic or Latino, MOE, &_years_dash "
-			mFamIncomeMT200kA_&_years. = "Family income more than $200,000, Asian, Native Hawaiian, and other Pacific Islander, MOE, &_years_dash "
-			mFamIncomeMT200kIOM_&_years. = "Family income more than $200,000, American Indian/Alaska Native, other race, two or more races, MOE, &_years_dash "
-			mFamIncomeMT200kAIOM_&_years. = "Family income more than $200,000, All remaining groups other than Black, Non-Hispanic White, Hispanic, MOE, &_years_dash "
+			mFamIncomeGT200kB_&_years. = "Family income more than $200,000, Black or African American, MOE, &_years_dash "
+			mFamIncomeGT200kW_&_years. = "Family income more than $200,000, Non-Hispanic White, MOE, &_years_dash "
+			mFamIncomeGT200kH_&_years. = "Family income more than $200,000, Hispanic or Latino, MOE, &_years_dash "
+			mFamIncomeGT200kA_&_years. = "Family income more than $200,000, Asian, Native Hawaiian, and other Pacific Islander, MOE, &_years_dash "
+			mFamIncomeGT200kIOM_&_years. = "Family income more than $200,000, American Indian/Alaska Native, other race, two or more races, MOE, &_years_dash "
+			mFamIncomeGT200kAIOM_&_years. = "Family income more than $200,000, All remaining groups other than Black, Non-Hispanic White, Hispanic, MOE, &_years_dash "
 			;
 
 	%end;
@@ -2361,13 +2419,11 @@
 
     AggFamilyIncome_&_years. = B19127e1;
     
-	FamIncome_&_years. = B19101e1;
-
 	FamIncomeLT75k_&_years. = 
 		sum(B19101e2, B19101e3, B19101e4, B19101e5, B19101e6, B19101e7, 
 			B19101e8, B19101e9, B19101e10, B19101e11, B19101e12 );
 
-	FamIncomeMT200k_&_years. = B19101e17;
+	FamIncomeGT200k_&_years. = B19101e17;
 
 	MedFamIncm_&_years. = B19113e1;
 		MedFamIncmB_&_years. = B19113Be1;
@@ -2385,16 +2441,21 @@
 		AggIncomeIOM_&_years. = sum(B19313Ce1, B19313Fe1, B19313Ge1 );
 		AggIncomeAIOM_&_years. = sum(B19313Ce1, B19313De1, B19313Ee1, B19313Fe1, B19313Ge1 );
 
+	AggHshldIncome_&_years. = B19025e1;
+		AggHshldIncomeB_&_years. = B19025Be1;
+		AggHshldIncomeW_&_years. = B19025He1;
+		AggHshldIncomeH_&_years. = B19025Ie1;
+		AggHshldIncomeA_&_years. = sum(B19025De1, B19025Ee1 );
+		AggHshldIncomeIOM_&_years. = sum(B19025Ce1, B19025Fe1, B19025Ge1 );
+		AggHshldIncomeAIOM_&_years. = sum(B19025Ce1, B19025De1, B19025Ee1, B19025Fe1, B19025Ge1 );
 
     mAggFamilyIncome_&_years. = B19127m1;
-
-	mFamIncome_&_years. = B19101m1;
 
 	mFamIncomeLT75k_&_years. = 
 		%moe_sum( var=B19101m2 B19101m3 B19101m4 B19101m5 B19101m6 B19101m7 
 		B19101m8 B19101m9 B19101m10 B19101m11 B19101m12);
 
-	mFamIncomeMT200k_&_years. = B19101m17;
+	mFamIncomeGT200k_&_years. = B19101m17;
 
 	mMedFamIncm_&_years. = B19113m1;
 			mMedFamIncmB_&_years. = B19113Bm1;
@@ -2412,12 +2473,19 @@
 			mAggIncomeIOM_&_years. = %moe_sum( var=B19313Cm1 B19313Fm1 B19313Gm1);
 			mAggIncomeAIOM_&_years. = %moe_sum( var=B19313Cm1 B19313Dm1 B19313Em1 B19313Fm1 B19313Gm1);
 
+	mAggHshldIncome_&_years. = B19025m1;
+		mAggHshldIncomeB_&_years. = B19025Bm1;
+		mAggHshldIncomeW_&_years. = B19025Hm1;
+		mAggHshldIncomeH_&_years. = B19025Im1;
+		mAggHshldIncomeA_&_years. = %moe_sum( var=B19025Dm1 B19025Em1 );
+		mAggHshldIncomeIOM_&_years. = %moe_sum( var=B19025Cm1 B19025Fm1 B19025Gm1 );
+		mAggHshldIncomeAIOM_&_years. = %moe_sum( var=B19025Cm1 B19025Dm1 B19025Em1 B19025Fm1 B19025Gm1 );
 
     label 
       AggFamilyIncome_&_years. = "Aggregate family income ($ &_last_year), &_years_dash "
 	  FamIncome_&_years. = "Family income, &_years_dash "
 	  FamIncomeLT75k_&_years. = "Family income less than $75000, &_years_dash "
-	  FamIncomeMT200k_&_years. = "Family income more than $200,000, &_years_dash "
+	  FamIncomeGT200k_&_years. = "Family income more than $200,000, &_years_dash "
 	  MedFamIncm_&_years. = "Median family income, &_years_dash "
 			MedFamIncmB_&_years. = "Median family income, Black/African American, &_years_dash "
 			MedFamIncmW_&_years. = "Median family income, Non-Hispanic White, &_years_dash "
@@ -2431,11 +2499,18 @@
 			AggIncomeH_&_years. = "Aggregate income, Hispanic/Latino, &_years_dash "
 			AggIncomeA_&_years. = "Aggregate income, Asian, Native Hawaiian, and other Pacific Islander, &_years_dash "
 			AggIncomeIOM_&_years. = "Aggregate income, American Indian/Alaska Native, some other race, two or more races, &_years_dash "
-			AggIncomeAIOM_&_years. = "Aggregate income, All remaining groups other than Black, Non-Hispanic White, Hispanic, &_years_dash "
+			AggIncomeAIOM_&_years."Aggregate income, All remaining groups other than Black, Non-Hispanic White, Hispanic, &_years_dash "
+	  AggHshldIncome_&_years. = "Aggregate household income, &_years_dash "
+		  AggHshldIncomeB_&_years. = "Aggregate household income, Black/African American, &_years_dash "
+		  AggHshldIncomeW_&_years. = "Aggregate household income, Non-Hispanic White, &_years_dash "
+		  AggHshldIncomeH_&_years. = "Aggregate household income, Hispanic/Latino, &_years_dash "
+		  AggHshldIncomeA_&_years. = "Aggregate household income, Asian, Native Hawaiian, and other Pacific Islander, &_years_dash "
+		  AggHshldIncomeIOM_&_years. = "Aggregate household income, American Indian/Alaska Native, some other race, two or more races, &_years_dash "
+		  AggHshldIncomeAIOM_&_years. = "Aggregate household income, All remaining groups other than Black, Non-Hispanic White, Hispanic, &_years_dash "
 	  mAggFamilyIncome_&_years. = "Aggregate family income ($ &_last_year), MOE, &_years_dash "
 	  mFamIncome_&_years. = "Family income, MOE, &_years_dash "
 	  mFamIncomeLT75k_&_years. = "Family income less than $75000, MOE, &_years_dash "
-	  mFamIncomeMT200k_&_years. = "Family income more than $200,000, MOE, &_years_dash "
+	  mFamIncomeGT200k_&_years. = "Family income more than $200,000, MOE, &_years_dash "
 	  mMedFamIncm_&_years. = "Median family income, MOE, &_years_dash "
 			mMedFamIncmB_&_years. = "Median family income, Black/African American, MOE, &_years_dash "
 			mMedFamIncmW_&_years. = "Median family income, Non-Hispanic White, MOE, &_years_dash "
@@ -2450,7 +2525,14 @@
 			mAggIncomeA_&_years. = "Aggregate income, Asian, Native Hawaiian, and other Pacific Islander, MOE, &_years_dash "
 			mAggIncomeIOM_&_years. = "Aggregate income, American Indian/Alaska Native, some other race, two or more races, MOE, &_years_dash "
 			mAggIncomeAIOM_&_years. = "Aggregate income, All remaining groups other than Black, Non-Hispanic White, Hispanic, MOE, &_years_dash "
-      		;
+	  mAggHshldIncome_&_years. = "Aggregate household income, MOE, &_years_dash "
+			mAggHshldIncomeB_&_years. = "Aggregate household income, Black/African American, MOE, &_years_dash "
+			mAggHshldIncomeW_&_years. = "Aggregate household income, Non-Hispanic White, MOE, &_years_dash "
+			mAggHshldIncomeH_&_years. = "Aggregate household income, Hispanic/Latino, MOE, &_years_dash "
+			mAggHshldIncomeA_&_years. = "Aggregate household income, Asian, Native Hawaiian, and other Pacific Islander, MOE, &_years_dash "
+			mAggHshldIncomeIOM_&_years. = "Aggregate household income, American Indian/Alaska Native, some other race, two or more races, MOE, &_years_dash "
+			mAggHshldIncomeAIOM_&_years. = "Aggregate household income, All remaining groups other than Black, Non-Hispanic White, Hispanic, MOE, &_years_dash "
+      ;
 
     ** Housing **;    
 
