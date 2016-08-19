@@ -145,7 +145,7 @@ data Acs_2010_14;
   
 run;
 
-data Equity.Acs_tables (Label="iPUMS 2010-14 ACS for Racial Equity Profiles");
+data Equity.Acs_tables_ipums (Label="iPUMS 2010-14 ACS for Racial Equity Profiles");
 
   set Acs_2010_14;
   where put( upuma, $pumctyb. ) ~= '' 
@@ -204,7 +204,7 @@ data Equity.Acs_tables (Label="iPUMS 2010-14 ACS for Racial Equity Profiles");
 	if empstat = 1 then employed=1;
 	  	else if empstat = 2 then employed=0;
 		else employed=.;
-
+ 
     if age25to64=1 and employed=1 then emp25to64=1;
 	  	else if age25to64=1 and employed=0 then emp25to64=0;
 		else emp25to64=.;
@@ -224,6 +224,7 @@ data Equity.Acs_tables (Label="iPUMS 2010-14 ACS for Racial Equity Profiles");
  	if 0 < cost_burden < 30 then nocostburden=1;
 		else nocostburden=.;
 
+		/*https://www.huduser.gov/portal/datasets/il/il14/index_il2014.html*/ 
 %macro setlimits;
 
 	%let counts = 1 2 3 4 5 6 7 8;
@@ -235,17 +236,19 @@ data Equity.Acs_tables (Label="iPUMS 2010-14 ACS for Racial Equity Profiles");
 			%let limit2=%scan(&limittwo., &i., " ");
 			%let limit3=%scan(&limitthree., &i., " ");
 			%let count=%scan(&counts., &i., " ");
-				if count = &count. then do;
-					if (rentgrs*12) < .30*&limit1. then aff_unit=1;**Aff to ELI**;
-					if .30*&limit1.<=(rentgrs*12)<.30*&limit2. then aff_unit=2;**Aff to VLI**;
-					if .30*&limit2.<=(rentgrs*12)<.30*&limit3. then aff_unit=3;**Aff to LI**;
-					if .30*&limit3.<=(rentgrs*12) then aff_unit=4;**Aff at 80 pct and above**;
-					end;
+				if ownershp = 2 then do; 
+					if count = &count. then do;
+						if (rentgrs*12) < .30*&limit1. then aff_unit=1;**Aff to ELI**;
+						if .30*&limit1.<=(rentgrs*12)<.30*&limit2. then aff_unit=2;**Aff to VLI**;
+						if .30*&limit2.<=(rentgrs*12)<.30*&limit3. then aff_unit=3;**Aff to LI**;
+						if .30*&limit3.<=(rentgrs*12) then aff_unit=4;**Aff at 80 pct and above**;
+						end;
+				    end;
 		%end;
 %mend;
 %setlimits;
 
-	if count >8 then do;
+	if count >8 and ownershp = 2 then do;
 		if (rentgrs*12) < .30*42400 then aff_unit=1;**Aff to ELI**;
 		if .30*42400<=(rentgrs*12)<.30*70650 then aff_unit=2;**Aff to VLI**;
 		if .30*70650<=(rentgrs*12)<.30*90450 then aff_unit=3;**Aff to LI**;
@@ -272,7 +275,7 @@ data Equity.Acs_tables (Label="iPUMS 2010-14 ACS for Racial Equity Profiles");
 			housing_costs = "Housing Costs"
 			ownmortgage = "Owned with mortgage or loan"
 			ownfreeclear="Owned free and clear"
-			aff_unit="Affordability Level";
+			aff_unit="Income Level that Unit Rent is Affordable";
 
   run; 
 
@@ -280,7 +283,7 @@ data Equity.Acs_tables (Label="iPUMS 2010-14 ACS for Racial Equity Profiles");
 
 /*Quality Control*/
 
-proc freq data=equity.acs_tables (where=(aff_unit=. and raceB=1 and city=7230));
+proc freq data=Equity.Acs_tables_ipums(where=(aff_unit=. and raceB=1 and city=7230));
 tables aff_unit*rent*count/list missing;
 run;
 
@@ -295,7 +298,7 @@ tables age25to64*employed*emp25to64/list missing;
 tables costburden*sevcostburden*nocostburden/list missing;
 run;
 
-proc freq data=equity.acs_tables (where=(city=7230 and age25to64=1));
+proc freq data=Equity.Acs_tables_ipums(where=(city=7230 and age25to64=1));
 tables empstat*age25to64*employed*emp25to64/list missing;
 weight perwt;
 run;
@@ -305,22 +308,22 @@ tables empstat*employed/list missing;
 weight perwt;
 run;
 
-proc freq data=equity.acs_tables (where=(city=7230 and empstat^=1 and empstat^=2));
+proc freq data=Equity.Acs_tables_ipums(where=(city=7230 and empstat^=1 and empstat^=2));
 tables empstat*age/list missing;
 weight perwt;
 run;
 
-proc freq data=equity.acs_tables (where=(city=7230 and ownershp=1));
+proc freq data=Equity.Acs_tables_ipums(where=(city=7230 and ownershp=1));
 tables mortgage/list missing;
 tables mortgage*ownfreeclear*ownmortgage/list missing;
 run;
 
-proc freq data=equity.acs_tables (where=(city=7230 and ownershp=2 and rent^=0000));
+proc freq data=Equity.Acs_tables_ipums(where=(city=7230 and ownershp=2 and rent^=0000));
 tables rent/list missing;
 tables hud_inc/list missing;
 run;
 
-proc freq data=equity.acs_tables (where=(city=7230));
+proc freq data=Equity.Acs_tables_ipums(where=(city=7230));
 tables count/list missing;
 run;
 

@@ -26,7 +26,7 @@
 
   %fdate()
 
-  proc tabulate data=Equity.Acs_tables format=comma10.0 noseps missing out=test;
+  proc tabulate data=Equity.Acs_tables_ipums format=comma10.0 noseps missing out=test;
     %if "&where. "~= "" %then %do;
       where &where;
     %end;
@@ -74,7 +74,7 @@
 
   %fdate()
 
-  proc tabulate data=Equity.Acs_tables format=comma10.0 noseps missing  out=test;
+  proc tabulate data=Equity.Acs_tables_ipums format=comma10.0 noseps missing  out=test;
     %if "&where. "~= "" %then %do;
       where &where;
     %end;
@@ -120,7 +120,7 @@
 
   %fdate()
 
-  proc tabulate data=Equity.Acs_tables format=comma10.0 noseps missing out=&out.;
+  proc tabulate data=Equity.Acs_tables_ipums format=comma10.0 noseps missing out=&out.;
     %if "&where. "~= "" %then %do;
       where &where;
     %end;
@@ -166,7 +166,7 @@
 
   %fdate()
 
-  proc tabulate data=Equity.Acs_tables format=comma10.0 noseps missing out=&out.;
+  proc tabulate data=Equity.Acs_tables_ipums format=comma10.0 noseps missing out=&out.;
     %if "&where. "~= "" %then %do;
       where &where;
     %end;
@@ -212,7 +212,7 @@
 
   %fdate()
 
-  proc tabulate data=Equity.Acs_tables format=comma10.0 noseps missing out=&out.;
+  proc tabulate data=Equity.Acs_tables_ipums format=comma10.0 noseps missing out=&out.;
     %if "&where. "~= "" %then %do;
       where &where;
     %end;
@@ -247,7 +247,7 @@
 
   %fdate()
 
-  proc tabulate data=Equity.Acs_tables format=comma10.0 noseps missing out=&out.;
+  proc tabulate data=Equity.Acs_tables_ipums format=comma10.0 noseps missing out=&out.;
     %if "&where. "~= "" %then %do;
       where &where;
     %end;
@@ -282,7 +282,7 @@
 
   %fdate()
 
-  proc tabulate data=Equity.Acs_tables format=comma10.0 noseps missing out=&out.;
+  proc tabulate data=Equity.Acs_tables_ipums format=comma10.0 noseps missing out=&out.;
     %if "&where. "~= "" %then %do;
       where &where;
     %end;
@@ -334,7 +334,7 @@
 
   %fdate()
 
-  proc tabulate data=Equity.Acs_tables format=percent10.1 noseps missing;
+  proc tabulate data=Equity.Acs_tables_ipums format=percent10.1 noseps missing;
     %if "&where. "~= "" %then %do;
       where &where;
     %end;
@@ -372,7 +372,7 @@
 
   %fdate()
 
-  proc tabulate data=Equity.Acs_tables format=percent10.1 noseps missing;
+  proc tabulate data=Equity.Acs_tables_ipums format=percent10.1 noseps missing;
     %if "&where. "~= "" %then %do;
       where &where;
     %end;
@@ -410,7 +410,7 @@
 
   %fdate()
 
-  proc tabulate data=Equity.Acs_tables format=percent10.1 noseps missing;
+  proc tabulate data=Equity.Acs_tables_ipums format=percent10.1 noseps missing;
     %if "&where. "~= "" %then %do;
       where &where;
     %end;
@@ -450,7 +450,7 @@
 
  
 
-  proc tabulate data=Equity.Acs_tables_inc format=comma10.1 noseps missing;
+  proc tabulate data=Equity.Acs_tables_ipums_inc format=comma10.1 noseps missing;
 
     %if &where~= %then %do;
 
