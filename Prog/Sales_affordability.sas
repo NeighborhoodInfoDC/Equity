@@ -21,6 +21,8 @@ Homeownership Affordability in Urban America: Past and Future;
 ** Define libraries **;
 %DCData_lib( realprop );
 %DCData_lib( equity );
+%DCData_lib (ACS);
+%DCData_lib (Census);
 
 data create_flags;
   set realpr_r.sales_res_clean (where=(ui_proptype in ('10' '11') and 2010 <= year(saledate) <= 2014))
@@ -109,6 +111,12 @@ run;
 *proc summary at city, ward, tract, and cluster levels - so you could get % of sales in Ward 7 affordable to 
 median white family vs. median black family.;
 
+proc contents data=equity.acs_2010_14_dc_sum_bg_tr10;
+run;
+
+data neighbyrace;
+	set equity.acs_2010_14_dc_sum_bg_tr10;
+	
 /*Proc Summary: Affordability for Owners by Race*/
 
 proc summary data=create_flags;
