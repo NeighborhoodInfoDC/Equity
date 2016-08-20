@@ -1,18 +1,19 @@
 /**************************************************************************
  Program:  Equity_macros_2010_14.sas
  Library:  Equity
- Project:  NeighborhoodInfo DC
- Author:   G. MacDonald
- Created:  04/24/2013
- Version:  SAS 9.2
+ Project:  Racial Equity Profiles
+ Author:   L. Hendey
+ Created:  7/25/16
+ Version:  SAS 9.4
  Environment:  Windows
  
- Description:  Create tables from 2009-11 3-year ACS IPUMS data for 
+ Description:  Based on .HsngSec.HsngSec_macros_2009_11.sas that created tables from 2009-11 3-year ACS IPUMS data for 
  Housing Security 2013 report out to funders.
 
  Modifications: 
 	07/25/13 LH Separated Macros to output tables from program.
  	07/25/16 MW Updated for ACS 2010-14, Equity, and SAS1 Server
+	08/20/16 LH	Modified macros to accomodate race categories.
 **************************************************************************/
 
 
@@ -26,12 +27,12 @@
 
   %fdate()
 
-  proc tabulate data=Equity.Acs_tables_ipums format=comma10.0 noseps missing out=test;
+  proc tabulate data=Equity.Acs_tables_ipums format=comma10.0 noseps missing out=&out.;
     %if "&where. "~= "" %then %do;
       where &where;
     %end;
     class &row_var;
-    class puma /order=data preloadfmt;
+    class puma ;
     var total;
     weight &weight;
     table 
@@ -61,6 +62,7 @@
     title3 "Universe: &universe";
     footnote1 "Source: ACS IPUMS data, 2010-14 (&fdate)";
 
+
   run;
 
   title2;
@@ -74,12 +76,12 @@
 
   %fdate()
 
-  proc tabulate data=Equity.Acs_tables_ipums format=comma10.0 noseps missing  out=test;
+  proc tabulate data=Equity.Acs_tables_ipums format=comma10.0 noseps missing  out=&out;
     %if "&where. "~= "" %then %do;
       where &where;
     %end;
     class &row_var;
-    class puma /order=data preloadfmt;
+    class puma  ;
     var total;
     weight &weight;
     table 
@@ -115,7 +117,7 @@
   footnote1;
 
 %mend Count_table2;
-
+*for affordability rent tables; 
 %macro Count_table3( where=, row_var=, row_fmt=, title=, weight=perwt, universe=Persons, out= );
 
   %fdate()
@@ -125,32 +127,32 @@
       where &where;
     %end;
     class &row_var;
-    class upuma sex /order=data preloadfmt;
+    class puma aff_unit;
     var total;
     weight &weight;
     table 
       /** Pages (do not change) **/
-      all='Total'
+      all='Total' aff_unit=' '
   	,
       /** Rows **/
       all='Total' &row_var
       ,
       /** Columns (do not change) **/
-      total = "&universe" * sum=' ' * ( upuma=' ' all='Washington Region' )
+      total = "&universe" * sum=' ' * ( puma=' ' all='District of Columbia' )
       / condense
     ;
     table 
       /** Pages (do not change) **/
-      all='Total'
+      all='Total' aff_unit=' '
   	,
       /** Rows **/
       all='Total' &row_var
       ,
       /** Columns (do not change) **/
-      total = "% &universe" * colpctsum=' ' * f=comma10.1 * ( upuma=' ' all='Washington Region' )
+      total = "% &universe" * colpctsum=' ' * f=comma10.1 * ( puma=' ' all='District of Columbia' )
       / condense
     ;
-    format upuma $pumctyb. sex sex. &row_var &row_fmt;
+    format puma puma. aff_unit aff_unit. &row_var &row_fmt;
     title2 &title;
     title3 "Universe: &universe";
     footnote1 "Source: ACS IPUMS data, 2010-14 (&fdate)";
@@ -162,6 +164,7 @@
 
 %mend Count_table3;
 
+*tables for NH White and Hispanic; 
 %macro Count_table4( where=, row_var=, row_fmt=, title=, weight=hhwt, universe=Persons, out=);
 
   %fdate()
@@ -171,32 +174,32 @@
       where &where;
     %end;
     class &row_var;
-    class upuma hud_inc /order=data preloadfmt;
+    class puma race_cat1 ;
     var total;
     weight &weight;
     table 
       /** Pages (do not change) **/
-      all='Total' hud_inc=' '
+      all='Total' race_cat1=' '
   	,
       /** Rows **/
       all='Total' &row_var
       ,
       /** Columns (do not change) **/
-      total = "&universe" * sum=' ' * ( upuma=' ' all='Washington Region' )
+      total = "&universe" * sum=' ' * ( puma=' ' all='District of Columbia' )
       / condense
     ;
     table 
       /** Pages (do not change) **/
-      all='Total' hud_inc=' '
+      all='Total' race_cat1=' '
   	,
       /** Rows **/
       all='Total' &row_var
       ,
       /** Columns (do not change) **/
-      total = "% &universe" * colpctsum=' ' * f=comma10.1 * ( upuma=' ' all='Washington Region' )
+      total = "% &universe" * colpctsum=' ' * f=comma10.1 * ( puma=' ' all='District of Columbia' )
       / condense
     ;
-    format upuma $pumctyb. hud_inc hudinc. &row_var &row_fmt;
+    format puma puma. race_cat1 racecatA. &row_var &row_fmt;
     title2 &title;
     title3 "Universe: &universe";
     footnote1 "Source: ACS IPUMS data, 2010-14 (&fdate)";
@@ -207,6 +210,54 @@
   footnote1;
 
 %mend Count_table4;
+
+*tables for Race Alone; 
+%macro Count_table5( where=, row_var=, row_fmt=, title=, weight=hhwt, universe=Persons, out=);
+
+  %fdate()
+
+  proc tabulate data=Equity.Acs_tables_ipums format=comma10.0 noseps missing out=&out.;
+    %if "&where. "~= "" %then %do;
+      where &where;
+    %end;
+    class &row_var;
+    class puma race_cat2 ;
+    var total;
+    weight &weight;
+    table 
+      /** Pages (do not change) **/
+      all='Total' race_cat2=' '
+  	,
+      /** Rows **/
+      all='Total' &row_var
+      ,
+      /** Columns (do not change) **/
+      total = "&universe" * sum=' ' * ( puma=' ' all='District of Columbia' )
+      / condense
+    ;
+    table 
+      /** Pages (do not change) **/
+      all='Total' race_cat2=' '
+  	,
+      /** Rows **/
+      all='Total' &row_var
+      ,
+      /** Columns (do not change) **/
+      total = "% &universe" * colpctsum=' ' * f=comma10.1 * ( puma=' ' all='District of Columbia' )
+      / condense
+    ;
+    format puma puma. race_cat2 racecatB. &row_var &row_fmt;
+    title2 &title;
+    title3 "Universe: &universe";
+    footnote1 "Source: ACS IPUMS data, 2010-14 (&fdate)";
+
+  run;
+
+  title2;
+  footnote1;
+
+%mend Count_table5;
+
 
 %macro Count_table_med( where=, row_var=, row_fmt=, title=, weight=perwt, universe=Persons, out= );
 
@@ -288,7 +339,7 @@
     %end;
     class &row_var;
 	class &row_var2;
-    class upuma /order=data preloadfmt;
+    class puma ;
     var total;
     weight &weight;
     table 
@@ -299,7 +350,7 @@
       all='Total' &row_var. * &row_var2.
       ,
       /** Columns (do not change) **/
-      total = "&universe" * sum=' ' * ( upuma=' ' all='Washington Region' )
+      total = "&universe" * sum=' ' * ( puma=' ' all='District of Columbia' )
       / condense
     ;
     table 
@@ -310,10 +361,10 @@
       all='Total' &row_var. * &row_var2.
       ,
       /** Columns (do not change) **/
-      total = "% &universe" * colpctsum=' ' * f=comma10.1 * ( upuma=' ' all='Washington Region' )
+      total = "% &universe" * colpctsum=' ' * f=comma10.1 * ( puma=' ' all='District of Columbia' )
       / condense
     ;
-    format upuma $pumctyb. &row_var &row_fmt &row_var2 &row_fmt2;
+    format puma puma. &row_var &row_fmt &row_var2 &row_fmt2;
     title2 &title;
     title3 "Universe: &universe";
     footnote1 "Source: ACS IPUMS data, 2010-14 (&fdate)";
@@ -444,13 +495,9 @@
 
 %macro Income_table( where=, row_var=, row_fmt=, title=, weight=hhwt, universe=Households );
 
- 
+   %fdate()
 
-  %fdate()
-
- 
-
-  proc tabulate data=Equity.Acs_tables_ipums_inc format=comma10.1 noseps missing;
+   proc tabulate data=Equity.Acs_tables_ipums_inc format=comma10.1 noseps missing;
 
     %if &where~= %then %do;
 

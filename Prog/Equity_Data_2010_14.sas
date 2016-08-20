@@ -205,10 +205,10 @@ data Equity.Acs_tables_ipums (Label="iPUMS 2010-14 ACS for Racial Equity Profile
 		else foreign=0;
 
 	if mortgage=1 then ownfreeclear=1; 
-		else if mortgage=0 then ownfreeclear=.;
+		else if mortgage=0 then ownfreeclear=.u;
 		else ownfreeclear=0;
 	if mortgage in (3,4) then ownmortgage=1;
-		else if mortgage=0 then ownmortgage=.;
+		else if mortgage=0 then ownmortgage=.u;
 		else ownmortgage=0;
 
     if 025 =< age <= 64 then age25to64=1;
