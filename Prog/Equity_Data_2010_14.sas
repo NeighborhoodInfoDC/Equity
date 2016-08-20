@@ -90,7 +90,7 @@ proc sort data = pre_tables; by uniquehh; run;
 
 proc sort data = acs_nchild; by uniquehh; run;
 
-proc freq data=pre_tables;
+proc freq data=pre_tables noprint;
 tables uniquehh/list missing out=count_hh;
 run;
 
@@ -171,26 +171,38 @@ data Equity.Acs_tables_ipums (Label="iPUMS 2010-14 ACS for Racial Equity Profile
   else occunit = 1; **occupied housing unit**;*/
 
   	if race=1 and hispan=0 then raceW=1;
-		else raceW=.;
-	if hispan^=0 then raceH=1;
-		else raceH=.;
+		else raceW=0;
+	if hispan > 0 then raceH=1;
+		else raceH=0;
 	if race=3 then raceI=1;
-		else raceI=.;
+		else raceI=0;
 	if race=2 then raceB=1;
-		else raceB=.;
+		else raceB=0;
 	if race in (4,5,6) then raceA=1;
-		else raceA=.;
+		else raceA=0;
 	if race=7 then raceO=1;
-		else raceO=.;	
+		else raceO=0;	
 	if race in (8,9) then raceM=1;
-		else raceM=.;
+		else raceM=0;
 	if race in (3,7,8,9) then raceIOM=1;
-		else raceIOM=.;
+		else raceIOM=0;
 	if race >2 then raceAIOM=1;
-		else raceAIOM=.;
+		else raceAIOM=0;
+
+	/*NH White, NH Other, and Hispanic Categorical Variable*/
+	race_cat1=.;
+	if raceW=1 then race_cat1=1; 
+	if raceH=0 and raceW=0 then race_cat1=2;
+	if raceH=1 then race_cat1=3;
+
+	/*Black or Other race categoricial variable*/
+	race_cat2=.;
+	if raceB=1 then race_cat2=1;
+	if raceAIOM=1 then race_cat2=2;
+	if raceB=0 and raceAIOM=0 then race_cat2=3;
 
 	if citizen in (2,3,4,5) then foreign=1;
-		else foreign=.;
+		else foreign=0;
 
 	if mortgage=1 then ownfreeclear=1; 
 		else if mortgage=0 then ownfreeclear=.;
@@ -217,35 +229,39 @@ data Equity.Acs_tables_ipums (Label="iPUMS 2010-14 ACS for Racial Equity Profile
 	  else if hhincome > 0 then cost_burden = ( 100 * 12 * housing_costs ) / hhincome;
 	  else cost_burden = 100;
 
-    if cost_burden >= 50 then sevcostburden = 1;
-  		else sevcostburden=.;
-    if cost_burden >=30 then costburden=1;
-		else costburden=.;
- 	if 0 < cost_burden < 30 then nocostburden=1;
-		else nocostburden=.;
+	if cost_burden ne .u then do; 
+	    if cost_burden >= 50 then sevcostburden = 1;
+	  		else sevcostburden=0;
+	    if cost_burden >=30 then costburden=1;
+			else costburden=0;
+	 	if 0 < cost_burden < 30 then nocostburden=1;
+			else nocostburden=0;
+	end; 
 
+
+	/*Calculate the income level (% of AMI) that the Units rent level would be affordable to (regardless of income of tenant)*/
 		/*https://www.huduser.gov/portal/datasets/il/il14/index_il2014.html*/ 
-%macro setlimits;
+	%macro setlimits;
 
-	%let counts = 1 2 3 4 5 6 7 8;
-	%let limitone = 22500 25700 28900 32100 34700 37250 39850 42400;
-	%let limittwo = 37450 42800 48150 53500 57800 62100 66350 70650;
-	%let limitthree = 47950 54800 61650 68500 74000 79500 84950 90450;
-		%do i = 1 %to 8;
-			%let limit1=%scan(&limitone., &i., " ");
-			%let limit2=%scan(&limittwo., &i., " ");
-			%let limit3=%scan(&limitthree., &i., " ");
-			%let count=%scan(&counts., &i., " ");
-				if ownershp = 2 then do; 
-					if count = &count. then do;
-						if (rentgrs*12) < .30*&limit1. then aff_unit=1;**Aff to ELI**;
-						if .30*&limit1.<=(rentgrs*12)<.30*&limit2. then aff_unit=2;**Aff to VLI**;
-						if .30*&limit2.<=(rentgrs*12)<.30*&limit3. then aff_unit=3;**Aff to LI**;
-						if .30*&limit3.<=(rentgrs*12) then aff_unit=4;**Aff at 80 pct and above**;
-						end;
-				    end;
-		%end;
-%mend;
+		%let counts = 1 2 3 4 5 6 7 8;
+		%let limitone = 22500 25700 28900 32100 34700 37250 39850 42400;
+		%let limittwo = 37450 42800 48150 53500 57800 62100 66350 70650;
+		%let limitthree = 47950 54800 61650 68500 74000 79500 84950 90450;
+			%do i = 1 %to 8;
+				%let limit1=%scan(&limitone., &i., " ");
+				%let limit2=%scan(&limittwo., &i., " ");
+				%let limit3=%scan(&limitthree., &i., " ");
+				%let count=%scan(&counts., &i., " ");
+					if ownershp = 2 then do; 
+						if count = &count. then do;
+							if (rentgrs*12) < .30*&limit1. then aff_unit=1;**Aff to ELI**;
+							if .30*&limit1.<=(rentgrs*12)<.30*&limit2. then aff_unit=2;**Aff to VLI**;
+							if .30*&limit2.<=(rentgrs*12)<.30*&limit3. then aff_unit=3;**Aff to LI**;
+							if .30*&limit3.<=(rentgrs*12) then aff_unit=4;**Aff at 80 pct and above**;
+							end;
+					    end;
+			%end;
+	%mend;
 %setlimits;
 
 	if count >8 and ownershp = 2 then do;
@@ -264,22 +280,24 @@ data Equity.Acs_tables_ipums (Label="iPUMS 2010-14 ACS for Racial Equity Profile
 			racem = "Race: Two or More Races"
 			raceiom = "Race: American Indian/Alaskan Native, Other, and Two or More"
 			raceaiom = "Race: Asian/Pacific Islander, American Indian/Alaskan Native, Other, and Two or More"
+			race_cat1= "Race Category for Hispanic and Non-Hispanic White"
+			race_cat2= "Race Category for Race Alone"
 			foreign = "Foreign Born"
 			age25to64 = "Age: 25 to 64"
 			employed = "Employed"
 			emp25to64 = "Employed & Aged 25 to 64"
 			cost_burden = "Cost Burden"
-			sevcostburden = "Severely Cost Burdened"
-			costburden = "Cost Burdened"
-			nocostburden = "No Cost Burdened"
-			housing_costs = "Housing Costs"
-			ownmortgage = "Owned with mortgage or loan"
+			sevcostburden = "Household is Severely Housing Cost-Burdened"
+			costburden = "Household is Housing Cost-Burdened"
+			nocostburden = "Household is Not Cost-Burdened"
+			housing_costs = "Total Monthly Housing Costs"
+			ownmortgage = "Household Owns Unit with Mortgage or Loan"
 			ownfreeclear="Owned free and clear"
 			aff_unit="Income Level that Unit Rent is Affordable";
 
   run; 
 
-%File_info( data= Equity.Acs_tables, contents=n );
+%File_info( data= Equity.Acs_tables_ipums, contents=n );
 
 /*Quality Control*/
 
@@ -318,9 +336,9 @@ tables mortgage/list missing;
 tables mortgage*ownfreeclear*ownmortgage/list missing;
 run;
 
-proc freq data=Equity.Acs_tables_ipums(where=(city=7230 and ownershp=2 and rent^=0000));
-tables rent/list missing;
-tables hud_inc/list missing;
+proc freq data=Equity.Acs_tables_ipums(where=(city=7230 and ownershp=2));
+*tables rentgrs/list missing;
+tables hud_inc aff_unit ownershp/list missing;
 run;
 
 proc freq data=Equity.Acs_tables_ipums(where=(city=7230));

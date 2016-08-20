@@ -406,45 +406,9 @@ proc format;
 	2 = "At Least One Member with a Part-Time Job, No Full Time Workers"
 	3 = "At Least One Member with a Full-Time Job";
 
-	value racew 
-	. = "Not White-Non Hispanic"
-	1 = "White-Non Hispanic";
-
-	value raceh 
-	. = "Not Hispanic"
-	1 = "Hispanic";
-
-	value racei
-	. = "Not American Indian/Alaskan Native"
-	1 = "American Indian/Alaskan Native";
-
-	value raceb 
-	. = "Not Black"
-	1 = "Black";
-
-	value racea 
-	. = "Not Asian/Pacific Islander"
-	1 = "Asian/Pacific Islander";
-
-	value raceo 
-	. = "Not 'Other' Race"
-	1 = "Other Race";
-
-	value racem 
-	. = "Not Two or More Races"
-	1 = "Two or More Races";
-
-	value raceiom 
-	. = "Not American Indian/Alaskan Native, Other, and Two or More"
-	1 = "American Indian/Alaskan Native, Other, and Two or More";
-
-	value raceaiom 
-	. = "Not Asian/Pacific Islander, American Indian/Alaskan Native, Other, and Two or More"
-	1 = "Asian/Pacific Islander, American Indian/Alaskan Native, Other, and Two or More";
-
-	value foreign 
-	. = "Not Foreign Born"
-	1 = "Foreign Born";
+	value yesno
+	0 = "No"
+	1 = "Yes";
 
 	value age25to64_f 
 	. = "Not 25 to 64"
@@ -459,18 +423,6 @@ proc format;
 	1 = "Ages 25 to 64 and Employed"
 	. = "Ages 25 to 64 and Not in the Labor Force";
 
-	value sevcostburden
-	. = "Not Severely Cost Burdened"
-	1 = "Severely Cost Burdened";
-
-	value costburden
-	. = "Not Cost Burdened"
-	1 = "Cost Burdened";
-
-	value nocostburden 
-	. = "Cost Burdened"
-	1 = "No Cost Burdened";
-
 	/*value ownfreeclear
 	. = "Not owners"
 	0 = "Do Not Own Free and Clear"
@@ -483,10 +435,22 @@ proc format;
 
 	value aff_unit
 	. = "Household is larger than 8 people"
-	1 = "Unit is Affordable at ELI (Below 30% of Income Limit)"
-	2 = "Unit is Affordable at VLI (Between 30% and 49.9% of Income Limit)"
-	3 = "Unit is Affordable at LI (Between 50% and 79.9% of Income Limit)"
-	4 = "Unit is Affordable at 80 percent AMI and above";
+	1 = "Unit is Affordable at ELI (Below 30% of AMI)"
+	2 = "Unit is Affordable at VLI (30%-50% of AMI)"
+	3 = "Unit is Affordable at LI (50%-80% of AMIt)"
+	4 = "Unit is Affordable at 80% AMI and above";
+
+	value racecatA
+	1 = "Non-Hispanic White"
+	2 = "Non-Hispanic All Other Race"
+	3 = "Hispanic";
+
+	value racecatB
+	1 = "Black Alone"
+	2 = "Asian, Native American, Other or Multiple Race"
+	3 = "White Alone";
+
+
 
 run;
 
