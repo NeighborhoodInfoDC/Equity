@@ -219,7 +219,7 @@ data Equity.Acs_tables_ipums (Label="iPUMS 2010-14 ACS for Racial Equity Profile
  
     if age25to64=1 and employed=1 then emp25to64=1;
 	  	else if age25to64=1 and employed=0 then emp25to64=0;
-		else emp25to64=.;
+		else emp25to64=.u;
 
 	if ownershp = 1 then housing_costs = owncost;
   		else if ownershp = 2 then housing_costs = rentgrs;
