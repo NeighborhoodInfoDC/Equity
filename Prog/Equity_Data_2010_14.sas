@@ -295,6 +295,7 @@ data Equity.Acs_tables_ipums (Label="iPUMS 2010-14 ACS for Racial Equity Profile
 			ownfreeclear="Owned free and clear"
 			aff_unit="Income Level that Unit Rent is Affordable";
 
+			format race_cat1 racecatA. race_cat2 racecatB. aff_unit aff_unit.;
   run; 
 
 %File_info( data= Equity.Acs_tables_ipums, contents=n );
