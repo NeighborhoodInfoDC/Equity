@@ -421,20 +421,19 @@ proc format;
 	value emp25to64_f 
 	0 = "Ages 25 to 64 and Unemployed"
 	1 = "Ages 25 to 64 and Employed"
-	. = "Ages 25 to 64 and Not in the Labor Force";
+	.u = "Ages 25 to 64 and Not in the Labor Force";
 
 	/*value ownfreeclear
-	. = "Not owners"
+	.u = "Not owners"
 	0 = "Do Not Own Free and Clear"
 	1 = "Own Free and Clear";*/
 
 	value ownmortgage
-	. = "Not Owners"
+	.u = "Not Owners"
 	0 = "Own Free and Clear"
 	1 = "Own With Mortgage";
 
 	value aff_unit
-	. = "Household is larger than 8 people"
 	1 = "Unit is Affordable at ELI (Below 30% of AMI)"
 	2 = "Unit is Affordable at VLI (30%-50% of AMI)"
 	3 = "Unit is Affordable at LI (50%-80% of AMIt)"
@@ -450,7 +449,15 @@ proc format;
 	2 = "Asian, Native American, Other or Multiple Race"
 	3 = "White Alone";
 
-
+	value category
+	.= "Total"
+	2= "Non-Hispanic White"
+	3= "Non-Hispanic All Other"
+	4= "Hispanic"
+	5= "Black Alone"
+	6= "Asian, American Indian, Other Alone and Multiple Race"
+	7= "White Alone"
+	8= "Foreign Born";
 
 run;
 
