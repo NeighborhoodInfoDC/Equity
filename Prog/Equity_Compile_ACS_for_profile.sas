@@ -18,7 +18,7 @@
 %DCData_lib( Equity )
 
 %let geography=city Ward2012 cluster_tr2000;
-
+%let _years=2010_14;
 
 /** Macro Add_Percents- Start Definition **/
 
@@ -187,8 +187,8 @@
 
 	%do r=1 %to 4;
 
-		%let race=%scan(&racelist.,&r.,” “);
-		%let name=%scan(&racename.,&r.,” “);
+		%let race=%scan(&racelist.,&r.," ");
+		%let name=%scan(&racename.,&r.," ");
 	 
     %Pct_calc( var=PctPopUnder18Years&race., label=% children &name., num=PopUnder18Years&race., den=PopAlone&race., years= 2010_14 )
     
@@ -313,8 +313,8 @@
 
 	%do r=1 %to 4;
 
-			%let race=%scan(&racelist.,&r.,” “);
-			%let name=%scan(&racename.,&r.,” “);
+		%let race=%scan(&racelist.,&r.," ");
+		%let name=%scan(&racename.,&r.," ");
 		 
 	%Pct_calc( var=PctUnemployed&race., label=&name. Unemployment rate (%), num=PopUnemployed&race., den=PopInCivLaborForce&race., years=2010_14 )
 
@@ -380,8 +380,8 @@
 
 	%do r=1 %to 4;
 
-			%let race=%scan(&racelist.,&r.,” “);
-			%let name=%scan(&racename.,&r.,” “);
+		%let race=%scan(&racelist.,&r.," ");
+		%let name=%scan(&racename.,&r.," ");
 
     %Pct_calc( var=Pct25andOverWoutHS&race., label=% persons &name. without HS diploma, num=Pop25andOverWoutHS&race., den=Pop25andOverYears&race., years=2010_14 )
 
@@ -474,8 +474,8 @@
     
 	%do r=1 %to 4;
 
-			%let race=%scan(&racelist.,&r.,” “);
-			%let name=%scan(&racename.,&r.,” “);
+		%let race=%scan(&racelist.,&r.," ");
+		%let name=%scan(&racename.,&r.," ");
 
     %Pct_calc( var=PctFamilyLT75000&race., label=% families &name. with income less than 75000, num=FamIncomeLT75k&race., den=FamIncome&race., years=2010_14 )
 
@@ -529,8 +529,8 @@
 
 	%do r=1 %to 4;
 
-			%let race=%scan(&racelist.,&r.,” “);
-			%let name=%scan(&racename.,&r.,” “);
+		%let race=%scan(&racelist.,&r.," ");
+		%let name=%scan(&racename.,&r.," ");
 
     %Pct_calc( var=PctOwnerOccupiedHU&race., label=Homeownership rate &name.(%), num=NumOwnerOccupiedHU&race., den=NumOccupiedHsgUnits&race., years=2010_14 )
 
