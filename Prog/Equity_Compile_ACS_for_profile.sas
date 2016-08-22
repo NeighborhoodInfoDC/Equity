@@ -326,13 +326,13 @@
 
 	%Pct_calc( var=PctWorkFTLT35k&race., label=% persons &name. employed full time with earnings less than 35000, num=PopWorkFTLT35K&race., den=PopWorkFT&race., years=2010_14 )
 
-	%Moe_prop_a( var=PctWorkFTLT35k&race._m_2010_14, mult=100, num=PopWorkFTLT35k&race._2010_14, den=PopWorkFTLT35k&race._2010_14, 
-                       num_moe=mPopWorkFTLT35k&race._2010_14, den_moe=mPopWorkFTLT35k&race._2010_14 );
+	%Moe_prop_a( var=PctWorkFTLT35k&race._m_2010_14, mult=100, num=PopWorkFTLT35k&race._2010_14, den=PopWorkFT&race._2010_14, 
+                       num_moe=mPopWorkFTLT35k&race._2010_14, den_moe=mPopWorkFT&race._2010_14 );
 
 	%Pct_calc( var=PctWorkFTLT75k&race., label=% persons &name. employed full time with earnings less than 75000, num=PopWorkFTLT75k&race., den=PopWorkFT&race., years=2010_14 )
 
-	%Moe_prop_a( var=PctWorkFTLT75k&race._m_2010_14, mult=100, num=PopWorkFTLT75k&race._2010_14, den=PopWorkFTLT75k&race._2010_14, 
-                       num_moe=mPopWorkFTLT75k&race._2010_14, den_moe=mPopWorkFTLT75k&race._2010_14 );
+	%Moe_prop_a( var=PctWorkFTLT75k&race._m_2010_14, mult=100, num=PopWorkFTLT75k&race._2010_14, den=PopWorkFT&race._2010_14, 
+                       num_moe=mPopWorkFTLT75k&race._2010_14, den_moe=mPopWorkFT&race._2010_14 );
 
 	%Pct_calc( var=PctEmployedMngmt&race., label=% persons &name. 16+ years old employed in management business science and arts occupations, num=PopEmployedMngmt&race., den=PopEmployedByOcc&race., years=2010_14 )
 
@@ -470,7 +470,7 @@
     %Moe_prop_a( var=PctFamilyGT200000&race._m_2010_14, mult=100, num=FamIncomeGT200k&race._2010_14, den=NumFamilies&race._2010_14, 
                        num_moe=mFamIncomeGT200k&race._2010_14, den_moe=mNumFamilies&race._2010_14 );
 
-	%Pct_calc( var=AvgHshldIncome&race., label=Aggregate family income last year &name. ($), num=AggHshldIncome&race., den=NumHshlds&race., mult=1, years=2010_14 )
+	%Pct_calc( var=AvgHshldIncome&race., label=Average household income last year, &name. ($), num=AggHshldIncome&race., den=NumHshlds&race., mult=1, years=2010_14 )
 
 	%dollar_convert( AvgHshldIncome&race._2010_14, AvgHshldIncAdj&race._2010_14, 2014, &inc_dollar_yr );
 
@@ -480,10 +480,6 @@
                         
     %dollar_convert( AvgHshldIncome&race._m_2010_14, AvgHshldIncAdj&race._m_2010_14, 2014, &inc_dollar_yr )
 
-	%dollar_convert( MedFamIncm&race._2010_14, MedFamilyIncAdj&race._2010_14, 2014, &inc_dollar_yr )
-
-    %dollar_convert( mMedFamIncm&race._2010_14, MedFamilyIncAdj&race._m_2010_14, 2014, &inc_dollar_yr )
-
 	%end;
 
 	label
@@ -491,10 +487,6 @@
 	  AvgHshldIncAdjW_2010_14 = "Average household income, Non-Hispanic White, 2010-14"
 	  AvgHshldIncAdjH_2010_14 = "Average household income, Hispanic/Latino, 2010-14"
 	  AvgHshldIncAdjAIOM_2010_14 = "Average household income, All remaining groups other than Black, Non-Hispanic White, Hispanic, 2010-14"
-	  MedFamilyIncAdjB_2010_14 = "Medium family income, Black/African American, 2010-14"
-	  MedFamilyIncAdjW_2010_14 = "Medium family income, Non-Hispanic White, 2010-14"
-	  MedFamilyIncAdjH_2010_14 = "Medium family income, Hispanic/Latino, 2010-14"
-	  MedFamilyIncAdjAIOM_2010_14 = "Medium family income, All remaining groups other than Black, Non-Hispanic White, Hispanic, 2010-14"
       ;
 
         

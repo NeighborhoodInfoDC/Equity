@@ -1079,12 +1079,13 @@
 			sum(B23001e3, B23001e10, B23001e17, B23001e24, B23001e31, B23001e38, B23001e45, B23001e52, 
 				B23001e59, B23001e66, B23001e89, B23001e96, B23001e103, B23001e110, B23001e117, B23001e124, 
 				B23001e131, B23001e138, B23001e145, B23001e152 );
-			Pop16_64yearsB_&_years. = C23002Be3;
-			Pop16_64yearsW_&_years.	= C23002He3;
-			Pop16_64yearsH_&_years.	= C23002Ie3;
-			Pop16_64yearsA_&_years.	= sum(C23002De3, C23002Ee3 );
-			Pop16_64yearsIOM_&_years. = sum(C23002Ce3, C23002Fe3, C23002Ge3 );
-			Pop16_64yearsAIOM_&_years. = sum(C23002Ce3, C23002De3, C23002Ee3, C23002Fe3, C23002Ge3 );
+			Pop16_64yearsB_&_years. = (C23002Be3, C23002Be16 );
+			Pop16_64yearsW_&_years.	= (C23002He3, C23002He16 );
+			Pop16_64yearsH_&_years.	= (C23002Ie3, C23002Ie16 );
+			Pop16_64yearsA_&_years.	= sum(C23002De3, C23002De16, C23002Ee3, C23002Ee16 );
+			Pop16_64yearsIOM_&_years. = sum(C23002Ce3, C23002Ce16, C23002Fe3, C23002Fe16, C23002Ge3, C23002Ge16 );
+			Pop16_64yearsAIOM_&_years. = sum(C23002Ce3, C23002Ce16, C23002De3, C23002De16, C23002Ee3, C23002Ee16, 
+											 C23002Fe3, C23002Fe16, C23002Ge3, C23002Ge16 )
 
 	  Pop25_64years_&_years. = 
 			sum(B01001e11, B01001e12, B01001e13, B01001e14, B01001e15, B01001e16, B01001e17, 
@@ -1411,12 +1412,14 @@
 		%moe_sum( var=B23001m3 B23001m10 B23001m17 B23001m24 B23001m31 B23001m38 B23001m45 B23001m52 
 			B23001m59 B23001m66 B23001m89 B23001m96 B23001m103 B23001m110 B23001m117 B23001m124 
 			B23001m131 B23001m138 B23001m145 B23001m152);
-			mPop16_64yearsB_&_years. = C23002Bm3;
-			mPop16_64yearsW_&_years. = C23002Hm3;
-			mPop16_64yearsH_&_years. = C23002Im3;
-			mPop16_64yearsA_&_years. = %moe_sum( var=C23002Dm3 C23002Em3);
-			mPop16_64yearsIOM_&_years. = %moe_sum( var=C23002Cm3 C23002Fm3 C23002Gm3); 
-			mPop16_64yearsAIOM_&_years. = %moe_sum( var=C23002Cm3 C23002Dm3 C23002Em3 C23002Fm3 C23002Gm3);
+			mPop16_64yearsB_&_years. = %moe_sum( var=C23002Bm3 C23002Bm16);
+			mPop16_64yearsW_&_years. = %moe_sum( var=C23002Hm3 C23002Hm16);
+			mPop16_64yearsH_&_years. = %moe_sum( var=C23002Im3 C23002Im16);
+			mPop16_64yearsA_&_years. = %moe_sum( var=C23002Dm3 C23002Dm16 C23002Em3 C23002Em16);
+			mPop16_64yearsIOM_&_years. = %moe_sum( var=C23002Cm3 C23002Cm16 C23002Fm3 C23002Fm16 C23002Gm3 C23002Gm16) ; 
+			mPop16_64yearsAIOM_&_years. = %moe_sum( var=C23002Cm3 C23002Cm16 C23002Dm3 C23002Dm16 C23002Em3 C23002Em16 
+														C23002Fm3 C23002Fm16 C23002Gm3 C23002Gm16);
+
 
 	  mPop25_64years_&_years.	 = 
 		%moe_sum( var=B01001m11 B01001m12 B01001m13 B01001m14 B01001m15 B01001m16 
