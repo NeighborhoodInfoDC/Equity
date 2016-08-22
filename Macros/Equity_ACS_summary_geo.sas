@@ -440,7 +440,7 @@
     %Dc_update_meta_file(
       ds_lib=&_out_lib,
       ds_name=&out_ds,
-      creator_process=ACS_&_years._&state_ab._sum_all.sas,
+      creator_process=Equity_ACS_&_years._&state_ab._sum_all.sas,
       restrictions=None,
       revisions=%str(&_revisions)
     )
