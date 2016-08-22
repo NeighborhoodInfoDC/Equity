@@ -363,7 +363,7 @@
 
 	%Pct_calc( var=Pct16andOverEmployedW, label=% pop. 16+ yrs. employed NH-White, num=Pop16andOverEmployedW, den=Pop16andOverYearsW, years=2010_14 )
 
-    %Moe_prop_a( var=Pct16andOverEmployed_m_2010_14W, mult=100, num=Pop16andOverEmployedW_2010_14, den=Pop16andOverYearsW_2010_14, 
+    %Moe_prop_a( var=Pct16andOverEmployedW_m_2010_14, mult=100, num=Pop16andOverEmployedW_2010_14, den=Pop16andOverYearsW_2010_14, 
                        num_moe=mPop16andOverEmployedW_2010_14, den_moe=mPop16andOverYearsW_2010_14 );
 
     %Pct_calc( var=Pct16andOverEmployedB, label=% pop. 16+ yrs. employed Black-Alone, num=Pop16andOverEmployedB, den=Pop16andOverYearsB, years=2010_14 )
@@ -393,7 +393,7 @@
 
 	%Pct_calc( var=Pct25andOverWHS&race., label=% persons &name. with HS diploma, num=Pop25andOverWHS&race., den=Pop25andOverYears&race., years=2010_14 )
 
-    %Moe_prop_a( var=Pct25andOverAllWHS&race._m_2010_14, mult=100, num=Pop25andOverWHS&race._2010_14, den=Pop25andOverYears&race._2010_14, 
+    %Moe_prop_a( var=Pct25andOverWHS&race._m_2010_14, mult=100, num=Pop25andOverWHS&race._2010_14, den=Pop25andOverYears&race._2010_14, 
                        num_moe=mPop25andOverWHS&race._2010_14, den_moe=mPop25andOverYears&race._2010_14 );
 
 	%Pct_calc( var=Pct25andOverWSC&race., label=% persons &name. with some college, num=Pop25andOverWSC&race., den=Pop25andOverYears&race., years=2010_14 )
@@ -470,7 +470,7 @@
     %Moe_prop_a( var=PctFamilyGT200000&race._m_2010_14, mult=100, num=FamIncomeGT200k&race._2010_14, den=NumFamilies&race._2010_14, 
                        num_moe=mFamIncomeGT200k&race._2010_14, den_moe=mNumFamilies&race._2010_14 );
 
-	%Pct_calc( var=AvgHshldIncome&race., label=Average household income last year, &name. ($), num=AggHshldIncome&race., den=NumHshlds&race., mult=1, years=2010_14 )
+	%Pct_calc( var=AvgHshldIncome&race., label=Average household income last year &name. ($), num=AggHshldIncome&race., den=NumHshlds&race., mult=1, years=2010_14 )
 
 	%dollar_convert( AvgHshldIncome&race._2010_14, AvgHshldIncAdj&race._2010_14, 2014, &inc_dollar_yr );
 

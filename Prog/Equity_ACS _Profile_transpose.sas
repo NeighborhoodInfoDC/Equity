@@ -1,3 +1,22 @@
+/**************************************************************************
+ Program:  Equity_ACS_profile_transpose.sas
+ Library:  Equity
+ Project:  NeighborhoodInfo DC
+ Author:   L. Hendey & S. Diby
+ Created:  08/22/16
+ Version:  SAS 9.4
+ Environment:  Windows
+ 
+ Description:  Transposes calculated indicators for Equity profiles 
+			   and merges calculated statistics for ACS data at different geographies. 
+**************************************************************************/
+%include "L:\SAS\Inc\StdLocal.sas";
+
+** Define libraries **;
+%DCData_lib( ACS )
+%DCData_lib( Equity )
+
+
 data city_ward;
 	set equity.equity_profile_city
 			equity.equity_profile_wd12;
@@ -6,20 +25,39 @@ data city_ward;
 
 run; 
 
-proc transpose data=city_ward out=race ; 
-var PctAlone: NumFamilies: ;
+proc transpose data=city_ward out=city_ward_race ; 
+var PctBlackNonHispBridge: PctWhiteNonHispBridge:
+	PctHisp: PctAsnPINonHispBridge: PctOth:
+	PctAloneB: PctAloneW: PctAloneH: PctAloneA_:
+	PctAloneI_: PctAloneO: PctAloneM: PctAloneIOM: PctAloneAIOM:
+	PctForeignBorn: PctPoorPersonsFB: PctOLang: 
+	PctPopUnder18Years: PctPop18_34Years: 
+	PctPop35_64Years: PctPop65andOver:
+	Pct25andOverWoutHS: Pct25andOverWHS: Pct25andOverWSC:
+	PctPoorPersonsB: PctPoorPersonsW: 
+	PctPoorPersonsH: PctPoorPersonsAIOM:
+	PctPoorChildrenB: PctPoorChildrenW:
+	PctPoorChildrenH: PctPoorChildrenAIOM:
+	PctFamilyLT75000: PctFamilyGT200000:
+	AvgHshldIncAdj: PctUnemployed: 
+	PctEmployed16to64: Pct16andOverEmploy:
+	Pct16andOverWages: Pct16andOverWorkFT: 
+	PctWorkFTLT35k:	PctWorkFTLT75k:
+	PctEmployedMngmt: PctEmployedServ:
+	PctEmployedSales: PctEmployedNatRes: 
+	PctEmployedProd: PctOwnerOccupiedHU:
+ ;
 id ward2012; 
 run; 
 
-data race2 (where=(category ~=.));
-	set race;
+data city_ward_race_2 (where=(category ~=.));
+	set city_ward_race;
 
 black=index(_name_, "B_2010_14");
 if black=0 then black=index(_name_,"B_m_2010_14");
 
 white=index(_name_, "W_2010_14");
 if white=0 then white=index(_name_,"W_m_2010_14");
-
 
 hispanic=index(_name_, "H_2010_14");
 if hispanic=0 then hispanic=index(_name_,"H_m_2010_14");
