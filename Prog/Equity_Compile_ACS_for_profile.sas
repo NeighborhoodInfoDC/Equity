@@ -21,10 +21,7 @@
 %let racelist=W B H AIOM;
 %let racename= NH-White Black-Alone Hispanic All-Other;
 %let geography=city Ward2012 cluster_tr2000;
-<<<<<<< HEAD
-=======
 %let _years=2010_14;
->>>>>>> origin/develop_2
 
 /** Macro Add_Percents- Start Definition **/
 
@@ -40,7 +37,7 @@
   %let geoafmt = %sysfunc( putc( %upcase( &geo ), $geoafmt. ) );
 
   data Equity_profile&geosuf._A (compress=no);  
-  merge  
+  	merge  
           equity.acs_2010_14_dc_sum_bg&geosuf
         (keep=&geo TotPop: mTotPop: 
 		   PopUnder5Years_: mPopUnder5Years_:
@@ -151,7 +148,6 @@
 		   PopPoorElderly: mPopPoorElderly:
 		   ElderlyPovertyDefined: mElderlyPovertyDefined:
 		   rename=(TotPop_2010_14=TotPop_tr_2010_14 mTotPop_2010_14=mTotPop_tr_2010_14))
- 
          ;
     	 by &geo;
    
@@ -173,15 +169,15 @@
     
 	%Label_var_years( var=TotPop, label=Population, years= 2010_14 )
 
-	%Pct_calc( var=PctForeignBorn, label=% foreign born, num=PopForeignBorn, den=TotPop_tr, years=2010_14 )
+	%Pct_calc( var=PctForeignBorn, label=% foreign born, num=PopForeignBorn, den=PopWithRace, years=2010_14 )
 
-    %Moe_prop_a( var=PctForeignBorn_m_2010_14, mult=100, num=PopForeignBorn_2010_14, den=TotPop_tr_2010_14, 
-                       num_moe=mPopForeignBorn_2010_14, den_moe=mTotPop_tr_2010_14 );
+    %Moe_prop_a( var=PctForeignBorn_m_2010_14, mult=100, num=PopForeignBorn_2010_14, den=PopWithRace_2010_14, 
+                       num_moe=mPopForeignBorn_2010_14, den_moe=mPopWithRace_2010_14 );
 
-	%Pct_calc( var=PctNativeBorn, label=% native born, num=PopNativeBorn, den=TotPop_tr, years=2010_14 )
+	%Pct_calc( var=PctNativeBorn, label=% native born, num=PopNativeBorn, den=PopWithRace, years=2010_14 )
 
-    %Moe_prop_a( var=PctNativeBorn_m_2010_14, mult=100, num=PopNativeBorn_2010_14, den=TotPop_tr_2010_14, 
-                       num_moe=mPopNativeBorn_2010_14, den_moe=mTotPop_tr_2010_14 );
+    %Moe_prop_a( var=PctNativeBorn_m_2010_14, mult=100, num=PopNativeBorn_2010_14, den=PopWithRace_2010_14, 
+                       num_moe=mPopNativeBorn_2010_14, den_moe=mPopWithRace_2010_14 );
 
 
 	%do r=1 %to 4;
@@ -476,7 +472,7 @@
 
 	%Pct_calc( var=AvgHshldIncome&race., label=Aggregate family income last year &name. ($), num=AggHshldIncome&race., den=NumHshlds&race., mult=1, years=2010_14 )
 
-	%dollar_convert( AvgHshldIncome&race._2010_14, AvgHshldIncAdj&race._2010_14, 2014, &inc_dollar_yr )
+	%dollar_convert( AvgHshldIncome&race._2010_14, AvgHshldIncAdj&race._2010_14, 2014, &inc_dollar_yr );
 
 	AvgHshldIncome&race._m_2010_14 = 
       %Moe_ratio( num=AggHshldIncome&race._2010_14, den=NumHshlds&race._2010_14, 
@@ -484,9 +480,9 @@
                         
     %dollar_convert( AvgHshldIncome&race._m_2010_14, AvgHshldIncAdj&race._m_2010_14, 2014, &inc_dollar_yr )
 
-	%dollar_convert( MedFamIncome&race._2010_14, MedFamIncAdj&race._2010_14, 2014, &inc_dollar_yr )
+	%dollar_convert( MedFamIncm&race._2010_14, MedFamilyIncAdj&race._2010_14, 2014, &inc_dollar_yr )
 
-    %dollar_convert( MedFamIncome&race._m_2010_14, MedFamIncAdj&race._m_2010_14, 2014, &inc_dollar_yr )
+    %dollar_convert( mMedFamIncm&race._2010_14, MedFamilyIncAdj&race._m_2010_14, 2014, &inc_dollar_yr )
 
 	%end;
 
@@ -527,7 +523,7 @@
 
     ** Create flag for generating profile **;
     
-    if TotPop_2010 >= 100 then _make_profile = 1;
+    if TotPop_2010_14 >= 100 then _make_profile = 1;
     else _make_profile = 0;
     
  
@@ -543,13 +539,12 @@
 
 %add_percents; 
 
-proc print data=equity.equity_profile_city;
+/*proc print data=equity.equity_profile_city;
 var city AvgHshldIncomeB_2010_14 AvgHshldIncomeW_2010_14 AvgHshldIncomeH_2010_14 AvgHshldIncomeAIOM_2010_14
 AvgHshldIncomeB_m_2010_14 AvgHshldIncomeW_m_2010_14 AvgHshldIncomeH_m_2010_14 AvgHshldIncomeAIOM_m_2010_14
 ;
 
-
-/*proc print data=equity.equity_profile_wd12;
+proc print data=equity.equity_profile_wd12;
 var ward2012 
 PctAloneB_2010_14 PctAloneB_m_2010_14 PctAloneW_2010_14 PctAloneW_m_2010_14 
 PctAloneH_2010_14 PctAloneH_m_2010_14  PctAloneA_2010_14 PctAloneA_m_2010_14 
