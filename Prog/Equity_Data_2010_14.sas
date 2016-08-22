@@ -302,6 +302,10 @@ data Equity.Acs_tables_ipums (Label="iPUMS 2010-14 ACS for Racial Equity Profile
 
 /*Quality Control*/
 
+proc freq data=Equity.Acs_tables_ipums (where=(city=7230));
+tables puma/list missing;
+run;
+
 proc freq data=Equity.Acs_tables_ipums(where=(aff_unit=. and raceB=1 and city=7230));
 tables aff_unit*rent*count/list missing;
 run;
