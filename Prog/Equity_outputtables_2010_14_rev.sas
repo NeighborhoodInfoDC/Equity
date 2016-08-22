@@ -47,11 +47,6 @@ options nospool;
 
 	run;
 
-	data costb_NHWH;
-		set costb_NHWH;
-		if puma=. then puma=999;
-		run;
-
 		data costb_NHWH0 (drop=_table_ costburden race_cat1);
 
 			set costb_NHWH (where=(_table_=1 & costburden=.) keep =_table_ puma total_Sum costburden race_cat1);
@@ -106,12 +101,7 @@ options nospool;
 
 	run;
 
-	data costb_alone;
-		set costb_alone;
-		if puma=. then puma=999;
-		run;
-
-		data costb_alone0 (drop=_table_ costburden race_cat2);
+	data costb_alone0 (drop=_table_ costburden race_cat2);
 
 			set costb_alone (where=(_table_=1 & costburden=.) keep =_table_ puma total_Sum costburden race_cat2);
 
@@ -162,11 +152,6 @@ options nospool;
 	  title= "Table 3. Cost Burden for Renters Who are Foreign-Born" );
 	run;
 
-	data costb_for;
-		set costb_for;
-		if puma=. then puma=999;
-		run;
-
 		data costb_for0 (drop=_table_ costburden );
 
 			set costb_for (where=(_table_=1 & costburden=.) keep =_table_ puma total_Sum costburden );
@@ -206,11 +191,6 @@ options nospool;
 	  title= "Table 4. Severe Cost Burden for Renters, White-Non Hispanic, Hispanic" );
 
 	run;
-
-	data scostb_NHWH;
-		set scostb_NHWH;
-		if puma=. then puma=999;
-		run;
 
 		data scostb_NHWH0 (drop=_table_ sevcostburden race_cat1);
 
@@ -267,11 +247,6 @@ options nospool;
 
 	run;
 
-	data scostb_Alone;
-		set scostb_Alone;
-		if puma=. then puma=999;
-		run;
-
 		data scostb_alone0 (drop=_table_ sevcostburden race_cat2);
 
 			set scostb_alone (where=(_table_=1 & sevcostburden=.) keep =_table_ puma total_Sum sevcostburden race_cat2);
@@ -323,11 +298,6 @@ options nospool;
 	  title= "Table 6. Severe Cost Burden for Renters Who are Foreign-Born" );
 	run;
 
-	data scostb_for;
-		set scostb_for;
-		if puma=. then puma=999;
-		run;
-
 		data scostb_for0 (drop=_table_ sevcostburden );
 
 			set scostb_for (where=(_table_=1 & sevcostburden=.) keep =_table_ puma total_Sum sevcostburden );
@@ -367,11 +337,6 @@ options nospool;
 	  title= "Table 7. Share of Population Ages 25-64 that is Employed, Non-Hispanic White, Hispanic" );
 
 	run;
-
-	data emp_NHWH;
-		set emp_NHWH;
-		if puma=. then puma=999;
-		run;
 
 		data emp_NHWH0 (drop=_table_ emp25to64 race_cat1);
 
@@ -485,11 +450,6 @@ options nospool;
 
 	run;
 
-	data emp_alone;
-		set emp_alone;
-		if puma=. then puma=999;
-		run;
-
 		data emp_alone0 (drop=_table_ emp25to64 race_cat2);
 
 			set emp_alone (where=(_table_=1 & emp25to64=.) keep =_table_ puma total_Sum emp25to64 race_cat2);
@@ -600,11 +560,6 @@ options nospool;
 
 	run;
 
-	data emp_for;
-		set emp_for;
-		if puma=. then puma=999;
-		run;
-
 		data emp_for0 (drop=_table_ emp25to64 );
 
 			set emp_for (where=(_table_=1 & emp25to64=.) keep =_table_ puma total_Sum emp25to64 );
@@ -678,11 +633,6 @@ options nospool;
 	  out=mort_NHWH,
 	  title= "Table 10. Mortgage Status for Homeowners, Non Hispanic White, Hispanic" );
 	run;
-
-	data mort_NHWH;
-		set mort_NHWH;
-		if puma=. then puma=999;
-		run;
 
 		data mort_NHWH0 (drop=_table_ ownmortgage race_cat1);
 
@@ -765,11 +715,6 @@ options nospool;
 	  title= "Table 11. Mortgage Status for Homeowners, Races Alone" );
 	run;
 
-	data mort_alone;
-		set mort_alone;
-		if puma=. then puma=999;
-		run;
-
 		data mort_alone0 (drop=_table_ ownmortgage race_cat2);
 
 			set mort_alone (where=(_table_=1 & ownmortgage=.) keep =_table_ puma total_Sum ownmortgage race_cat2);
@@ -851,11 +796,6 @@ options nospool;
 
 	run;
 
-	data mort_for;
-		set mort_for;
-		if puma=. then puma=999;
-		run;
-
 		data mort_for0 (drop=_table_ ownmortgage );
 
 			set mort_for (where=(_table_=1 & ownmortgage=.) keep =_table_ puma total_Sum ownmortgage );
@@ -914,11 +854,6 @@ options nospool;
 		title="Table 13. Housing Affordability for Renters, Non-Hispanic White, Hispanic"); 
 		run;
 
-	data aff_NHWH;
-		set aff_NHWH;
-		if puma=. then puma=999;
-		run;
-	
 		data aff_NHWH2a (drop=_table_ aff_unit race_cat1);
 
 			set aff_NHWH (where=(_table_=1 & aff_unit=1) keep =_table_ puma total_Sum aff_unit race_cat1);
@@ -1050,12 +985,6 @@ options nospool;
 		title="Table 14. Housing Affordability for Renters, Race Alone"); 
 		run;
 
-	data aff_alone;
-		set aff_alone;
-		if puma=. then puma=999;
-		run;
-
-	
 		data aff_alone2a (drop=_table_ aff_unit race_cat2);
 
 			set aff_alone (where=(_table_=1 & aff_unit=1) keep =_table_ puma total_Sum aff_unit race_cat2);
@@ -1178,11 +1107,6 @@ options nospool;
 		universe=Renters,
 		out=aff_for,
 		title="Table 15. Housing Affordability for Renters, Foreign Born"); 
-		run;
-
-	data aff_for;
-		set aff_for;
-		if puma=. then puma=999;
 		run;
 
 		data aff_for2a (drop=_table_  aff_unit foreign );
@@ -1441,6 +1365,8 @@ options nospool;
 				emp_for0  emp_for2a emp_for2b emp_for2c emp_for3a emp_for3b emp_for3c;
 		by PUMA category;
 		format puma puma_id.;
+
+		if puma=. then puma="000";
 		run; 
 proc sort data=merged_data;
 by category;
@@ -1493,7 +1419,7 @@ if _name_="PctRentUnitsLI" then order=23;
 if _name_="NumRentUnitsMHI" then order=24;
 if _name_="PctRentUnitsMHI" then order=25;
 
-label PUMA999 = "District of Columbia";
+label PUMA000 = "District of Columbia";
 run; 
 
 proc sort data=profile_tabs_ipums out=sorted;
