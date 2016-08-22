@@ -460,7 +460,7 @@ proc format;
 	8= "Foreign Born";
 
 	value puma_id;
-	000 = "District of Columbia"
+	100 = "District of Columbia"
 	101 = "101"
 	102 = "102"
 	103 = "103"

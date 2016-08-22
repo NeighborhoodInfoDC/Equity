@@ -35,6 +35,46 @@
 
 options nospool;
 
+%macro rename(data);
+
+/** First, create a data set with the list of variables in your input data set **/
+
+proc contents data=&data out=_contents noprint;
+
+/** Then, turn the list into a macro variable list: **/
+
+proc sql noprint;
+  select name 
+  into :varlist separated by ' '
+  from _contents
+  ;
+quit;
+
+/** Next, you need to process each var in the list into a rename statement. **/
+
+%let i = 1;
+%let v = %scan( &varlist, &i );
+%let rename = ;
+
+%do %while ( &v ~= );
+  
+  %let rename = &rename &v=c&v.;
+
+  %let i = %eval( &i + 1 );
+  %let v = %scan( &varlist, &i );
+
+%end;
+
+/** Finally, you apply the rename statement to your data set. **/
+
+data &data._new;
+  set &data;
+  rename &rename ;
+run;
+%mend rename;
+
+
+
 /*COST BURDEN*/ 
 	%Count_table4( 
 	  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 ),
@@ -1366,12 +1406,34 @@ options nospool;
 		by PUMA category;
 		format puma puma_id.;
 
-		if puma=. then puma="000";
+		if puma=. then puma=100;
+
+		mergeflag=1; 
 		run; 
-proc sort data=merged_data;
+
+data whiterates;
+	set merged_data (where=(category=2 & puma=100));
+
+	run; 
+
+%rename(whiterates);
+run; 
+data merged_data_WR (drop=cNum: cPct: cPop: mergeflag);
+	merge merged_data whiterates_new (drop=cPUMA cCategory rename=(cmergeflag=mergeflag));
+	by mergeflag;
+
+	GapRentCostB=cPctRentCostB/100*NumRenters-NumRentCostB;
+	/*calcualte other gaps for Pct vars*/
+	run;
+
+	/*check proc print data=merged_data_wr;
+	var category puma GapRentCostB PctRentCostB cPctRentCostB NumRenters NumRentCostB;
+
+	run;*/
+proc sort data=merged_data_WR;
 by category;
 
-Proc transpose data=merged_data out=transposed_data prefix=PUMA;
+Proc transpose data=merged_data_WR out=transposed_data prefix=PUMA;
 by category;
 id puma; 
 format puma puma_id.;
@@ -1384,11 +1446,12 @@ proc freq data=transposed_data;
 tables _name_;
 run;
 data profile_tabs_ipums ; 
-	set transposed_data; 
+	set transposed_data ; 
 
 rename _name_=Indicator;
 
 order = .;
+/*need to add GAP variables into order*/ 
 
 if _name_ ="Pop25to64years" then order=1;
 if _name_="Pop25to64yearsEmp" then order=2; 
@@ -1407,19 +1470,20 @@ if _name_="PctOwnersOweMort"  then order=13;
 
 if _name_="NumRentCostB" then order=14;
 if _name_="PctRentCostB" then order=15;
-if _name_="NumRentSevCostB" then order=16;
-if _name_="PctRentSevCostB" then order=17;
+if _name_="GapRentCostB" then order=16;
+if _name_="NumRentSevCostB" then order=17;
+if _name_="PctRentSevCostB" then order=18;
 
-if _name_="NumRentUnitsELI" then order=18;
-if _name_="PctRentUnitsELI" then order=19;
-if _name_="NumRentUnitsVLI" then order=20;
-if _name_="PctRentUnitsVLI" then order=21;
-if _name_="NumRentUnitsLI" then order=22;
-if _name_="PctRentUnitsLI" then order=23;
-if _name_="NumRentUnitsMHI" then order=24;
-if _name_="PctRentUnitsMHI" then order=25;
+if _name_="NumRentUnitsELI" then order=19;
+if _name_="PctRentUnitsELI" then order=20;
+if _name_="NumRentUnitsVLI" then order=21;
+if _name_="PctRentUnitsVLI" then order=22;
+if _name_="NumRentUnitsLI" then order=23;
+if _name_="PctRentUnitsLI" then order=24;
+if _name_="NumRentUnitsMHI" then order=25;
+if _name_="PctRentUnitsMHI" then order=26;
 
-label PUMA000 = "District of Columbia";
+label PUMA100 = "District of Columbia";
 run; 
 
 proc sort data=profile_tabs_ipums out=sorted;
