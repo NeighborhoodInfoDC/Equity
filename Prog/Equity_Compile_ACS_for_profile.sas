@@ -17,8 +17,10 @@
 %DCData_lib( ACS )
 %DCData_lib( Equity )
 
+%let inc_dollar_yr=2015;
+%let racelist=W B H AIOM;
+%let racename= NH-White Black-Alone Hispanic All-Other;
 %let geography=city Ward2012 cluster_tr2000;
-
 
 /** Macro Add_Percents- Start Definition **/
 
@@ -26,8 +28,7 @@
 
 %do i = 1 %to 3; 
   %let geo=%scan(&geography., &i., " "); 
-  %let racelist=W B H AIOM;
-  %let racename= NH-White Black-Alone Hispanic All-Other;
+
 
     %local geosuf geoafmt j; 
 
@@ -38,12 +39,12 @@
   merge  
           equity.acs_2010_14_dc_sum_bg&geosuf
         (keep=&geo TotPop: mTotPop: 
-		   PopUnder5Years_&_years. mPopUnder5Years_&_years.
-		   PopUnder18Years_&_years. mPopUnder18Years_&_years. 
-		   Pop18_34Years_&_years. mPop18_34Years_&_years.
-		   Pop35_64Years_&_years. mPop35_64Years_&_years.
-		   Pop65andOverYears_&_years. mPop65andOverYears_&_years.
-		   Pop25andOverYears_&_years. mPop25andOverYears_&_years. 
+		   PopUnder5Years_: mPopUnder5Years_:
+		   PopUnder18Years_: mPopUnder18Years_:
+		   Pop18_34Years_:mPop18_34Years_:
+		   Pop35_64Years_: mPop35_64Years_:
+		   Pop65andOverYears_: mPop65andOverYears_:
+		   Pop25andOverYears_: mPop25andOverYears_:
 		   PopWithRace: mPopWithRace:
 		   PopBlackNonHispBridge: mPopBlackNonHispBridge:
            PopWhiteNonHispBridge: mPopWhiteNonHispBridge:
@@ -52,9 +53,7 @@
 		   PopOtherRaceNonHispBridg: mPopOtherRaceNonHispBr:
 		   PopMultiracialNonHisp: mPopMultiracialNonHisp:
 		   PopAlone: mPopAlone:
-           /*NumHshldPhone: mNumHshldPhone: 
-           NumHshldCar: mNumHshldCar: 
-           NumFamilies_: mNumFamilies_:*/
+           NumFamilies_: mNumFamilies_:
 		   PopEmployed:  mPopEmployed:
 		   PopEmployedByOcc: mPopEmployedByOcc: 
 		   PopEmployedMngmt: mPopEmployedMngmt:
@@ -63,27 +62,27 @@
 		   PopEmployedNatRes: mPopEmployedNatRes: 
 		   PopEmployedProd: mPopEmployedProd:
            Pop25andOverWoutHS: mPop25andOverWoutHS: 
-		   Pop25andOverWHS_&_years. mPop25andOverWHS_&_years. 
-		   Pop25andOverWSC_&_years. mPop25andOverWSC_&_years. 
-		   Pop25andOverWCollege_&_years. mPop25andOverWCollege_&_years.
-		   AggFamilyIncome: mAggFamilyIncome: 
+		   Pop25andOverWHS_: mPop25andOverWHS_:
+		   Pop25andOverWSC_: mPop25andOverWSC_:
+		   Pop25andOverWCollege_: mPop25andOverWCollege_:
 		   AggIncome: mAggIncome:
+		   AggHshldIncome: mAggHshldIncome:
 		   MedFamIncm: mMedFamIncm:
-		   FamIncome_&_years. mFamIncome_&_years.
-		   FamIncomeLT75k_&_years. mFamIncomeLT75k_&_years.
-		   FamIncomeGT200k_&_years. mFamIncomeGT200k_&_years.
+		   FamIncomeLT75k_: mFamIncomeLT75k_:
+		   FamIncomeGT200k_: mFamIncomeGT200k_:
 		   NumOccupiedHsgUnits: mNumOccupiedHsgUnits:
 		   NumOwnerOccupiedHU: mNumOwnerOccupiedHU:
            NumRenterHsgUnits: mNumRenterHsgUnits:
 		   NumRenterOccupiedHU: mNumRenterOccupiedHU:
 		   NumVacantHsgUnits: mNumVacantHsgUnits:
 		   NumVacantHsgUnitsForRent: mNumVacantHUForRent: 
-		   NumVacantHsgUnitsForSale: mNumVacantHsgUnitsForSale
-           /*NumOwnerOccupiedHsgUnits: mNumOwnerOccupiedHU: */)
+		   NumVacantHsgUnitsForSale: mNumVacantHUForSale:
+           NumOwnerOccupiedHU: mNumOwnerOccupiedHU:)
 
       equity.Acs_2010_14_dc_sum_tr&geosuf
         (keep=&geo TotPop: mTotPop: 
 		   PopUnder5Years: mPopUnder5Years:
+		   Pop5andOverYears: mPop5andOverYears:
 		   PopUnder18Years: mPopUnder18Years: 
 		   Pop18_34Years: mPop18_34Years:
 		   Pop35_64Years: mPop35_64Years:
@@ -97,9 +96,8 @@
 		   PopOtherRaceNonHispBridg: mPopOtherRaceNonHispBr:
 		   PopMultiracialNonHisp: mPopMultiracialNonHisp:
 		   PopAlone: mPopAlone:
-           /*NumHshldPhone: mNumHshldPhone: 
-           NumHshldCar: mNumHshldCar: 
-           NumFamilies_: mNumFamilies_:*/
+           NumFamilies: mNumFamilies:
+		   NumHshlds: mNumHshlds:
 		   PopEmployed:  mPopEmployed:
 		   PopEmployedByOcc: mPopEmployedByOcc: 
 		   PopEmployedMngmt: mPopEmployedMngmt:
@@ -111,10 +109,9 @@
 		   Pop25andOverWHS: mPop25andOverWHS:
 		   Pop25andOverWSC: mPop25andOverWSC:
 		   Pop25andOverWCollege: mPop25andOverWCollege:
-		   AggFamilyIncome: mAggFamilyIncome: 
 		   AggIncome: mAggIncome:
+		   AggHshldIncome: mAggHshldIncome:
 		   MedFamIncm: mMedFamIncm:
-		   FamIncome: mFamIncome:
 		   FamIncomeLT75k: mFamIncomeLT75k:
 		   FamIncomeGT200k: mFamIncomeGT200k:
 		   NumOccupiedHsgUnits: mNumOccupiedHsgUnits:
@@ -123,9 +120,8 @@
 		   NumRenterOccupiedHU: mNumRenterOccupiedHU:
 		   NumVacantHsgUnits: mNumVacantHsgUnits:
 		   NumVacantHsgUnitsForRent: mNumVacantHUForRent: 
-		   NumVacantHsgUnitsForSale: mNumVacantHsgUnitsForSale
-           /*NumOwnerOccupiedHsgUnits: mNumOwnerOccupiedHU: */)
-
+		   NumVacantHsgUnitsForSale: mNumVacantHUForSale:
+           NumOwnerOccupiedHU: mNumOwnerOccupiedHU:
 		   PopNativeBorn: mPopNativeBorn:
 		   PopNonEnglish: mPopNonEnglish:
 		   PopForeignBorn: mPopForeignBorn: 
@@ -135,7 +131,7 @@
 		   PopCivilianEmployed: mPopCivilianEmployed:
            PopUnemployed: mPopUnemployed:
            Pop16andOverYears: mPop16andOverYears: 
-           Pop16andOverEmployed: mPop16andOverEmployed: 
+           Pop16andOverEmploy: mPop16andOverEmploy: 
 		   Pop16_64years: mPop16_64years:
 		   Pop25_64years: mPop25_64years:
 		   Pop16_64Employed: mPop16_64Employed:
@@ -150,13 +146,13 @@
            PopPoorChildren: mPopPoorChildren: 
 		   PopPoorElderly: mPopPoorElderly:
 		   ElderlyPovertyDefined: mElderlyPovertyDefined:
+		   rename=(TotPop_2010_14=TotPop_tr_2010_14 mTotPop_2010_14=mTotPop_tr_2010_14))
  
-         rename=(TotPop_2010_14=TotPop_tr_2010_14 mTotPop_2010_14=mTotPop_tr_2010_14))
-
          ;
-    by &geo;
-    
+    	 by &geo;
+   
   run;
+
   /* i do not think we need this proc summary....
   proc summary data=Nbr_profile&geosuf._A;
     var _numeric_;
@@ -164,6 +160,7 @@
     output out=Nbr_profile&geosuf._B (compress=no) mean=;
 
   run;*/
+
   data equity.Equity_profile&geosuf (compress=no); 
   
     set Equity_profile&geosuf._A;
@@ -181,8 +178,6 @@
 
     %Moe_prop_a( var=PctNativeBorn_m_2010_14, mult=100, num=PopNativeBorn_2010_14, den=TotPop_tr_2010_14, 
                        num_moe=mPopNativeBorn_2010_14, den_moe=mTotPop_tr_2010_14 );
-
-    %Pct_calc( var=PctSameHouse5YearsAgo, label=% same house 5 years ago, num=PopSameHouse5YearsAgo, den=Pop5andOverYears, years=2010_14 )
 
 
 	%do r=1 %to 4;
@@ -207,7 +202,7 @@
 
 	%Pct_calc( var=PctPop65andOverYears&race., label=% seniors &name., num=Pop65andOverYears&race., den=PopAlone&race., years= 2010_14 )
 
-    %Moe_prop_a( var=PctPop65andOverYears&race._m_2010_14, mult=100, num=Pop65andOverYears&race._2010_14, den=PopAlone&race._2010_14, 
+    %Moe_prop_a( var=PctPop65andOverYrs&race._m_2010_14, mult=100, num=Pop65andOverYears&race._2010_14, den=PopAlone&race._2010_14, 
                        num_moe=mPop65andOverYears&race._2010_14, den_moe=mPopAlone&race._2010_14 );
 
 	%end;
@@ -218,25 +213,23 @@
     %Pct_calc( var=PctBlackNonHispBridge, label=% black non-Hispanic, num=PopBlackNonHispBridge, den=PopWithRace, years=2010_14 )
     %Pct_calc( var=PctWhiteNonHispBridge, label=% white non-Hispanic, num=PopWhiteNonHispBridge, den=PopWithRace, years=2010_14 )
     %Pct_calc( var=PctHisp, label=% Hispanic, num=PopHisp, den=PopWithRace, years=2010_14 )
-    %Pct_calc( var=PctAsianPINonHispBridge, label=% Asian/P.I. non-Hispanic, num=PopAsianPINonHispBridge, den=PopWithRace, years=2010_14 )
-    
-    %Pct_calc( var=PctOtherRaceNonHispBridge, label=% other race non-Hispanic, num=PopOtherRaceNonHispBridge, den=PopWithRace, years=2010_14 )
-    %Pct_calc( var=PctOtherRaceNonHispBridg, label=% other race non-Hispanic, num=PopOtherRaceNonHispBridg, den=PopWithRace, years=2010_14 )
+    %Pct_calc( var=PctAsnPINonHispBridge, label=% Asian/P.I. non-Hispanic, num=PopAsianPINonHispBridge, den=PopWithRace, years=2010_14 )
+    %Pct_calc( var=PctOtherRaceNonHispBridg, label=% All other than Black White Asian P.I. Hispanic, num=PopOtherRaceNonHispBridg, den=PopWithRace, years=2010_14 )
 
     %Moe_prop_a( var=PctBlackNonHispBridge_m_2010_14, mult=100, num=PopBlackNonHispBridge_2010_14, den=PopWithRace_2010_14, 
-                       num_moe=mPopBlackNonHispBridge_2010_14, den_moe=mPopWithRace2010_14 );
+                       num_moe=mPopBlackNonHispBridge_2010_14, den_moe=mPopWithRace_2010_14 );
 
     %Moe_prop_a( var=PctWhiteNonHispBridge_m_2010_14, mult=100, num=PopWhiteNonHispBridge_2010_14, den=PopWithRace_2010_14, 
-                       num_moe=mPopWhiteNonHispBridge_2010_14, den_moe=mPopWithRace2010_14 );
+                       num_moe=mPopWhiteNonHispBridge_2010_14, den_moe=mPopWithRace_2010_14 );
 
     %Moe_prop_a( var=PctHisp_m_2010_14, mult=100, num=PopHisp_2010_14, den=PopWithRace_2010_14, 
-                       num_moe=mPopHisp_2010_14, den_moe=mPopWithRace2010_14 );
+                       num_moe=mPopHisp_2010_14, den_moe=mPopWithRace_2010_14 );
 
-	%Moe_prop_a( var=PctAsianPINonHispBridge_m_2010_14, mult=100, num=PopAsianPINonHispBridge_2010_14, den=PopWithRace_2010_14, 
-                       num_moe=mPopAsianPINonHispBridge_2010_14, den_moe=mPopWithRace2010_14 );
+	%Moe_prop_a( var=PctAsnPINonHispBridge_m_2010_14, mult=100, num=PopAsianPINonHispBridge_2010_14, den=PopWithRace_2010_14, 
+                       num_moe=mPopAsianPINonHispBridge_2010_14, den_moe=mPopWithRace_2010_14 );
 
-    %Moe_prop_a( var=PctOtherRaceNonHispBridg_m_2010_14, mult=100, num=PopOtherRaceNonHispBridg_2010_14, den=PopWithRace_2010_14, 
-                       num_moe=mPopOtherRaceNonHispBridg_2010_14, den_moe=mPopWithRace2010_14 );
+    %Moe_prop_a( var=PctOthRaceNonHispBridg_m_2010_14, mult=100, num=PopOtherRaceNonHispBridg_2010_14, den=PopWithRace_2010_14, 
+                       num_moe=mPopOtherRaceNonHispBr_2010_14, den_moe=mPopWithRace_2010_14 );
 
 	** Population by race/ethnicity alone**; 
 
@@ -285,11 +278,6 @@
 	%Moe_prop_a( var=PctOLang_m_2010_14, mult=100, num=PopNonEnglish_2010_14, den=Pop5andOverYears_2010_14, 
 	                       num_moe=mPopNonEnglish_2010_14, den_moe=mPop5andOverYears_2010_14 );
 
-	%Pct_calc( var=PctFamiliesOwnChildrenFH, label=% female-headed families with children, num=NumFamiliesOwnChildrenFH, den=NumFamiliesOwnChildren, years=2010_14 )
-
-    %Moe_prop_a( var=PctFamiliesOwnChildFH_m_2010_14, mult=100, num=NumFamiliesOwnChildrenFH_2010_14, den=NumFamiliesOwnChildren_2010_14, 
-                       num_moe=mNumFamiliesOwnChildFH_2010_14, den_moe=mNumFamiliesOwnChildren_2010_14 );
-
 	%Pct_calc( var=PctPoorPersonsB, label=Poverty rate Black-Alone (%), num=PopPoorPersonsB, den=PersonsPovertyDefinedB, years=2010_14 )
 	%Pct_calc( var=PctPoorPersonsW, label=Poverty rate NH-White (%), num=PopPoorPersonsW, den=PersonsPovertyDefinedW, years=2010_14 )
 	%Pct_calc( var=PctPoorPersonsH, label=Poverty rate Hispanic(%), num=PopPoorPersonsH, den=PersonsPovertyDefinedH, years=2010_14 )
@@ -336,17 +324,17 @@
     %Moe_prop_a( var=Pct16andOverWorkFT&race._m_2010_14, mult=100, num=PopWorkFT&race._2010_14, den=Pop16andOverYears&race._2010_14, 
                        num_moe=mPopWorkFT&race._2010_14, den_moe=mPop16andOverYears&race._2010_14 );
 
-	%Pct_calc( var=Pct16andOverWorkFTLT35000&race., label=% persons &name. employed full time with earnings less than 35000, num=PopWorkFTLT35K&race., den=PopWorkFT&race., years=2010_14 )
+	%Pct_calc( var=PctWorkFTLT35k&race., label=% persons &name. employed full time with earnings less than 35000, num=PopWorkFTLT35K&race., den=PopWorkFT&race., years=2010_14 )
 
-	%Moe_prop_a( var=Pct16andOverWorkFTLT35000&race._m_2010_14, mult=100, num=PopWorkFTLT35k&race._2010_14, den=PopWorkFTLT35k&race._2010_14, 
+	%Moe_prop_a( var=PctWorkFTLT35k&race._m_2010_14, mult=100, num=PopWorkFTLT35k&race._2010_14, den=PopWorkFTLT35k&race._2010_14, 
                        num_moe=mPopWorkFTLT35k&race._2010_14, den_moe=mPopWorkFTLT35k&race._2010_14 );
 
-	%Pct_calc( var=Pct16andOverWorkFTLT75000&race., label=% persons &name. employed full time with earnings less than 75000, num=PopWorkFTLT75k&race., den=PopWorkFT&race., years=2010_14 )
+	%Pct_calc( var=PctWorkFTLT75k&race., label=% persons &name. employed full time with earnings less than 75000, num=PopWorkFTLT75k&race., den=PopWorkFT&race., years=2010_14 )
 
-	%Moe_prop_a( var=Pct16andOverWorkFTLT75000&race._m_2010_14, mult=100, num=PopWorkFTLT75k&race._2010_14, den=PopWorkFTLT75k&race._2010_14, 
+	%Moe_prop_a( var=PctWorkFTLT75k&race._m_2010_14, mult=100, num=PopWorkFTLT75k&race._2010_14, den=PopWorkFTLT75k&race._2010_14, 
                        num_moe=mPopWorkFTLT75k&race._2010_14, den_moe=mPopWorkFTLT75k&race._2010_14 );
 
-	%Pct_calc( var=PctEmployedMngmt&race., label=% persons &name. 16+ years old employed in management, business, science and arts occupations, num=PopEmployedMngmt&race., den=PopEmployedByOcc&race., years=2010_14 )
+	%Pct_calc( var=PctEmployedMngmt&race., label=% persons &name. 16+ years old employed in management business science and arts occupations, num=PopEmployedMngmt&race., den=PopEmployedByOcc&race., years=2010_14 )
 
 	%Moe_prop_a( var=PctEmployedMngmt&race._m_2010_14, mult=100, num=PopEmployedMngmt&race._2010_14, den=PopEmployedByOcc&race._2010_14, 
                        num_moe=mPopEmployedMngmt&race._2010_14, den_moe=mPopEmployedByOcc&race._2010_14 );
@@ -361,22 +349,37 @@
 	%Moe_prop_a( var=PctEmployedSales&race._m_2010_14, mult=100, num=PopEmployedSales&race._2010_14, den=PopEmployedByOcc&race._2010_14, 
                        num_moe=mPopEmployedSales&race._2010_14, den_moe=mPopEmployedByOcc&race._2010_14 );
 
-	%Pct_calc( var=PctEmployedNatRes&race., label=% persons &name. 16+ years old employed in natural resources, construction, and maintenance occupations, num=PopEmployedNatRes&race., den=PopEmployedByOcc&race., years=2010_14 )
+	%Pct_calc( var=PctEmployedNatRes&race., label=% persons &name. 16+ years old employed in natural resources construction and maintenance occupations, num=PopEmployedNatRes&race., den=PopEmployedByOcc&race., years=2010_14 )
 
 	%Moe_prop_a( var=PctEmployedNatRes&race._m_2010_14, mult=100, num=PopEmployedNatRes&race._2010_14, den=PopEmployedByOcc&race._2010_14, 
                        num_moe=mPopEmployedNatRes&race._2010_14, den_moe=mPopEmployedByOcc&race._2010_14 );
 
-	%Pct_calc( var=PctEmployedProd&race., label=% persons &name. employed in production, transportation, and material moving occupations, num=PopEmployedProd&race., den=PopEmployedByOcc&race., years=2010_14 )
+	%Pct_calc( var=PctEmployedProd&race., label=% persons &name. employed in production transportation and material moving occupations, num=PopEmployedProd&race., den=PopEmployedByOcc&race., years=2010_14 )
 
 	%Moe_prop_a( var=PctEmployedProd&race._m_2010_14, mult=100, num=PopEmployedProd&race._2010_14, den=PopEmployedByOcc&race._2010_14, 
                        num_moe=mPopEmployedProd&race._2010_14, den_moe=mPopEmployedByOcc&race._2010_14 );
 
 	%end;
 
-    %Pct_calc( var=Pct16andOverEmployed, label=% pop. 16+ yrs. employed, num=Pop16andOverEmployed, den=Pop16andOverYears, years=2010_14 )
+	%Pct_calc( var=Pct16andOverEmployedW, label=% pop. 16+ yrs. employed NH-White, num=Pop16andOverEmployedW, den=Pop16andOverYearsW, years=2010_14 )
 
-    %Moe_prop_a( var=Pct16andOverEmployed_m_2010_14, mult=100, num=Pop16andOverEmployed_2010_14, den=Pop16andOverYears_2010_14, 
-                       num_moe=mPop16andOverEmployed_2010_14, den_moe=mPop16andOverYears_2010_14 );
+    %Moe_prop_a( var=Pct16andOverEmployed_m_2010_14W, mult=100, num=Pop16andOverEmployedW_2010_14, den=Pop16andOverYearsW_2010_14, 
+                       num_moe=mPop16andOverEmployedW_2010_14, den_moe=mPop16andOverYearsW_2010_14 );
+
+    %Pct_calc( var=Pct16andOverEmployedB, label=% pop. 16+ yrs. employed Black-Alone, num=Pop16andOverEmployedB, den=Pop16andOverYearsB, years=2010_14 )
+
+    %Moe_prop_a( var=Pct16andOverEmployedB_m_2010_14, mult=100, num=Pop16andOverEmployedB_2010_14, den=Pop16andOverYearsB_2010_14, 
+                       num_moe=mPop16andOverEmployedB_2010_14, den_moe=mPop16andOverYearsB_2010_14 );
+
+	%Pct_calc( var=Pct16andOverEmployedH, label=% pop. 16+ yrs. employed Hispanic, num=Pop16andOverEmployedH, den=Pop16andOverYearsH, years=2010_14 )
+
+    %Moe_prop_a( var=Pct16andOverEmployedH_m_2010_14, mult=100, num=Pop16andOverEmployedH_2010_14, den=Pop16andOverYearsH_2010_14, 
+                       num_moe=mPop16andOverEmployedH_2010_14, den_moe=mPop16andOverYearsH_2010_14 );
+
+    %Pct_calc( var=Pct16andOverEmployAIOM, label=% pop. 16+ yrs. employed All-Other, num=Pop16andOverEmployAIOM, den=Pop16andOverYearsAIOM, years=2010_14 )
+
+    %Moe_prop_a( var=Pct16andOverEmployAIOM_m_2010_14, mult=100, num=Pop16andOverEmployAIOM_2010_14, den=Pop16andOverYearsAIOM_2010_14, 
+                       num_moe=mPop16andOverEmployAIOM_2010_14, den_moe=mPop16andOverYearsAIOM_2010_14 );
 
 	%do r=1 %to 4;
 
@@ -425,16 +428,6 @@
 	%Moe_prop_a( var=Pct25andOverWSCNB_m_2010_14, mult=100, num=Pop25andOverWSCNB_2010_14, den=Pop25andOverYearsNB_2010_14, 
                        num_moe=mPop25andOverWSCNB_2010_14, den_moe=mPop25andOverYearsNB_2010_14 );
 
-    ** Isolation Indicators **;
-    
-    %Pct_calc( var=PctHshldPhone, label=% HHs with a phone, num=NumHshldPhone, den=NumOccupiedHsgUnits, years=2010_14 )
-    %Pct_calc( var=PctHshldCar, label=% HHs with a car, num=NumHshldCar, den=NumOccupiedHsgUnits, years=2010_14 )
-    
-    %Moe_prop_a( var=PctHshldPhone_m_2010_14, mult=100, num=NumHshldPhone_2010_14, den=NumOccupiedHsgUnits_2010_14, 
-                       num_moe=mNumHshldPhone_2010_14, den_moe=mNumOccupiedHsgUnits_2010_14 );
-    
-    %Moe_prop_a( var=PctHshldCar_m_2010_14, mult=100, num=NumHshldCar_2010_14, den=NumOccupiedHsgUnits_2010_14, 
-                       num_moe=mNumHshldCar_2010_14, den_moe=mNumOccupiedHsgUnits_2010_14 );
     
    ** Child Well-Being Indicators **;
     
@@ -459,17 +452,7 @@
 		%Moe_prop_a( var=PctPoorChildrenAIOM_m_2010_14, mult=100, num=PopPoorChildrenAIOM_2010_14, den=ChildrenPovertyDefAIOM_2010_14, 
 	                       num_moe=mPopPoorChildrenAIOM_2010_14, den_moe=mChildrenPovertyDefAIOM_2010_14 );
 
-    
-    %Pct_calc( var=Pct_births_low_wt, label=% low weight births (under 5.5 lbs), num=Births_low_wt, den=Births_w_weight, from=&births_start_yr, to=&births_end_yr )
-    %Pct_calc( var=Pct_births_teen, label=% births to teen mothers, num=Births_teen, den=Births_w_age, from=&births_start_yr, to=&births_end_yr )
-    
-	 ** Elderly Well-Being Indicators **;
-    
-    %Pct_calc( var=PctPoorElderly, label=% seniors in poverty, num=PopPoorElderly, den=ElderlyPovertyDefined, years=2010_14 )
-    
-    %Moe_prop_a( var=PctPoorElderly_m_2010_14, mult=100, num=PopPoorElderly_2010_14, den=ElderlyPovertyDefined_2010_14, 
-                       num_moe=mPopPoorElderly_2010_14, den_moe=mElderlyPovertyDefined_2010_14 );
-
+        
     ** Income Conditions **;
     
 	%do r=1 %to 4;
@@ -477,43 +460,41 @@
 			%let race=%scan(&racelist.,&r.,” “);
 			%let name=%scan(&racename.,&r.,” “);
 
-    %Pct_calc( var=PctFamilyLT75000&race., label=% families &name. with income less than 75000, num=FamIncomeLT75k&race., den=FamIncome&race., years=2010_14 )
+    %Pct_calc( var=PctFamilyLT75000&race., label=% families &name. with income less than 75000, num=FamIncomeLT75k&race., den=NumFamilies&race., years=2010_14 )
 
-    %Moe_prop_a( var=PctFamilyLT75000&race._m_2010_14, mult=100, num=FamIncomeGT75k&race._2010_14, den=FamIncome&race._2010_14, 
-                       num_moe=mFamIncomeGT75k&race._2010_14, den_moe=mFamIncome&race._2010_14 );
+    %Moe_prop_a( var=PctFamilyLT75000&race._m_2010_14, mult=100, num=FamIncomeLT75k&race._2010_14, den=NumFamilies&race._2010_14, 
+                       num_moe=mFamIncomeLT75k&race._2010_14, den_moe=mNumFamilies&race._2010_14 );
 
-	%Pct_calc( var=PctFamilyGT200000&race., label=% families &name. with income greater than 200000, num=FamIncomeGT200k&race., den=FamIncome&race., years=2010_14 )
+	%Pct_calc( var=PctFamilyGT200000&race., label=% families &name. with income greater than 200000, num=FamIncomeGT200k&race., den=NumFamilies&race., years=2010_14 )
 
-    %Moe_prop_a( var=PctFamilyGT200000&race._m_2010_14, mult=100, num=FamIncomeGT200k&race._2010_14, den=FamIncome&race._2010_14, 
-                       num_moe=mFamIncomeGT200k&race._2010_14, den_moe=mFamIncome&race._2010_14 );
+    %Moe_prop_a( var=PctFamilyGT200000&race._m_2010_14, mult=100, num=FamIncomeGT200k&race._2010_14, den=NumFamilies&race._2010_14, 
+                       num_moe=mFamIncomeGT200k&race._2010_14, den_moe=mNumFamilies&race._2010_14 );
 
-	%Pct_calc( var=AvgFamilyIncome&race., label=Average family income last year &name. ($), num=AggFamilyIncome&race., den=FamIncome&race., mult=1, years=2010_14 )
+	%Pct_calc( var=AvgHshldIncome&race., label=Aggregate family income last year &name. ($), num=AggHshldIncome&race., den=NumHshlds&race., mult=1, years=2010_14 )
 
-	%dollar_convert( AvgFamilyIncome&race._2010_14, AvgFamilyIncAdj&race._2010_14, 2015, &inc_dollar_yr )
+	%dollar_convert( AvgHshldIncome&race._2010_14, AvgHshldIncAdj&race._2010_14, 2014, &inc_dollar_yr )
 
-	AvgFamilyIncome&race._m_2010_14 = 
-      %Moe_ratio( num=AggFamilyIncome&race._2010_14, den=FamIncome&race._2010_14, 
-                  num_moe=mAggFamilyIncome&race._2010_14, den_moe=mFamIncome&race._2010_14 );
+	AvgHshldIncome&race._m_2010_14 = 
+      %Moe_ratio( num=AggHshldIncome&race._2010_14, den=NumHshlds&race._2010_14, 
+                  num_moe=mAggHshldIncome&race._2010_14, den_moe=mNumHshlds&race._2010_14 );
                         
-    %dollar_convert( AvgFamilyIncome&race._m_2010_14, AvgFamilyIncAdj&race._m_2010_14, 2015, &inc_dollar_yr )
+    %dollar_convert( AvgHshldIncome&race._m_2010_14, AvgHshldIncAdj&race._m_2010_14, 2014, &inc_dollar_yr )
 
-	%Pct_calc( var=MedianFamilyIncome&race., label=Median family income last year &name. ($), num=MedFamIncm&race., den=FamIncome&race., mult=1, years=2010_14 )
+	%dollar_convert( MedFamIncome&race._2010_14, MedFamIncAdj&race._2010_14, 2014, &inc_dollar_yr )
 
-	%dollar_convert( MedianFamilyIncome&race._2010_14, MedFamilyIncAdj&race._2010_14, 2015, &inc_dollar_yr )
-
-	MedianFamilyIncome&race._m_2010_14 = 
-      %Moe_ratio( num=MedFamIncm&race._2010_14, den=FamIncome&race._2010_14, 
-                  num_moe=mMedFamIncm&race._2010_14, den_moe=mFamIncome&race._2010_14 );
-                        
-    %dollar_convert( MedianFamilyIncome&race._m_2010_14, MedFamilyIncAdj&race._m_2010_14, 2015, &inc_dollar_yr )
+    %dollar_convert( MedFamIncome&race._m_2010_14, MedFamIncAdj&race._m_2010_14, 2014, &inc_dollar_yr )
 
 	%end;
 
 	label
-	  AvgFamilyIncAdjB_2010_14 = "Avg. family income, Black/African American, 2010-14"
-	  AvgFamilyIncAdjW_2010_14 = "Avg. family income, Non-Hispanic White, 2010-14"
-	  AvgFamilyIncAdjH_2010_14 = "Avg. family income, Hispanic/Latino, 2010-14"
-	  AvgFamilyIncAdjAIOM_2010_14 = "Avg. family income, All remaining groups other than Black, Non-Hispanic White, Hispanic, 2010-14"
+	  AvgHshldIncAdjB_2010_14 = "Average household income, Black/African American, 2010-14"
+	  AvgHshldIncAdjW_2010_14 = "Average household income, Non-Hispanic White, 2010-14"
+	  AvgHshldIncAdjH_2010_14 = "Average household income, Hispanic/Latino, 2010-14"
+	  AvgHshldIncAdjAIOM_2010_14 = "Average household income, All remaining groups other than Black, Non-Hispanic White, Hispanic, 2010-14"
+	  MedFamilyIncAdjB_2010_14 = "Medium family income, Black/African American, 2010-14"
+	  MedFamilyIncAdjW_2010_14 = "Medium family income, Non-Hispanic White, 2010-14"
+	  MedFamilyIncAdjH_2010_14 = "Medium family income, Hispanic/Latino, 2010-14"
+	  MedFamilyIncAdjAIOM_2010_14 = "Medium family income, All remaining groups other than Black, Non-Hispanic White, Hispanic, 2010-14"
       ;
 
         
@@ -557,6 +538,11 @@
 /** End Macro Definition **/
 
 %add_percents; 
+
+proc print data=equity.equity_profile_city;
+var city AvgHshldIncomeB_2010_14 AvgHshldIncomeW_2010_14 AvgHshldIncomeH_2010_14 AvgHshldIncomeAIOM_2010_14
+AvgHshldIncomeB_m_2010_14 AvgHshldIncomeW_m_2010_14 AvgHshldIncomeH_m_2010_14 AvgHshldIncomeAIOM_m_2010_14
+;
 
 
 /*proc print data=equity.equity_profile_wd12;
