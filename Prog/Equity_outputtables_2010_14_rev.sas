@@ -1418,18 +1418,31 @@ data whiterates;
 
 %rename(whiterates);
 run; 
+
+proc contents data=whiterates_new;
+run;
+
 data merged_data_WR (drop=cNum: cPct: cPop: mergeflag);
 	merge merged_data whiterates_new (drop=cPUMA cCategory rename=(cmergeflag=mergeflag));
 	by mergeflag;
-
 	GapRentCostB=cPctRentCostB/100*NumRenters-NumRentCostB;
-	/*calcualte other gaps for Pct vars*/
+	GapRentSevCostB=cPctRentSevCostB/100*NumRenters-NumRentSevCostB;
+	GapRentUnitsELI=cPctRentUnitsELI/100*NumRenters-NumRentUnitsELI;
+	GapRentUnitsLI=cPctRentUnitsLI/100*NumRenters-NumRentUnitsLI;
+	GapRentUnitsMHI=cPctRentUnitsMHI/100*NumRenters-NumRentUnitsMHI;
+	GapRentUnitsVLI=cPctRentUnitsVLI/100*NumRenters-NumRentUnitsVLI;
+	GapOwnersNoMort=cPctOwnersNoMort/100*NumOwners-NumOwnersNoMort;
+	GapOwnersOweMort=cPctOwnersOweMort/100*NumOwners-NumOwnersOweMort;
+	GapPop25to64yearsEmp=cPct25to64yearsEmp/100*Pop25to64Years-Pop25to64yearsEmp;
+	GapPop25to64yearsOutLF=cPct25to64yearsOutLF/100*Pop25to64Years-Pop25to64yearsOutLF;
+	GapPop25to64yearsUnEmp=cPct25to64yearsUnEmp/100*Pop25to64Years-Pop25to64yearsUnEmp;
 	run;
 
-	/*check proc print data=merged_data_wr;
-	var category puma GapRentCostB PctRentCostB cPctRentCostB NumRenters NumRentCostB;
+proc print data=merged_data_wr;
+var category puma GapRentCostB GapRentSevCostB GapRentUnitsELI GapRentUnitsLI GapRentUnitsMHI GapRentUnitsVLI GapOwnersNoMort
+	GapOwnersOweMort GapPop25to64yearsEmp GapPop25to64yearsOutLF GapPop25to64yearsUnEmp PctRentCostB NumRenters NumRentCostB;
+run;
 
-	run;*/
 proc sort data=merged_data_WR;
 by category;
 
@@ -1445,13 +1458,13 @@ run;
 proc freq data=transposed_data;
 tables _name_;
 run;
+
 data profile_tabs_ipums ; 
 	set transposed_data ; 
 
 rename _name_=Indicator;
 
 order = .;
-/*need to add GAP variables into order*/ 
 
 if _name_ ="Pop25to64years" then order=1;
 if _name_="Pop25to64yearsEmp" then order=2; 
@@ -1483,7 +1496,20 @@ if _name_="PctRentUnitsLI" then order=24;
 if _name_="NumRentUnitsMHI" then order=25;
 if _name_="PctRentUnitsMHI" then order=26;
 
+if _name_="GapRentCostB" then order=27;
+if _name_="GapRentSevCostB" then order=28;
+if _name_="GapRentUnitsELI" then order=29;
+if _name_="GapRentUnitsLI" then order=30;
+if _name_="GapRentUnitsMHI" then order=31;
+if _name_="GapRentUnitsVLI" then order=32;
+if _name_="GapOwnersNoMort" then order=33;
+if _name_="GapOwnersOweMort" then order=34;
+if _name_="GapPop25to64yearsEmp" then order=35;
+if _name_="GapPop25to64yearsOutLF" then order=36;
+if _name_="GapPop25to64yearsUnEmp" then order=37;
+
 label PUMA100 = "District of Columbia";
+
 run; 
 
 proc sort data=profile_tabs_ipums out=sorted;
