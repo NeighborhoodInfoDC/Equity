@@ -66,8 +66,7 @@ run;
 *Add gap calculation;
 
 data whiterates;
-	set equity.equity_profile_city; 
-	if _make_profile=1;
+	set equity.equity_profile_city 
 	(keep= _make_profile
 		   Pct25andOverWoutHSW: Pct25andOverWHSW: Pct25andOverWSCW:
            PctPoorPersonsW: PctPoorChildrenW:
@@ -80,6 +79,7 @@ data whiterates;
            PctEmployedSalesW: PctEmployedNatResW: 
            PctEmployedProdW: PctOwnerOccupiedHUW: )
 		   ;
+	_make_profile=1;
 	run;
 
 %rename(whiterates);
