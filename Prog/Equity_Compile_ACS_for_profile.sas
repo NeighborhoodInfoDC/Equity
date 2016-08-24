@@ -68,7 +68,6 @@
 		   Pop25andOverWCollege_: mPop25andOverWCollege_:
 		   AggIncome: mAggIncome:
 		   AggHshldIncome: mAggHshldIncome:
-		   MedFamIncm: mMedFamIncm:
 		   FamIncomeLT75k_: mFamIncomeLT75k_:
 		   FamIncomeGT200k_: mFamIncomeGT200k_:
 		   NumOccupiedHsgUnits: mNumOccupiedHsgUnits:
@@ -112,7 +111,6 @@
 		   Pop25andOverWCollege: mPop25andOverWCollege:
 		   AggIncome: mAggIncome:
 		   AggHshldIncome: mAggHshldIncome:
-		   MedFamIncm: mMedFamIncm:
 		   FamIncomeLT75k: mFamIncomeLT75k:
 		   FamIncomeGT200k: mFamIncomeGT200k:
 		   NumOccupiedHsgUnits: mNumOccupiedHsgUnits:
@@ -179,6 +177,25 @@
     %Moe_prop_a( var=PctNativeBorn_m_2010_14, mult=100, num=PopNativeBorn_2010_14, den=PopWithRace_2010_14, 
                        num_moe=mPopNativeBorn_2010_14, den_moe=mPopWithRace_2010_14 );
 
+    %Pct_calc( var=PctPopUnder18Years, label=% children, num=PopUnder18Years, den=PopWithRace, years= 2010_14 )
+    
+    %Moe_prop_a( var=PctPopUnder18Years_m_2010_14, mult=100, num=PopUnder18Years_2010_14, den=PopWithRace_2010_14, 
+                       num_moe=mPopUnder18Years_2010_14, den_moe=mPopWithRace_2010_14 );
+
+	%Pct_calc( var=PctPop18_34Years, label=% persons 18-34 years old, num=Pop18_34Years, den=PopWithRace, years= 2010_14 )
+	
+	%Moe_prop_a( var=PctPop18_34Years_m_2010_14, mult=100, num=Pop18_34Years_2010_14, den=PopWithRace_2010_14, 
+	                       num_moe=mPop18_34Years_2010_14, den_moe=mPopWithRace_2010_14 );
+
+	%Pct_calc( var=PctPop35_64Years, label=% persons 35-64 years old, num=Pop35_64Years, den=PopWithRace, years= 2010_14 )
+	
+	%Moe_prop_a( var=PctPop35_64Years_m_2010_14, mult=100, num=Pop35_64Years_2010_14, den=PopWithRace_2010_14, 
+	                       num_moe=mPop35_64Years_2010_14, den_moe=mPopWithRace_2010_14 );
+
+	%Pct_calc( var=PctPop65andOverYears, label=% seniors, num=Pop65andOverYears, den=PopWithRace, years= 2010_14 )
+
+    %Moe_prop_a( var=PctPop65andOverYrs_m_2010_14, mult=100, num=Pop65andOverYears_2010_14, den=PopWithRace_2010_14, 
+                       num_moe=mPop65andOverYears_2010_14, den_moe=mPopWithRace_2010_14 );
 
 	%do r=1 %to 4;
 
@@ -278,12 +295,16 @@
 	%Moe_prop_a( var=PctOLang_m_2010_14, mult=100, num=PopNonEnglish_2010_14, den=Pop5andOverYears_2010_14, 
 	                       num_moe=mPopNonEnglish_2010_14, den_moe=mPop5andOverYears_2010_14 );
 
+	%Pct_calc( var=PctPoorPersons, label=Poverty rate (%), num=PopPoorPersons, den=PersonsPovertyDefined, years=2010_14 )
 	%Pct_calc( var=PctPoorPersonsB, label=Poverty rate Black-Alone (%), num=PopPoorPersonsB, den=PersonsPovertyDefinedB, years=2010_14 )
 	%Pct_calc( var=PctPoorPersonsW, label=Poverty rate NH-White (%), num=PopPoorPersonsW, den=PersonsPovertyDefinedW, years=2010_14 )
 	%Pct_calc( var=PctPoorPersonsH, label=Poverty rate Hispanic(%), num=PopPoorPersonsH, den=PersonsPovertyDefinedH, years=2010_14 )
 	%Pct_calc( var=PctPoorPersonsAIOM, label=Poverty rate All-Other(%), num=PopPoorPersonsAIOM, den=PersonsPovertyDefAIOM, years=2010_14 )
 	%Pct_calc( var=PctPoorPersonsFB, label=Poverty rate foreign born (%), num=PopPoorPersonsFB, den=PersonsPovertyDefinedFB, years=2010_14 )
     
+	%Moe_prop_a( var=PctPoorPersons_m_2010_14, mult=100, num=PopPoorPersons_2010_14, den=PersonsPovertyDefined_2010_14, 
+                       num_moe=mPopPoorPersons_2010_14, den_moe=mPersonsPovertyDefined_2010_14 );
+
     %Moe_prop_a( var=PctPoorPersonsB_m_2010_14, mult=100, num=PopPoorPersonsB_2010_14, den=PersonsPovertyDefinedB_2010_14, 
                        num_moe=mPopPoorPersonsB_2010_14, den_moe=mPersonsPovertyDefinedB_2010_14 );
 
@@ -298,6 +319,61 @@
 
 	%Moe_prop_a( var=PctPoorPersonsFB_m_2010_14, mult=100, num=PopPoorPersonsFB_2010_14, den=PersonsPovertyDefinedFB_2010_14, 
                        num_moe=mPopPoorPersonsFB_2010_14, den_moe=mPersonsPovertyDefinedFB_2010_14 );
+
+	%Pct_calc( var=PctUnemployed, label=Unemployment rate (%), num=PopUnemployed, den=PopInCivLaborForce, years=2010_14 )
+
+	%Moe_prop_a( var=PctUnemployed_m_2010_14, mult=100, num=PopUnemployed_2010_14, den=PopInCivLaborForce_2010_14, 
+	                       num_moe=mPopUnemployed_2010_14, den_moe=mPopInCivLaborForce_2010_14 );
+
+	%Pct_calc( var=PctEmployed16to64, label=% persons employed between 16 and 64 years old, num=Pop16_64Employed, den=Pop16_64years, years=2010_14 )
+
+	%Moe_prop_a( var=PctEmployed16to64_m_2010_14, mult=100, num=Pop16_64Employed_2010_14, den=Pop16_64years_2010_14, 
+                       num_moe=mPop16_64Employed_2010_14, den_moe=mPop16_64years_2010_14 );
+
+	%Pct_calc( var=Pct16andOverWages, label=% persons employed with earnings, num=PopWorkEarn, den=Pop16andOverYears, years=2010_14 )
+
+	%Moe_prop_a( var=Pct16andOverWages_m_2010_14, mult=100, num=PopWorkEarn_2010_14, den=Pop16andOverYears_2010_14, 
+                       num_moe=mPopWorkEarn_2010_14, den_moe=mPop16andOverYears_2010_14 );
+
+	%Pct_calc( var=Pct16andOverWorkFT, label=% persons employed full time, num=PopWorkFT, den=Pop16andOverYears, years=2010_14 )
+
+    %Moe_prop_a( var=Pct16andOverWorkFT_m_2010_14, mult=100, num=PopWorkFT_2010_14, den=Pop16andOverYears_2010_14, 
+                       num_moe=mPopWorkFT_2010_14, den_moe=mPop16andOverYears_2010_14 );
+
+	%Pct_calc( var=PctWorkFTLT35k, label=% persons employed full time with earnings less than 35000, num=PopWorkFTLT35K, den=PopWorkFT, years=2010_14 )
+
+	%Moe_prop_a( var=PctWorkFTLT35k_m_2010_14, mult=100, num=PopWorkFTLT35k_2010_14, den=PopWorkFT_2010_14, 
+                       num_moe=mPopWorkFTLT35k_2010_14, den_moe=mPopWorkFT_2010_14 );
+
+	%Pct_calc( var=PctWorkFTLT75k, label=% persons employed full time with earnings less than 75000, num=PopWorkFTLT75k, den=PopWorkFT, years=2010_14 )
+
+	%Moe_prop_a( var=PctWorkFTLT75k_m_2010_14, mult=100, num=PopWorkFTLT75k_2010_14, den=PopWorkFT_2010_14, 
+                       num_moe=mPopWorkFTLT75k_2010_14, den_moe=mPopWorkFT_2010_14 );
+
+	%Pct_calc( var=PctEmployedMngmt, label=% persons 16+ years old employed in management business science and arts occupations, num=PopEmployedMngmt, den=PopEmployedByOcc, years=2010_14 )
+
+	%Moe_prop_a( var=PctEmployedMngmt_m_2010_14, mult=100, num=PopEmployedMngmt_2010_14, den=PopEmployedByOcc_2010_14, 
+                       num_moe=mPopEmployedMngmt_2010_14, den_moe=mPopEmployedByOcc_2010_14 );
+
+	%Pct_calc( var=PctEmployedServ, label=% persons 16+ years old employed in service occupations, num=PopEmployedServ, den=PopEmployedByOcc, years=2010_14 )
+
+	%Moe_prop_a( var=PctEmployedServ_m_2010_14, mult=100, num=PopEmployedServ_2010_14, den=PopEmployedByOcc_2010_14, 
+                       num_moe=mPopEmployedServ_2010_14, den_moe=mPopEmployedByOcc_2010_14 );
+
+	%Pct_calc( var=PctEmployedSales, label=% persons 16+ years old employed in sales and office occupations, num=PopEmployedSales, den=PopEmployedByOcc, years=2010_14 )
+
+	%Moe_prop_a( var=PctEmployedSales_m_2010_14, mult=100, num=PopEmployedSales_2010_14, den=PopEmployedByOcc_2010_14, 
+                       num_moe=mPopEmployedSales_2010_14, den_moe=mPopEmployedByOcc_2010_14 );
+
+	%Pct_calc( var=PctEmployedNatRes, label=% persons 16+ years old employed in natural resources construction and maintenance occupations, num=PopEmployedNatRes, den=PopEmployedByOcc, years=2010_14 )
+
+	%Moe_prop_a( var=PctEmployedNatRes_m_2010_14, mult=100, num=PopEmployedNatRes_2010_14, den=PopEmployedByOcc_2010_14, 
+                       num_moe=mPopEmployedNatRes_2010_14, den_moe=mPopEmployedByOcc_2010_14 );
+
+	%Pct_calc( var=PctEmployedProd, label=% persons employed in production transportation and material moving occupations, num=PopEmployedProd, den=PopEmployedByOcc, years=2010_14 )
+
+	%Moe_prop_a( var=PctEmployedProd_m_2010_14, mult=100, num=PopEmployedProd_2010_14, den=PopEmployedByOcc_2010_14, 
+                       num_moe=mPopEmployedProd_2010_14, den_moe=mPopEmployedByOcc_2010_14 );
 
 	%do r=1 %to 4;
 
@@ -316,7 +392,7 @@
 
 	%Pct_calc( var=Pct16andOverWages&race., label=% persons &name. employed with earnings, num=PopWorkEarn&race., den=Pop16andOverYears&race., years=2010_14 )
 
-	%Moe_prop_a( var=Pct16andOverWages_m_2010_14&race., mult=100, num=PopWorkEarn&race._2010_14, den=Pop16andOverYears&race._2010_14, 
+	%Moe_prop_a( var=Pct16andOverWages&race._m_2010_14, mult=100, num=PopWorkEarn&race._2010_14, den=Pop16andOverYears&race._2010_14, 
                        num_moe=mPopWorkEarn&race._2010_14, den_moe=mPop16andOverYears&race._2010_14 );
 
 	%Pct_calc( var=Pct16andOverWorkFT&race., label=% persons &name. employed full time, num=PopWorkFT&race., den=Pop16andOverYears&race., years=2010_14 )
@@ -361,6 +437,11 @@
 
 	%end;
 
+	%Pct_calc( var=Pct16andOverEmployed, label=% pop. 16+ yrs. employed, num=Pop16andOverEmployed, den=Pop16andOverYears, years=2010_14 )
+
+    %Moe_prop_a( var=Pct16andOverEmployed_m_2010_14, mult=100, num=Pop16andOverEmployed_2010_14, den=Pop16andOverYears_2010_14, 
+                       num_moe=mPop16andOverEmployed_2010_14, den_moe=mPop16andOverYears_2010_14 );
+
 	%Pct_calc( var=Pct16andOverEmployedW, label=% pop. 16+ yrs. employed NH-White, num=Pop16andOverEmployedW, den=Pop16andOverYearsW, years=2010_14 )
 
     %Moe_prop_a( var=Pct16andOverEmployedW_m_2010_14, mult=100, num=Pop16andOverEmployedW_2010_14, den=Pop16andOverYearsW_2010_14, 
@@ -403,27 +484,47 @@
 
 	%end;
 
+	%Pct_calc( var=Pct25andOverWoutHS, label=% persons without HS diploma, num=Pop25andOverWoutHS, den=Pop25andOverYears, years=2010_14 )
+
+	%Moe_prop_a( var=Pct25andOverWoutHS_m_2010_14, mult=100, num=Pop25andOverWoutHS_2010_14, den=Pop25andOverYears_2010_14, 
+                       num_moe=mPop25andOverWoutHS_2010_14, den_moe=mPop25andOverYears_2010_14 );
+
 	%Pct_calc( var=Pct25andOverWoutHSFB, label=% foreign born persons without HS diploma, num=Pop25andOverWoutHSFB, den=Pop25andOverYearsFB, years=2010_14 )
-	%Pct_calc( var=Pct25andOverWoutHSNB, label=% native born persons without HS diploma, num=Pop25andOverWoutHSNB, den=Pop25andOverYearsNB, years=2010_14 )
-	%Pct_calc( var=Pct25andOverWHSFB, label=% foreign born persons with HS diploma, num=Pop25andOverWHSFB, den=Pop25andOverYearsFB, years=2010_14 )
-	%Pct_calc( var=Pct25andOverWHSNB, label=% native born persons with HS diploma, num=Pop25andOverWHSNB, den=Pop25andOverYearsNB, years=2010_14 )
-	%Pct_calc( var=Pct25andOverWSCFB, label=% foreign born persons with some college, num=Pop25andOverWSCFB, den=Pop25andOverYearsFB, years=2010_14 )
-	%Pct_calc( var=Pct25andOverWSCNB, label=% native born persons with some college, num=Pop25andOverWSCNB, den=Pop25andOverYearsNB, years=2010_14 )
 
 	%Moe_prop_a( var=Pct25andOverWoutHSFB_m_2010_14, mult=100, num=Pop25andOverWoutHSFB_2010_14, den=Pop25andOverYearsFB_2010_14, 
                        num_moe=mPop25andOverWoutHSFB_2010_14, den_moe=mPop25andOverYearsFB_2010_14 );
 
+	%Pct_calc( var=Pct25andOverWoutHSNB, label=% native born persons without HS diploma, num=Pop25andOverWoutHSNB, den=Pop25andOverYearsNB, years=2010_14 )
+
 	%Moe_prop_a( var=Pct25andOverWoutHSNB_m_2010_14, mult=100, num=Pop25andOverWoutHSNB_2010_14, den=Pop25andOverYearsNB_2010_14, 
                        num_moe=mPop25andOverWoutHSNB_2010_14, den_moe=mPop25andOverYearsNB_2010_14 );
+
+	%Pct_calc( var=Pct25andOverWHS, label=% persons with HS diploma, num=Pop25andOverWHS, den=Pop25andOverYears, years=2010_14 )
+
+	%Moe_prop_a( var=Pct25andOverWHS_m_2010_14, mult=100, num=Pop25andOverWHS_2010_14, den=Pop25andOverYears_2010_14, 
+                       num_moe=mPop25andOverWHS_2010_14, den_moe=mPop25andOverYears_2010_14 );
+
+	%Pct_calc( var=Pct25andOverWHSFB, label=% foreign born persons with HS diploma, num=Pop25andOverWHSFB, den=Pop25andOverYearsFB, years=2010_14 )
 
 	%Moe_prop_a( var=Pct25andOverWHSFB_m_2010_14, mult=100, num=Pop25andOverWHSFB_2010_14, den=Pop25andOverYearsFB_2010_14, 
                        num_moe=mPop25andOverWHSFB_2010_14, den_moe=mPop25andOverYearsFB_2010_14 );
 
+	%Pct_calc( var=Pct25andOverWHSNB, label=% native born persons with HS diploma, num=Pop25andOverWHSNB, den=Pop25andOverYearsNB, years=2010_14 )
+
 	%Moe_prop_a( var=Pct25andOverWHSNB_m_2010_14, mult=100, num=Pop25andOverWHSNB_2010_14, den=Pop25andOverYearsNB_2010_14, 
                        num_moe=mPop25andOverWHSNB_2010_14, den_moe=mPop25andOverYearsNB_2010_14 );
 
+	%Pct_calc( var=Pct25andOverWSC, label=% persons with some college, num=Pop25andOverWSC, den=Pop25andOverYears, years=2010_14 )
+
+	%Moe_prop_a( var=Pct25andOverWSC_m_2010_14, mult=100, num=Pop25andOverWSC_2010_14, den=Pop25andOverYears_2010_14, 
+                       num_moe=mPop25andOverWSC_2010_14, den_moe=mPop25andOverYears_2010_14 );
+
+	%Pct_calc( var=Pct25andOverWSCFB, label=% foreign born persons with some college, num=Pop25andOverWSCFB, den=Pop25andOverYearsFB, years=2010_14 )
+
 	%Moe_prop_a( var=Pct25andOverWSCFB_m_2010_14, mult=100, num=Pop25andOverWSCFB_2010_14, den=Pop25andOverYearsFB_2010_14, 
                        num_moe=mPop25andOverWSCFB_2010_14, den_moe=mPop25andOverYearsFB_2010_14 );
+
+	%Pct_calc( var=Pct25andOverWSCNB, label=% native born persons with some college, num=Pop25andOverWSCNB, den=Pop25andOverYearsNB, years=2010_14 )
 
 	%Moe_prop_a( var=Pct25andOverWSCNB_m_2010_14, mult=100, num=Pop25andOverWSCNB_2010_14, den=Pop25andOverYearsNB_2010_14, 
                        num_moe=mPop25andOverWSCNB_2010_14, den_moe=mPop25andOverYearsNB_2010_14 );
@@ -455,6 +556,26 @@
         
     ** Income Conditions **;
     
+	%Pct_calc( var=PctFamilyLT75000, label=% families with income less than 75000, num=FamIncomeLT75k, den=NumFamilies, years=2010_14 )
+
+    %Moe_prop_a( var=PctFamilyLT75000_m_2010_14, mult=100, num=FamIncomeLT75k_2010_14, den=NumFamilies_2010_14, 
+                       num_moe=mFamIncomeLT75k_2010_14, den_moe=mNumFamilies_2010_14 );
+
+	%Pct_calc( var=PctFamilyGT200000, label=% families with income greater than 200000, num=FamIncomeGT200k, den=NumFamilies, years=2010_14 )
+
+    %Moe_prop_a( var=PctFamilyGT200000_m_2010_14, mult=100, num=FamIncomeGT200k_2010_14, den=NumFamilies_2010_14, 
+                       num_moe=mFamIncomeGT200k_2010_14, den_moe=mNumFamilies_2010_14 );
+
+	%Pct_calc( var=AvgHshldIncome, label=Average household income last year ($), num=AggHshldIncome, den=NumHshlds, mult=1, years=2010_14 )
+
+	%dollar_convert( AvgHshldIncome_2010_14, AvgHshldIncAdj_2010_14, 2014, &inc_dollar_yr )
+
+    AvgHshldIncome_m_2010_14 = 
+      %Moe_ratio( num=AggHshldIncome_2010_14, den=NumHshlds_2010_14, 
+                  num_moe=mAggHshldIncome_2010_14, den_moe=mNumHshlds_2010_14 );
+                        
+    %dollar_convert( AvgHshldIncome_m_2010_14, AvgHshldIncAdj_m_2010_14, 2014, &inc_dollar_yr )
+
 	%do r=1 %to 4;
 
 		%let race=%scan(&racelist.,&r.," ");
@@ -472,9 +593,9 @@
 
 	%Pct_calc( var=AvgHshldIncome&race., label=Average household income last year &name. ($), num=AggHshldIncome&race., den=NumHshlds&race., mult=1, years=2010_14 )
 
-	%dollar_convert( AvgHshldIncome&race._2010_14, AvgHshldIncAdj&race._2010_14, 2014, &inc_dollar_yr );
+	%dollar_convert( AvgHshldIncome&race._2010_14, AvgHshldIncAdj&race._2010_14, 2014, &inc_dollar_yr )
 
-	AvgHshldIncome&race._m_2010_14 = 
+    AvgHshldIncome&race._m_2010_14 = 
       %Moe_ratio( num=AggHshldIncome&race._2010_14, den=NumHshlds&race._2010_14, 
                   num_moe=mAggHshldIncome&race._2010_14, den_moe=mNumHshlds&race._2010_14 );
                         
@@ -499,6 +620,11 @@
 
 	%Moe_prop_a( var=PctVacantHUForRent_m_2010_14, mult=100, num=NumVacantHsgUnitsForRent_2010_14, den=NumRenterHsgUnits_2010_14, 
                        num_moe=mNumVacantHUForRent_2010_14, den_moe=mNumRenterHsgUnits_2010_14 );
+
+    %Pct_calc( var=PctOwnerOccupiedHU, label=Homeownership rate (%), num=NumOwnerOccupiedHU, den=NumOccupiedHsgUnits, years=2010_14 )
+
+    %Moe_prop_a( var=PctOwnerOccupiedHU_m_2010_14, mult=100, num=NumOwnerOccupiedHU_2010_14, den=NumOccupiedHsgUnits_2010_14, 
+                       num_moe=mNumOwnerOccupiedHU_2010_14, den_moe=mNumOccupiedHsgUnits_2010_14 );
 
 	%do r=1 %to 4;
 
