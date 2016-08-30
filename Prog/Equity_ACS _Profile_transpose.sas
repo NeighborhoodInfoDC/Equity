@@ -209,7 +209,7 @@ var PctBlackNonHispBridge: PctWhiteNonHispBridge:
 	PctAloneB: PctAloneW: PctAloneH: PctAloneA_:
 	PctAloneI_: PctAloneO: PctAloneM: PctAloneIOM: PctAloneAIOM:
 
-	PctForeignBorn: PctNativeBorn: PctOthLang: 
+	PctForeignBorn: PctNativeBorn:
 
 	PctPopUnder18Years_: PctPopUnder18YearsW_: 
 	PctPopUnder18YearsB_: PctPopUnder18YearsH_:
@@ -368,6 +368,9 @@ run;
 data equity.profile_tabs_ACS (where=(category ~=.));
 	set transposed_data;
 
+total=index(_name_, "_2010_14");
+if total=0 then total=index(_name_, "_m_2010_14");
+
 black=index(_name_, "B_2010_14");
 if black=0 then black=index(_name_,"B_m_2010_14");
 
@@ -380,18 +383,29 @@ if hispanic=0 then hispanic=index(_name_,"H_m_2010_14");
 AIOM=index(_name_, "AIOM_2010_14");
 if AIOM=0 then AIOM=index(_name_,"AIOM_m_2010_14");
 
+if total >0 then category=1;
 if black > 0 then category=5;
 if white > 0 then category=2;
 if hispanic > 0 then category=4; 
 if AIOM  > 0 then category=6; 
 
  if _name_ in ("PctWhiteNonHispBridge_2010_14") then category=2;
+ if _name_ in ("PctWhiteNonHispBridge_m_2010_14") then category=2;
  if _name_ in ("PctBlackNonHispBridge_2010_14") then category=5;
+ if _name_ in ("PctBlackNonHispBridge_m_2010_14") then category=5;
  if _name_ in ("PctHisp_2010_14") then category=4;
+ if _name_ in ("PctHisp_m_2010_14") then category=4;
  if _name_ in ("PctAsnPINonHispBridge_2010_14") then category=0;
+ if _name_ in ("PctAsnPINonHispBridge_m_2010_14") then category=0;
  if _name_ in ("PctOth_2010_14") then category=0;
+ if _name_ in ("PctOth_m_2010_14") then category=0;
+ if _name_ in ("PctForeignBorn_2010_14") then category=0;
+ if _name_ in ("PctForeignBorn_m_2010_14") then category=0;
+ if _name_ in ("PctNativeBorn_2010_14") then category=0;
+ if _name_ in ("PctNativeBorn_m_2010_14") then category=0;
+ if _name_ in ("PctOthLang_2010_14") then category=0;
+ if _name_ in ("PctOthLang_m_2010_14") then category=0;
 
-*looks like there are some you'll have to fix individually;
  if _name_ ="Gap25andOverWoutHSFB_2010_14" then do; black=0; category=.; end;
  if _name_ ="Pct25andOverWoutHSFB_2010_14" then do; black=0; category=.; end;
  if _name_ ="Pct25andOverWoutHSFB_m_2010_14" then do; black=0; category=.; end;
