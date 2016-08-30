@@ -290,9 +290,9 @@
 
 	** Family Risk Factors **;
 
-	%Pct_calc( var=PctOLang, label=% pop. that speaks a language other than English at home, num=PopNonEnglish, den=Pop5andOverYears, years=2010_14 )
+	%Pct_calc( var=PctOthLang, label=% pop. that speaks a language other than English at home, num=PopNonEnglish, den=Pop5andOverYears, years=2010_14 )
 
-	%Moe_prop_a( var=PctOLang_m_2010_14, mult=100, num=PopNonEnglish_2010_14, den=Pop5andOverYears_2010_14, 
+	%Moe_prop_a( var=PctOthLang_m_2010_14, mult=100, num=PopNonEnglish_2010_14, den=Pop5andOverYears_2010_14, 
 	                       num_moe=mPopNonEnglish_2010_14, den_moe=mPop5andOverYears_2010_14 );
 
 	%Pct_calc( var=PctPoorPersons, label=Poverty rate (%), num=PopPoorPersons, den=PersonsPovertyDefined, years=2010_14 )
