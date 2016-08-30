@@ -89,7 +89,6 @@ data city_ward_WR (drop=cNum: cPct: cPop: _make_profile);
 	merge city_ward whiterates_new (rename=(c_make_profile=_make_profile));
 	by _make_profile;
 	
-	Gap25andOverWoutHS_2010_14=cPct25andOverWoutHSW_2010_14/100*Pop25andOverYears_2010_14-Pop25andOverWoutHS_2010_14;
 	Gap25andOverWoutHSB_2010_14=cPct25andOverWoutHSW_2010_14/100*Pop25andOverYearsB_2010_14-Pop25andOverWoutHSB_2010_14;
 	Gap25andOverWoutHSW_2010_14=cPct25andOverWoutHSW_2010_14/100*Pop25andOverYearsW_2010_14-Pop25andOverWoutHSW_2010_14;
 	Gap25andOverWoutHSH_2010_14=cPct25andOverWoutHSW_2010_14/100*Pop25andOverYearsH_2010_14-Pop25andOverWoutHSH_2010_14;
@@ -97,7 +96,6 @@ data city_ward_WR (drop=cNum: cPct: cPop: _make_profile);
 	Gap25andOverWoutHSFB_2010_14=cPct25andOverWoutHSW_2010_14/100*Pop25andOverYearsFB_2010_14-Pop25andOverWoutHSFB_2010_14;
 	Gap25andOverWoutHSNB_2010_14=cPct25andOverWoutHSW_2010_14/100*Pop25andOverYearsNB_2010_14-Pop25andOverWoutHSNB_2010_14;
 
-	Gap25andOverWHS_2010_14=cPct25andOverWHSW_2010_14/100*Pop25andOverYears_2010_14-Pop25andOverWHS_2010_14;
 	Gap25andOverWHSB_2010_14=cPct25andOverWHSW_2010_14/100*Pop25andOverYearsB_2010_14-Pop25andOverWHSB_2010_14;
 	Gap25andOverWHSW_2010_14=cPct25andOverWHSW_2010_14/100*Pop25andOverYearsW_2010_14-Pop25andOverWHSW_2010_14;
 	Gap25andOverWHSH_2010_14=cPct25andOverWHSW_2010_14/100*Pop25andOverYearsH_2010_14-Pop25andOverWHSH_2010_14;
@@ -105,7 +103,6 @@ data city_ward_WR (drop=cNum: cPct: cPop: _make_profile);
 	Gap25andOverWHSFB_2010_14=cPct25andOverWHSW_2010_14/100*Pop25andOverYearsFB_2010_14-Pop25andOverWHSFB_2010_14;
 	Gap25andOverWHSNB_2010_14=cPct25andOverWHSW_2010_14/100*Pop25andOverYearsNB_2010_14-Pop25andOverWHSNB_2010_14;
 
-	Gap25andOverWSC_2010_14=cPct25andOverWSCW_2010_14/100*Pop25andOverYears_2010_14-Pop25andOverWSC_2010_14;
 	Gap25andOverWSCB_2010_14=cPct25andOverWSCW_2010_14/100*Pop25andOverYearsB_2010_14-Pop25andOverWSCB_2010_14;
 	Gap25andOverWSCW_2010_14=cPct25andOverWSCW_2010_14/100*Pop25andOverYearsW_2010_14-Pop25andOverWSCW_2010_14;
 	Gap25andOverWSCH_2010_14=cPct25andOverWSCW_2010_14/100*Pop25andOverYearsH_2010_14-Pop25andOverWSCH_2010_14;
@@ -113,110 +110,92 @@ data city_ward_WR (drop=cNum: cPct: cPop: _make_profile);
 	Gap25andOverWSCFB_2010_14=cPct25andOverWSCW_2010_14/100*Pop25andOverYearsFB_2010_14-Pop25andOverWSCFB_2010_14;
 	Gap25andOverWSCNB_2010_14=cPct25andOverWSCW_2010_14/100*Pop25andOverYearsNB_2010_14-Pop25andOverWSCNB_2010_14;
 
-	GapPoorPersons_2010_14=cPctPoorPersonsW_2010_14/100*PersonsPovertyDefined_2010_14-PopPoorPersons_2010_14;
 	GapPoorPersonsB_2010_14=cPctPoorPersonsW_2010_14/100*PersonsPovertyDefinedB_2010_14-PopPoorPersonsB_2010_14;
 	GapPoorPersonsW_2010_14=cPctPoorPersonsW_2010_14/100*PersonsPovertyDefinedW_2010_14-PopPoorPersonsW_2010_14;
 	GapPoorPersonsH_2010_14=cPctPoorPersonsW_2010_14/100*PersonsPovertyDefinedH_2010_14-PopPoorPersonsH_2010_14;
 	GapPoorPersonsAIOM_2010_14=cPctPoorPersonsW_2010_14/100*PersonsPovertyDefAIOM_2010_14-PopPoorPersonsAIOM_2010_14;
 	GapPoorPersonsFB_2010_14=cPctPoorPersonsW_2010_14/100*PersonsPovertyDefinedFB_2010_14-PopPoorPersonsFB_2010_14;
 
-	GapPoorChildren_2010_14=cPctPoorChildrenW_2010_14/100*ChildrenPovertyDefined_2010_14-PopPoorChildren_2010_14;
 	GapPoorChildrenB_2010_14=cPctPoorChildrenW_2010_14/100*ChildrenPovertyDefinedB_2010_14-PopPoorChildrenB_2010_14;
 	GapPoorChildrenW_2010_14=cPctPoorChildrenW_2010_14/100*ChildrenPovertyDefinedW_2010_14-PopPoorChildrenW_2010_14;
 	GapPoorChildrenH_2010_14=cPctPoorChildrenW_2010_14/100*ChildrenPovertyDefinedH_2010_14-PopPoorChildrenH_2010_14;
 	GapPoorChildrenAIOM_2010_14=cPctPoorChildrenW_2010_14/100*ChildrenPovertyDefAIOM_2010_14-PopPoorChildrenAIOM_2010_14;
 
-	GapFamilyLT75000_2010_14=cPctFamilyLT75000W_2010_14/100*NumFamilies_2010_14-FamIncomeLT75k_2010_14;
 	GapFamilyLT75000B_2010_14=cPctFamilyLT75000W_2010_14/100*NumFamiliesB_2010_14-FamIncomeLT75kB_2010_14;
 	GapFamilyLT75000W_2010_14=cPctFamilyLT75000W_2010_14/100*NumFamiliesW_2010_14-FamIncomeLT75kW_2010_14;
 	GapFamilyLT75000H_2010_14=cPctFamilyLT75000W_2010_14/100*NumFamiliesH_2010_14-FamIncomeLT75kH_2010_14;
 	GapFamilyLT75000AIOM_2010_14=cPctFamilyLT75000W_2010_14/100*NumFamiliesAIOM_2010_14-FamIncomeLT75kAIOM_2010_14;
 
-	GapFamilyGT200000_2010_14=cPctFamilyGT200000W_2010_14/100*NumFamilies_2010_14-FamIncomeGT200k_2010_14;
 	GapFamilyGT200000B_2010_14=cPctFamilyGT200000W_2010_14/100*NumFamiliesB_2010_14-FamIncomeGT200kB_2010_14;
 	GapFamilyGT200000W_2010_14=cPctFamilyGT200000W_2010_14/100*NumFamiliesW_2010_14-FamIncomeGT200kW_2010_14;
 	GapFamilyGT200000H_2010_14=cPctFamilyGT200000W_2010_14/100*NumFamiliesH_2010_14-FamIncomeGT200kH_2010_14;
 	GapFamilyGT200000AIOM_2010_14=cPctFamilyGT200000W_2010_14/100*NumFamiliesAIOM_2010_14-FamIncomeGT200kAIOM_2010_14;
 
-	GapAvgHshldIncAdj_2010_14=cAvgHshldIncAdjW_2010_14/100*NumHshlds_2010_14-AggHshldIncome_2010_14;
 	GapAvgHshldIncAdjB_2010_14=cAvgHshldIncAdjW_2010_14/100*NumHshldsB_2010_14-AggHshldIncomeB_2010_14;
 	GapAvgHshldIncAdjW_2010_14=cAvgHshldIncAdjW_2010_14/100*NumHshldsW_2010_14-AggHshldIncomeW_2010_14;
 	GapAvgHshldIncAdjH_2010_14=cAvgHshldIncAdjW_2010_14/100*NumHshldsH_2010_14-AggHshldIncomeH_2010_14;
 	GapAvgHshldIncAdjAIOM_2010_14=cAvgHshldIncAdjW_2010_14/100*NumHshldsAIOM_2010_14-AggHshldIncomeAIOM_2010_14;
 
-	GapEmployed16to64_2010_14=cPctEmployed16to64W_2010_14/100*Pop16_64years_2010_14-Pop16_64Employed_2010_14;
 	GapEmployed16to64B_2010_14=cPctEmployed16to64W_2010_14/100*Pop16_64yearsB_2010_14-Pop16_64EmployedB_2010_14;
 	GapEmployed16to64W_2010_14=cPctEmployed16to64W_2010_14/100*Pop16_64yearsW_2010_14-Pop16_64EmployedW_2010_14;
 	GapEmployed16to64H_2010_14=cPctEmployed16to64W_2010_14/100*Pop16_64yearsH_2010_14-Pop16_64EmployedH_2010_14;
 	GapEmployed16to64AIOM_2010_14=cPctEmployed16to64W_2010_14/100*Pop16_64yearsAIOM_2010_14-Pop16_64EmployedAIOM_2010_14;
 
-	Gap16andOverEmployed_2010_14=cPct16andOverEmployedW_2010_14/100*Pop16andOverYears_2010_14-Pop16andOverEmployed_2010_14;
 	Gap16andOverEmployedB_2010_14=cPct16andOverEmployedW_2010_14/100*Pop16andOverYearsB_2010_14-Pop16andOverEmployedB_2010_14;
 	Gap16andOverEmployedW_2010_14=cPct16andOverEmployedW_2010_14/100*Pop16andOverYearsW_2010_14-Pop16andOverEmployedW_2010_14;
 	Gap16andOverEmployedH_2010_14=cPct16andOverEmployedW_2010_14/100*Pop16andOverYearsH_2010_14-Pop16andOverEmployedH_2010_14;
 	Gap16andOverEmployAIOM_2010_14=cPct16andOverEmployedW_2010_14/100*Pop16andOverYearsAIOM_2010_14-Pop16andOverEmployAIOM_2010_14;
 
-	GapUnemployed_2010_14=cPctUnemployedW_2010_14/100*PopInCivLaborForce_2010_14-PopUnemployed_2010_14;
 	GapUnemployedB_2010_14=cPctUnemployedW_2010_14/100*PopInCivLaborForceB_2010_14-PopUnemployedB_2010_14;
 	GapUnemployedW_2010_14=cPctUnemployedW_2010_14/100*PopInCivLaborForceW_2010_14-PopUnemployedW_2010_14;
 	GapUnemployedH_2010_14=cPctUnemployedW_2010_14/100*PopInCivLaborForceH_2010_14-PopUnemployedH_2010_14;
 	GapUnemployedAIOM_2010_14=cPctUnemployedW_2010_14/100*PopInCivLaborForceAIOM_2010_14-PopUnemployedAIOM_2010_14;
 
-	Gap16andOverWages_2010_14=cPct16andOverWagesW_2010_14/100*Pop16andOverYears_2010_14-PopWorkEarn_2010_14;
 	Gap16andOverWagesB_2010_14=cPct16andOverWagesW_2010_14/100*Pop16andOverYearsB_2010_14-PopWorkEarnB_2010_14;
 	Gap16andOverWagesW_2010_14=cPct16andOverWagesW_2010_14/100*Pop16andOverYearsW_2010_14-PopWorkEarnW_2010_14;
 	Gap16andOverWagesH_2010_14=cPct16andOverWagesW_2010_14/100*Pop16andOverYearsH_2010_14-PopWorkEarnH_2010_14;
 	Gap16andOverWagesAIOM_2010_14=cPct16andOverWagesW_2010_14/100*Pop16andOverYearsAIOM_2010_14-PopWorkEarnAIOM_2010_14;
 
-	Gap16andOverWorkFT_2010_14=cPct16andOverWorkFTW_2010_14/100*Pop16andOverYears_2010_14-PopWorkFT_2010_14;
 	Gap16andOverWorkFTB_2010_14=cPct16andOverWorkFTW_2010_14/100*Pop16andOverYearsB_2010_14-PopWorkFTB_2010_14;
 	Gap16andOverWorkFTW_2010_14=cPct16andOverWorkFTW_2010_14/100*Pop16andOverYearsW_2010_14-PopWorkFTW_2010_14;
 	Gap16andOverWorkFTH_2010_14=cPct16andOverWorkFTW_2010_14/100*Pop16andOverYearsH_2010_14-PopWorkFTH_2010_14;
 	Gap16andOverWorkFTAIOM_2010_14=cPct16andOverWorkFTW_2010_14/100*Pop16andOverYearsAIOM_2010_14-PopWorkFTAIOM_2010_14;
 
-	GapWorkFTLT35k_2010_14=cPctWorkFTLT35kW_2010_14/100*PopWorkFT_2010_14-PopWorkFTLT35K_2010_14;
 	GapWorkFTLT35kB_2010_14=cPctWorkFTLT35kW_2010_14/100*PopWorkFTB_2010_14-PopWorkFTLT35KB_2010_14;
 	GapWorkFTLT35kW_2010_14=cPctWorkFTLT35kW_2010_14/100*PopWorkFTW_2010_14-PopWorkFTLT35KW_2010_14;
 	GapWorkFTLT35kH_2010_14=cPctWorkFTLT35kW_2010_14/100*PopWorkFTH_2010_14-PopWorkFTLT35KH_2010_14;
 	GapWorkFTLT35kAIOM_2010_14=cPctWorkFTLT35kW_2010_14/100*PopWorkFTAIOM_2010_14-PopWorkFTLT35KAIOM_2010_14;
 
-	GapWorkFTLT75k_2010_14=cPctWorkFTLT75kW_2010_14/100*PopWorkFT_2010_14-PopWorkFTLT75K_2010_14;
 	GapWorkFTLT75kB_2010_14=cPctWorkFTLT75kW_2010_14/100*PopWorkFTB_2010_14-PopWorkFTLT75KB_2010_14;
 	GapWorkFTLT75kW_2010_14=cPctWorkFTLT75kW_2010_14/100*PopWorkFTW_2010_14-PopWorkFTLT75KW_2010_14;
 	GapWorkFTLT75kH_2010_14=cPctWorkFTLT75kW_2010_14/100*PopWorkFTH_2010_14-PopWorkFTLT75KH_2010_14;
 	GapWorkFTLT75kAIOM_2010_14=cPctWorkFTLT75kW_2010_14/100*PopWorkFTAIOM_2010_14-PopWorkFTLT75KAIOM_2010_14;
 
-	GapEmployedMngmt_2010_14=cPctEmployedMngmtW_2010_14/100*PopEmployedByOcc_2010_14-PopEmployedMngmt_2010_14;
 	GapEmployedMngmtB_2010_14=cPctEmployedMngmtW_2010_14/100*PopEmployedByOccB_2010_14-PopEmployedMngmtB_2010_14;
 	GapEmployedMngmtW_2010_14=cPctEmployedMngmtW_2010_14/100*PopEmployedByOccW_2010_14-PopEmployedMngmtW_2010_14;
 	GapEmployedMngmtH_2010_14=cPctEmployedMngmtW_2010_14/100*PopEmployedByOccH_2010_14-PopEmployedMngmtH_2010_14;
 	GapEmployedMngmtAIOM_2010_14=cPctEmployedMngmtW_2010_14/100*PopEmployedByOccAIOM_2010_14-PopEmployedMngmtAIOM_2010_14;
 
-	GapEmployedServ_2010_14=cPctEmployedServW_2010_14/100*PopEmployedByOcc_2010_14-PopEmployedServ_2010_14;
 	GapEmployedServB_2010_14=cPctEmployedServW_2010_14/100*PopEmployedByOccB_2010_14-PopEmployedServB_2010_14;
 	GapEmployedServW_2010_14=cPctEmployedServW_2010_14/100*PopEmployedByOccW_2010_14-PopEmployedServW_2010_14;
 	GapEmployedServH_2010_14=cPctEmployedServW_2010_14/100*PopEmployedByOccH_2010_14-PopEmployedServH_2010_14;
 	GapEmployedServAIOM_2010_14=cPctEmployedServW_2010_14/100*PopEmployedByOccAIOM_2010_14-PopEmployedServAIOM_2010_14;
 
-	GapEmployedSales_2010_14=cPctEmployedSalesW_2010_14/100*PopEmployedByOcc_2010_14-PopEmployedSales_2010_14;
 	GapEmployedSalesB_2010_14=cPctEmployedSalesW_2010_14/100*PopEmployedByOccB_2010_14-PopEmployedSalesB_2010_14;
 	GapEmployedSalesW_2010_14=cPctEmployedSalesW_2010_14/100*PopEmployedByOccW_2010_14-PopEmployedSalesW_2010_14;
 	GapEmployedSalesH_2010_14=cPctEmployedSalesW_2010_14/100*PopEmployedByOccH_2010_14-PopEmployedSalesH_2010_14;
 	GapEmployedSalesAIOM_2010_14=cPctEmployedSalesW_2010_14/100*PopEmployedByOccAIOM_2010_14-PopEmployedSalesAIOM_2010_14;
 
-	GapEmployedNatRes_2010_14=cPctEmployedNatResW_2010_14/100*PopEmployedByOcc_2010_14-PopEmployedNatRes_2010_14;
 	GapEmployedNatResB_2010_14=cPctEmployedNatResW_2010_14/100*PopEmployedByOccB_2010_14-PopEmployedNatResB_2010_14;
 	GapEmployedNatResW_2010_14=cPctEmployedNatResW_2010_14/100*PopEmployedByOccW_2010_14-PopEmployedNatResW_2010_14;
 	GapEmployedNatResH_2010_14=cPctEmployedNatResW_2010_14/100*PopEmployedByOccH_2010_14-PopEmployedNatResH_2010_14;
 	GapEmployedNatResAIOM_2010_14=cPctEmployedNatResW_2010_14/100*PopEmployedByOccAIOM_2010_14-PopEmployedNatResAIOM_2010_14;
 
-	GapEmployedProd_2010_14=cPctEmployedProdW_2010_14/100*PopEmployedByOcc_2010_14-PopEmployedProd_2010_14;
 	GapEmployedProdB_2010_14=cPctEmployedProdW_2010_14/100*PopEmployedByOccB_2010_14-PopEmployedProdB_2010_14;
 	GapEmployedProdW_2010_14=cPctEmployedProdW_2010_14/100*PopEmployedByOccW_2010_14-PopEmployedProdW_2010_14;
 	GapEmployedProdH_2010_14=cPctEmployedProdW_2010_14/100*PopEmployedByOccH_2010_14-PopEmployedProdH_2010_14;
 	GapEmployedProdAIOM_2010_14=cPctEmployedProdW_2010_14/100*PopEmployedByOccAIOM_2010_14-PopEmployedProdAIOM_2010_14;
 
-	GapOwnerOccupiedHU_2010_14=cPctOwnerOccupiedHUW_2010_14/100*NumOccupiedHsgUnits_2010_14-NumOwnerOccupiedHU_2010_14;
 	GapOwnerOccupiedHUB_2010_14=cPctOwnerOccupiedHUW_2010_14/100*NumOccupiedHsgUnitsB_2010_14-NumOwnerOccupiedHUB_2010_14;
 	GapOwnerOccupiedHUW_2010_14=cPctOwnerOccupiedHUW_2010_14/100*NumOccupiedHsgUnitsW_2010_14-NumOwnerOccupiedHUW_2010_14;
 	GapOwnerOccupiedHUH_2010_14=cPctOwnerOccupiedHUW_2010_14/100*NumOccupiedHsgUnitsH_2010_14-NumOwnerOccupiedHUH_2010_14;
@@ -229,7 +208,8 @@ var PctBlackNonHispBridge: PctWhiteNonHispBridge:
 	PctHisp: PctAsnPINonHispBridge: PctOth:
 	PctAloneB: PctAloneW: PctAloneH: PctAloneA_:
 	PctAloneI_: PctAloneO: PctAloneM: PctAloneIOM: PctAloneAIOM:
-	PctForeignBorn:  PctOLang: 
+
+	PctForeignBorn: PctNativeBorn: PctOthLang: 
 
 	PctPopUnder18Years_: PctPopUnder18YearsW_: 
 	PctPopUnder18YearsB_: PctPopUnder18YearsH_:
@@ -249,7 +229,7 @@ var PctBlackNonHispBridge: PctWhiteNonHispBridge:
 	PctPop65andOverYearsH: PctPop65andOverYrsH:
 	PctPop65andOverYearsAIOM: PctPop65andOverYrsAIOM:
 
-	Pct25andOverWoutHS_: Gap25andOverWoutHS_:
+	Pct25andOverWoutHS_: 
 	Pct25andOverWoutHSW: Gap25andOverWoutHSW:
 	Pct25andOverWoutHSB: Gap25andOverWoutHSB:
 	Pct25andOverWoutHSH: Gap25andOverWoutHSH:
@@ -257,7 +237,7 @@ var PctBlackNonHispBridge: PctWhiteNonHispBridge:
 	Pct25andOverWoutHSFB: Gap25andOverWoutHSFB:
 	Pct25andOverWoutHSNB: Gap25andOverWoutHSNB:
 
-	Pct25andOverWHS_: Gap25andOverWHS_:  
+	Pct25andOverWHS_:  
 	Pct25andOverWHSW: Gap25andOverWHSW:  
 	Pct25andOverWHSB: Gap25andOverWHSB:  
 	Pct25andOverWHSH: Gap25andOverWHSH:  
@@ -265,7 +245,7 @@ var PctBlackNonHispBridge: PctWhiteNonHispBridge:
 	Pct25andOverWHSFB: Gap25andOverWHSFB:  
 	Pct25andOverWHSNB: Gap25andOverWHSNB:  
 
-	Pct25andOverWSC_: Gap25andOverWSC_:
+	Pct25andOverWSC_: 
 	Pct25andOverWSCW: Gap25andOverWSCW:
 	Pct25andOverWSCB: Gap25andOverWSCB:
 	Pct25andOverWSCH: Gap25andOverWSCH:
@@ -273,110 +253,110 @@ var PctBlackNonHispBridge: PctWhiteNonHispBridge:
 	Pct25andOverWSCFB: Gap25andOverWSCFB:
 	Pct25andOverWSCNB: Gap25andOverWSCNB:
 
-	PctPoorPersons_: GapPoorPersons_:
+	PctPoorPersons_: 
 	PctPoorPersonsW: GapPoorPersonsW:
 	PctPoorPersonsB: GapPoorPersonsB:
 	PctPoorPersonsH: GapPoorPersonsH:
 	PctPoorPersonsAIOM: GapPoorPersonsAIOM:
 	PctPoorPersonsFB: GapPoorPersonsFB:
 
-	PctPoorChildren_: GapPoorChildren_:
+	PctPoorChildren_: 
 	PctPoorChildrenW: GapPoorChildrenW:
 	PctPoorChildrenB: GapPoorChildrenB:
 	PctPoorChildrenH: GapPoorChildrenH:
 	PctPoorChildrenAIOM: GapPoorChildrenAIOM:
 
-	PctFamilyLT75000_: GapFamilyLT75000_:
+	PctFamilyLT75000_: 
 	PctFamilyLT75000W: GapFamilyLT75000W: 
 	PctFamilyLT75000B: GapFamilyLT75000B: 
 	PctFamilyLT75000H: GapFamilyLT75000H: 
 	PctFamilyLT75000AIOM: GapFamilyLT75000AIOM: 
 
-	PctFamilyLT200000_: GapFamilyLT200000_:
+	PctFamilyGT200000_:
 	PctFamilyGT200000W: GapFamilyGT200000W: 
 	PctFamilyGT200000B: GapFamilyGT200000B: 
 	PctFamilyGT200000H: GapFamilyGT200000H: 
 	PctFamilyGT200000AIOM: GapFamilyGT200000AIOM: 
 
-	AvgHshldIncAdj_: GapAvgHshldIncAdj_:
+	AvgHshldIncAdj_: 
 	AvgHshldIncAdjW: GapAvgHshldIncAdjW:
 	AvgHshldIncAdjB: GapAvgHshldIncAdjB:
 	AvgHshldIncAdjH: GapAvgHshldIncAdjH:
 	AvgHshldIncAdjAIOM: GapAvgHshldIncAdjAIOM:
 
-	Pct16andOverEmployed_: Gap16andOverEmployed_:
+	Pct16andOverEmployed_: 
 	Pct16andOverEmployedW: Gap16andOverEmployedW:
 	Pct16andOverEmployedB: Gap16andOverEmployedB:
 	Pct16andOverEmployedH: Gap16andOverEmployedH:
 	Pct16andOverEmployAIOM: Gap16andOverEmployAIOM:
 
-	PctEmployed16to64_: GapEmployed16to64_:
+	PctEmployed16to64_: 
 	PctEmployed16to64W: GapEmployed16to64W:
 	PctEmployed16to64B: GapEmployed16to64B:
 	PctEmployed16to64H: GapEmployed16to64H:
 	PctEmployed16to64AIOM: GapEmployed16to64AIOM:
 
-	PctUnemployed_: GapUnemployed_:
+	PctUnemployed_: 
 	PctUnemployedW: GapUnemployedW:
 	PctUnemployedB: GapUnemployedB:
 	PctUnemployedH: GapUnemployedH:
 	PctUnemployedAIOM: GapUnemployedAIOM:
 
-	Pct16andOverWages_: Gap16andOverWages_:
+	Pct16andOverWages_: 
 	Pct16andOverWagesW: Gap16andOverWagesW:
 	Pct16andOverWagesB: Gap16andOverWagesB:
 	Pct16andOverWagesH: Gap16andOverWagesH:
 	Pct16andOverWagesAIOM: Gap16andOverWagesAIOM:
 
-	Pct16andOverWorkFT_: Gap16andOverWorkFT_:
+	Pct16andOverWorkFT_: 
 	Pct16andOverWorkFTW: Gap16andOverWorkFTW:
 	Pct16andOverWorkFTB: Gap16andOverWorkFTB:
 	Pct16andOverWorkFTH: Gap16andOverWorkFTH:
 	Pct16andOverWorkFTAIOM: Gap16andOverWorkFTAIOM:
 
-	PctWorkFTLT35k_: GapWorkFTLT35k_:
+	PctWorkFTLT35k_: 
 	PctWorkFTLT35kW: GapWorkFTLT35kW:
 	PctWorkFTLT35kB: GapWorkFTLT35kB:
 	PctWorkFTLT35kH: GapWorkFTLT35kH:
 	PctWorkFTLT35kAIOM: GapWorkFTLT35kAIOM:
 
-	PctWorkFTLT75k_: GapWorkFTLT75k_:
+	PctWorkFTLT75k_: 
 	PctWorkFTLT75kW: GapWorkFTLT75kW:
 	PctWorkFTLT75kB: GapWorkFTLT75kB:
 	PctWorkFTLT75kH: GapWorkFTLT75kH:
 	PctWorkFTLT75kAIOM: GapWorkFTLT75kAIOM:
 
-	PctEmployedMngmt_: GapEmployedMngmt_:
+	PctEmployedMngmt_: 
 	PctEmployedMngmtW: GapEmployedMngmtW:
 	PctEmployedMngmtB: GapEmployedMngmtB:
 	PctEmployedMngmtH: GapEmployedMngmtH:
 	PctEmployedMngmtAIOM: GapEmployedMngmtAIOM:
 
-	PctEmployedServ_: GapEmployedServ_:
+	PctEmployedServ_: 
 	PctEmployedServW: GapEmployedServW:
 	PctEmployedServB: GapEmployedServB:
 	PctEmployedServH: GapEmployedServH:
 	PctEmployedServAIOM: GapEmployedServAIOM:
 
-	PctEmployedSales_: GapEmployedSales_:
+	PctEmployedSales_: 
 	PctEmployedSalesW: GapEmployedSalesW:
 	PctEmployedSalesB: GapEmployedSalesB:
 	PctEmployedSalesH: GapEmployedSalesH:
 	PctEmployedSalesAIOM: GapEmployedSalesAIOM:
 
-	PctEmployedNatRes_: GapEmployedNatRes_:
+	PctEmployedNatRes_: 
 	PctEmployedNatResW: GapEmployedNatResW:
 	PctEmployedNatResB: GapEmployedNatResB:
 	PctEmployedNatResH: GapEmployedNatResH:
 	PctEmployedNatResAIOM: GapEmployedNatResAIOM:
 
-	PctEmployedProd_: GapEmployedProd_:
+	PctEmployedProd_: 
 	PctEmployedProdW: GapEmployedProdW:
 	PctEmployedProdB: GapEmployedProdB:
 	PctEmployedProdH: GapEmployedProdH:
 	PctEmployedProdAIOM: GapEmployedProdAIOM:
 
-	PctOwnerOccupiedHU_: GapOwnerOccupiedHU_:
+	PctOwnerOccupiedHU_: 
 	PctOwnerOccupiedHUW: GapOwnerOccupiedHUW:
 	PctOwnerOccupiedHUB: GapOwnerOccupiedHUB:
 	PctOwnerOccupiedHUH: GapOwnerOccupiedHUH:
@@ -405,25 +385,32 @@ if white > 0 then category=2;
 if hispanic > 0 then category=4; 
 if AIOM  > 0 then category=6; 
 
- if _name_ in("PctWhiteNonHispBridge") then category=2;
+ if _name_ in ("PctWhiteNonHispBridge_2010_14") then category=2;
  if _name_ in ("PctBlackNonHispBridge_2010_14") then category=5;
  if _name_ in ("PctHisp_2010_14") then category=4;
  if _name_ in ("PctAsnPINonHispBridge_2010_14") then category=0;
  if _name_ in ("PctOth_2010_14") then category=0;
 
- *looks like there are some you'll have to fix individually;
+*looks like there are some you'll have to fix individually;
  if _name_ ="Gap25andOverWoutHSFB_2010_14" then do; black=0; category=.; end;
  if _name_ ="Pct25andOverWoutHSFB_2010_14" then do; black=0; category=.; end;
+ if _name_ ="Pct25andOverWoutHSFB_m_2010_14" then do; black=0; category=.; end;
  if _name_ ="Gap25andOverWoutHSNB_2010_14" then do; black=0; category=.; end;
  if _name_ ="Pct25andOverWoutHSNB_2010_14" then do; black=0; category=.; end;
+ if _name_ ="Pct25andOverWoutHSNB_m_2010_14" then do; black=0; category=.; end;
  if _name_ ="Gap25andOverWHSFB_2010_14" then do; black=0; category=.; end;
  if _name_ ="Pct25andOverWHSFB_2010_14" then do; black=0; category=.; end;
+ if _name_ ="Pct25andOverWHSFB_m_2010_14" then do; black=0; category=.; end;
  if _name_ ="Gap25andOverWHSNB_2010_14" then do; black=0; category=.; end;
  if _name_ ="Pct25andOverWHSNB_2010_14" then do; black=0; category=.; end;
+ if _name_ ="Pct25andOverWHSNB_m_2010_14" then do; black=0; category=.; end;
  if _name_ ="Gap25andOverWSCFB_2010_14" then do; black=0; category=.; end;
  if _name_ ="Pct25andOverWSCFB_2010_14" then do; black=0; category=.; end;
+ if _name_ ="Pct25andOverWSCFB_m_2010_14" then do; black=0; category=.; end;
  if _name_ ="Gap25andOverWSCNB_2010_14" then do; black=0; category=.; end;
  if _name_ ="Pct25andOverWSCNB_2010_14" then do; black=0; category=.; end;
+ if _name_ ="Pct25andOverWSCNB_m_2010_14" then do; black=0; category=.; end;
+
 
 order=.;
 
