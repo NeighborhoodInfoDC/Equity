@@ -1,5 +1,5 @@
 /**************************************************************************
- Program:  Assessed_value_change.sas
+ Program:  Calculate_assessed_value.sas
  Library:  Equity
  Project:  Racial Equity Profile
  Author:   K.Abazajian
@@ -7,7 +7,8 @@
  Version:  SAS 9.4
  Environment:  Windows
  
- Description:  
+ Description:  Program compares DC Assessed Property value for 2010 and 2016 
+				for tracts and Wards based on racial composition of tracts.
 
  Modifications: 
  08/30/16 MW Added classifications for neighborhood by race.
@@ -51,20 +52,32 @@ proc sort data=assessed_val; by geo2010;
 run;
 *For tract level summary;
 proc summary data=assessed_val; 
+where in_both=1; 
 by geo2010; 
 var assess_val10 assess_val16; 
-output out=tract_assessed_val (drop=_TYPE_ _FREQ_) sum=; 
+output out=tract_assessed_val (drop=_type_) sum=; 
 run;
 *	Note: There are 654 parcels with no tract assigned?
 	Also, tracts 2.01, 73.01, 62.02 with residential units but no data ;
 
 data tract_assessed_val_change;
-set tract_assessed_val;
+set tract_assessed_val (rename=(_freq_=NumSFCondo));
 dollar_change= sum(assess_val16,-assess_val10);
-percent_change= 100 + ((dollar_change / assess_val10) * 100);
+avg_dollar_change=dollar_change/NumSFCondo;
+percent_change= ((dollar_change / assess_val10) * 100);
 run;
 
 /*Select tract-based Race Vars*/
+/*Maia - can you adapt this instead so we aren't creating from scratch??
+
+Ncdb.Ncdb_sum_2010&geosuf
+        (keep=&geo
+          PopWithRace: PopBlackNonHispBridge:
+           PopWhiteNonHispBridge: PopHisp: PopAsianPINonHispBridge:
+           PopOtherRaceNonHispBridge: 
+            )
+L:\Metadata\meta_ncdb_ncdb_sum_2010_tr10.html */
+
 proc sort data=census.census_sf1_2010_dc_ph (where=(geo2010^=" ") keep=geo2010 p5i1 p5i3 p5i4 p5i5 p5i6 p5i7 p5i8 p5i9 p5i10)
 out=census_base;
 by geo2010;
@@ -107,6 +120,8 @@ proc freq data=census_race;
 
 /** Macro ACS_Percents- Start Definition **/
 
+/*****************did you copy somala's code? in Equity_Compile_ACS_for_profile.sas? - double check that it matches please*/ 
+
 %macro acs_percents;
 
     %local geosuf geoafmt j; 
@@ -145,7 +160,16 @@ proc freq data=census_race;
 		else majhisp_14=0;
 	if majwhite_14=0 and majblack_14=0 and majhisp_14=0 then mixedngh_14=1;
 		else mixedngh_14 =0;
+
+	tract_comp=.;
+	if majwhite_14=1 then tract_comp=1;
+	if majblack_14=1 then tract_comp=2;
+	if mixedngh_14=1 then tract_comp=3;
  
+  run;
+
+  proc freq data=acs_race;
+  tables tract_comp majwhite_14*tract_comp;
   run;
     
   %File_info( data=acs_race, printobs=0, contents=n )
@@ -156,8 +180,9 @@ proc freq data=census_race;
 
 /*Tract 62.02 has no people in it??*/
 
+/*ideally this is done by creating whiteupperbound=white estimate + white MOE;  */
 data racecomp;
-	merge acs_race (keep=geo2010 whiterate_2010_14 whiterate_m_14 blackrate_2010_14 blackrate_m_14 majwhite_14 majblack_14 mixedngh_14) census_race (keep= geo2010 whiterate blackrate majwhite_10 majblack_10 mixedngh_10);
+	merge acs_race (keep=geo2010 whiterate_2010_14 whiterate_m_14 blackrate_2010_14 blackrate_m_14 majwhite_14 majblack_14 mixedngh_14 tract_comp) census_race (keep= geo2010 whiterate blackrate majwhite_10 majblack_10 mixedngh_10);
 	by geo2010;
 	majblack=majblack_14;
 	majwhite=majwhite_14;
@@ -168,28 +193,33 @@ data racecomp;
 		majblack=0;
 		majwhite=0;
 		manualfix=1;
+		tract_comp=3;
 		end;
 	if geo2010 in ("11001000501", "11001000702", "11001000901", "11001001301", "11001004002", "11001008301") then do;
 		mixedngh=0;
 		majblack=0;
 		majwhite=1;
 		manualfix=1;
+		tract_comp=1;
 		end;
 	if geo2010 in ("11001001901", "11001001902", "11001002201", "11001008701", "11001009204") then do;
 		mixedngh=0;
 		majblack=1;
 		majwhite=0;
 		manualfix=1;
+		tract_comp=2;
 		end;
 run;
-
+  proc freq data=racecomp;
+  tables tract_comp majwhite*tract_comp;
+  run;
 data valueshift;
-	merge racecomp (keep=geo2010 mixedngh majblack majwhite) tract_assessed_val_change (keep=geo2010 dollar_change percent_change);
+	merge racecomp (keep=geo2010 mixedngh majblack majwhite tract_comp) tract_assessed_val_change ;
 	by geo2010;
 	run;
 
 proc univariate data=valueshift;
-CLASS majblack majwhite;
-var dollar_change;
-output out=valuetest;
+CLASS tract_comp;
+var dollar_change avg_dollar_change percent_change;
+
 run;
