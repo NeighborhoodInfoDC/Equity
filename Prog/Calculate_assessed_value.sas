@@ -78,47 +78,116 @@ run;
 
 data census_race;
 	set census_base;
-	whiterate=p5i3/p5i1;
-	blackrate=p5i4/p5i1;
-	aiomrate=sum(p5i5, p5i6, p5i7, p5i8, p5i9)/p5i1;
-	if 	whiterate =>.75 then majwhite_10=1; /*Non-Hispanic White by Total Population*/
+	whiterate=(p5i3/p5i1)*100;
+	blackrate=(p5i4/p5i1)*100;
+	hisprate=(p5i10/p5i1)*100;
+	aiomrate=(sum(p5i5, p5i6, p5i7, p5i8, p5i9)/p5i1)*100;
+	if 	whiterate =>75 then majwhite_10=1; /*Non-Hispanic White by Total Population*/
 		else majwhite_10=0;
-	if  blackrate=>.75 then majblack_10=1; /*Non-Hispanic Black*/
+	if  blackrate=>75 then majblack_10=1; /*Non-Hispanic Black*/
 		else majblack_10=0;
-	if aiomrate=>.75 then majaiom_10=1; /*Non-Hispanic AmIn, Asian, Pacific Islander, Other, Multi*/
+	if  hisprate=>75 then majhisp_10=1;
+		else majhisp_10=0;
+	if aiomrate=>75 then majaiom_10=1; /*Non-Hispanic AmIn, Asian, Pacific Islander, Other, Multi*/
 		else majaiom_10=0;
-	if majwhite_10=0 and majblack_10=0 and majaiom_10=0 then mixedngh_10=1;
+	if majwhite_10=0 and majblack_10=0 and majhisp_10=0 and majaiom_10=0 then mixedngh_10=1;
 		else mixedngh_10 =0;
 	run;
 
 proc freq data=census_race;
 	tables whiterate*majwhite_10/list missing;
 	tables blackrate*majblack_10/list missing;
+	tables hisprate*majhisp_10/list missing;
 	tables aiomrate*majaiom_10/list missing;
-	tables majblack_10*majwhite_10*majaiom_10*mixedngh_10/list missing;
+	tables majblack_10*majwhite_10*majhisp_10*majaiom_10*mixedngh_10/list missing;
 	run;
 
-data acs_race;
-	set acs.acs_2010_14_dc_sum_bg_tr10;
-	whiterate=popwhitenonhispbridge_2010_14/popwithrace_2010_14;
-	blackrate=popblacknonhispbridge_2010_14/popwithrace_2010_14;
-	aiomrate=sum(popasianpinonhispbridge_2010_14, PopMultiracialNonHisp_2010_14, popnativeamnonhispbridge_2010_14, popothernonhispbridge_2010_14)/popwithrace_2010_14;
-	if 	whiterate =>.75 then majwhite_14=1; /*Non-Hispanic White by Total Population*/
+%let geo=geo2010;
+%let _years=2010_14;
+
+/** Macro ACS_Percents- Start Definition **/
+
+%macro acs_percents;
+
+    %local geosuf geoafmt j; 
+
+  %let geosuf = %sysfunc( putc( %upcase( &geo ), $geosuf. ) );
+  %let geoafmt = %sysfunc( putc( %upcase( &geo ), $geoafmt. ) );
+
+  
+  data acs_race; 
+  
+    set acs.acs_2010_14_dc_sum_bg_tr10 (keep= geo2010 popwhitenonhispbridge_2010_14 popblacknonhispbridge_2010_14 popasianpinonhispbridge_2010_14
+	PopMultiracialNonHisp_2010_14 popnativeamnonhispbridge_2010_14 popothernonhispbridge_2010_14 pophisp_2010_14 popwithrace_2010_14
+	mpopwhitenonhispbridge_2010_14 mpopblacknonhispbridge_2010_14 mpopasianpinonhispbridge_2010_14
+	mPopMultiracialNonHisp_2010_14 mpopnativeamnonhispbr_2010_14 mpopothernonhispbridge_2010_14 mpophisp_2010_14 mpopwithrace_2010_14);
+
+	%Pct_calc( var=whiterate, label=% White, num=popwhitenonhispbridge, den=PopWithRace, years=2010_14 )
+
+    %Moe_prop_a( var=whiterate_m_14, mult=100, num=popwhitenonhispbridge_2010_14, den=PopWithRace_2010_14, 
+                       num_moe=mPopWhiteNonHispBridge_2010_14, den_moe=mPopWithRace_2010_14 );
+
+	%Pct_calc( var=blackrate, label=% Black, num=popblacknonhispbridge, den=PopWithRace, years=2010_14 )
+
+    %Moe_prop_a( var=blackrate_m_14, mult=100, num=popblacknonhispbridge_2010_14, den=PopWithRace_2010_14, 
+                       num_moe=mPopBlackNonHispBridge_2010_14, den_moe=mPopWithRace_2010_14 );
+
+	%Pct_calc( var=hisprate, label=% hisp, num=pophisp, den=PopWithRace, years=2010_14 )
+
+    %Moe_prop_a( var=hisprate_m_14, mult=100, num=pophisp_2010_14, den=PopWithRace_2010_14, 
+                       num_moe=mPophisp_2010_14, den_moe=mPopWithRace_2010_14 );
+
+	if 	whiterate_2010_14 =>75 then majwhite_14=1; /*Non-Hispanic White by Total Population*/
 		else majwhite_14=0;
-	if  blackrate=>.75 then majblack_14=1; /*Non-Hispanic Black*/
+	if 	blackrate_2010_14 =>75 then majblack_14=1; /*Non-Hispanic black by Total Population*/
 		else majblack_14=0;
-	if  aiomrate=>.75 then majaiom_14=1; /*Non-Hispanic AmIn, Asian, Pacific Islander, Other, Multi*/
-		else majaiom_14=0;
-	if majwhite_14=0 and majblack_14=0 and majaiom_14=0 then mixedngh_14=1;
+ 	if 	hisprate_2010_14 =>75 then majhisp_14=1; /*Hispanic by Total Population*/
+		else majhisp_14=0;
+	if majwhite_14=0 and majblack_14=0 and majhisp_14=0 then mixedngh_14=1;
 		else mixedngh_14 =0;
-	run;
+ 
+  run;
+    
+  %File_info( data=acs_race, printobs=0, contents=n )
+  
+  
+%mend acs_percents;
 
-proc freq data=acs_race;
-	tables whiterate*majwhite_14/list missing;
-	tables blackrate*majblack_14/list missing;
-	tables aiomrate*majaiom_14/list missing;
-	tables majblack_14*majwhite_14*majaiom_14*mixedngh_14/list missing;
-	run;
+%acs_percents;
 
 /*Tract 62.02 has no people in it??*/
+
+data racecomp;
+	merge acs_race (keep=geo2010 whiterate_2010_14 whiterate_m_14 blackrate_2010_14 blackrate_m_14 majwhite_14 majblack_14 mixedngh_14) census_race (keep= geo2010 whiterate blackrate majwhite_10 majblack_10 mixedngh_10);
+	by geo2010;
+	if majblack_10^=majblack_14 then misblack=1;
+	if majwhite_10^=majwhite_14 then miswhite=1;
+	if mixedngh_10^=mixedngh_14 then mismixed=1;
+run;
+
+data racefix;
+	set racecomp (where=(mismixed=1));
+	run;
+
+data racecombine;
+	merge acs_race (keep=geo2010 majblack_14 majwhite_14 majhisp_14 mixedngh_14) census_race (keep= geo2010 majblack_10 majwhite_10 majhisp_10 mixedngh_10);
+	by geo2010;
+	if majblack_10^=majblack_14 then misblack=1;
+	if majwhite_10^=majwhite_14 then miswhite=1;
+	if majhisp_10^=majhisp_14 then mishisp=1;
+	if mixedngh_10^=mixedngh_14 then mismixed=1;
+run;
+proc freq data=racecombine;
+	tables majblack_10*majblack_14/list missing;
+	tables majwhite_10*majwhite_14/list missing;
+	tables majhisp_10*majhisp_14/list missing;
+	tables mixedngh_10*mixedngh_14/list missing;
+	run;
+
+proc freq data=racecomp (where=(misblack=1 or miswhite=1 or misaiom=1 or mismixed=1));
+	tables geo2010*misblack/list missing;
+	tables geo2010*miswhite/list missing;
+	tables geo2010*misaiom/list missing;
+	tables geo2010*mismixed/list missing;
+	run;
 
