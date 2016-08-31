@@ -20,6 +20,7 @@
 %DCData_lib (RealProp);
 %DCDATA_lib (Equity);
 %DCDATA_lib (Census);
+%DCDATA_lib (ACS);
 
 *pull data for SF and condo, 2010 2016;
 data y2010_realprop;
@@ -52,7 +53,7 @@ run;
 proc summary data=assessed_val; 
 by geo2010; 
 var assess_val10 assess_val16; 
-output out=tract_assessed_val sum= (drop=_TYPE_ _FREQ_); 
+output out=tract_assessed_val (drop=_TYPE_ _FREQ_) sum=; 
 run;
 *	Note: There are 654 parcels with no tract assigned?
 	Also, tracts 2.01, 73.01, 62.02 with residential units but no data ;
@@ -62,36 +63,62 @@ set tract_assessed_val;
 dollar_change= sum(assess_val16,-assess_val10);
 percent_change= 100 + ((dollar_change / assess_val10) * 100);
 run;
-* 	Write access to Equity data is denied?;
+
+/*Select tract-based Race Vars*/
+proc sort data=census.census_sf1_2010_dc_ph (where=(geo2010^=" ") keep=geo2010 p5i1 p5i3 p5i4 p5i5 p5i6 p5i7 p5i8 p5i9 p5i10)
+out=census_base;
+by geo2010;
+run;
+
+/*Test that all Census race values are collected correctly*/
+data census_test;
+set census_base;
+sumrace=sum(p5i3, p5i4, p5i5, p5i6, p5i7, p5i8, p5i9, p5i10);
+run;
 
 data census_race;
-	set *census summary file for tract*;
-	if *Non-Hispanic Black*/*totalpop*=>.75 then majblack=1;
-		else majblack=0;
-	if *Non-Hispanic White*/*totalpop*=>.75 then majwhite=1;
-		else majwhite=0;
-	if *Hispanic*/*totalpop*=>.75 then majhisp=1;
-		else majhisp=0;
-	if majhisp=0 and majwhite=0 and majblack=0 then mixedngh=1;
-		else mixedngh=0;
+	set census_base;
+	whiterate=p5i3/p5i1;
+	blackrate=p5i4/p5i1;
+	aiomrate=sum(p5i5, p5i6, p5i7, p5i8, p5i9)/p5i1;
+	if 	whiterate =>.75 then majwhite_10=1; /*Non-Hispanic White by Total Population*/
+		else majwhite_10=0;
+	if  blackrate=>.75 then majblack_10=1; /*Non-Hispanic Black*/
+		else majblack_10=0;
+	if aiomrate=>.75 then majaiom_10=1; /*Non-Hispanic AmIn, Asian, Pacific Islander, Other, Multi*/
+		else majaiom_10=0;
+	if majwhite_10=0 and majblack_10=0 and majaiom_10=0 then mixedngh_10=1;
+		else mixedngh_10 =0;
 	run;
-	
-data acs_race;
-	set *ACS summary file for tract*;
-	if *Non-Hispanic Black*/*totalpop*=>.75 then majblack=1;
-		else majblack=0;
-	if *Non-Hispanic White*/*totalpop*=>.75 then majwhite=1;
-		else majwhite=0;
-	if *Hispanic*/*totalpop*=>.75 then majhisp=1;
-		else majhisp=0;
-	if majhisp=0 and majwhite=0 and majblack=0 then mixedngh=1;
-		else mixedngh=0;
-	run;
-	
+
 proc freq data=census_race;
-	tables majblack*majwhite*majhisp*mixedngh/list missing;
+	tables whiterate*majwhite_10/list missing;
+	tables blackrate*majblack_10/list missing;
+	tables aiomrate*majaiom_10/list missing;
+	tables majblack_10*majwhite_10*majaiom_10*mixedngh_10/list missing;
 	run;
-	
+
+data acs_race;
+	set acs.acs_2010_14_dc_sum_bg_tr10;
+	whiterate=popwhitenonhispbridge_2010_14/popwithrace_2010_14;
+	blackrate=popblacknonhispbridge_2010_14/popwithrace_2010_14;
+	aiomrate=sum(popasianpinonhispbridge_2010_14, PopMultiracialNonHisp_2010_14, popnativeamnonhispbridge_2010_14, popothernonhispbridge_2010_14)/popwithrace_2010_14;
+	if 	whiterate =>.75 then majwhite_14=1; /*Non-Hispanic White by Total Population*/
+		else majwhite_14=0;
+	if  blackrate=>.75 then majblack_14=1; /*Non-Hispanic Black*/
+		else majblack_14=0;
+	if  aiomrate=>.75 then majaiom_14=1; /*Non-Hispanic AmIn, Asian, Pacific Islander, Other, Multi*/
+		else majaiom_14=0;
+	if majwhite_14=0 and majblack_14=0 and majaiom_14=0 then mixedngh_14=1;
+		else mixedngh_14 =0;
+	run;
+
 proc freq data=acs_race;
-	tables majblack*majwhite*majhisp*mixedngh/list missing;
+	tables whiterate*majwhite_14/list missing;
+	tables blackrate*majblack_14/list missing;
+	tables aiomrate*majaiom_14/list missing;
+	tables majblack_14*majwhite_14*majaiom_14*mixedngh_14/list missing;
 	run;
+
+/*Tract 62.02 has no people in it??*/
+
