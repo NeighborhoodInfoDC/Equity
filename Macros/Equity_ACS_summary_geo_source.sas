@@ -512,18 +512,45 @@
 	  PopNativeBorn_&_years. = B05002e2;
 	  PopNonEnglish_&_years. = sum(B06007e3, B06007e6 );
 
+	  PopForeignBornB_&_years. = B06004Be5
+	  PopForeignBornW_&_years. = B06004He5
+	  PopForeignBornH_&_years. = B06004Ie5
+	  PopForeignBornA_&_years. = sum(B06004De5 B06004Ee5)
+	  PopForeignBornIOM_&_years. = sum(B06004Ce5 B06004Fe5 B06004Ge5)
+	  PopForeignBornAIOM_&_years. = sum(B06004Ce5 B06004De5 B06004Ee5 B06004Fe5 B06004Ge5)
+
+
       mPopForeignBorn_&_years. = B05002m13;
 	  mPopNativeBorn_&_years. = B05002m2;
 	  mPopNonEnglish_&_years. = %moe_sum( var=B06007m3 B06007m6 );
+
+	  mPopForeignBornB_&_years. = B06004Bm5
+	  mPopForeignBornW_&_years. = B06004Hm5
+	  mPopForeignBornH_&_years. = B06004Im5
+	  mPopForeignBornA_&_years. = %moe_sum( var=B06004Dm5 B06004Em5)
+	  mPopForeignBornIOM_&_years. = %moe_sum( var=B06004Cm5 B06004Fm5 B06004Gm5)
+	  mPopForeignBornAIOM_&_years. = %moe_sum( var=B06004Cm5 B06004Dm5 B06004Em5 B06004Fm5 B06004Gm5)
 
       label 
         PopForeignBorn_&_years. = "Foreign born population, &_years_dash "
 		PopNativeBorn_&_years. = "Native born persons, &_years_dash "
 		PopNonEnglish_&_years. = "Speak a language other than English at home, &_years_dash "
+		PopForeignBornB_&_years. = "Foreign-born persons, Black/African American, &_years_dash "
+		PopForeignBornW_&_years. = "Foreign-born persons,Non-Hispanic White, &_years_dash "
+		PopForeignBornH_&_years. = "Foreign-born persons, Hispanic/Latino, &_years_dash "
+		PopForeignBornA_&_years. = "Foreign-born persons, Asian, Hawaiian and other Pacific Islander, &_years_dash "
+		PopForeignBornIOM_&_years. = "Foreign-born persons, American Indian/Alaska Native, other race, two or more races, &_years_dash "
+		PopForeignBornAIOM_&_years. = "Foreign-born persons, All remaining groups other than Black, Non-Hispanic White, Hispanic, &_years_dash "
         mPopForeignBorn_&_years. = "Foreign born population, MOE, &_years_dash "
 		mPopNativeBorn_&_years. = "Native born persons, &_years_dash "
 		mPopNonEnglish_&_years. = "Speak a language other than English at home, MOE, &_years_dash "
-    
+    	mPopForeignBornB_&_years. = "Foreign-born persons, Black/African American, MOE, &_years_dash "
+		mPopForeignBornW_&_years. = "Foreign-born persons, Non-Hispanic Non-Hispanic White, MOE, &_years_dash "
+		mPopForeignBornH_&_years. = "Foreign-born persons, Hispanic/Latino, MOE, &_years_dash "
+		mPopForeignBornA_&_years. = "Foreign-born persons, Asian, Hawaiian and other Pacific Islander, MOE, &_years_dash "
+		mPopForeignBornIOM_&_years. = "Foreign-born persons, American Indian/Alask Native, other race, two or more races, MOE, &_years_dash "
+		mPopForeignBornAIOM_&_years. = "Foreign-born persons, All remaining groups other than Black, Non-Hispanic White, Hispanic, MOE &_years_dash "
+
     %end;
     
     ** Population by race/ethnicity **;

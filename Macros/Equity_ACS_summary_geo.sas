@@ -183,6 +183,10 @@
 
 		   mPopNativeBorn_&_years. mPopForeignBorn_&_years. mPopNonEnglish_&_years.
 
+		   mPopForeignBornB_&_years. mPopForeignBornW_&_years.
+		   mPopForeignBornH_&_years. mPopForeignBornA_&_years.
+		   mPopForeignBornIOM_&_years. mPopForeignBornAIOM_&_years.
+
            mPopWithRace_&_years. mPopBlackNonHispBridge_&_years.
            mPopWhiteNonHispBridge_&_years. mPopAsianPINonHispBridge_&_years. 
 		   mPopHisp_&_years. mPopNativeAmNonHispBr_&_years.

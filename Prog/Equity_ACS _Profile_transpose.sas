@@ -203,13 +203,17 @@ data city_ward_WR (drop=cNum: cPct: cPop: _make_profile);
 
 run;
 
-proc transpose data=city_ward_WR out=transposed_data; 
+proc transpose data=city_ward_WR out=equity.profile_tabs_ACS; 
 var PctBlackNonHispBridge: PctWhiteNonHispBridge:
 	PctHisp: PctAsnPINonHispBridge: PctOth:
 	PctAloneB: PctAloneW: PctAloneH: PctAloneA_:
 	PctAloneI_: PctAloneO: PctAloneM: PctAloneIOM: PctAloneAIOM:
 
-	PctForeignBorn: PctNativeBorn:
+	PctForeignBorn_: PctNativeBorn:
+
+	PctForeignBornB: PctForeignBornW:
+	PctForeignBornH: PctForeignBornA:
+	PctForeignBornIOM: PctForeignBornAIOM:
 
 	PctPopUnder18Years_: PctPopUnder18YearsW_: 
 	PctPopUnder18YearsB_: PctPopUnder18YearsH_:
@@ -253,6 +257,24 @@ var PctBlackNonHispBridge: PctWhiteNonHispBridge:
 	Pct25andOverWSCFB: Gap25andOverWSCFB:
 	Pct25andOverWSCNB: Gap25andOverWSCNB:
 
+	AvgHshldIncAdj_: 
+	AvgHshldIncAdjW: GapAvgHshldIncAdjW:
+	AvgHshldIncAdjB: GapAvgHshldIncAdjB:
+	AvgHshldIncAdjH: GapAvgHshldIncAdjH:
+	AvgHshldIncAdjAIOM: GapAvgHshldIncAdjAIOM:
+
+	PctFamilyGT200000_:
+	PctFamilyGT200000W: GapFamilyGT200000W: 
+	PctFamilyGT200000B: GapFamilyGT200000B: 
+	PctFamilyGT200000H: GapFamilyGT200000H: 
+	PctFamilyGT200000AIOM: GapFamilyGT200000AIOM: 
+
+	PctFamilyLT75000_: 
+	PctFamilyLT75000W: GapFamilyLT75000W: 
+	PctFamilyLT75000B: GapFamilyLT75000B: 
+	PctFamilyLT75000H: GapFamilyLT75000H: 
+	PctFamilyLT75000AIOM: GapFamilyLT75000AIOM: 
+
 	PctPoorPersons_: 
 	PctPoorPersonsW: GapPoorPersonsW:
 	PctPoorPersonsB: GapPoorPersonsB:
@@ -265,24 +287,6 @@ var PctBlackNonHispBridge: PctWhiteNonHispBridge:
 	PctPoorChildrenB: GapPoorChildrenB:
 	PctPoorChildrenH: GapPoorChildrenH:
 	PctPoorChildrenAIOM: GapPoorChildrenAIOM:
-
-	PctFamilyLT75000_: 
-	PctFamilyLT75000W: GapFamilyLT75000W: 
-	PctFamilyLT75000B: GapFamilyLT75000B: 
-	PctFamilyLT75000H: GapFamilyLT75000H: 
-	PctFamilyLT75000AIOM: GapFamilyLT75000AIOM: 
-
-	PctFamilyGT200000_:
-	PctFamilyGT200000W: GapFamilyGT200000W: 
-	PctFamilyGT200000B: GapFamilyGT200000B: 
-	PctFamilyGT200000H: GapFamilyGT200000H: 
-	PctFamilyGT200000AIOM: GapFamilyGT200000AIOM: 
-
-	AvgHshldIncAdj_: 
-	AvgHshldIncAdjW: GapAvgHshldIncAdjW:
-	AvgHshldIncAdjB: GapAvgHshldIncAdjB:
-	AvgHshldIncAdjH: GapAvgHshldIncAdjH:
-	AvgHshldIncAdjAIOM: GapAvgHshldIncAdjAIOM:
 
 	Pct16andOverEmployed_: 
 	Pct16andOverEmployedW: Gap16andOverEmployedW:
@@ -365,7 +369,7 @@ var PctBlackNonHispBridge: PctWhiteNonHispBridge:
 id ward2012; 
 run; 
 
-data equity.profile_tabs_ACS (where=(category ~=.));
+/*data equity.profile_tabs_ACS (where=(category ~=.));
 	set transposed_data;
 
 total=index(_name_, "_2010_14");
@@ -428,7 +432,7 @@ if AIOM  > 0 then category=6;
 
 order=.;
 
-run;
+run;*/
 
 proc export data=equity.profile_tabs_ACS
 	outfile="D:\DCDATA\Libraries\Equity\Prog\profile_tabs_ACS.csv"

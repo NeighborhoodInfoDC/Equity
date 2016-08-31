@@ -222,6 +222,11 @@
     %Moe_prop_a( var=PctPop65andOverYrs&race._m_2010_14, mult=100, num=Pop65andOverYears&race._2010_14, den=PopAlone&race._2010_14, 
                        num_moe=mPop65andOverYears&race._2010_14, den_moe=mPopAlone&race._2010_14 );
 
+	%Pct_calc( var=PctForeignBorn&race., label=% foreign born &name., num=PopForeignBorn&race., den=PopAlone&race., years=2010_14 )
+
+    %Moe_prop_a( var=PctForeignBorn&race._m_2010_14, mult=100, num=PopForeignBorn&race._2010_14, den=PopAlone&race._2010_14, 
+                       num_moe=mPopForeignBorn&race._2010_14, den_moe=mPopAlone&race._2010_14 );
+
 	%end;
 
     
