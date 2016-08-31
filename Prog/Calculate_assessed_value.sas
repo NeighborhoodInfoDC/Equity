@@ -150,7 +150,6 @@ proc freq data=census_race;
     
   %File_info( data=acs_race, printobs=0, contents=n )
   
-  
 %mend acs_percents;
 
 %acs_percents;
@@ -160,34 +159,37 @@ proc freq data=census_race;
 data racecomp;
 	merge acs_race (keep=geo2010 whiterate_2010_14 whiterate_m_14 blackrate_2010_14 blackrate_m_14 majwhite_14 majblack_14 mixedngh_14) census_race (keep= geo2010 whiterate blackrate majwhite_10 majblack_10 mixedngh_10);
 	by geo2010;
-	if majblack_10^=majblack_14 then misblack=1;
-	if majwhite_10^=majwhite_14 then miswhite=1;
-	if mixedngh_10^=mixedngh_14 then mismixed=1;
+	majblack=majblack_14;
+	majwhite=majwhite_14;
+	mixedngh=mixedngh_14;
+	manualfix=0;
+	if geo2010 in ("11001000400", "11001000802", "11001010800", "11001002102", "11001003400") then do;
+		mixedngh=1; 
+		majblack=0;
+		majwhite=0;
+		manualfix=1;
+		end;
+	if geo2010 in ("11001000501", "11001000702", "11001000901", "11001001301", "11001004002", "11001008301") then do;
+		mixedngh=0;
+		majblack=0;
+		majwhite=1;
+		manualfix=1;
+		end;
+	if geo2010 in ("11001001901", "11001001902", "11001002201", "11001008701", "11001009204") then do;
+		mixedngh=0;
+		majblack=1;
+		majwhite=0;
+		manualfix=1;
+		end;
 run;
 
-data racefix;
-	set racecomp (where=(mismixed=1));
-	run;
-
-data racecombine;
-	merge acs_race (keep=geo2010 majblack_14 majwhite_14 majhisp_14 mixedngh_14) census_race (keep= geo2010 majblack_10 majwhite_10 majhisp_10 mixedngh_10);
+data valueshift;
+	merge racecomp (keep=geo2010 mixedngh majblack majwhite) tract_assessed_val_change (keep=geo2010 dollar_change percent_change);
 	by geo2010;
-	if majblack_10^=majblack_14 then misblack=1;
-	if majwhite_10^=majwhite_14 then miswhite=1;
-	if majhisp_10^=majhisp_14 then mishisp=1;
-	if mixedngh_10^=mixedngh_14 then mismixed=1;
+	run;
+
+proc univariate data=valueshift;
+CLASS majblack majwhite;
+var dollar_change;
+output out=valuetest;
 run;
-proc freq data=racecombine;
-	tables majblack_10*majblack_14/list missing;
-	tables majwhite_10*majwhite_14/list missing;
-	tables majhisp_10*majhisp_14/list missing;
-	tables mixedngh_10*mixedngh_14/list missing;
-	run;
-
-proc freq data=racecomp (where=(misblack=1 or miswhite=1 or misaiom=1 or mismixed=1));
-	tables geo2010*misblack/list missing;
-	tables geo2010*miswhite/list missing;
-	tables geo2010*misaiom/list missing;
-	tables geo2010*mismixed/list missing;
-	run;
-
