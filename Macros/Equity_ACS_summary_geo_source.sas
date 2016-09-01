@@ -295,7 +295,7 @@
 	mNumHshldsH_&_years. = B19001Im1;
 	mNumHshldsA_&_years. = %moe_sum( var=B19001Dm1 B19001Em1);
 	mNumHshldsIOM_&_years. = %moe_sum( var=B19001Cm1 B19001Fm1 B19001Gm1);
-	mNumHshldsAIOM_&_years. = %moe_sum( var=B19001Cm1 B19001Dm1 B19001Em1 B19001Fm1 B19001Gm1);
+	mNumHshldsAIOM_&_years. = %moe_sum( var= B19001Cm1 B19001Dm1 B19001Em1 B19001Fm1 B19001Gm1);
 
 	mPop5andOverYears_&_years. = B06007m1; 
 
@@ -463,7 +463,7 @@
 		Pop65andOverYearsA_&_years. = "Persons 65 years old and over, Asian, Hawaiian and other Pacific Islander, &_years_dash "
 		Pop65andOverYearsIOM_&_years. = "Persons 65 years old and over, American Indian/Alaska Native, other race, two or more races, &_years_dash "
 		Pop65andOverYearsAIOM_&_years. = "Persons 65 years old and over, All remaining groups other than Black, Non-Hispanic White, Hispanic, &_years_dash "
-		NumFamiliesB_&_years. = "Family HHs, Black/African American, MOE, &_years_dash "
+		mNumFamiliesB_&_years. = "Family HHs, Black/African American, MOE, &_years_dash "
 		mNumFamiliesW_&_years. = "Family HHs, Non-Hispanic White, MOE, &_years_dash "
 		mNumFamiliesH_&_years. = "Family HHs, Hispanic/Latino, MOE, &_years_dash "
 		mNumFamiliesA_&_years. = "Family HHs, Asian, Hawaiian, and other Pacific Islander, MOE, &_years_dash "
@@ -512,18 +512,45 @@
 	  PopNativeBorn_&_years. = B05002e2;
 	  PopNonEnglish_&_years. = sum(B06007e3, B06007e6 );
 
+	  PopForeignBornB_&_years. = B06004Be5
+	  PopForeignBornW_&_years. = B06004He5
+	  PopForeignBornH_&_years. = B06004Ie5
+	  PopForeignBornA_&_years. = sum(B06004De5 B06004Ee5)
+	  PopForeignBornIOM_&_years. = sum(B06004Ce5 B06004Fe5 B06004Ge5)
+	  PopForeignBornAIOM_&_years. = sum(B06004Ce5 B06004De5 B06004Ee5 B06004Fe5 B06004Ge5)
+
+
       mPopForeignBorn_&_years. = B05002m13;
 	  mPopNativeBorn_&_years. = B05002m2;
 	  mPopNonEnglish_&_years. = %moe_sum( var=B06007m3 B06007m6 );
+
+	  mPopForeignBornB_&_years. = B06004Bm5
+	  mPopForeignBornW_&_years. = B06004Hm5
+	  mPopForeignBornH_&_years. = B06004Im5
+	  mPopForeignBornA_&_years. = %moe_sum( var=B06004Dm5 B06004Em5)
+	  mPopForeignBornIOM_&_years. = %moe_sum( var=B06004Cm5 B06004Fm5 B06004Gm5)
+	  mPopForeignBornAIOM_&_years. = %moe_sum( var=B06004Cm5 B06004Dm5 B06004Em5 B06004Fm5 B06004Gm5)
 
       label 
         PopForeignBorn_&_years. = "Foreign born population, &_years_dash "
 		PopNativeBorn_&_years. = "Native born persons, &_years_dash "
 		PopNonEnglish_&_years. = "Speak a language other than English at home, &_years_dash "
+		PopForeignBornB_&_years. = "Foreign-born persons, Black/African American, &_years_dash "
+		PopForeignBornW_&_years. = "Foreign-born persons,Non-Hispanic White, &_years_dash "
+		PopForeignBornH_&_years. = "Foreign-born persons, Hispanic/Latino, &_years_dash "
+		PopForeignBornA_&_years. = "Foreign-born persons, Asian, Hawaiian and other Pacific Islander, &_years_dash "
+		PopForeignBornIOM_&_years. = "Foreign-born persons, American Indian/Alaska Native, other race, two or more races, &_years_dash "
+		PopForeignBornAIOM_&_years. = "Foreign-born persons, All remaining groups other than Black, Non-Hispanic White, Hispanic, &_years_dash "
         mPopForeignBorn_&_years. = "Foreign born population, MOE, &_years_dash "
 		mPopNativeBorn_&_years. = "Native born persons, &_years_dash "
 		mPopNonEnglish_&_years. = "Speak a language other than English at home, MOE, &_years_dash "
-    
+    	mPopForeignBornB_&_years. = "Foreign-born persons, Black/African American, MOE, &_years_dash "
+		mPopForeignBornW_&_years. = "Foreign-born persons, Non-Hispanic Non-Hispanic White, MOE, &_years_dash "
+		mPopForeignBornH_&_years. = "Foreign-born persons, Hispanic/Latino, MOE, &_years_dash "
+		mPopForeignBornA_&_years. = "Foreign-born persons, Asian, Hawaiian and other Pacific Islander, MOE, &_years_dash "
+		mPopForeignBornIOM_&_years. = "Foreign-born persons, American Indian/Alask Native, other race, two or more races, MOE, &_years_dash "
+		mPopForeignBornAIOM_&_years. = "Foreign-born persons, All remaining groups other than Black, Non-Hispanic White, Hispanic, MOE &_years_dash "
+
     %end;
     
     ** Population by race/ethnicity **;
@@ -1079,18 +1106,18 @@
 			sum(B23001e3, B23001e10, B23001e17, B23001e24, B23001e31, B23001e38, B23001e45, B23001e52, 
 				B23001e59, B23001e66, B23001e89, B23001e96, B23001e103, B23001e110, B23001e117, B23001e124, 
 				B23001e131, B23001e138, B23001e145, B23001e152 );
-			Pop16_64yearsB_&_years. = C23002Be3;
-			Pop16_64yearsW_&_years.	= C23002He3;
-			Pop16_64yearsH_&_years.	= C23002Ie3;
-			Pop16_64yearsA_&_years.	= sum(C23002De3, C23002Ee3 );
-			Pop16_64yearsIOM_&_years. = sum(C23002Ce3, C23002Fe3, C23002Ge3 );
-			Pop16_64yearsAIOM_&_years. = sum(C23002Ce3, C23002De3, C23002Ee3, C23002Fe3, C23002Ge3 );
+			Pop16_64yearsB_&_years. = sum(C23002Be3, C23002Be16 );
+			Pop16_64yearsW_&_years.	= sum(C23002He3, C23002He16 );
+			Pop16_64yearsH_&_years.	= sum(C23002Ie3, C23002Ie16 );
+			Pop16_64yearsA_&_years.	= sum(C23002De3, C23002De16, C23002Ee3, C23002Ee16 );
+			Pop16_64yearsIOM_&_years. = sum(C23002Ce3, C23002Ce16, C23002Fe3, C23002Fe16, C23002Ge3, C23002Ge16 );
+			Pop16_64yearsAIOM_&_years. = sum(C23002Ce3, C23002Ce16, C23002De3, C23002De16, C23002Ee3, C23002Ee16, 
+											 C23002Fe3, C23002Fe16, C23002Ge3, C23002Ge16 );
 
 	  Pop25_64years_&_years. = 
 			sum(B01001e11, B01001e12, B01001e13, B01001e14, B01001e15, B01001e16, B01001e17, 
 				B01001e18, B01001e19, B01001e35, B01001e36, B01001e37, B01001e38, B01001e39, 
 				B01001e40, B01001e41, B01001e42, B01001e43 );
-
 			Pop25_64yearsB_&_years. = 
 				sum(B01001Be9, B01001Be10, B01001Be11, B01001Be12, B01001Be13, 
 					B01001Be24, B01001Be25, B01001Be26, B01001Be27, B01001Be28 );
@@ -1130,7 +1157,8 @@
 			PopWorkFTH_&_years. = sum(B20005Ie3, B20005Ie50 );
 			PopWorkFTA_&_years. = sum(B20005De3, B20005De50, B20005Ee3, B20005Ee50 );
 			PopWorkFTIOM_&_years. = sum(B20005Ce3, B20005Ce50, B20005Fe3, B20005Fe50, B20005Ge3, B20005Ge50 );
-			PopWorkFTAIOM_&_years. = sum(B20005e3, B20005e50 );
+			PopWorkFTAIOM_&_years. = sum(B20005Ce3, B20005Ce50, B20005De3, B20005De50, B20005Ee3, B20005Ee50,
+										 B20005Fe3, B20005Fe50, B20005Ge3, B20005Ge50 );
 
 	  PopWorkEarn_&_years. = sum(B20005e5, B20005e28, B20005e52, B20005e75 );
 			PopWorkEarnB_&_years. = sum(B20005Be5, B20005Be28, B20005Be52, B20005Be75 );
@@ -1411,14 +1439,16 @@
 		%moe_sum( var=B23001m3 B23001m10 B23001m17 B23001m24 B23001m31 B23001m38 B23001m45 B23001m52 
 			B23001m59 B23001m66 B23001m89 B23001m96 B23001m103 B23001m110 B23001m117 B23001m124 
 			B23001m131 B23001m138 B23001m145 B23001m152);
-			mPop16_64yearsB_&_years. = C23002Bm3;
-			mPop16_64yearsW_&_years. = C23002Hm3;
-			mPop16_64yearsH_&_years. = C23002Im3;
-			mPop16_64yearsA_&_years. = %moe_sum( var=C23002Dm3 C23002Em3);
-			mPop16_64yearsIOM_&_years. = %moe_sum( var=C23002Cm3 C23002Fm3 C23002Gm3); 
-			mPop16_64yearsAIOM_&_years. = %moe_sum( var=C23002Cm3 C23002Dm3 C23002Em3 C23002Fm3 C23002Gm3);
+			mPop16_64yearsB_&_years. = %moe_sum( var=C23002Bm3 C23002Bm16);
+			mPop16_64yearsW_&_years. = %moe_sum( var=C23002Hm3 C23002Hm16);
+			mPop16_64yearsH_&_years. = %moe_sum( var=C23002Im3 C23002Im16);
+			mPop16_64yearsA_&_years. = %moe_sum( var=C23002Dm3 C23002Dm16 C23002Em3 C23002Em16);
+			mPop16_64yearsIOM_&_years. = %moe_sum( var=C23002Cm3 C23002Cm16 C23002Fm3 C23002Fm16 C23002Gm3 C23002Gm16) ; 
+			mPop16_64yearsAIOM_&_years. = %moe_sum( var=C23002Cm3 C23002Cm16 C23002Dm3 C23002Dm16 C23002Em3 C23002Em16 
+														C23002Fm3 C23002Fm16 C23002Gm3 C23002Gm16);
 
-	  mPop25_64years_&_years.	 = 
+
+	  mPop25_64years_&_years. = 
 		%moe_sum( var=B01001m11 B01001m12 B01001m13 B01001m14 B01001m15 B01001m16 
 					B01001m17 B01001m18 B01001m19 B01001m35 B01001m36 B01001m37 
 					B01001m38 B01001m39 B01001m40 B01001m41 B01001m42 B01001m43);
@@ -1462,7 +1492,8 @@
 			mPopWorkFTH_&_years. = %moe_sum( var=B20005Im3 B20005Im50);
 			mPopWorkFTA_&_years. = %moe_sum( var=B20005Dm3 B20005Dm50 B20005Em3 B20005Em50);
 			mPopWorkFTIOM_&_years. = %moe_sum( var=B20005Cm3 B20005Cm50 B20005Fm3 B20005Fm50 B20005Gm3 B20005Gm50);
-			mPopWorkFTAIOM_&_years. = %moe_sum( var=B20005m3 B20005m50);
+			mPopWorkFTAIOM_&_years. = %moe_sum( var=B20005Cm3 B20005Cm50 B20005Dm3 B20005Dm50 B20005Em3 B20005Em50
+													B20005Fm3 B20005Fm50 B20005Gm3 B20005Gm50);
 
 	  mPopWorkEarn_&_years. = %moe_sum( var=B20005m5 B20005m28 B20005m52 B20005m75);
 			mPopWorkEarnB_&_years. = %moe_sum( var=B20005Bm5 B20005Bm28 B20005Bm52 B20005Bm75);
@@ -2499,7 +2530,7 @@
 			AggIncomeH_&_years. = "Aggregate income, Hispanic/Latino, &_years_dash "
 			AggIncomeA_&_years. = "Aggregate income, Asian, Native Hawaiian, and other Pacific Islander, &_years_dash "
 			AggIncomeIOM_&_years. = "Aggregate income, American Indian/Alaska Native, some other race, two or more races, &_years_dash "
-			AggIncomeAIOM_&_years."Aggregate income, All remaining groups other than Black, Non-Hispanic White, Hispanic, &_years_dash "
+			AggIncomeAIOM_&_years. = "Aggregate income, All remaining groups other than Black, Non-Hispanic White, Hispanic, &_years_dash "
 	  AggHshldIncome_&_years. = "Aggregate household income, &_years_dash "
 		  AggHshldIncomeB_&_years. = "Aggregate household income, Black/African American, &_years_dash "
 		  AggHshldIncomeW_&_years. = "Aggregate household income, Non-Hispanic White, &_years_dash "

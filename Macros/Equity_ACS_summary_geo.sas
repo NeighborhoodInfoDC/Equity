@@ -183,6 +183,10 @@
 
 		   mPopNativeBorn_&_years. mPopForeignBorn_&_years. mPopNonEnglish_&_years.
 
+		   mPopForeignBornB_&_years. mPopForeignBornW_&_years.
+		   mPopForeignBornH_&_years. mPopForeignBornA_&_years.
+		   mPopForeignBornIOM_&_years. mPopForeignBornAIOM_&_years.
+
            mPopWithRace_&_years. mPopBlackNonHispBridge_&_years.
            mPopWhiteNonHispBridge_&_years. mPopAsianPINonHispBridge_&_years. 
 		   mPopHisp_&_years. mPopNativeAmNonHispBr_&_years.
@@ -440,7 +444,7 @@
     %Dc_update_meta_file(
       ds_lib=&_out_lib,
       ds_name=&out_ds,
-      creator_process=ACS_&_years._&state_ab._sum_all.sas,
+      creator_process=Equity_ACS_&_years._&state_ab._sum_all.sas,
       restrictions=None,
       revisions=%str(&_revisions)
     )
