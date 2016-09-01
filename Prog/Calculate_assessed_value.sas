@@ -21,6 +21,7 @@
 %DCData_lib (RealProp);
 %DCDATA_lib (Equity);
 %DCDATA_lib (Census);
+%DCDATA_lib (NCDB);
 %DCDATA_lib (ACS);
 
 *pull data for SF and condo, 2010 2016;
@@ -107,7 +108,7 @@ data tract_assessed_val_change;
 	*setting to missing because only 3 properties;
 
 	if geo2010="11001010900" then do; dollar_change=.; avg_dollar_change=.; percent_change=.; assess_val16=.; assess_val10=.; 
-		/*assess_val10r=.;*/
+		/*assess_val10r=.;*/end;
 	
 		dollar_change= (assess_val16-assess_val10)/1000;
 		avg_dollar_change=(assess_val16-assess_val10)/NumSFCondo;
@@ -117,7 +118,6 @@ data tract_assessed_val_change;
 		  avg_dollar_changeR=(assess_val16-assess_val10r)/NumSFCondo;
 		  percent_changeR=((assess_val16-assess_val10r)/ assess_val10r) * 100);*/
 
-	
 		label dollar_change="Nominal Change in Assessed Value, Single Family Homes and Condos ($000), 2010-16"
 			  avg_dollar_change="Avg. Nominal Change in Assessed Value, Single Family Homes and Condos, 2010-16"
 			  percent_change="Pct. Change in Nominal Assessed Value, Single Family Homes and Condos, 2010-16"
@@ -129,17 +129,10 @@ data tract_assessed_val_change;
 run;
 
 /*Select tract-based Race Vars*/
-/*Maia - can you adapt this instead so we aren't creating from scratch??
 
-Ncdb.Ncdb_sum_2010&geosuf
-        (keep=&geo
-          PopWithRace: PopBlackNonHispBridge:
-           PopWhiteNonHispBridge: PopHisp: PopAsianPINonHispBridge:
-           PopOtherRaceNonHispBridge: 
-            )
-L:\Metadata\meta_ncdb_ncdb_sum_2010_tr10.html */
-
-proc sort data=census.census_sf1_2010_dc_ph (where=(geo2010^=" ") keep=geo2010 p5i1 p5i3 p5i4 p5i5 p5i6 p5i7 p5i8 p5i9 p5i10)
+proc sort data=ncdb.Ncdb_sum_2010_tr10 (keep=geo2010 PopWithRace: PopBlackNonHispBridge:
+PopWhiteNonHispBridge: PopHisp:  PopAsianPINonHispBridge:
+PopNativeAmNonHispBridge: PopOtherNonHispBridge:)
 out=census_base;
 by geo2010;
 run;
@@ -147,15 +140,16 @@ run;
 /*Test that all Census race values are collected correctly*/
 data census_test;
 set census_base;
-sumrace=sum(p5i3, p5i4, p5i5, p5i6, p5i7, p5i8, p5i9, p5i10);
+sumrace=sum(popblacknonhispbridge_2010, popwhitenonhispbridge_2010, popasianpinonhispbridge_2010,
+popnativeamnonhispbridge_2010, popothernonhispbridge_2010, pophisp_2010);
 run;
 
 data census_race;
 	set census_base;
-	whiterate=(p5i3/p5i1)*100;
-	blackrate=(p5i4/p5i1)*100;
-	hisprate=(p5i10/p5i1)*100;
-	aiomrate=(sum(p5i5, p5i6, p5i7, p5i8, p5i9)/p5i1)*100;
+	whiterate=(PopWhiteNonHispBridge_2010/PopWithRace_2010)*100;
+	blackrate=(PopBlackNonHispBridge_2010/PopWithRace_2010)*100;
+	hisprate=(PopHisp_2010/PopWithRace_2010)*100;
+	aiomrate=(sum(PopAsianPINonHispBridge_2010, PopNativeAMNonHispBridge_2010, PopOtherNonHispBridge_2010)/PopWithRace_2010)*100;
 	if 	whiterate =>75 then majwhite_10=1; /*Non-Hispanic White by Total Population*/
 		else majwhite_10=0;
 	if  blackrate=>75 then majblack_10=1; /*Non-Hispanic Black*/
@@ -181,8 +175,6 @@ proc freq data=census_race;
 
 /** Macro ACS_Percents- Start Definition **/
 
-/*****************did you copy somala's code? in Equity_Compile_ACS_for_profile.sas? - double check that it matches please*/ 
-
 %macro acs_percents;
 
     %local geosuf geoafmt j; 
@@ -198,26 +190,27 @@ proc freq data=census_race;
 	mpopwhitenonhispbridge_2010_14 mpopblacknonhispbridge_2010_14 mpopasianpinonhispbridge_2010_14
 	mPopMultiracialNonHisp_2010_14 mpopnativeamnonhispbr_2010_14 mpopothernonhispbridge_2010_14 mpophisp_2010_14 mpopwithrace_2010_14);
 
-	%Pct_calc( var=whiterate, label=% White, num=popwhitenonhispbridge, den=PopWithRace, years=2010_14 )
-
-    %Moe_prop_a( var=whiterate_m_14, mult=100, num=popwhitenonhispbridge_2010_14, den=PopWithRace_2010_14, 
-                       num_moe=mPopWhiteNonHispBridge_2010_14, den_moe=mPopWithRace_2010_14 );
-
-	%Pct_calc( var=blackrate, label=% Black, num=popblacknonhispbridge, den=PopWithRace, years=2010_14 )
-
-    %Moe_prop_a( var=blackrate_m_14, mult=100, num=popblacknonhispbridge_2010_14, den=PopWithRace_2010_14, 
+	%Pct_calc( var=blackrate, label=% black non-Hispanic, num=PopBlackNonHispBridge, den=PopWithRace, years=2010_14 )
+    %Pct_calc( var=whiterate, label=% white non-Hispanic, num=PopWhiteNonHispBridge, den=PopWithRace, years=2010_14 )
+    %Pct_calc( var=hisprate, label=% Hispanic, num=PopHisp, den=PopWithRace, years=2010_14 )
+ 
+    %Moe_prop_a( var=blackrate_m_14, mult=100, num=PopBlackNonHispBridge_2010_14, den=PopWithRace_2010_14, 
                        num_moe=mPopBlackNonHispBridge_2010_14, den_moe=mPopWithRace_2010_14 );
 
-	%Pct_calc( var=hisprate, label=% hisp, num=pophisp, den=PopWithRace, years=2010_14 )
+    %Moe_prop_a( var=whiterate_m_14, mult=100, num=PopWhiteNonHispBridge_2010_14, den=PopWithRace_2010_14, 
+                       num_moe=mPopWhiteNonHispBridge_2010_14, den_moe=mPopWithRace_2010_14 );
 
-    %Moe_prop_a( var=hisprate_m_14, mult=100, num=pophisp_2010_14, den=PopWithRace_2010_14, 
-                       num_moe=mPophisp_2010_14, den_moe=mPopWithRace_2010_14 );
+    %Moe_prop_a( var=hisprate_m_14, mult=100, num=PopHisp_2010_14, den=PopWithRace_2010_14, 
+                       num_moe=mPopHisp_2010_14, den_moe=mPopWithRace_2010_14 );
 
 	if 	whiterate_2010_14 =>75 then majwhite_14=1; /*Non-Hispanic White by Total Population*/
+		else if whiterate_2010_14 + whiterate_m_14 =>75 then majwhite_14=1;
 		else majwhite_14=0;
 	if 	blackrate_2010_14 =>75 then majblack_14=1; /*Non-Hispanic black by Total Population*/
+		else if blackrate_2010_14 + blackrate_m_14 =>75 then majblack_14=1;
 		else majblack_14=0;
  	if 	hisprate_2010_14 =>75 then majhisp_14=1; /*Hispanic by Total Population*/
+		else if hisprate_2010_14 + hisprate_m_14 =>75 then majhisp_14=1;
 		else majhisp_14=0;
 	if majwhite_14=0 and majblack_14=0 and majhisp_14=0 then mixedngh_14=1;
 		else mixedngh_14 =0;
@@ -241,36 +234,15 @@ proc freq data=census_race;
 
 /*Tract 62.02 has no people in it??*/
 
-/*ideally this is done by creating whiteupperbound=white estimate + white MOE;  */
+
 data racecomp;
 	merge acs_race (keep=geo2010 whiterate_2010_14 whiterate_m_14 blackrate_2010_14 blackrate_m_14 majwhite_14 majblack_14 mixedngh_14 tract_comp) census_race (keep= geo2010 whiterate blackrate majwhite_10 majblack_10 mixedngh_10);
 	by geo2010;
 	majblack=majblack_14;
 	majwhite=majwhite_14;
 	mixedngh=mixedngh_14;
-	manualfix=0;
-	if geo2010 in ("11001000400", "11001000802", "11001010800", "11001002102", "11001003400") then do;
-		mixedngh=1; 
-		majblack=0;
-		majwhite=0;
-		manualfix=1;
-		tract_comp=3;
-		end;
-	if geo2010 in ("11001000501", "11001000702", "11001000901", "11001001301", "11001004002", "11001008301") then do;
-		mixedngh=0;
-		majblack=0;
-		majwhite=1;
-		manualfix=1;
-		tract_comp=1;
-		end;
-	if geo2010 in ("11001001901", "11001001902", "11001002201", "11001008701", "11001009204") then do;
-		mixedngh=0;
-		majblack=1;
-		majwhite=0;
-		manualfix=1;
-		tract_comp=2;
-		end;
 run;
+
   proc freq data=racecomp;
   tables tract_comp majwhite*tract_comp;
   run;
