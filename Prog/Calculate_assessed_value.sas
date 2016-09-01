@@ -27,22 +27,36 @@
 data y2010_realprop;
 set RealProp.proptax_history(where=(year=2010 & ui_proptype in ('10','11')));
 run;
-data y2016_realprop;
+data y2016_realprop (drop=ssl rename=(ssl_new=ssl));
 set RealProp.ownerpt_2016_04 (where=(ui_proptype in ('10','11')));
+
+length ssl_new $17.; 
+ssl_new=ssl;
+
 run;
 
 *merge 2010 and 2016 data by ssl;
 proc sort data=y2010_realprop; by ssl;run;
 proc sort data=y2016_realprop; by ssl;run;
 data assessed_val;
-merge y2010_realprop(in=a keep=ssl assess_val rename=(assess_val=assess_val10)) 
-	y2016_realprop(in=b keep=ssl assess_val rename=(assess_val=assess_val16))
+merge y2010_realprop(in=a keep=ssl assess_val rename=(assess_val=assess_val10a)) 
+	y2016_realprop(in=b keep=ssl assess_val rename=(assess_val=assess_val16a))
 	realprop.parcel_geo(keep=ssl geo2010);
 by ssl;
 if a=0 and b=1 then in_2016=1;
 else if a=1 and b=0 then in_2010=1;
 else if a=1 and b=1 then in_both=1;
 label in_2016 ="Only in 2016 data" in_2010="Only in 2010 data" in_both="In both years of data";
+
+assess_val10=assess_val10a/1000;
+assess_val16=assess_val16a/1000; 
+
+*%dollar_convert(assess_val10, assess_val10r, 2010, 2016);
+
+
+label assess_val10="Property Assessed Value($000) 2010"
+	   assess_val16="Property Assessed Value($000) 2016"
+	   /*assess_val10r="Property Assessed Value ($000) 2010 in $2016"*/;
 run;
 *For count of units in each;
 proc summary data=assessed_val print sum; var in_2016 in_2010 in_both;
@@ -54,17 +68,31 @@ run;
 proc summary data=assessed_val; 
 where in_both=1; 
 by geo2010; 
-var assess_val10 assess_val16; 
+var assess_val10 assess_val16 /*assess_val10r*/; 
 output out=tract_assessed_val (drop=_type_) sum=; 
 run;
 *	Note: There are 654 parcels with no tract assigned?
 	Also, tracts 2.01, 73.01, 62.02 with residential units but no data ;
 
 data tract_assessed_val_change;
-set tract_assessed_val (rename=(_freq_=NumSFCondo));
-dollar_change= sum(assess_val16,-assess_val10);
-avg_dollar_change=dollar_change/NumSFCondo;
-percent_change= ((dollar_change / assess_val10) * 100);
+	set tract_assessed_val (rename=(_freq_=NumSFCondo)) ;
+
+		dollar_change= assess_val16-assess_val10;
+		avg_dollar_change=dollar_change/NumSFCondo*1000;
+		percent_change= ((dollar_change / assess_val10) * 100);
+
+		/*dollar_changeR=assess_val16-assess_val10r;
+		  avg_dollar_changeR=dollar_changeR/NumSFCondo*1000;
+		  percent_changeR=((dollar_changeR / assess_val10r) * 100);*/
+
+		label dollar_change="Nominal Change in Assessed Value, Single Family Homes and Condos ($000), 2010-16"
+			  avg_dollar_change="Avg. Nominal Change in Assessed Value, Single Family Homes and Condos, 2010-16"
+			  percent_change="Pct. Change in Nominal Assessed Value, Single Family Homes and Condos, 2010-16"
+	 			/*dollar_changeR="Real Change in Assessed Value, Single Family Homes and Condos ($000) $2016, 2010-16"
+			  avg_dollar_changeR="Avg. Real Change in Assessed Value, Single Family Homes and Condos $2016, 2010-16"
+			  percent_changeR="Pct. Change in Real Assessed Value, Single Family Homes and Condos $2016, 2010-16"*/
+;
+
 run;
 
 /*Select tract-based Race Vars*/
@@ -213,13 +241,23 @@ run;
   proc freq data=racecomp;
   tables tract_comp majwhite*tract_comp;
   run;
-data valueshift;
+data equity.assessedval_race (label="Assessed Value for Single Family Homes and Condos by Tract Racial Composition");
 	merge racecomp (keep=geo2010 mixedngh majblack majwhite tract_comp) tract_assessed_val_change ;
 	by geo2010;
+
+	format geo2010;
 	run;
 
-proc univariate data=valueshift;
+proc univariate data=equity.assessedval_race;
 CLASS tract_comp;
 var dollar_change avg_dollar_change percent_change;
 
 run;
+proc freq data=equity.assessedval_race;
+tables dollar_change avg_dollar_change percent_change;
+run;
+
+proc export data=equity.assessedval_race
+	outfile="D:\DCDATA\Libraries\Equity\Prog\assessedval_race.csv"
+	dbms=csv replace;
+	run;
