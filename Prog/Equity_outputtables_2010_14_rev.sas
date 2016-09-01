@@ -87,6 +87,61 @@ run;
 
 	run;
 
+data costb_nhwh_test;
+set Equity.Acs_tables_ipums;
+if city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 then subpopvar = 1;
+else subpopvar = 0;
+run;
+
+proc sort data = costb_nhwh_test;
+by strata cluster;
+run;
+
+proc surveymeans data = costb_nhwh_test (where=(subpopvar=1));
+weight hhwt;
+strata strata;
+cluster cluster;
+domain subpopvar;
+var costburden;
+ods output Domain=try_total;
+run;
+
+proc surveymeans data = costb_nhwh_test (where=(subpopvar=1));
+weight hhwt;
+strata strata;
+cluster cluster;
+domain subpopvar*puma;
+var costburden;
+ods output Domain=try_puma;
+run;
+
+proc surveymeans data = costb_nhwh_test (where=(subpopvar=1));
+weight hhwt;
+strata strata;
+cluster cluster;
+domain subpopvar*race_cat1;
+var costburden;
+ods output Domain=try_race;
+run;
+
+proc surveymeans data = costb_nhwh_test (where=(subpopvar=1));
+weight hhwt;
+strata strata;
+cluster cluster;
+domain subpopvar*race_cat1*puma;
+var costburden;
+ods output Domain=try_all;
+run;
+
+data test_pray;
+set try_total (keep=mean stderr) try_puma (keep=mean puma stderr) try_race (keep=race_cat1 mean stderr) 
+try_all (keep=race_cat1 puma mean stderr);
+	category=.;
+		if race_cat1=1 then category=2;
+		if race_cat1=2 then category=3;
+		if race_cat1=3 then category=4; 
+run;
+
 		data costb_NHWH0 (drop=_table_ costburden race_cat1);
 
 			set costb_NHWH (where=(_table_=1 & costburden=.) keep =_table_ puma total_Sum costburden race_cat1);
@@ -129,6 +184,21 @@ run;
 		if race_cat1=3 then category=4; 
 		format category category.;
 		run; 
+
+proc sort data=costb_nhwh3
+	out=costb_hope;
+	by PUMA category;
+	run;
+
+	proc sort data=test_pray
+		out=test_hope;
+		by PUMA category;
+		run;
+
+	data merge_pray4me;
+		merge costb_hope test_hope;
+		by PUMA category;
+		run;
 
 	%Count_table5( 
 	  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 ),

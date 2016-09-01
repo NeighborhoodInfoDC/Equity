@@ -196,7 +196,7 @@
       all='Total' &row_var
       ,
       /** Columns (do not change) **/
-      total = "% &universe" * colpctsum=' ' * f=comma10.1 * ( puma=' ' all='District of Columbia' )
+      total = "% &universe" * (colpctsum=' ' * f=comma10.1)* ( puma=' ' all='District of Columbia' )
       / condense
     ;
     format puma puma. race_cat1 racecatA. &row_var &row_fmt;
