@@ -97,6 +97,17 @@ proc sort data = costb_nhwh_test;
 by strata cluster;
 run;
 
+/**Leah look here**/
+proc surveyfreq data = costb_nhwh_test (where=(subpopvar=1));
+weight hhwt;
+strata strata;
+cluster cluster;
+by subpopvar;
+tables costburden*puma;
+*var costburden;
+ods output Domain=try_total2;
+run;
+
 proc surveymeans data = costb_nhwh_test (where=(subpopvar=1));
 weight hhwt;
 strata strata;
