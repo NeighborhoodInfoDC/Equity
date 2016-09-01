@@ -16,6 +16,8 @@
 %DCData_lib( ACS )
 %DCData_lib( Equity )
 
+%let racelist=W B H AIOM;
+%let racename= NH-White Black-Alone Hispanic All-Other;
 
 %macro rename(data);
 /** First, create a data set with the list of variables in your input data set **/
@@ -368,6 +370,362 @@ var PctBlackNonHispBridge: PctWhiteNonHispBridge:
  ;
 id ward2012; 
 run; 
+
+
+
+data equity.profile_tabs_ACS_suppress;
+	set equity.profile_tabs_ACS;
+
+	%do r=1 %to 4;
+
+		%let race=%scan(&racelist.,&r.," ");
+		%let name=%scan(&racename.,&r.," ");
+
+	array est {146} 
+		PctBlackNonHispBridge_2010_14 PctWhiteNonHispBridge_2010_14
+		PctHisp_2010_14 PctAsnPINonHispBridge_2010_14 PctOtherRaceNonHispBridg_2010_14
+		PctAloneB_2010_14 PctAloneW_2010_14 PctAloneH_2010_14 PctAloneA_2010_14
+		PctAloneI_2010_14 PctAloneO_2010_14 PctAloneM_2010_14 PctAloneIOM_2010_14 PctAloneAIOM_2010_14
+
+		PctForeignBorn_2010_14 PctNativeBorn_2010_14 PctForeignBorn&race._2010_14 PctOthLang_2010_14
+
+		PctPopUnder18Years_2010_14 PctPopUnder18Years&race._2010_14 
+		PctPop18_34Years_2010_14 PctPop18_34Years&race._2010_14 
+		PctPop35_64Years_2010_14 PctPop35_64Years&race._2010_14 
+		PctPop65andOverYears_2010_14 PctPop65andOverYrs&race._2010_14
+
+		Pct25andOverWoutHS_2010_14 Pct25andOverWoutHS&race._2010_14 
+		Pct25andOverWHS_2010_14 Pct25andOverWHS&race._2010_14 
+		Pct25andOverWSC_2010_14 Pct25andOverWSC&race._2010_14
+		   
+		AvgHshldIncAdj_2010_14 AvgHshldIncAdj&race._2010_14 
+		PctFamilyGT200000_2010_14 PctFamilyGT200000&race._2010_14 
+		PctFamilyLT75000_2010_14 PctFamilyLT75000&race._2010_14
+		PctPoorPersons_2010_14 PctPoorPersons&race._2010_14 
+		PctPoorChildren_2010_14 PctPoorChildren&race._2010_14
+
+		Pct16andOverEmployed_2010_14 Pct16andOverEmployed&race._2010_14
+		PctEmployed16to64_2010_14 PctEmployed16to64&race._2010_14
+		PctUnemployed_2010_14 PctUnemployed&race._2010_14
+		Pct16andOverWages_2010_14 Pct16andOverWages&race._2010_14
+		Pct16andOverWorkFT_2010_14 Pct16andOverWorkFT&race._2010_14
+		PctWorkFTLT35k_2010_14 PctWorkFTLT35k&race._2010_14 
+		PctWorkFTLT75k_2010_14 PctWorkFTLT75k&race._2010_14
+		PctEmployedMngmt_2010_14 PctEmployedMngmt&race._2010_14
+		PctEmployedServ_2010_14 PctEmployedServ&race._2010_14
+		PctEmployedSales_2010_14 PctEmployedSales&race._2010_14
+		PctEmployedNatRes_2010_14 PctEmployedNatRes&race._2010_14
+		PctEmployedProd_2010_14 PctEmployedProd&race._2010_14
+		PctOwnerOccupiedHU_2010_14 PctOwnerOccupiedHU&race._2010_14
+		;
+
+	array moe {146} 	
+		PctBlackNonHispBridge_m_2010_14 PctWhiteNonHispBridge_m_2010_14
+		PctHisp_m_2010_14 PctAsnPINonHispBridge_m_2010_14 PctOtherRaceNonHispBridg_m_2010_14
+		PctAloneB_m_2010_14 PctAloneW_m_2010_14 PctAloneH_m_2010_14 PctAloneA_m_2010_14
+		PctAloneI_m_2010_14 PctAloneO_m_2010_14 PctAloneM_m_2010_14 PctAloneIOM_m_2010_14 PctAloneAIOM_m_2010_14
+
+		PctForeignBorn_m_2010_14 PctNativeBorn_m_2010_14 PctForeignBorn&race._m_2010_14 PctOthLang_m_2010_14
+
+		PctPopUnder18Years_m_2010_14 PctPopUnder18Years&race._m_2010_14 
+		PctPop18_34Years_m_2010_14 PctPop18_34Years&race._m_2010_14 
+		PctPop35_64Years_m_2010_14 PctPop35_64Years&race._m_2010_14 
+		PctPop65andOverYears_m_2010_14 PctPop65andOverYrs&race._m_2010_14 
+
+		Pct25andOverWoutHS_m_2010_14 Pct25andOverWoutHS&race._m_2010_14 
+		Pct25andOverWHS_m_2010_14 Pct25andOverWHS&race._m_2010_14 
+		Pct25andOverWSC_m_2010_14 Pct25andOverWSC&race._m_2010_14 
+		   
+		AvgHshldIncAdj_m_2010_14 AvgHshldIncAdj&race._m_2010_14 
+		PctFamilyGT200000_m_2010_14 PctFamilyGT200000&race._m_2010_14 
+		PctFamilyLT75000_m_2010_14 PctFamilyLT75000&race._m_2010_14
+		PctPoorPersons_m_2010_14 PctPoorPersons&race._m_2010_14 
+		PctPoorChildren_m_2010_14 PctPoorChildren&race._m_2010_14 
+
+		Pct16andOverEmployed_m_2010_14 Pct16andOverEmployed&race._m_2010_14
+		PctEmployed16to64_m_2010_14 PctEmployed16to64&race._m_2010_14
+		PctUnemployed_m_2010_14 PctUnemployed&race._m_2010_14
+		Pct16andOverWages_m_2010_14 Pct16andOverWages&race._m_2010_14
+		Pct16andOverWorkFT_m_2010_14 Pct16andOverWorkFT&race._m_2010_14
+		PctWorkFTLT35k_m_2010_14 PctWorkFTLT35k&race._m_2010_14 
+		PctWorkFTLT75k_m_2010_14 PctWorkFTLT75k&race._m_2010_14
+		PctEmployedMngmt_m_2010_14 PctEmployedMngmt&race._m_2010_14
+		PctEmployedServ_m_2010_14 PctEmployedServ&race._m_2010_14
+		PctEmployedSales_m_2010_14 PctEmployedSales&race._m_2010_14
+		PctEmployedNatRes_m_2010_14 PctEmployedNatRes&race._m_2010_14
+		PctEmployedProd_m_2010_14 PctEmployedProd&race._m_2010_14
+		PctOwnerOccupiedHU_m_2010_14 PctOwnerOccupiedHU&race._m_2010_14
+		;
+
+	array cv {292} 
+		PctBlackNonHispBridge_2010_14	PctBlackNonHispBridge_m_2010_14	
+		PctWhiteNonHispBridge_2010_14 PctWhiteNonHispBridge_m_2010_14	
+		PctHisp_2010_14 PctHisp_m_2010_14	
+		PctAsnPINonHispBridge_2010_14 PctAsnPINonHispBridge_m_2010_14	
+		PctOtherRaceNonHispBridg_2010_14 PctOtherRaceNonHispBridg_m_2010_14	
+		PctAloneB_2010_14 PctAloneB_m_2010_14	
+		PctAloneW_2010_14 PctAloneW_m_2010_14	
+		PctAloneH_2010_14 PctAloneH_m_2010_14	
+		PctAloneA_2010_14 PctAloneA_m_2010_14	
+		PctAloneI_2010_14 PctAloneI_m_2010_14	
+		PctAloneO_2010_14 PctAloneO_m_2010_14	
+		PctAloneM_2010_14 PctAloneM_m_2010_14	
+		PctAloneIOM_2010_14 PctAloneIOM_m_2010_14	
+		PctAloneAIOM_2010_14 PctAloneAIOM_m_2010_14
+		
+		PctForeignBorn_2010_14 PctForeignBorn_m_2010_14	
+		PctNativeBorn_2010_14 PctNativeBorn_m_2010_14	
+		PctForeignBorn&race._2010_14 PctForeignBorn&race._m_2010_14	
+		PctOthLang_2010_14 PctOthLang_m_2010_14
+		
+		PctPopUnder18Years_2010_14 PctPopUnder18Years_m_2010_14	
+		PctPopUnder18Years&race._2010_14 PctPopUnder18Years&race._m_2010_14	
+		PctPop18_34Years_2010_14 PctPop18_34Years_m_2010_14	
+		PctPop18_34Years&race._2010_14 PctPop18_34Years&race._m_2010_14	
+		PctPop35_64Years_2010_14 PctPop35_64Years_m_2010_14	
+		PctPop35_64Years&race._2010_14 PctPop35_64Years&race._m_2010_14	
+		PctPop65andOverYears_2010_14 PctPop65andOverYears_m_2010_14	
+		PctPop65andOverYrs&race._2010_14 PctPop65andOverYrs&race._m_2010_14
+		
+		Pct25andOverWoutHS_2010_14 Pct25andOverWoutHS_m_2010_14	
+		Pct25andOverWoutHS&race._2010_14 Pct25andOverWoutHS&race._m_2010_14	
+		Pct25andOverWHS_2010_14 Pct25andOverWHS_m_2010_14	
+		Pct25andOverWHS&race._2010_14 Pct25andOverWHS&race._m_2010_14	
+		Pct25andOverWSC_2010_14 Pct25andOverWSC_m_2010_14	
+		Pct25andOverWSC&race._2010_14 Pct25andOverWSC&race._m_2010_14
+		
+		AvgHshldIncAdj_2010_14 AvgHshldIncAdj_m_2010_14	
+		AvgHshldIncAdj&race._2010_14 AvgHshldIncAdj&race._m_2010_14	
+		PctFamilyGT200000_2010_14 PctFamilyGT200000_m_2010_14	
+		PctFamilyGT200000&race._2010_14 PctFamilyGT200000&race._m_2010_14	
+		PctFamilyLT75000_2010_14 PctFamilyLT75000_m_2010_14	
+		PctFamilyLT75000&race._2010_14 PctFamilyLT75000&race._m_2010_14	
+		PctPoorPersons_2010_14 PctPoorPersons_m_2010_14	
+		PctPoorPersons&race._2010_14 PctPoorPersons&race._m_2010_14	
+		PctPoorChildren_2010_14 PctPoorChildren_m_2010_14	
+		PctPoorChildren&race._2010_14 PctPoorChildren&race._m_2010_14
+		
+		Pct16andOverEmployed_2010_14 Pct16andOverEmployed_m_2010_14	
+		Pct16andOverEmployed&race._2010_14 Pct16andOverEmployed&race._m_2010_14	
+		PctEmployed16to64_2010_14 PctEmployed16to64_m_2010_14	
+		PctEmployed16to64&race._2010_14 PctEmployed16to64&race._m_2010_14	
+		PctUnemployed_2010_14 PctUnemployed_m_2010_14	
+		PctUnemployed&race._2010_14 PctUnemployed&race._m_2010_14	
+		Pct16andOverWages_2010_14 Pct16andOverWages_m_2010_14	
+		Pct16andOverWages&race._2010_14 Pct16andOverWages&race._m_2010_14	
+		Pct16andOverWorkFT_2010_14 Pct16andOverWorkFT_m_2010_14	
+		Pct16andOverWorkFT&race._2010_14 Pct16andOverWorkFT&race._m_2010_14	
+		PctWorkFTLT35k_2010_14 PctWorkFTLT35k_m_2010_14	
+		PctWorkFTLT35k&race._2010_14 PctWorkFTLT35k&race._m_2010_14	
+		PctWorkFTLT75k_2010_14 PctWorkFTLT75k_m_2010_14	
+		PctWorkFTLT75k&race._2010_14 PctWorkFTLT75k&race._m_2010_14	
+		PctEmployedMngmt_2010_14 PctEmployedMngmt_m_2010_14	
+		PctEmployedMngmt&race._2010_14 PctEmployedMngmt&race._m_2010_14	
+		PctEmployedServ_2010_14 PctEmployedServ_m_2010_14	
+		PctEmployedServ&race._2010_14 PctEmployedServ&race._m_2010_14	
+		PctEmployedSales_2010_14 PctEmployedSales_m_2010_14	
+		PctEmployedSales&race._2010_14 PctEmployedSales&race._m_2010_14	
+		PctEmployedNatRes_2010_14 PctEmployedNatRes_m_2010_14	
+		PctEmployedNatRes&race._2010_14 PctEmployedNatRes&race._m_2010_14	
+		PctEmployedProd_2010_14 PctEmployedProd_m_2010_14	
+		PctEmployedProd&race._2010_14 PctEmployedProd&race._m_2010_14	
+		PctOwnerOccupiedHU_2010_14 PctOwnerOccupiedHU_m_2010_14	
+		PctOwnerOccupiedHU&race._2010_14 PctOwnerOccupiedHU&race._m_2010_14
+		;
+
+	array upper {292} 		
+		PctBlackNonHispBridge_2010_14	PctBlackNonHispBridge_m_2010_14	
+		PctWhiteNonHispBridge_2010_14 PctWhiteNonHispBridge_m_2010_14	
+		PctHisp_2010_14 PctHisp_m_2010_14	
+		PctAsnPINonHispBridge_2010_14 PctAsnPINonHispBridge_m_2010_14	
+		PctOtherRaceNonHispBridg_2010_14 PctOtherRaceNonHispBridg_m_2010_14	
+		PctAloneB_2010_14 PctAloneB_m_2010_14	
+		PctAloneW_2010_14 PctAloneW_m_2010_14	
+		PctAloneH_2010_14 PctAloneH_m_2010_14	
+		PctAloneA_2010_14 PctAloneA_m_2010_14	
+		PctAloneI_2010_14 PctAloneI_m_2010_14	
+		PctAloneO_2010_14 PctAloneO_m_2010_14	
+		PctAloneM_2010_14 PctAloneM_m_2010_14	
+		PctAloneIOM_2010_14 PctAloneIOM_m_2010_14	
+		PctAloneAIOM_2010_14 PctAloneAIOM_m_2010_14
+		
+		PctForeignBorn_2010_14 PctForeignBorn_m_2010_14	
+		PctNativeBorn_2010_14 PctNativeBorn_m_2010_14	
+		PctForeignBorn&race._2010_14 PctForeignBorn&race._m_2010_14	
+		PctOthLang_2010_14 PctOthLang_m_2010_14
+		
+		PctPopUnder18Years_2010_14 PctPopUnder18Years_m_2010_14	
+		PctPopUnder18Years&race._2010_14 PctPopUnder18Years&race._m_2010_14	
+		PctPop18_34Years_2010_14 PctPop18_34Years_m_2010_14	
+		PctPop18_34Years&race._2010_14 PctPop18_34Years&race._m_2010_14	
+		PctPop35_64Years_2010_14 PctPop35_64Years_m_2010_14	
+		PctPop35_64Years&race._2010_14 PctPop35_64Years&race._m_2010_14	
+		PctPop65andOverYears_2010_14 PctPop65andOverYears_m_2010_14	
+		PctPop65andOverYrs&race._2010_14 PctPop65andOverYrs&race._m_2010_14
+		
+		Pct25andOverWoutHS_2010_14 Pct25andOverWoutHS_m_2010_14	
+		Pct25andOverWoutHS&race._2010_14 Pct25andOverWoutHS&race._m_2010_14	
+		Pct25andOverWHS_2010_14 Pct25andOverWHS_m_2010_14	
+		Pct25andOverWHS&race._2010_14 Pct25andOverWHS&race._m_2010_14	
+		Pct25andOverWSC_2010_14 Pct25andOverWSC_m_2010_14	
+		Pct25andOverWSC&race._2010_14 Pct25andOverWSC&race._m_2010_14
+		
+		AvgHshldIncAdj_2010_14 AvgHshldIncAdj_m_2010_14	
+		AvgHshldIncAdj&race._2010_14 AvgHshldIncAdj&race._m_2010_14	
+		PctFamilyGT200000_2010_14 PctFamilyGT200000_m_2010_14	
+		PctFamilyGT200000&race._2010_14 PctFamilyGT200000&race._m_2010_14	
+		PctFamilyLT75000_2010_14 PctFamilyLT75000_m_2010_14	
+		PctFamilyLT75000&race._2010_14 PctFamilyLT75000&race._m_2010_14	
+		PctPoorPersons_2010_14 PctPoorPersons_m_2010_14	
+		PctPoorPersons&race._2010_14 PctPoorPersons&race._m_2010_14	
+		PctPoorChildren_2010_14 PctPoorChildren_m_2010_14	
+		PctPoorChildren&race._2010_14 PctPoorChildren&race._m_2010_14
+		
+		Pct16andOverEmployed_2010_14 Pct16andOverEmployed_m_2010_14	
+		Pct16andOverEmployed&race._2010_14 Pct16andOverEmployed&race._m_2010_14	
+		PctEmployed16to64_2010_14 PctEmployed16to64_m_2010_14	
+		PctEmployed16to64&race._2010_14 PctEmployed16to64&race._m_2010_14	
+		PctUnemployed_2010_14 PctUnemployed_m_2010_14	
+		PctUnemployed&race._2010_14 PctUnemployed&race._m_2010_14	
+		Pct16andOverWages_2010_14 Pct16andOverWages_m_2010_14	
+		Pct16andOverWages&race._2010_14 Pct16andOverWages&race._m_2010_14	
+		Pct16andOverWorkFT_2010_14 Pct16andOverWorkFT_m_2010_14	
+		Pct16andOverWorkFT&race._2010_14 Pct16andOverWorkFT&race._m_2010_14	
+		PctWorkFTLT35k_2010_14 PctWorkFTLT35k_m_2010_14	
+		PctWorkFTLT35k&race._2010_14 PctWorkFTLT35k&race._m_2010_14	
+		PctWorkFTLT75k_2010_14 PctWorkFTLT75k_m_2010_14	
+		PctWorkFTLT75k&race._2010_14 PctWorkFTLT75k&race._m_2010_14	
+		PctEmployedMngmt_2010_14 PctEmployedMngmt_m_2010_14	
+		PctEmployedMngmt&race._2010_14 PctEmployedMngmt&race._m_2010_14	
+		PctEmployedServ_2010_14 PctEmployedServ_m_2010_14	
+		PctEmployedServ&race._2010_14 PctEmployedServ&race._m_2010_14	
+		PctEmployedSales_2010_14 PctEmployedSales_m_2010_14	
+		PctEmployedSales&race._2010_14 PctEmployedSales&race._m_2010_14	
+		PctEmployedNatRes_2010_14 PctEmployedNatRes_m_2010_14	
+		PctEmployedNatRes&race._2010_14 PctEmployedNatRes&race._m_2010_14	
+		PctEmployedProd_2010_14 PctEmployedProd_m_2010_14	
+		PctEmployedProd&race._2010_14 PctEmployedProd&race._m_2010_14	
+		PctOwnerOccupiedHU_2010_14 PctOwnerOccupiedHU_m_2010_14	
+		PctOwnerOccupiedHU&race._2010_14 PctOwnerOccupiedHU&race._m_2010_14
+		;
+
+	array lower {#} 		
+		PctBlackNonHispBridge_2010_14	PctBlackNonHispBridge_m_2010_14	
+		PctWhiteNonHispBridge_2010_14 PctWhiteNonHispBridge_m_2010_14	
+		PctHisp_2010_14 PctHisp_m_2010_14	
+		PctAsnPINonHispBridge_2010_14 PctAsnPINonHispBridge_m_2010_14	
+		PctOtherRaceNonHispBridg_2010_14 PctOtherRaceNonHispBridg_m_2010_14	
+		PctAloneB_2010_14 PctAloneB_m_2010_14	
+		PctAloneW_2010_14 PctAloneW_m_2010_14	
+		PctAloneH_2010_14 PctAloneH_m_2010_14	
+		PctAloneA_2010_14 PctAloneA_m_2010_14	
+		PctAloneI_2010_14 PctAloneI_m_2010_14	
+		PctAloneO_2010_14 PctAloneO_m_2010_14	
+		PctAloneM_2010_14 PctAloneM_m_2010_14	
+		PctAloneIOM_2010_14 PctAloneIOM_m_2010_14	
+		PctAloneAIOM_2010_14 PctAloneAIOM_m_2010_14
+		
+		PctForeignBorn_2010_14 PctForeignBorn_m_2010_14	
+		PctNativeBorn_2010_14 PctNativeBorn_m_2010_14	
+		PctForeignBorn&race._2010_14 PctForeignBorn&race._m_2010_14	
+		PctOthLang_2010_14 PctOthLang_m_2010_14
+		
+		PctPopUnder18Years_2010_14 PctPopUnder18Years_m_2010_14	
+		PctPopUnder18Years&race._2010_14 PctPopUnder18Years&race._m_2010_14	
+		PctPop18_34Years_2010_14 PctPop18_34Years_m_2010_14	
+		PctPop18_34Years&race._2010_14 PctPop18_34Years&race._m_2010_14	
+		PctPop35_64Years_2010_14 PctPop35_64Years_m_2010_14	
+		PctPop35_64Years&race._2010_14 PctPop35_64Years&race._m_2010_14	
+		PctPop65andOverYears_2010_14 PctPop65andOverYears_m_2010_14	
+		PctPop65andOverYrs&race._2010_14 PctPop65andOverYrs&race._m_2010_14
+		
+		Pct25andOverWoutHS_2010_14 Pct25andOverWoutHS_m_2010_14	
+		Pct25andOverWoutHS&race._2010_14 Pct25andOverWoutHS&race._m_2010_14	
+		Pct25andOverWHS_2010_14 Pct25andOverWHS_m_2010_14	
+		Pct25andOverWHS&race._2010_14 Pct25andOverWHS&race._m_2010_14	
+		Pct25andOverWSC_2010_14 Pct25andOverWSC_m_2010_14	
+		Pct25andOverWSC&race._2010_14 Pct25andOverWSC&race._m_2010_14
+		
+		AvgHshldIncAdj_2010_14 AvgHshldIncAdj_m_2010_14	
+		AvgHshldIncAdj&race._2010_14 AvgHshldIncAdj&race._m_2010_14	
+		PctFamilyGT200000_2010_14 PctFamilyGT200000_m_2010_14	
+		PctFamilyGT200000&race._2010_14 PctFamilyGT200000&race._m_2010_14	
+		PctFamilyLT75000_2010_14 PctFamilyLT75000_m_2010_14	
+		PctFamilyLT75000&race._2010_14 PctFamilyLT75000&race._m_2010_14	
+		PctPoorPersons_2010_14 PctPoorPersons_m_2010_14	
+		PctPoorPersons&race._2010_14 PctPoorPersons&race._m_2010_14	
+		PctPoorChildren_2010_14 PctPoorChildren_m_2010_14	
+		PctPoorChildren&race._2010_14 PctPoorChildren&race._m_2010_14
+		
+		Pct16andOverEmployed_2010_14 Pct16andOverEmployed_m_2010_14	
+		Pct16andOverEmployed&race._2010_14 Pct16andOverEmployed&race._m_2010_14	
+		PctEmployed16to64_2010_14 PctEmployed16to64_m_2010_14	
+		PctEmployed16to64&race._2010_14 PctEmployed16to64&race._m_2010_14	
+		PctUnemployed_2010_14 PctUnemployed_m_2010_14	
+		PctUnemployed&race._2010_14 PctUnemployed&race._m_2010_14	
+		Pct16andOverWages_2010_14 Pct16andOverWages_m_2010_14	
+		Pct16andOverWages&race._2010_14 Pct16andOverWages&race._m_2010_14	
+		Pct16andOverWorkFT_2010_14 Pct16andOverWorkFT_m_2010_14	
+		Pct16andOverWorkFT&race._2010_14 Pct16andOverWorkFT&race._m_2010_14	
+		PctWorkFTLT35k_2010_14 PctWorkFTLT35k_m_2010_14	
+		PctWorkFTLT35k&race._2010_14 PctWorkFTLT35k&race._m_2010_14	
+		PctWorkFTLT75k_2010_14 PctWorkFTLT75k_m_2010_14	
+		PctWorkFTLT75k&race._2010_14 PctWorkFTLT75k&race._m_2010_14	
+		PctEmployedMngmt_2010_14 PctEmployedMngmt_m_2010_14	
+		PctEmployedMngmt&race._2010_14 PctEmployedMngmt&race._m_2010_14	
+		PctEmployedServ_2010_14 PctEmployedServ_m_2010_14	
+		PctEmployedServ&race._2010_14 PctEmployedServ&race._m_2010_14	
+		PctEmployedSales_2010_14 PctEmployedSales_m_2010_14	
+		PctEmployedSales&race._2010_14 PctEmployedSales&race._m_2010_14	
+		PctEmployedNatRes_2010_14 PctEmployedNatRes_m_2010_14	
+		PctEmployedNatRes&race._2010_14 PctEmployedNatRes&race._m_2010_14	
+		PctEmployedProd_2010_14 PctEmployedProd_m_2010_14	
+		PctEmployedProd&race._2010_14 PctEmployedProd&race._m_2010_14	
+		PctOwnerOccupiedHU_2010_14 PctOwnerOccupiedHU_m_2010_14	
+		PctOwnerOccupiedHU&race._2010_14 PctOwnerOccupiedHU&race._m_2010_14
+		;
+
+	array gap {105} 
+		Gap25andOverWoutHS_2010_14 Gap25andOverWoutHS&race._2010_14 
+		Gap25andOverWHS_2010_14 Gap25andOverWHS&race._2010_14 
+		Gap25andOverWSC_2010_14 Gap25andOverWSC&race._2010_14 
+		   
+		GapAvgHshldIncAdj_2010_14 GapAvgHshldIncAdj&race._2010_14 
+		GapFamilyGT200000_2010_14 GapFamilyGT200000&race._2010_14 
+		GapFamilyLT75000_2010_14 GapFamilyLT75000&race._2010_14
+		GapPoorPersons_2010_14 GapPoorPersons&race._2010_14 
+		GapPoorChildren_2010_14 GapPoorChildren&race._2010_14 
+
+		Gap16andOverEmployed_2010_14 Gap16andOverEmployed&race._2010_14
+		GapEmployed16to64_2010_14 GapEmployed16to64&race._2010_14
+		GapUnemployed_2010_14 GapUnemployed&race._2010_14
+		Gap16andOverWages_2010_14 Gap16andOverWages&race._2010_14
+		Gap16andOverWorkFT_2010_14 Gap16andOverWorkFT&race._2010_14
+		GapWorkFTLT35k_2010_14 GapWorkFTLT35k&race._2010_14 
+		GapWorkFTLT75k_2010_14 GapWorkFTLT75k&race._2010_14
+		GapEmployedMngmt_2010_14 GapEmployedMngmt&race._2010_14
+		GapEmployedServ_2010_14 GapEmployedServ&race._2010_14
+		GapEmployedSales_2010_14 GapEmployedSales&race._2010_14
+		GapEmployedNatRes_2010_14 GapEmployedNatRes&race._2010_14
+		GapEmployedProd_2010_14 GapEmployedProd&race._2010_14
+		GapOwnerOccupiedHU_2010_14 GapOwnerOccupiedHU&race._2010_14
+		; 
+ 
+	array
+  	do k=1 to 146; 
+   
+                cv{k}=moe{k}/1.645/est{k}*100;
+                lower{k}=est{k}- moe{k};
+                upper{k}=est{k}+ moe{k};
+                
+                *code to suppress if cv > 30;
+                if cv{k} > 30 then do; est{k}=.s; moe{k}=.s;
+                
+                *write code to suppress gaps if not sign. diff from white rates - probably need to add to array list;  
+				if gap(k)= then do; gap(k)=.s
+        %end;        
+  end; 
+
 
 /*data equity.profile_tabs_ACS (where=(category ~=.));
 	set transposed_data;
