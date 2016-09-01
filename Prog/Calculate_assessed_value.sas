@@ -44,10 +44,10 @@ merge y2010_realprop(in=a keep=ssl assess_val rename=(assess_val=assess_val10a))
 	y2016_realprop(in=b keep=ssl assess_val rename=(assess_val=assess_val16a))
 	realprop.parcel_geo(keep=ssl geo2010);
 by ssl;
-if a=0 and b=1 then in_2016=1;
-else if a=1 and b=0 then in_2010=1;
-else if a=1 and b=1 then in_both=1;
-label in_2016 ="Only in 2016 data" in_2010="Only in 2010 data" in_both="In both years of data";
+/*if a=0 and b=1 then in_2016=1;
+else if a=1 and b=0 then in_2010=1;*/
+if a=1 and b=1 then in_both=1;
+label /*in_2016 ="Only in 2016 data" in_2010="Only in 2010 data"*/ in_both="In both years of data";
 
 run; 
 *For count of units in each;
@@ -81,11 +81,11 @@ data assessed_val_cutoff;
 	else if assess_val10 =. and assess_val16 =. then extreme=1; *missing both years;
 	else if assess_val10 =. or assess_val16 =. then extreme=2; *missing one year;
 
-*%dollar_convert(assess_val10, assess_val10r, 2010, 2016);
+%dollar_convert(assess_val10, assess_val10r, 2010, 2016);
 
 label assess_val10="Property Assessed Value 2010 extreme obs removed"
 	   assess_val16="Property Assessed Value 2016 extreme obs removed"
-	   /*assess_val10r="Property Assessed Value 2010 in $2016 extreme obs removed"*/;
+	   assess_val10r="Property Assessed Value 2010 in $2016 extreme obs removed";
 
 run;
 
@@ -95,7 +95,7 @@ run;
 proc summary data=assessed_val_cutoff; 
 where extreme=0; 
 by geo2010; 
-var assess_val10 assess_val16 /*assess_val10r*/; 
+var assess_val10 assess_val16 assess_val10r; 
 output out=tract_assessed_val (drop=_type_) sum=; 
 run;
 *	Note: There are 654 parcels with no tract assigned?
@@ -108,22 +108,22 @@ data tract_assessed_val_change;
 	*setting to missing because only 3 properties;
 
 	if geo2010="11001010900" then do; dollar_change=.; avg_dollar_change=.; percent_change=.; assess_val16=.; assess_val10=.; 
-		/*assess_val10r=.;*/end;
+		assess_val10r=.;end;
 	
 		dollar_change= (assess_val16-assess_val10)/1000;
 		avg_dollar_change=(assess_val16-assess_val10)/NumSFCondo;
 		percent_change= ((assess_val16-assess_val10) / assess_val10) * 100;
 
-		/*dollar_changeR=(assess_val16-assess_val10r)/1000;
+		dollar_changeR=(assess_val16-assess_val10r)/1000;
 		  avg_dollar_changeR=(assess_val16-assess_val10r)/NumSFCondo;
-		  percent_changeR=((assess_val16-assess_val10r)/ assess_val10r) * 100);*/
+		  percent_changeR=((assess_val16-assess_val10r)/ assess_val10r) * 100);
 
 		label dollar_change="Nominal Change in Assessed Value, Single Family Homes and Condos ($000), 2010-16"
 			  avg_dollar_change="Avg. Nominal Change in Assessed Value, Single Family Homes and Condos, 2010-16"
 			  percent_change="Pct. Change in Nominal Assessed Value, Single Family Homes and Condos, 2010-16"
-	 			/*dollar_changeR="Real Change in Assessed Value, Single Family Homes and Condos ($000) $2016, 2010-16"
+	 			dollar_changeR="Real Change in Assessed Value, Single Family Homes and Condos ($000) $2016, 2010-16"
 			  avg_dollar_changeR="Avg. Real Change in Assessed Value, Single Family Homes and Condos $2016, 2010-16"
-			  percent_changeR="Pct. Change in Real Assessed Value, Single Family Homes and Condos $2016, 2010-16"*/
+			  percent_changeR="Pct. Change in Real Assessed Value, Single Family Homes and Condos $2016, 2010-16"
 ;
 
 run;
