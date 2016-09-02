@@ -5,7 +5,7 @@
 		%let race=%scan(&racelist.,&r.," ");
 		%let name=%scan(&racename.,&r.," ");
 
-	array e_est {21} 
+	array e_est&race. {21} 
 		Pct25andOverWoutHS&race._2010_14
 		Pct25andOverWHS&race._2010_14
 		Pct25andOverWSC&race._2010_14
@@ -29,7 +29,7 @@
 		PctOwnerOccupiedHU&race._2010_14
 		;
 
-	array e_moe {21} 	
+	array e_moe&race. {21} 	
 		Pct25andOverWoutHS&race._m_2010_14
 		Pct25andOverWHS&race._m_2010_14
 		Pct25andOverWSC&race._m_2010_14
@@ -53,7 +53,7 @@
 		PctOwnerOccupiedHU&race._m_2010_14
 		;
 
-	array e_cv {21} 
+	array e_cv&race. {21} 
 		cvPct25andOverWoutHS&race._2010_14
 		cvPct25andOverWHS&race._2010_14
 		cvPct25andOverWSC&race._2010_14
@@ -77,7 +77,7 @@
 		cvPctOwnerOccupiedHU&race._2010_14
 		;
 
-	array e_upper {21} 		
+	array e_upper&race. {21} 		
 		uPct25andOverWoutHS&race._2010_14
 		uPct25andOverWHS&race._2010_14
 		uPct25andOverWSC&race._2010_14
@@ -101,7 +101,7 @@
 		uPctOwnerOccupiedHU&race._2010_14
 		;
 
-	array e_lower {21} 		
+	array e_lower&race. {21} 		
 		lPct25andOverWoutHS&race._2010_14
 		lPct25andOverWHS&race._2010_14
 		lPct25andOverWSC&race._2010_14
@@ -127,13 +127,13 @@
 
   	do k=1 to 21; 
    
-                e_cv{k}=e_moe{k}/1.645/e_est{k}*100;
-                e_lower{k}=e_est{k}- e_moe{k};
-                e_upper{k}=e_est{k}+ e_moe{k};
+                e_cv&race.{k}=e_moe&race.{k}/1.645/e_est&race.{k}*100;
+                e_lower&race.{k}=e_est&race.{k}- e_moe&race.{k};
+                e_upper&race.{k}=e_est&race.{k}+ e_moe&race.{k};
 				
 
                 *code to suppress if cv > 30;
-                if e_cv{k} > 30 then do; e_est{k}=.s; e_moe{k}=.s;
+                if e_cv&race.{k} > 30 then do; e_est&race.{k}=.s; e_moe&race.{k}=.s;
                 end;
 
 	end;

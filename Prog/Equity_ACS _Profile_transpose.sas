@@ -87,7 +87,7 @@ data whiterates;
 %rename(whiterates);
 run;
 
-data city_ward_WR (drop=cNum: cPct: cPop: _make_profile);
+data city_ward_WR (drop=cPct: _make_profile);
 	merge city_ward whiterates_new (rename=(c_make_profile=_make_profile));
 	by _make_profile;
 	
@@ -352,8 +352,8 @@ data equity.profile_tabs_ACS_suppress;
                 t_upper{t}=t_est{t}+ t_moe{t};
               
 
-                if t_cv{m} > 30 then do; 
-									t_est{m}=.s; t_moe{m}=.s; 
+                if t_cv{t} > 30 then do; 
+									t_est{t}=.s; t_moe{t}=.s; 
 									end; 
 	end;
 
