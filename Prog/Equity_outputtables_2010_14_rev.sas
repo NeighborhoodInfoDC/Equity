@@ -898,6 +898,10 @@ data emp_index;
 set Equity.Acs_tables_ipums;
 if city=7230 and age25to64=1   then subpopvar = 1;
 else subpopvar = 0;
+/*Try to trick proc surveymeans*/
+if emp25to64=.u then emptext="Out of LF";
+	else if emp25to64=1 then emptext="Employed"
+	else emptext="Unemployed"
 run;
 
 proc sort data = emp_index;
@@ -906,15 +910,39 @@ run;
 
 *StdDev on Count Total People Ages 25 to 64 (by Race& PUMA)*;
 %survey_freq (input=emp_index, where=%str(subpopvar=1), options=missing, weight=perwt, 
-type=crosstabs, tables=puma*race_cat1, out=emp_total_freqprelim);run;
+type=crosstabs, tables=puma*race_cat1, out=emp_all_freqprelim);run;
 
 *StdDev on Employed for Ages 25 to 64 (by Race & PUMA)*;
-%survey_freq (input=emp_index, where=%str(subpopvar=1 and emp25to64=.), options=missing, weight=perwt, 
-type=crosstabs, tables=emp25to64*puma*race_cat1, out=emp_div_freqprelim);run;
+%survey_freq (input=emp_index, where=%str(subpopvar=1 and emp25to64=1), options=missing, weight=perwt, 
+type=crosstabs, tables=emp25to64*puma*race_cat1, out=emp_emp_freqprelim);run;
 
-/***Does not include emp25to64=. Check Friday morning. nomcar??**/
+*StdDev on Unemployed for Ages 25 to 64 (by Race & PUMA)*;
+%survey_freq (input=emp_index, where=%str(subpopvar=1 and emp25to64=0), options=missing, weight=perwt, 
+type=crosstabs, tables=emp25to64*puma*race_cat1, out=emp_umemp_freqprelim);run;
 
-/*Try
+*StdDev on Out of LF for Ages 25 to 64 (by Race & PUMA)*;
+%survey_freq (input=emp_index, where=%str(subpopvar=1 and emp25to64=.u), options=missing, weight=perwt, 
+type=crosstabs, tables=emp25to64*puma*race_cat1, out=emp_outLF_freqprelim);run;
+
+/***Does not include emp25to64=. Check Friday morning. Do either nomcar or emptext work??**/
+
+/*Try either NOMCAR or emptext
+
+*StdDev on Pct Employed 25 to 64 (Total)*;
+%survey_means (input=emp_index, where=%str(subpopvar=1), weight=perwt, option=,
+domain=subpopvar, var=emptext, out=emp_total_pctprelim);run;
+
+*StdDev on Pct Employed 25 to 64 (by Puma)*;
+%survey_means (input=emp_index, where=%str(subpopvar=1), weight=perwt, option=, 
+domain=subpopvar*puma, var=emptext, out=emp_puma_pctprelim);run;
+
+*StdDev on Pct Employed 25 to 64 (by Race)*;
+%survey_means (input=emp_index, where=%str(subpopvar=1), weight=perwt, option=, 
+domain=subpopvar*race_cat1, var=emptext, out=emp_race_pctprelim);run;
+
+*StdDev on Pct Employed 25 to 64 (by Race & Puma)*;
+%survey_means (input=emp_index, where=%str(subpopvar=1), weight=perwt, option=, 
+domain=subpopvar*race_cat1*puma, var=emptext, out=emp_allvars_pctprelim);run;
 
 *StdDev on Pct Employed 25 to 64 (Total)*;
 %survey_means (input=emp_index, where=%str(subpopvar=1), weight=perwt, option=NOMCAR, 
@@ -1249,43 +1277,48 @@ data scostb_pctincl;
 		format category category.;
 		run; 
 		
-data costb_index;
+data mort_index;
 set Equity.Acs_tables_ipums;
-if city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 then subpopvar = 1;
+if city=7230 and pernum=1 and GQ in (1,2) and ownershp = 1 then subpopvar = 1;
 else subpopvar = 0;
 run;
 
-proc sort data = costb_index;
+proc sort data = mort_index;
 by strata cluster;
 run;
 
-*StdDev on Count Total Renters (by Puma and Race))*;
-%survey_freq (input=costb_index, where=%str(subpopvar=1), weight=hhwt, 
-type=crosstabs, tables=puma*race_cat1, out=costb_totalr_freqprelim);run;
+*StdDev on Count Total Owners (by Puma and Race))*;
+%survey_freq (input=mort_index, where=%str(subpopvar=1), weight=hhwt, 
+type=crosstabs, tables=puma*race_cat1, out=mort_o_freqprelim);run;
 
-*StdDev on Count Cost Burdened (by Puma and Race)*;
-%survey_freq (input=costb_index, where=%str(subpopvar=1 and costburden=1), weight=hhwt, 
-type=crosstabs, tables=costburden*puma*race_cat1, out=costb_totalcb_freqprelim);run;
+*StdDev on Count Own with Mortgage (by Puma and Race)*;
+%survey_freq (input=mort_index, where=%str(subpopvar=1 and ownmortgage=1), weight=hhwt, 
+type=crosstabs, tables=ownmortgage*puma*race_cat1, out=mort_om_freqprelim);run;
 
-*StdDev on Pct Cost Burdened (of Total)*;
+*StdDev on Count Own Free and Clear (by Puma and Race)*;
+%survey_freq (input=mort_index, where=%str(subpopvar=1 and ownmortgage=0), weight=hhwt, 
+type=crosstabs, tables=ownmortgage*puma*race_cat1, out=mort_ofc_freqprelim);run;
+
+/*For only mortgage=1*/
+*StdDev on Pct Own with Mortgage (of Total)*;
+%survey_means (input=mort_index, where=%str(subpopvar=1), weight=hhwt, 
+domain=subpopvar, var=ownmortgage, out=mort_total_pctprelim);run;
+
+*StdDev on Pct Own with Mortgage (by Puma Only)*;
+%survey_means (input=mort_index, where=%str(subpopvar=1), weight=hhwt, 
+domain=subpopvar*puma, var=ownmortgage out=mort_puma_pctprelim);run;
+
+*StdDev on Pct Own with Mortgage (by Race Only)*;
 %survey_means (input=costb_index, where=%str(subpopvar=1), weight=hhwt, 
-domain=subpopvar, var=costburden, out=costb_total_pctprelim);run;
+domain=subpopvar*race_cat1, var=ownmortgage, out=mort_race_pctprelim);run;
 
-*StdDev on Pct Cost Burdened (by Puma Only)*;
+*StdDev on Pct Own with Mortgage (by Race & Puma)*;
 %survey_means (input=costb_index, where=%str(subpopvar=1), weight=hhwt, 
-domain=subpopvar*puma, var=costburden, out=costb_puma_pctprelim);run;
+domain=subpopvar*race_cat1*puma, var=ownmortgage, out=mort_allvars_pctprelim);run;
 
-*StdDev on Pct Cost Burdened (by Race Only)*;
-%survey_means (input=costb_index, where=%str(subpopvar=1), weight=hhwt, 
-domain=subpopvar*race_cat1, var=costburden, out=costb_race_pctprelim);run;
-
-*StdDev on Pct Cost Burdened (by Race & Puma)*;
-%survey_means (input=costb_index, where=%str(subpopvar=1), weight=hhwt, 
-domain=subpopvar*race_cat1*puma, var=costburden, out=costb_allvars_pctprelim);run;
-
-data costb_pct;
-set costb_total_pctprelim (keep=mean stderr) costb_puma_pctprelim (keep=mean puma stderr) costb_race_pctprelim (keep=race_cat1 mean stderr) 
-costb_allvars_pctprelim (keep=race_cat1 puma mean stderr);
+data mort_pct;
+set mort_total_pctprelim (keep=mean stderr) mort_puma_pctprelim (keep=mean puma stderr) mort_race_pctprelim (keep=race_cat1 mean stderr) 
+mort_allvars_pctprelim (keep=race_cat1 puma mean stderr);
 	category=.;
 		if race_cat1=1 then category=2;
 		if race_cat1=2 then category=3;
@@ -1293,8 +1326,8 @@ costb_allvars_pctprelim (keep=race_cat1 puma mean stderr);
 		format category category.;
 run;
 
-data costb_r_freq;
-	set costb_totalr_freqprelim (keep=wgtfreq stddev puma race_cat1);
+data mort_o_freq;
+	set mort_o_freqprelim (keep=wgtfreq stddev puma race_cat1);
 		category=.;
 			if race_cat1=1 then category=2;
 			if race_cat1=2 then category=3;
@@ -1302,8 +1335,8 @@ data costb_r_freq;
 			format category category.;
 run;
 
-data costb_cb_freq;
-	set costb_totalcb_freqprelim (keep=wgtfreq stddev puma race_cat1);
+data mort_om_freq;
+	set mort_om_freqprelim (keep=wgtfreq stddev puma race_cat1);
 		category=.;
 			if race_cat1=1 then category=2;
 			if race_cat1=2 then category=3;
@@ -1311,20 +1344,35 @@ data costb_cb_freq;
 			format category category.;
 run;
 
-proc sort data=costb_nhwh0 out=costb_r_base; by PUMA category; run;
-proc sort data=costb_nhwh2 out=costb_cb_base; by PUMA category; run;
-proc sort data=costb_nhwh3 out=costb_pct_base; by PUMA category; run;
-proc sort data=costb_r_freq out=costb_r_std; by PUMA category; run;
-proc sort data=costb_cb_freq out=costb_cb_std; by PUMA category; run;
+data mort_ofc_freq;
+	set mort_ofc_freqprelim (keep=wgtfreq stddev puma race_cat1);
+		category=.;
+			if race_cat1=1 then category=2;
+			if race_cat1=2 then category=3;
+			if race_cat1=3 then category=4; 
+			format category category.;
+run;
+
+proc sort data=mort_nhwh0 out=mort_o_base; by PUMA category; run;
+proc sort data=mort_nhwh2a out=mort_om_base; by PUMA category; run;
+proc sort data=mort_nhwh2b out=mort_ofc_base; by PUMA category; run;
+proc sort data=mort_o_freq out=mort_o_std; by PUMA category; run;
+proc sort data=mort_om_freq out=mort_om_std; by PUMA category; run;
+proc sort data=mort_ofc_freq out=mort_ofc_std; by PUMA category; run;
 proc sort data=costb_pct out=costb_pct_std; by PUMA category; run;
 
-data costb_r_freqincl;
-	merge costb_r_base costb_r_std (drop=wgtfreq race_cat1);
+data mort_o_freqincl;
+	merge mort_o_base mort_o_std (drop=wgtfreq race_cat1);
 		by PUMA category;
 		run;
 
-data costb_cb_freqincl;
-	merge costb_cb_base costb_cb_std (drop=wgtfreq race_cat1);
+data mort_om_freqincl;
+	merge mort_om_base mort_om_std (drop=wgtfreq race_cat1);
+		by PUMA category;
+		run;
+		
+data mort_ofc_freqincl;
+	merge mort_ofc_base mort_ofc_std (drop=wgtfreq race_cat1);
 		by PUMA category;
 		run;
 
