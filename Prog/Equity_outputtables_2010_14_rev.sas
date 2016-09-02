@@ -142,96 +142,81 @@ run;
 
 *StdDev on Count Total Renters*;
 %survey_freq (input=costb_index, where=%str(subpopvar=1), weight=hhwt, 
-tables=puma*race_cat1, out=costb_totalr_freqprelim);run;
+type=crosstabs, tables=puma*race_cat1, out=costb_totalr_freqprelim);run;
 
 *StdDev on Count Cost Burdened*;
 %survey_freq (input=costb_index, where=%str(subpopvar=1 and costburden=1), weight=hhwt, 
-tables=costburden*puma*race_cat1, out=costb_totalcb_freqprelim);run;
+type=crosstabs, tables=costburden*puma*race_cat1, out=costb_totalcb_freqprelim);run;
 
 *StdDev on Pct Cost Burdened (Total)*;
 %survey_means (input=costb_index, where=%str(subpopvar=1), weight=hhwt, 
-domain=subpopvar, var=costburden, out=costb_total_pct);run;
+domain=subpopvar, var=costburden, out=costb_total_pctprelim);run;
 
 *StdDev on Pct Cost Burdened (by Puma)*;
 %survey_means (input=costb_index, where=%str(subpopvar=1), weight=hhwt, 
-domain=subpopvar*puma, var=costburden, out=costb_puma_pct);run;
+domain=subpopvar*puma, var=costburden, out=costb_puma_pctprelim);run;
 
 *StdDev on Pct Cost Burdened (by Race)*;
 %survey_means (input=costb_index, where=%str(subpopvar=1), weight=hhwt, 
-domain=subpopvar*race_cat1, var=costburden, out=costb_race_pct);run;
+domain=subpopvar*race_cat1, var=costburden, out=costb_race_pctprelim);run;
 
 
 *StdDev on Pct Cost Burdened (by Race & Puma)*;
 %survey_means (input=costb_index, where=%str(subpopvar=1), weight=hhwt, 
-domain=subpopvar*race_cat1*puma, var=costburden, out=costb_allvars_pct);run;
+domain=subpopvar*race_cat1*puma, var=costburden, out=costb_allvars_pctprelim);run;
 
 data costb_pct;
-set costb_total_pct (keep=mean stderr) costb_puma_pct (keep=mean puma stderr) costb_race_pct (keep=race_cat1 mean stderr) 
-costb_allvars_pct (keep=race_cat1 puma mean stderr);
+set costb_total_pctprelim (keep=mean stderr) costb_puma_pctprelim (keep=mean puma stderr) costb_race_pctprelim (keep=race_cat1 mean stderr) 
+costb_allvars_pctprelim (keep=race_cat1 puma mean stderr);
 	category=.;
 		if race_cat1=1 then category=2;
 		if race_cat1=2 then category=3;
 		if race_cat1=3 then category=4; 
+		format category category.;
 run;
 
-data costb_totalr_freq;
+data costb_r_freq;
 	set costb_totalr_freqprelim (keep=wgtfreq stddev puma race_cat1);
 		category=.;
 			if race_cat1=1 then category=2;
 			if race_cat1=2 then category=3;
 			if race_cat1=3 then category=4; 
+			format category category.;
 run;
 
-data costb_totalcb_freq;
+data costb_cb_freq;
 	set costb_totalcb_freqprelim (keep=wgtfreq stddev puma race_cat1);
 		category=.;
 			if race_cat1=1 then category=2;
 			if race_cat1=2 then category=3;
 			if race_cat1=3 then category=4; 
+			format category category.;
 run;
 
-proc sort data=costb_nhwh0
-	out=costb_base_r;
-	by PUMA category;
-	run;
+proc sort data=costb_nhwh0 out=costb_r_base; by PUMA category; run;
 
-proc sort data=costb_nhwh2
-	out=costb_base_cb;
-	by PUMA category;
-	run;
+proc sort data=costb_nhwh2 out=costb_cb_base; by PUMA category; run;
 
-proc sort data=costb_nhwh3
-	out=costb_base_pct;
-	by PUMA category;
-	run;
+proc sort data=costb_nhwh3 out=costb_pct_base; by PUMA category; run;
 
-proc sort data=costb_totalr_freq
-	out=costb_std_r;
-	by PUMA category;
-	run;
+proc sort data=costb_r_freq out=costb_r_std; by PUMA category; run;
 
-proc sort data=costb_totalcb_freq2
-	out=costb_std_cb;
-	by PUMA category;
-	run;
+proc sort data=costb_cb_freq out=costb_cb_std; by PUMA category; run;
 
-proc sort data=costb_pct
-	out=costb_std_pct;
-	by PUMA category;
-	run;
+proc sort data=costb_pct out=costb_pct_std; by PUMA category; run;
 
-data costb_freq_totalr;
-	merge costb_base_r costb_std_r (drop=wgtfreq race_cat1);
+data costb_r_freqincl;
+	merge costb_r_base costb_r_std (drop=wgtfreq race_cat1);
 		by PUMA category;
 		run;
 
-data costb_freq_totalcb;
-	merge costb_base_cb costb_std_cb (drop=wgtfreq race_cat1);
+data costb_cb_freqincl;
+	merge costb_cb_base costb_cb_std (drop=wgtfreq race_cat1);
 		by PUMA category;
 		run;
 
-data costb_pct_total;
-	merge costb_pct_base costb_std_pct (drop=mean race_cat1);
+data costb_pctincl;
+	merge costb_pct_base costb_pct_std (drop=mean race_cat1);
 		by PUMA category;
 		run;
 
@@ -287,6 +272,81 @@ data costb_pct_total;
 		format category category.;
 		run; 
 
+*StdDev on Count Total Renters (Race Alone)*;
+%survey_freq (input=costb_index, where=%str(subpopvar=1), weight=hhwt, 
+type=crosstabs, tables=puma*race_cat2, out=costb_totalr_freqprelim_alone);run;
+
+*StdDev on Count Cost Burdened (Race Alone)*;
+%survey_freq (input=costb_index, where=%str(subpopvar=1 and costburden=1), weight=hhwt, 
+type=crosstabs, tables=costburden*puma*race_cat2, out=costb_totalcb_freqprelim_alone);run;
+
+*StdDev on Pct Cost Burdened (Total - Race Alone)*;
+%survey_means (input=costb_index, where=%str(subpopvar=1), weight=hhwt, 
+domain=subpopvar, var=costburden, out=costb_total_pctprelim_alone);run;
+
+*StdDev on Pct Cost Burdened (by Puma)*;
+%survey_means (input=costb_index, where=%str(subpopvar=1), weight=hhwt, 
+domain=subpopvar*puma, var=costburden, out=costb_puma_pctprelim_alone);run;
+
+*StdDev on Pct Cost Burdened (by Race)*;
+%survey_means (input=costb_index, where=%str(subpopvar=1), weight=hhwt, 
+domain=subpopvar*race_cat2, var=costburden, out=costb_race_pctprelim_alone);run;
+
+
+*StdDev on Pct Cost Burdened (by Race & Puma)*;
+%survey_means (input=costb_index, where=%str(subpopvar=1), weight=hhwt, 
+domain=subpopvar*race_cat2*puma, var=costburden, out=costb_allvars_pctprelim_alone);run;
+
+data costb_pct_alone;
+set costb_total_pctprelim_alone (keep=mean stderr) costb_puma_pctprelim_alone (keep=mean puma stderr) costb_race_pctprelim_alone (keep=race_cat2 mean stderr) 
+costb_allvars_pctprelim_alone (keep=race_cat2 puma mean stderr);
+	category=.;
+		if race_cat2=1 then category=5;
+		if race_cat2=2 then category=6;
+		if race_cat2=3 then category=7; 
+		format category category.;
+run;
+
+data costb_r_freq_alone;
+	set costb_totalr_freqprelim_alone (keep=wgtfreq stddev puma race_cat2);
+		category=.;
+		if race_cat2=1 then category=5;
+		if race_cat2=2 then category=6;
+		if race_cat2=3 then category=7;
+		format category category.; 
+run;
+
+data costb_cb_freq_alone;
+	set costb_totalcb_freqprelim_alone (keep=wgtfreq stddev puma race_cat2);
+		category=.;
+			if race_cat2=1 then category=2;
+			if race_cat2=2 then category=3;
+			if race_cat2=3 then category=4; 
+			format category category.;
+run;
+
+proc sort data=costb_alone0 out=costb_r_base_alone; by PUMA category; run;
+proc sort data=costb_alone2 out=costb_cb_base_alone; by PUMA category; run;
+proc sort data=costb_alone3 out=costb_pct_base_alone; by PUMA category; run;
+proc sort data=costb_r_freq_alone out=costb_r_std_alone; by PUMA category; run;
+proc sort data=costb_cb_freq_alone out=costb_cb_std_alone; by PUMA category; run;
+proc sort data=costb_pct_alone out=costb_pct_std_alone; by PUMA category; run;
+
+data costb_r_freqincl_alone;
+	merge costb_r_base_alone costb_r_std_alone (drop=wgtfreq race_cat2);
+		by PUMA category;
+		run;
+
+data costb_cb_freqincl_alone;
+	merge costb_cb_base_alone costb_cb_std_alone (drop=wgtfreq race_cat2);
+		by PUMA category;
+		run;
+
+data costb_pctincl_alone;
+	merge costb_pct_base_alone costb_pct_std_alone (drop=mean race_cat2);
+		by PUMA category;
+		run;
+
 	%Count_table2( 
 	  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and foreign=1),
 	  row_var= costburden,
@@ -323,6 +383,63 @@ data costb_pct_total;
 		category=8;
 		format category category.;
 		run; 
+
+*StdDev on Count Total Renters (Foreign)*;
+%survey_freq (input=costb_index, where=%str(subpopvar=1 and foreign=1), weight=hhwt, 
+type=oneway, tables=puma, out=costb_totalr_freqprelim_for);run;
+
+*StdDev on Count Cost Burdened (Foreign)*;
+%survey_freq (input=costb_index, where=%str(subpopvar=1 and costburden=1 and foreign=1), weight=hhwt, 
+type=crosstabs, tables=costburden*puma, out=costb_totalcb_freqprelim_for);run;
+
+*StdDev on Pct Cost Burdened (Total - Foreign)*;
+%survey_means (input=costb_index, where=%str(subpopvar=1 and foreign=1), weight=hhwt, 
+domain=subpopvar, var=costburden, out=costb_total_pctprelim_for);run;
+
+*StdDev on Pct Cost Burdened (by Puma)*;
+%survey_means (input=costb_index, where=%str(subpopvar=1  and foreign=1), weight=hhwt, 
+domain=subpopvar*puma, var=costburden, out=costb_puma_pctprelim_for);run;
+
+
+data costb_pct_for;
+set costb_total_pctprelim_for (keep=mean stderr) costb_puma_pctprelim_for (keep=mean puma stderr);
+	category=8;
+		format category category.;
+run;
+
+data costb_r_freq_for;
+	set costb_totalr_freqprelim_for(keep=wgtfreq stddev puma );
+		category=8;
+		format category category.; 
+run;
+
+data costb_cb_freq_for;
+	set costb_totalcb_freqprelim_for(keep=wgtfreq stddev puma);
+		category=8;
+			format category category.;
+run;
+
+proc sort data=costb_for0 out=costb_r_base_for; by PUMA category; run;
+proc sort data=costb_for2 out=costb_cb_base_for; by PUMA category; run;
+proc sort data=costb_for3 out=costb_pct_base_for; by PUMA category; run;
+proc sort data=costb_r_freq_for out=costb_r_std_for; by PUMA category; run;
+proc sort data=costb_cb_freq_for out=costb_cb_std_for; by PUMA category; run;
+proc sort data=costb_pct_for out=costb_pct_std_for; by PUMA category; run;
+
+data costb_r_freqincl_for;
+	merge costb_r_base_for costb_r_std_for (drop=wgtfreq);
+		by PUMA category;
+		run;
+
+data costb_cb_freqincl_for;
+	merge costb_cb_base_for costb_cb_std_for (drop=wgtfreq);
+		by PUMA category;
+		run;
+
+data costb_pctincl_for;
+	merge costb_pct_base_for costb_pct_std_for (drop=wgtfreq);
+		by PUMA category;
+		run;
 
 /*SEVERE COST BURDEN*/ 
 		
@@ -381,6 +498,90 @@ data costb_pct_total;
 		format category category.;
 		run; 
 
+data scostb_index;
+set Equity.Acs_tables_ipums;
+if city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 then subpopvar = 1;
+else subpopvar = 0;
+run;
+
+proc sort data = scostb_index;
+by strata cluster;
+run;
+
+*StdDev on Count Total Renters*;
+%survey_freq (input=scostb_index, where=%str(subpopvar=1), weight=hhwt, 
+type=crosstabs, tables=puma*race_cat1, out=scostb_totalr_freqprelim);run;
+
+*StdDev on Count SevCost Burdened*;
+%survey_freq (input=scostb_index, where=%str(subpopvar=1 and sevcostburden=1), weight=hhwt, 
+type=crosstabs, tables=sevcostburden*puma*race_cat1, out=scostb_totalcb_freqprelim);run;
+
+*StdDev on Pct Sev Cost Burdened (Total)*;
+%survey_means (input=scostb_index, where=%str(subpopvar=1), weight=hhwt, 
+domain=subpopvar, var=sevcostburden, out=scostb_total_pctprelim);run;
+
+*StdDev on Pct Sev Cost Burdened (by Puma)*;
+%survey_means (input=scostb_index, where=%str(subpopvar=1), weight=hhwt, 
+domain=subpopvar*puma, var=sevcostburden, out=scostb_puma_pctprelim);run;
+
+*StdDev on Pct Sev Cost Burdened (by Race)*;
+%survey_means (input=scostb_index, where=%str(subpopvar=1), weight=hhwt, 
+domain=subpopvar*race_cat1, var=sevcostburden, out=scostb_race_pctprelim);run;
+
+*StdDev on Pct Sev Cost Burdened (by Race & Puma)*;
+%survey_means (input=scostb_index, where=%str(subpopvar=1), weight=hhwt, 
+domain=subpopvar*race_cat1*puma, var=sevcostburden, out=scostb_allvars_pctprelim);run;
+
+data scostb_pct;
+set scostb_total_pctprelim (keep=mean stderr) scostb_puma_pctprelim (keep=mean puma stderr) scostb_race_pctprelim (keep=race_cat1 mean stderr) 
+scostb_allvars_pctprelim (keep=race_cat1 puma mean stderr);
+	category=.;
+		if race_cat1=1 then category=2;
+		if race_cat1=2 then category=3;
+		if race_cat1=3 then category=4; 
+		format category category.;
+run;
+
+data scostb_r_freq;
+	set scostb_totalr_freqprelim (keep=wgtfreq stddev puma race_cat1);
+		category=.;
+			if race_cat1=1 then category=2;
+			if race_cat1=2 then category=3;
+			if race_cat1=3 then category=4; 
+			format category category.;
+run;
+
+data scostb_cb_freq;
+	set scostb_totalcb_freqprelim (keep=wgtfreq stddev puma race_cat1);
+		category=.;
+			if race_cat1=1 then category=2;
+			if race_cat1=2 then category=3;
+			if race_cat1=3 then category=4; 
+			format category category.;
+run;
+
+proc sort data=scostb_nhwh0 out=scostb_r_base; by PUMA category; run;
+proc sort data=scostb_nhwh2 out=scostb_cb_base; by PUMA category; run;
+proc sort data=scostb_nhwh3 out=scostb_pct_base; by PUMA category; run;
+proc sort data=scostb_r_freq out=scostb_r_std; by PUMA category; run;
+proc sort data=scostb_cb_freq out=scostb_cb_std; by PUMA category; run;
+proc sort data=scostb_pct out=scostb_pct_std; by PUMA category; run;
+
+data scostb_r_freqincl;
+	merge scostb_r_base scostb_r_std (drop=/*wgtfreq*/ race_cat1);
+		by PUMA category;
+		run;
+
+data scostb_cb_freqincl;
+	merge scostb_cb_base scostb_cb_std (drop=/*wgtfreq*/ race_cat1);
+		by PUMA category;
+		run;
+
+data scostb_pctincl;
+	merge scostb_pct_base scostb_pct_std (drop=/*mean*/ race_cat1);
+		by PUMA category;
+		run;
+
 	%Count_table5( 
 	  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 ),
 	  row_var= sevcostburden,
@@ -433,6 +634,80 @@ data costb_pct_total;
 		format category category.;
 		run; 
 
+*StdDev on Count Total Renters (Race Alone)*;
+%survey_freq (input=scostb_index, where=%str(subpopvar=1), weight=hhwt, 
+type=crosstabs, tables=puma*race_cat2, out=scostb_totalr_freqprelim_alone);run;
+
+*StdDev on Count Sev Cost Burdened (Race Alone)*;
+%survey_freq (input=scostb_index, where=%str(subpopvar=1 and sevcostburden=1), weight=hhwt, 
+type=crosstabs, tables=sevcostburden*puma*race_cat2, out=scostb_totalcb_freqprelim_alone);run;
+
+*StdDev on Pct Sev Cost Burdened (Total - Race Alone)*;
+%survey_means (input=scostb_index, where=%str(subpopvar=1), weight=hhwt, 
+domain=subpopvar, var=sevcostburden, out=scostb_total_pctprelim_alone);run;
+
+*StdDev on Pct Sev Cost Burdened (by Puma)*;
+%survey_means (input=scostb_index, where=%str(subpopvar=1), weight=hhwt, 
+domain=subpopvar*puma, var=sevcostburden, out=scostb_puma_pctprelim_alone);run;
+
+*StdDev on Pct Sev Cost Burdened (by Race)*;
+%survey_means (input=scostb_index, where=%str(subpopvar=1), weight=hhwt, 
+domain=subpopvar*race_cat2, var=sevcostburden, out=scostb_race_pctprelim_alone);run;
+
+*StdDev on Pct Sev Cost Burdened (by Race & Puma)*;
+%survey_means (input=scostb_index, where=%str(subpopvar=1), weight=hhwt, 
+domain=subpopvar*race_cat2*puma, var=sevcostburden, out=scostb_allvars_pctprelim_alone);run;
+
+data scostb_pct_alone;
+set scostb_total_pctprelim_alone (keep=mean stderr) scostb_puma_pctprelim_alone (keep=mean puma stderr) scostb_race_pctprelim_alone (keep=race_cat2 mean stderr) 
+scostb_allvars_pctprelim_alone (keep=race_cat2 puma mean stderr);
+	category=.;
+		if race_cat2=1 then category=5;
+		if race_cat2=2 then category=6;
+		if race_cat2=3 then category=7; 
+		format category category.;
+run;
+
+data scostb_r_freq_alone;
+	set scostb_totalr_freqprelim_alone (keep=wgtfreq stddev puma race_cat2);
+		category=.;
+		if race_cat2=1 then category=5;
+		if race_cat2=2 then category=6;
+		if race_cat2=3 then category=7;
+		format category category.; 
+run;
+
+data scostb_cb_freq_alone;
+	set scostb_totalcb_freqprelim_alone (keep=wgtfreq stddev puma race_cat2);
+		category=.;
+			if race_cat2=1 then category=5;
+			if race_cat2=2 then category=6;
+			if race_cat2=3 then category=7; 
+			format category category.;
+run;
+
+proc sort data=scostb_alone0 out=scostb_r_base_alone; by PUMA category; run;
+proc sort data=scostb_alone2 out=scostb_cb_base_alone; by PUMA category; run;
+proc sort data=scostb_alone3 out=scostb_pct_base_alone; by PUMA category; run;
+proc sort data=scostb_r_freq_alone out=scostb_r_std_alone; by PUMA category; run;
+proc sort data=scostb_cb_freq_alone out=scostb_cb_std_alone; by PUMA category; run;
+proc sort data=scostb_pct_alone out=scostb_pct_std_alone; by PUMA category; run;
+
+data scostb_r_freqincl_alone;
+	merge scostb_r_base_alone scostb_r_std_alone (drop=/*wgtfreq*/ race_cat2);
+		by PUMA category;
+		run;
+
+data scostb_cb_freqincl_alone;
+	merge scostb_cb_base_alone scostb_cb_std_alone (drop=/*wgtfreq*/ race_cat2);
+		by PUMA category;
+		run;
+
+data scostb_pctincl_alone;
+	merge scostb_pct_base_alone scostb_pct_std_alone (drop=/*mean*/ race_cat2);
+		by PUMA category;
+		run;
+
 	%Count_table2( 
 	  where= %str(city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 and foreign=1),
 	  row_var= sevcostburden,
@@ -469,6 +744,63 @@ data costb_pct_total;
 		category=8;
 		format category category.;
 		run; 
+
+*StdDev on Count Total Renters (Foreign)*;
+%survey_freq (input=scostb_index, where=%str(subpopvar=1 and foreign=1), weight=hhwt, 
+type=oneway, tables=puma, out=scostb_totalr_freqprelim_for);run;
+
+*StdDev on Count Cost Burdened (Foreign)*;
+%survey_freq (input=scostb_index, where=%str(subpopvar=1 and sevcostburden=1 and foreign=1), weight=hhwt, 
+type=crosstabs, tables=sevcostburden*puma, out=scostb_totalcb_freqprelim_for);run;
+
+*StdDev on Pct Cost Burdened (Total - Foreign)*;
+%survey_means (input=scostb_index, where=%str(subpopvar=1 and foreign=1), weight=hhwt, 
+domain=subpopvar, var=sevcostburden, out=scostb_total_pctprelim_for);run;
+
+*StdDev on Pct Cost Burdened (by Puma)*;
+%survey_means (input=scostb_index, where=%str(subpopvar=1  and foreign=1), weight=hhwt, 
+domain=subpopvar*puma, var=sevcostburden, out=scostb_puma_pctprelim_for);run;
+
+
+data scostb_pct_for;
+set scostb_total_pctprelim_for (keep=mean stderr) scostb_puma_pctprelim_for (keep=mean puma stderr);
+	category=8;
+		format category category.;
+run;
+
+data scostb_r_freq_for;
+	set scostb_totalr_freqprelim_for(keep=wgtfreq stddev puma );
+		category=8;
+		format category category.; 
+run;
+
+data scostb_cb_freq_for;
+	set scostb_totalcb_freqprelim_for(keep=wgtfreq stddev puma);
+		category=8;
+			format category category.;
+run;
+
+proc sort data=scostb_for0 out=scostb_r_base_for; by PUMA category; run;
+proc sort data=scostb_for2 out=scostb_cb_base_for; by PUMA category; run;
+proc sort data=scostb_for3 out=scostb_pct_base_for; by PUMA category; run;
+proc sort data=scostb_r_freq_for out=scostb_r_std_for; by PUMA category; run;
+proc sort data=scostb_cb_freq_for out=scostb_cb_std_for; by PUMA category; run;
+proc sort data=scostb_pct_for out=scostb_pct_std_for; by PUMA category; run;
+
+data scostb_r_freqincl_for;
+	merge scostb_r_base_for scostb_r_std_for (drop=wgtfreq);
+		by PUMA category;
+		run;
+
+data scostb_cb_freqincl_for;
+	merge scostb_cb_base_for scostb_cb_std_for (drop=wgtfreq);
+		by PUMA category;
+		run;
+
+data scostb_pctincl_for;
+	merge scostb_pct_base_for scostb_pct_std_for (drop=wgtfreq);
+		by PUMA category;
+		run;
 
 /*Share of Population Employed 25-64*/
 
@@ -583,6 +915,89 @@ data costb_pct_total;
 		if race_cat1=3 then category=4; 
 		format category category.;
 		run; 
+data emp_index;
+set Equity.Acs_tables_ipums;
+if city=7230 and age25to64=1   then subpopvar = 1;
+else subpopvar = 0;
+run;
+
+proc sort data = emp_index;
+by strata cluster;
+run;
+
+*StdDev on Count Total Renters*;
+%survey_freq (input=emp_index, where=%str(subpopvar=1), weight=perwt, 
+type=crosstabs, tables=puma*race_cat1, out=emp_totalr_freqprelim);run;
+
+*StdDev on Count SevCost Burdened*;
+%survey_freq (input=emp_index, where=%str(subpopvar=1 and emp25to64=1), weight=perwt, 
+type=crosstabs, tables=emp25to64*puma*race_cat1, out=emp_totalcb_freqprelim);run;
+
+*StdDev on Pct Employed 25 to 64 (Total)*;
+%survey_means (input=emp_index, where=%str(subpopvar=1), weight=perwt, 
+domain=subpopvar, var=emp25to64, out=emp_total_pctprelim);run;
+
+*StdDev on Pct Employed 25 to 64 (by Puma)*;
+%survey_means (input=emp_index, where=%str(subpopvar=1), weight=perwt, 
+domain=subpopvar*puma, var=emp25to64, out=emp_puma_pctprelim);run;
+
+*StdDev on Pct Employed 25 to 64 (by Race)*;
+%survey_means (input=emp_index, where=%str(subpopvar=1), weight=perwt, 
+domain=subpopvar*race_cat1, var=emp25to64, out=emp_race_pctprelim);run;
+
+*StdDev on Pct Employed 25 to 64 (by Race & Puma)*;
+%survey_means (input=emp_index, where=%str(subpopvar=1), weight=perwt, 
+domain=subpopvar*race_cat1*puma, var=emp25to64, out=emp_allvars_pctprelim);run;
+
+data scostb_pct;
+set scostb_total_pctprelim (keep=mean stderr) scostb_puma_pctprelim (keep=mean puma stderr) scostb_race_pctprelim (keep=race_cat1 mean stderr) 
+scostb_allvars_pctprelim (keep=race_cat1 puma mean stderr);
+	category=.;
+		if race_cat1=1 then category=2;
+		if race_cat1=2 then category=3;
+		if race_cat1=3 then category=4; 
+		format category category.;
+run;
+
+data scostb_r_freq;
+	set scostb_totalr_freqprelim (keep=wgtfreq stddev puma race_cat1);
+		category=.;
+			if race_cat1=1 then category=2;
+			if race_cat1=2 then category=3;
+			if race_cat1=3 then category=4; 
+			format category category.;
+run;
+
+data scostb_cb_freq;
+	set scostb_totalcb_freqprelim (keep=wgtfreq stddev puma race_cat1);
+		category=.;
+			if race_cat1=1 then category=2;
+			if race_cat1=2 then category=3;
+			if race_cat1=3 then category=4; 
+			format category category.;
+run;
+
+proc sort data=scostb_nhwh0 out=scostb_r_base; by PUMA category; run;
+proc sort data=scostb_nhwh2 out=scostb_cb_base; by PUMA category; run;
+proc sort data=scostb_nhwh3 out=scostb_pct_base; by PUMA category; run;
+proc sort data=scostb_r_freq out=scostb_r_std; by PUMA category; run;
+proc sort data=scostb_cb_freq out=scostb_cb_std; by PUMA category; run;
+proc sort data=scostb_pct out=scostb_pct_std; by PUMA category; run;
+
+data scostb_r_freqincl;
+	merge scostb_r_base scostb_r_std (drop=/*wgtfreq*/ race_cat1);
+		by PUMA category;
+		run;
+
+data scostb_cb_freqincl;
+	merge scostb_cb_base scostb_cb_std (drop=/*wgtfreq*/ race_cat1);
+		by PUMA category;
+		run;
+
+data scostb_pctincl;
+	merge scostb_pct_base scostb_pct_std (drop=/*mean*/ race_cat1);
+		by PUMA category;
+		run;
 
 	%Count_table5( 
 	  where= %str(city=7230 and age25to64=1 ),

@@ -18,7 +18,7 @@
 
 
 ***** Macros *****;
-%macro survey_freq (input=, where= , weight=, tables=, out=);
+%macro survey_freq (input=, where= , weight=, tables=, type=, out=);
 
 proc surveyfreq data = &input (where=(&where));
 weight &weight;
@@ -26,7 +26,7 @@ strata strata;
 cluster cluster;
 by subpopvar;
 tables &tables;
-ods output crosstabs=&out;
+ods output &type=&out;
 run;
 
 %mend survey_freq;
