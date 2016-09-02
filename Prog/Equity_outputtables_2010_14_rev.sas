@@ -577,14 +577,14 @@ data scostb_NHWH0_stdincl;
 data scostb_NHWH2_stdincl;
 	merge scostb_cb_base scostb_cb_std (drop=/*wgtfreq*/ race_cat1);
 		by PUMA category;
-		rename stddev=SDNumSevRentCostB;
+		rename stddev=SDNumRentSevCostB;
 
 		run;
 
 data scostb_NHWH3_stdincl;
 	merge scostb_pct_base scostb_pct_std (drop=/*mean*/ race_cat1);
 		by PUMA category;
-		rename stderr=SEPctSevRentCostB;
+		rename stderr=SEPctRentSevCostB;
 		run;
 
 	%Count_table5( 
@@ -703,14 +703,14 @@ data scostb_alone0_stdincl;
 data scostb_alone2_stdincl;
 	merge scostb_cb_base_alone scostb_cb_std_alone (drop=/*wgtfreq*/ race_cat2);
 		by PUMA category;
-		rename stddev=SDNumSevRentCostB;
+		rename stddev=SDNumRentSevCostB;
 
 		run;
 
 data scostb_alone3_stdincl;
 	merge scostb_pct_base_alone scostb_pct_std_alone (drop=/*mean*/ race_cat2);
 		by PUMA category;
-		rename stderr=SEPctSevRentCostB;
+		rename stderr=SEPctRentSevCostB;
 		run;
 
 	%Count_table2( 
@@ -803,14 +803,14 @@ data scostb_for0_stdincl;
 data scostb_for2_stdincl;
 	merge scostb_cb_base_for scostb_cb_std_for (drop=/*wgtfreq*/);
 		by PUMA category;
-		rename stddev=SDNumSevRentCostB;
+		rename stddev=SDNumRentSevCostB;
 
 		run;
 
 data scostb_for3_stdincl;
 	merge scostb_pct_base_for scostb_pct_std_for (drop=/*mean*/);
 		by PUMA category;
-		rename stderr=SEPctSevRentCostB;
+		rename stderr=SEPctRentSevCostB;
 		run;
 
 /*Share of Population Employed 25-64*/
@@ -3159,8 +3159,6 @@ data aff_for3d_stdincl;
 
 	run;
 
-
-
 *Merge files together;
 		proc sort data=costb_nhwh0_stdincl;
 		by PUMA category;
@@ -3312,53 +3310,37 @@ data aff_for3d_stdincl;
 		by PUMA category;
 		proc sort data=emp_for3c_stdincl;
 		by PUMA category;
+		run;
 
-		/*
-				data merged_data;
-		merge costb_nhwh0 costb_nhwh2 costb_nhwh3 costb_alone0 (where=(category~=.)) costb_alone2  (where=(category~=.)) costb_alone3  (where=(category~=.)) 
-			 costb_for0 costb_for2  costb_for3 
-			 scostb_nhwh2 scostb_nhwh3 scostb_alone2  (where=(category~=.)) scostb_alone3 (where=(category~=.))  scostb_for2 scostb_for3
-			 mort_nhwh0 mort_nhwh2a mort_nhwh2b mort_nhwh3a  mort_nhwh3b  mort_alone0 (where=(category~=.)) mort_alone2a  (where=(category~=.)) mort_alone2b  (where=(category~=.))
-			 mort_alone3a  (where=(category~=.)) mort_alone3b  (where=(category~=.))  mort_for0 mort_for2a  mort_for2b  mort_for3a  mort_for3b  
-			 aff_nhwh2a aff_nhwh2b aff_nhwh2c aff_nhwh2d  aff_alone2a  aff_alone2b  aff_alone2c  aff_alone2d  aff_for2a  aff_for2b  aff_for2c  aff_for2d  
-			aff_nhwh3a  aff_nhwh3b  aff_nhwh3c  aff_nhwh3d  aff_alone3a  aff_alone3b  aff_alone3c  aff_alone3d  aff_for3a  aff_for3b  aff_for3c  aff_for3d  
-			emp_nhwh0 emp_nhwh2a emp_nhwh2b emp_nhwh2c emp_nhwh3a  emp_nhwh3b  emp_nhwh3c  
-			emp_alone0 (where=(category~=.)) emp_alone2a  (where=(category~=.)) emp_alone2b  (where=(category~=.)) emp_alone2c  (where=(category~=.))
-			emp_alone3a  (where=(category~=.)) emp_alone3b  (where=(category~=.)) emp_alone3c  (where=(category~=.))
-				emp_for0  emp_for2a  emp_for2b  emp_for2c  emp_for3a  emp_for3b  emp_for3c ;
-
-		by PUMA category;
-		format puma puma_id.;
-
-		if puma=. then puma=100;
-
-		mergeflag=1; 
-		run; 
-
-data whiterates;
-	set merged_data (where=(category=2 & puma=100));
-
-	run; */
 
 		data merged_data;
-		merge costb_nhwh0_stdincl costb_nhwh2_stdincl costb_nhwh3_stdincl costb_alone0_stdincl (where=(category~=.)) costb_alone2_stdincl  (where=(category~=.)) costb_alone3_stdincl  (where=(category~=.)) 
-			 costb_for0_stdincl costb_for2_stdincl  costb_for3_stdincl 
-			 scostb_nhwh2_stdincl scostb_nhwh3_stdincl scostb_alone2_stdincl  (where=(category~=.)) scostb_alone3 (where=(category~=.))  scostb_for2 scostb_for3
-			 mort_nhwh0_stdincl mort_nhwh2a_stdincl mort_nhwh2b_stdincl mort_nhwh3a_stdincl  mort_nhwh3b_stdincl  mort_alone0_stdincl (where=(category~=.)) mort_alone2a_stdincl  (where=(category~=.)) mort_alone2b_stdincl  (where=(category~=.))
-			 mort_alone3a_stdincl  (where=(category~=.)) mort_alone3b_stdincl  (where=(category~=.))  mort_for0_stdincl mort_for2a_stdincl  mort_for2b_stdincl  mort_for3a_stdincl  mort_for3b_stdincl  
-			 aff_nhwh2a_stdincl aff_nhwh2b_stdincl aff_nhwh2c_stdincl aff_nhwh2d_stdincl  aff_alone2a_stdincl  aff_alone2b_stdincl  aff_alone2c_stdincl  aff_alone2d_stdincl  aff_for2a_stdincl  aff_for2b_stdincl  aff_for2c_stdincl  aff_for2d_stdincl  
-			aff_nhwh3a_stdincl  aff_nhwh3b_stdincl  aff_nhwh3c_stdincl  aff_nhwh3d_stdincl  aff_alone3a_stdincl  aff_alone3b_stdincl  aff_alone3c_stdincl  aff_alone3d_stdincl  aff_for3a_stdincl  aff_for3b_stdincl  aff_for3c_stdincl  aff_for3d_stdincl  
-			emp_nhwh0_stdincl emp_nhwh2a_stdincl emp_nhwh2b_stdincl emp_nhwh2c_stdincl emp_nhwh3a_stdincl  emp_nhwh3b_stdincl  emp_nhwh3c_stdincl  
-			emp_alone0_stdincl (where=(category~=.)) emp_alone2a_stdincl  (where=(category~=.)) emp_alone2b_stdincl  (where=(category~=.)) emp_alone2c_stdincl  (where=(category~=.))
-			emp_alone3a_stdincl  (where=(category~=.)) emp_alone3b_stdincl  (where=(category~=.)) emp_alone3c_stdincl  (where=(category~=.))
-				emp_for0_stdincl  emp_for2a_stdincl  emp_for2b_stdincl  emp_for2c_stdincl  emp_for3a_stdincl  emp_for3b_stdincl  emp_for3c_stdincl ;
+		merge costb_nhwh0_stdincl costb_nhwh2_stdincl costb_nhwh3_stdincl costb_alone0_stdincl (where=(category~=.)) costb_alone2_stdincl
+			(where=(category~=.)) costb_alone3_stdincl  (where=(category~=.)) costb_for0_stdincl costb_for2_stdincl  costb_for3_stdincl 
+			 scostb_nhwh2_stdincl scostb_nhwh3_stdincl scostb_alone2_stdincl  (where=(category~=.)) scostb_alone3_stdincl 
+			(where=(category~=.))  scostb_for2_stdincl scostb_for3_stdincl mort_nhwh0_stdincl mort_nhwh2a_stdincl mort_nhwh2b_stdincl 
+		mort_nhwh3a_stdincl  mort_nhwh3b_stdincl  mort_alone0_stdincl (where=(category~=.)) mort_alone2a_stdincl  (where=(category~=.)) 
+			mort_alone2b_stdincl  (where=(category~=.)) mort_alone3a_stdincl  (where=(category~=.)) mort_alone3b_stdincl  
+			(where=(category~=.))  mort_for0_stdincl mort_for2a_stdincl  mort_for2b_stdincl  mort_for3a_stdincl  mort_for3b_stdincl  
+			 aff_nhwh2a_stdincl aff_nhwh2b_stdincl aff_nhwh2c_stdincl aff_nhwh2d_stdincl  aff_alone2a_stdincl  aff_alone2b_stdincl  
+			aff_alone2c_stdincl  aff_alone2d_stdincl  aff_for2a_stdincl  aff_for2b_stdincl  aff_for2c_stdincl  aff_for2d_stdincl  
+			aff_nhwh3a_stdincl  aff_nhwh3b_stdincl  aff_nhwh3c_stdincl  aff_nhwh3d_stdincl  aff_alone3a_stdincl  aff_alone3b_stdincl  
+			aff_alone3c_stdincl  aff_alone3d_stdincl  aff_for3a_stdincl  aff_for3b_stdincl  aff_for3c_stdincl  aff_for3d_stdincl  
+			emp_nhwh0_stdincl emp_nhwh2a_stdincl emp_nhwh2b_stdincl emp_nhwh2c_stdincl emp_nhwh3a_stdincl  emp_nhwh3b_stdincl 
+			emp_nhwh3c_stdincl emp_alone0_stdincl (where=(category~=.)) emp_alone2a_stdincl  (where=(category~=.)) emp_alone2b_stdincl  
+			(where=(category~=.)) emp_alone2c_stdincl  (where=(category~=.))
+			emp_alone3a_stdincl  (where=(category~=.)) emp_alone3b_stdincl  (where=(category~=.)) emp_alone3c_stdincl  
+			(where=(category~=.))
+				emp_for0_stdincl  emp_for2a_stdincl  emp_for2b_stdincl  emp_for2c_stdincl  emp_for3a_stdincl  emp_for3b_stdincl  
+		emp_for3c_stdincl ;
+		
 
 		by PUMA category;
 		format puma puma_id.;
 
 		if puma=. then puma=100;
-
+		drop wgtfreq mean;
 		mergeflag=1; 
+
 		run; 
 
 data whiterates;
@@ -3372,9 +3354,20 @@ run;
 proc contents data=whiterates_new;
 run;
 
-data merged_data_WR (drop=cNum: cPct: cPop: mergeflag);
+data merged_data_WR (drop=cNum: cPct: cPop: cSD: cSE: mergeflag);
 	merge merged_data whiterates_new (drop=cPUMA cCategory rename=(cmergeflag=mergeflag));
 	by mergeflag;
+	mPctRentCostB=(SEPctRentCostB*100)/1.645;
+	mPctRentSevCostB=(SEPctRentSevCostB*100)/1.645;
+	mPct25to64yearsEmp=(SEPct25to64yearsEmp*100)/1.645;
+	mPct25to64yearsUnEmp=(SEPct25to64yearsUnEmp*100)/1.645;
+	mPct25to64yearsOutLF=(SEPct25to64yearsOutLF*100)/1.645;
+	mPctOwnersOweMort=(SEPctOwnersOweMort*100)/1.645;
+	mPctOwnersNoMort=(SEPctOwnersNoMort*100)/1.645;
+	mPctRentUnitsELI=(SEPctRentUnitsELI*100)/1.645;
+	mPctRentUnitsVLI=(SEPctRentUnitsVLI*100)/1.645;
+	mPctRentUnitsLI=(SEPctRentUnitsLI*100)/1.645;
+	mPctRentUnitsMHI=(SEPctRentUnitsMHI*100)/1.645;
 	GapRentCostB=cPctRentCostB/100*NumRenters-NumRentCostB;
 	GapRentSevCostB=cPctRentSevCostB/100*NumRenters-NumRentSevCostB;
 	GapRentUnitsELI=cPctRentUnitsELI/100*NumRenters-NumRentUnitsELI;
@@ -3389,7 +3382,9 @@ data merged_data_WR (drop=cNum: cPct: cPop: mergeflag);
 	run;
 
 proc print data=merged_data_wr;
-var category puma GapRentCostB GapRentSevCostB GapRentUnitsELI GapRentUnitsLI GapRentUnitsMHI GapRentUnitsVLI GapOwnersNoMort
+var category puma mPctRentCostB mPctRentSevCostB mPct25to64yearsEmp mPct25to64yearsUnEmp mPct25to64yearsOutLF mPctOwnersOweMort
+mPctOwnersNoMort mPctRentUnitsELI mPctRentUnitsVLI mPctRentUnitsLI mPctRentUnitsMHI GapRentCostB GapRentSevCostB GapRentUnitsELI 
+GapRentUnitsLI GapRentUnitsMHI GapRentUnitsVLI GapOwnersNoMort
 	GapOwnersOweMort GapPop25to64yearsEmp GapPop25to64yearsOutLF GapPop25to64yearsUnEmp PctRentCostB NumRenters NumRentCostB;
 run;
 
@@ -3409,52 +3404,84 @@ proc freq data=transposed_data;
 tables _name_;
 run;
 
-data profile_tabs_ipums ; 
-	set transposed_data ; 
-
+data profile_tabs_ipums; 
+	set transposed_data ;
 rename _name_=Indicator;
 
 order = .;
 
 if _name_ ="Pop25to64years" then order=1;
-if _name_="Pop25to64yearsEmp" then order=2; 
-if _name_="Pct25to64yearsEmp" then order=3;
-if _name_="GapPop25to64yearsEmp" then order=4;
-if _name_="Pop25to64yearsUnEmp" then order=5; 
-if _name_="Pct25to64yearsUnEmp" then order=6;
-if _name_="GapPop25to64yearsUnEmp" then order=7;
-if _name_="Pop25to64yearsOutLF" then order=8; 
-if _name_="Pct25to64yearsOutLF" then order=9;
-if _name_="GapPop25to64yearsOutLF" then order=10;
+if _name_ ="SDPop25to64years" then order=2;
+if _name_="Pop25to64yearsEmp" then order=3; 
+if _name_="SDPop25to64yearsEmp" then order=4; 
+if _name_="Pct25to64yearsEmp" then order=5;
+if _name_="mPct25to64yearsEmp" then order=6;
+if _name_="GapPop25to64yearsEmp" then order=7;
+if _name_="Pop25to64yearsUnEmp" then order=8; 
+if _name_="SDPop25to64yearsUnEmp" then order=9; 
+if _name_="Pct25to64yearsUnEmp" then order=10;
+if _name_="mPct25to64yearsUnEmp" then order=11;
+if _name_="GapPop25to64yearsUnEmp" then order=12;
+if _name_="Pop25to64yearsOutLF" then order=13; 
+if _name_="SDPop25to64yearsOutLF" then order=14; 
+if _name_="Pct25to64yearsOutLF" then order=15;
+if _name_="mPct25to64yearsOutLF" then order=16;
+if _name_="GapPop25to64yearsOutLF" then order=17;
 
-if _name_="NumOwners" then order=11;
-if _name_="NumRenters" then order=12; 
-if _name_="NumOwnersNoMort"  then order=13;
-if _name_="PctOwnersNoMort" then order=14; 
-if _name_="GapOwnersNoMort" then order=15;
-if _name_="NumOwnersOweMort" then order=16;
-if _name_="PctOwnersOweMort"  then order=17;
-if _name_="GapOwnersOweMort" then order=18;
+if _name_="NumOwners" then order=18;
+if _name_="SDNumOwners" then order=19;
+if _name_="NumRenters" then order=20; 
+if _name_="SDNumRenters" then order=21; 
+if _name_="NumOwnersNoMort"  then order=22;
+if _name_="SDNumOwnersNoMort"  then order=23;
+if _name_="PctOwnersNoMort" then order=24; 
+if _name_="mPctOwnersNoMort" then order=25; 
+if _name_="GapOwnersNoMort" then order=26;
+if _name_="NumOwnersOweMort" then order=27;
+if _name_="SDNumOwnersOweMort" then order=28;
+if _name_="PctOwnersOweMort"  then order=29;
+if _name_="mPctOwnersOweMort"  then order=30;
+if _name_="GapOwnersOweMort" then order=31;
 
-if _name_="NumRentCostB" then order=19;
-if _name_="PctRentCostB" then order=20;
-if _name_="GapRentCostB" then order=21;
-if _name_="NumRentSevCostB" then order=22;
-if _name_="PctRentSevCostB" then order=23;
-if _name_="GapRentSevCostB" then order=24;
+if _name_="NumRentCostB" then order=32;
+if _name_="SDNumRentCostB" then order=33;
+if _name_="PctRentCostB" then order=34;
+if _name_="mPctRentCostB" then order=35;
+if _name_="GapRentCostB" then order=36;
+if _name_="NumRentSevCostB" then order=37;
+if _name_="SDNumRentSevCostB" then order=38;
+if _name_="PctRentSevCostB" then order=39;
+if _name_="mPctRentSevCostB" then order=40;
+if _name_="GapRentSevCostB" then order=41;
 
-if _name_="NumRentUnitsELI" then order=25;
-if _name_="PctRentUnitsELI" then order=26;
-if _name_="GapRentUnitsELI" then order=27;
-if _name_="NumRentUnitsVLI" then order=28;
-if _name_="PctRentUnitsVLI" then order=29;
-if _name_="GapRentUnitsVLI" then order=30;
-if _name_="NumRentUnitsLI" then order=31;
-if _name_="PctRentUnitsLI" then order=32;
-if _name_="GapRentUnitsLI" then order=33;
-if _name_="NumRentUnitsMHI" then order=34;
-if _name_="PctRentUnitsMHI" then order=35;
-if _name_="GapRentUnitsMHI" then order=36;
+if _name_="NumRentUnitsELI" then order=42;
+if _name_="SDNumRentUnitsELI" then order=43;
+if _name_="PctRentUnitsELI" then order=44;
+if _name_="mPctRentUnitsELI" then order=45;
+if _name_="GapRentUnitsELI" then order=46;
+if _name_="NumRentUnitsVLI" then order=47;
+if _name_="SDNumRentUnitsVLI" then order=48;
+if _name_="PctRentUnitsVLI" then order=49;
+if _name_="mPctRentUnitsVLI" then order=50;
+if _name_="GapRentUnitsVLI" then order=51;
+if _name_="NumRentUnitsLI" then order=52;
+if _name_="SDNumRentUnitsLI" then order=52;
+if _name_="PctRentUnitsLI" then order=53;
+if _name_="mPctRentUnitsLI" then order=54;
+if _name_="GapRentUnitsLI" then order=55;
+if _name_="NumRentUnitsMHI" then order=56;
+if _name_="SDNumRentUnitsMHI" then order=57;
+if _name_="PctRentUnitsMHI" then order=58;
+if _name_="mPctRentUnitsMHI" then order=59;
+if _name_="GapRentUnitsMHI" then order=60;
+
+if _name_ in ("SEPct25to64yearsOutLF", "SE25to64yearsUnEmp", "SEPct25to64yearsEmp", "SEPctOwnersNoMort", "SEPctOwnersOweMort",
+"SEPctRentCostB",
+"SEPctRentUnitsELI",
+"SEPctRentUnitsLI",
+"SEPctRentUnitsMHI",
+"SEPctRentUnitsVLI",
+"SEPctRentSevCostB") then delete;
 
 label PUMA100 = "District of Columbia";
 
@@ -3464,6 +3491,7 @@ proc sort data=profile_tabs_ipums out=sorted;
 by order;
 data equity.profile_tabs_ipums (Label="iPUMS ACS 2010-14 Tabulations for Racial Equity Profile" sortedby=order);
 set sorted;
+
 run;
 proc export data=equity.profile_tabs_ipums 
 	outfile="D:\DCDATA\Libraries\Equity\Prog\profile_tabs_ipums.csv"
