@@ -18,9 +18,9 @@
 
 
 ***** Macros *****;
-%macro survey_freq (input=, where= , weight=, tables=, type=, out=);
+%macro survey_freq (input=, where= , options=, weight=, tables=, type=, out=);
 
-proc surveyfreq data = &input (where=(&where));
+proc surveyfreq data = &input (where=(&where)) &options;
 weight &weight;
 strata strata;
 cluster cluster;

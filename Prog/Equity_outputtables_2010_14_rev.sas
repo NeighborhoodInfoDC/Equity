@@ -918,15 +918,16 @@ run;
 proc sort data = emp_index;
 by strata cluster;
 run;
-/***Does not include emp25to64=.**/
+
 *StdDev on Count Total People Ages 25 to 64*;
-%survey_freq (input=emp_index, where=%str(subpopvar=1), weight=perwt, 
+%survey_freq (input=emp_index, where=%str(subpopvar=1), options=missing, weight=perwt, 
 type=crosstabs, tables=puma*race_cat1, out=emp_total_freqprelim);run;
 
 *StdDev on Count Total People ages 25 to 64 (by Race & Puma)*;
-%survey_freq (input=emp_index, where=%str(subpopvar=1), weight=perwt, 
+%survey_freq (input=emp_index, where=%str(subpopvar=1), options=missing, weight=perwt, 
 type=crosstabs, tables=emp25to64*puma*race_cat1, out=emp_div_freqprelim);run;
 
+/***Does not include emp25to64=.**/
 *StdDev on Pct Employed 25 to 64 (Total)*;
 %survey_means (input=emp_index, where=%str(subpopvar=1), weight=perwt, 
 domain=subpopvar, var=emp25to64, out=emp_total_pctprelim);run;
@@ -943,9 +944,9 @@ domain=subpopvar*race_cat1, var=emp25to64, out=emp_race_pctprelim);run;
 %survey_means (input=emp_index, where=%str(subpopvar=1), weight=perwt, 
 domain=subpopvar*race_cat1*puma, var=emp25to64, out=emp_allvars_pctprelim);run;
 
-data scostb_pct;
-set scostb_total_pctprelim (keep=mean stderr) scostb_puma_pctprelim (keep=mean puma stderr) scostb_race_pctprelim (keep=race_cat1 mean stderr) 
-scostb_allvars_pctprelim (keep=race_cat1 puma mean stderr);
+data emp_pct;
+set emp_total_pctprelim (keep=mean stderr) emp_puma_pctprelim (keep=mean puma stderr) emp_race_pctprelim (keep=race_cat1 mean stderr) 
+emp_allvars_pctprelim (keep=race_cat1 puma mean stderr);
 	category=.;
 		if race_cat1=1 then category=2;
 		if race_cat1=2 then category=3;
@@ -953,8 +954,8 @@ scostb_allvars_pctprelim (keep=race_cat1 puma mean stderr);
 		format category category.;
 run;
 
-data scostb_r_freq;
-	set scostb_totalr_freqprelim (keep=wgtfreq stddev puma race_cat1);
+data emp_freq;
+	set emp_total_freqprelim (keep=wgtfreq stddev puma race_cat1);
 		category=.;
 			if race_cat1=1 then category=2;
 			if race_cat1=2 then category=3;
@@ -962,8 +963,8 @@ data scostb_r_freq;
 			format category category.;
 run;
 
-data scostb_cb_freq;
-	set scostb_totalcb_freqprelim (keep=wgtfreq stddev puma race_cat1);
+data emp_div_freq;
+	set emp_div_freqprelim (keep=wgtfreq stddev puma race_cat1);
 		category=.;
 			if race_cat1=1 then category=2;
 			if race_cat1=2 then category=3;
@@ -971,12 +972,12 @@ data scostb_cb_freq;
 			format category category.;
 run;
 
-proc sort data=scostb_nhwh0 out=scostb_r_base; by PUMA category; run;
-proc sort data=scostb_nhwh2 out=scostb_cb_base; by PUMA category; run;
-proc sort data=scostb_nhwh3 out=scostb_pct_base; by PUMA category; run;
-proc sort data=scostb_r_freq out=scostb_r_std; by PUMA category; run;
-proc sort data=scostb_cb_freq out=scostb_cb_std; by PUMA category; run;
-proc sort data=scostb_pct out=scostb_pct_std; by PUMA category; run;
+proc sort data=emp_nhwh0 out=emp_r_base; by PUMA category; run;
+proc sort data=emp_nhwh2 out=emp_cb_base; by PUMA category; run;
+proc sort data=emp_nhwh3 out=emp_pct_base; by PUMA category; run;
+proc sort data=emp_r_freq out=emp_r_std; by PUMA category; run;
+proc sort data=emp_cb_freq out=emp_cb_std; by PUMA category; run;
+proc sort data=emp_pct out=emp_pct_std; by PUMA category; run;
 
 data scostb_r_freqincl;
 	merge scostb_r_base scostb_r_std (drop=/*wgtfreq*/ race_cat1);
