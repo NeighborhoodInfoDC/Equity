@@ -2878,17 +2878,18 @@ data aff_pctincl_for;
 		proc sort data=emp_for3c_stdincl;
 		by PUMA category;
 		data merged_data;
-		merge costb_nhwh0 costb_nhwh2 costb_nhwh3 costb_alone0 (where=(category~=.)) costb_alone2 (where=(category~=.)) costb_alone3 (where=(category~=.)) 
-			 costb_for0 costb_for2 costb_for3
-			 scostb_nhwh2 scostb_nhwh3 scostb_alone2 (where=(category~=.)) scostb_alone3 (where=(category~=.))  scostb_for2 scostb_for3
-			 mort_nhwh0 mort_nhwh2a mort_nhwh2b mort_nhwh3a mort_nhwh3b mort_alone0 (where=(category~=.)) mort_alone2a (where=(category~=.)) mort_alone2b (where=(category~=.))
-			 mort_alone3a (where=(category~=.)) mort_alone3b (where=(category~=.))  mort_for0 mort_for2a mort_for2b mort_for3a mort_for3b 
-			 aff_nhwh2a aff_nhwh2b aff_nhwh2c aff_nhwh2d aff_alone2a aff_alone2b aff_alone2c aff_alone2d aff_for2a aff_for2b aff_for2c aff_for2d
-			aff_nhwh3a aff_nhwh3b aff_nhwh3c aff_nhwh3d aff_alone3a aff_alone3b aff_alone3c aff_alone3d aff_for3a aff_for3b aff_for3c aff_for3d
-			emp_nhwh0 emp_nhwh2a emp_nhwh2b emp_nhwh2c emp_nhwh3a emp_nhwh3b emp_nhwh3c 
-			emp_alone0 (where=(category~=.)) emp_alone2a (where=(category~=.)) emp_alone2b (where=(category~=.)) emp_alone2c (where=(category~=.))
-			emp_alone3a (where=(category~=.)) emp_alone3b (where=(category~=.)) emp_alone3c (where=(category~=.))
-				emp_for0  emp_for2a emp_for2b emp_for2c emp_for3a emp_for3b emp_for3c;
+		merge costb_nhwh0_stdincl costb_nhwh2_stdincl costb_nhwh3_stdincl costb_alone0_stdincl (where=(category~=.)) costb_alone2_stdincl  (where=(category~=.)) costb_alone3_stdincl  (where=(category~=.)) 
+			 costb_for0_stdincl costb_for2_stdincl  costb_for3_stdincl  
+			 scostb_nhwh2_stdincl scostb_nhwh3_stdincl scostb_alone2_stdincl  (where=(category~=.)) scostb_alone3 (where=(category~=.))  scostb_for2 scostb_for3
+			 mort_nhwh0_stdincl mort_nhwh2a_stdincl mort_nhwh2b_stdincl mort_nhwh3a_stdincl  mort_nhwh3b_stdincl  mort_alone0_stdincl (where=(category~=.)) mort_alone2a_stdincl  (where=(category~=.)) mort_alone2b_stdincl  (where=(category~=.))
+			 mort_alone3a_stdincl  (where=(category~=.)) mort_alone3b_stdincl  (where=(category~=.))  mort_for0_stdincl mort_for2a_stdincl  mort_for2b_stdincl  mort_for3a_stdincl  mort_for3b_stdincl  
+			 aff_nhwh2a_stdincl aff_nhwh2b_stdincl aff_nhwh2c_stdincl aff_nhwh2d_stdincl  aff_alone2a_stdincl  aff_alone2b_stdincl  aff_alone2c_stdincl  aff_alone2d_stdincl  aff_for2a_stdincl  aff_for2b_stdincl  aff_for2c_stdincl  aff_for2d_stdincl  
+			aff_nhwh3a_stdincl  aff_nhwh3b_stdincl  aff_nhwh3c_stdincl  aff_nhwh3d_stdincl  aff_alone3a_stdincl  aff_alone3b_stdincl  aff_alone3c_stdincl  aff_alone3d_stdincl  aff_for3a_stdincl  aff_for3b_stdincl  aff_for3c_stdincl  aff_for3d_stdincl  
+			emp_nhwh0_stdincl emp_nhwh2a_stdincl emp_nhwh2b_stdincl emp_nhwh2c_stdincl emp_nhwh3a_stdincl  emp_nhwh3b_stdincl  emp_nhwh3c_stdincl  
+			emp_alone0_stdincl (where=(category~=.)) emp_alone2a_stdincl  (where=(category~=.)) emp_alone2b_stdincl  (where=(category~=.)) emp_alone2c_stdincl  (where=(category~=.))
+			emp_alone3a_stdincl  (where=(category~=.)) emp_alone3b_stdincl  (where=(category~=.)) emp_alone3c_stdincl  (where=(category~=.))
+				emp_for0_stdincl  emp_for2a_stdincl  emp_for2b_stdincl  emp_for2c_stdincl  emp_for3a_stdincl  emp_for3b_stdincl  emp_for3c_stdincl ;
+
 		by PUMA category;
 		format puma puma_id.;
 
