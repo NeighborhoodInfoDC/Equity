@@ -74,7 +74,7 @@ data whiterates;
            PctPoorPersonsW: PctPoorChildrenW:
            PctFamilyLT75000W: PctFamilyGT200000W:
            AvgHshldIncAdjW: PctUnemployedW: 
-           PctEmployed16to64W: Pct16andOverEmployedW:
+           PctEmployed16to64W: Pct16andOverEmployW:
            Pct16andOverWagesW: Pct16andOverWorkFTW: 
            PctWorkFTLT35kW:  PctWorkFTLT75kW:
            PctEmployedMngmtW: PctEmployedServW:
@@ -146,7 +146,7 @@ data city_ward_WR (drop=cPct: _make_profile);
 	Gap16andOverEmployB_2010_14=cPct16andOverEmployW_2010_14/100*Pop16andOverYearsB_2010_14-Pop16andOverEmployB_2010_14;
 	Gap16andOverEmployW_2010_14=cPct16andOverEmployW_2010_14/100*Pop16andOverYearsW_2010_14-Pop16andOverEmployW_2010_14;
 	Gap16andOverEmployH_2010_14=cPct16andOverEmployW_2010_14/100*Pop16andOverYearsH_2010_14-Pop16andOverEmployH_2010_14;
-	Gap16andOverEmployAIOM_2010_14=cPct16andOverEmployedW_2010_14/100*Pop16andOverYearsAIOM_2010_14-Pop16andOverEmployAIOM_2010_14;
+	Gap16andOverEmployAIOM_2010_14=cPct16andOverEmployW_2010_14/100*Pop16andOverYearsAIOM_2010_14-Pop16andOverEmployAIOM_2010_14;
 
 	GapUnemployedB_2010_14=cPctUnemployedW_2010_14/100*PopInCivLaborForceB_2010_14-PopUnemployedB_2010_14;
 	GapUnemployedW_2010_14=cPctUnemployedW_2010_14/100*PopInCivLaborForceW_2010_14-PopUnemployedW_2010_14;
