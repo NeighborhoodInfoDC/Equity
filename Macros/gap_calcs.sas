@@ -5,7 +5,7 @@
 		%let race=%scan(&racelist.,&r.," ");
 		%let name=%scan(&racename.,&r.," ");
 
-	array c_est {21} 
+	array w_est {21} 
 		Pct25andOverWoutHSW_2010_14
 		Pct25andOverWHSW_2010_14
 		Pct25andOverWSCW_2010_14
@@ -29,7 +29,7 @@
 		PctOwnerOccupiedHUW_2010_14
 		;
 
-	array c_moe {21} 	
+	array w_moe {21} 	
 		Pct25andOverWoutHSW_m_2010_14
 		Pct25andOverWHSW_m_2010_14
 		Pct25andOverWSCW_m_2010_14
@@ -53,7 +53,7 @@
 		PctOwnerOccupiedHUW_m_2010_14
 		;
 
-	array c_cv {21} 
+	array w_cv {21} 
 		cvPct25andOverWoutHSW_2010_14
 		cvPct25andOverWHSW_2010_14
 		cvPct25andOverWSCW_2010_14
@@ -77,7 +77,7 @@
 		cvPctOwnerOccupiedHUW_2010_14
 		;
 
-	array c_upper {21} 		
+	array w_upper {21} 		
 		uPct25andOverWoutHSW_2010_14
 		uPct25andOverWHSW_2010_14
 		uPct25andOverWSCW_2010_14
@@ -101,7 +101,7 @@
 		uPctOwnerOccupiedHUW_2010_14
 		;
 
-	array c_lower {21} 		
+	array w_lower {21} 		
 		lPct25andOverWoutHSW_2010_14
 		lPct25andOverWHSW_2010_14
 		lPct25andOverWSCW_2010_14
@@ -125,7 +125,7 @@
 		lPctOwnerOccupiedHUW_2010_14
 		;
 
-	array r_gap {21} 
+	array e_gap {21} 
 		Gap25andOverWoutHS&race._2010_14
 		Gap25andOverWHS&race._2010_14
 		Gap25andOverWSC&race._2010_14
@@ -151,17 +151,17 @@
 
   	do m=1 to 21; 
    
-                c_cv{m}=c_moe{m}/1.645/c_est{m}*100;
-                c_lower{m}=c_est{m}- c_moe{m};
-                c_upper{m}=c_est{m}+ c_moe{m};
+                w_cv{m}=w_moe{m}/1.645/w_est{m}*100;
+                w_lower{m}=w_est{m}- w_moe{m};
+                w_upper{m}=w_est{m}+ w_moe{m};
           
-                if c_cv{m} > 30 then do; 
-					c_est{m}=.s; c_moe{m}=.s; 
+                if w_cv{m} > 30 then do; 
+					w_est{m}=.s; w_moe{m}=.s; 
 				end; 
 
 	 *write code to suppress gaps if not sign. diff from white rates - probably need to add to array list;  
-				if r_upper{m} < c_upper{m} and r_upper{m} > c_lower{m} then r_gap{m}=.s;
-				if r_lower{m} > c_lower{m} and r_lower{m} < c_upper{m} then r_gap{m}=.s;  
+				if e_upper{m} < w_upper{m} and e_upper{m} > w_lower{m} then e_gap{m}=.s;
+				if e_lower{m} > w_lower{m} and e_lower{m} < w_upper{m} then e_gap{m}=.s;  
 	end;
 
            

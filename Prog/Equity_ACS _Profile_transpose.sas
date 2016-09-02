@@ -345,11 +345,11 @@ data equity.profile_tabs_ACS_suppress;
 		lPctOwnerOccupiedHU_2010_14
 		;
 
-  	do m=1 to 21; 
+  	do t=1 to 21; 
    
-                t_cv{m}=t_moe{m}/1.645/t_est{m}*100;
-                t_lower{m}=t_est{m}- t_moe{m};
-                t_upper{m}=t_est{m}+ t_moe{m};
+                t_cv{t}=t_moe{t}/1.645/t_est{t}*100;
+                t_lower{t}=t_est{t}- t_moe{t};
+                t_upper{t}=t_est{t}+ t_moe{t};
               
 
                 if t_cv{m} > 30 then do; 
