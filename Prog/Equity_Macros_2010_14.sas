@@ -18,7 +18,7 @@
 
 
 ***** Macros *****;
-%macro survey_freq (input=, where= , title=, weight=, tables=, out=);
+%macro survey_freq (input=, where= , weight=, tables=, out=);
 
 proc surveyfreq data = &input (where=(&where));
 weight &weight;
@@ -27,10 +27,23 @@ cluster cluster;
 by subpopvar;
 tables &tables;
 ods output crosstabs=&out;
- title2 &title;
 run;
 
 %mend survey_freq;
+
+%macro survey_means (input=, where=, weight=, domain=, var=, out=);
+
+proc surveymeans data = &input (where=(&where));
+weight &weight;
+strata strata;
+cluster cluster;
+domain &domain;
+var &var;
+ods output Domain=&out;
+run;
+
+%mend survey_means;
+
 
 ** Count table macro **;
 
