@@ -18,6 +18,19 @@
 
 
 ***** Macros *****;
+%macro survey_freq (input=, where= , title=, weight=, tables=, out=);
+
+proc surveyfreq data = &input (where=(&where));
+weight &weight;
+strata strata;
+cluster cluster;
+by subpopvar;
+tables &tables;
+ods output crosstabs=&out;
+ title2 &title;
+run;
+
+%mend survey_freq;
 
 ** Count table macro **;
 

@@ -87,72 +87,6 @@ run;
 
 	run;
 
-data costb_nhwh_test;
-set Equity.Acs_tables_ipums;
-if city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 then subpopvar = 1;
-else subpopvar = 0;
-run;
-
-proc sort data = costb_nhwh_test;
-by strata cluster;
-run;
-
-/**Leah look here**/
-proc surveyfreq data = costb_nhwh_test (where=(subpopvar=1));
-weight hhwt;
-strata strata;
-cluster cluster;
-by subpopvar;
-tables costburden*puma;
-*var costburden;
-ods output Domain=try_total2;
-run;
-
-proc surveymeans data = costb_nhwh_test (where=(subpopvar=1));
-weight hhwt;
-strata strata;
-cluster cluster;
-domain subpopvar;
-var costburden;
-ods output Domain=try_total;
-run;
-
-proc surveymeans data = costb_nhwh_test (where=(subpopvar=1));
-weight hhwt;
-strata strata;
-cluster cluster;
-domain subpopvar*puma;
-var costburden;
-ods output Domain=try_puma;
-run;
-
-proc surveymeans data = costb_nhwh_test (where=(subpopvar=1));
-weight hhwt;
-strata strata;
-cluster cluster;
-domain subpopvar*race_cat1;
-var costburden;
-ods output Domain=try_race;
-run;
-
-proc surveymeans data = costb_nhwh_test (where=(subpopvar=1));
-weight hhwt;
-strata strata;
-cluster cluster;
-domain subpopvar*race_cat1*puma;
-var costburden;
-ods output Domain=try_all;
-run;
-
-data test_pray;
-set try_total (keep=mean stderr) try_puma (keep=mean puma stderr) try_race (keep=race_cat1 mean stderr) 
-try_all (keep=race_cat1 puma mean stderr);
-	category=.;
-		if race_cat1=1 then category=2;
-		if race_cat1=2 then category=3;
-		if race_cat1=3 then category=4; 
-run;
-
 		data costb_NHWH0 (drop=_table_ costburden race_cat1);
 
 			set costb_NHWH (where=(_table_=1 & costburden=.) keep =_table_ puma total_Sum costburden race_cat1);
@@ -196,18 +130,155 @@ run;
 		format category category.;
 		run; 
 
-proc sort data=costb_nhwh3
-	out=costb_hope;
+data costb_index;
+set Equity.Acs_tables_ipums;
+if city=7230 and pernum=1 and GQ in (1,2) and ownershp = 2 then subpopvar = 1;
+else subpopvar = 0;
+run;
+
+proc sort data = costb_index;
+by strata cluster;
+run;
+
+proc surveyfreq data = costb_index (where=(subpopvar=1));
+weight hhwt;
+strata strata;
+cluster cluster;
+by subpopvar;
+tables puma*race_cat1;
+ods output crosstabs=costb_totalr_freq;
+
+run;
+*Total Renters*;
+%survey_freq (
+input=costb_index,
+where=%str(subpopvar=1),
+weight=hhwt, 
+tables=puma*race_cat1,
+out=costb_totalr_freq);run;
+
+*Cost Burdened*;
+%survey_freq (
+input=costb_index,
+where=%str(subpopvar=1 and costburden=1),
+weight=hhwt, 
+tables=costburden*puma*race_cat1,
+out=tryme);run;
+
+
+proc surveyfreq data = costb_index (where=(subpopvar=1 and costburden=1));
+title "Try me";
+weight hhwt;
+strata strata;
+cluster cluster;
+by subpopvar;
+tables costburden*puma*race_cat1;
+ods output crosstabs=costb_totalcb_freq;
+run;
+
+proc surveymeans data = costb_index (where=(subpopvar=1));
+weight hhwt;
+strata strata;
+cluster cluster;
+domain subpopvar;
+var costburden;
+ods output Domain=costb_total_pct;
+run;
+
+proc surveymeans data = costb_index (where=(subpopvar=1));
+weight hhwt;
+strata strata;
+cluster cluster;
+domain subpopvar*puma;
+var costburden;
+ods output Domain=costb_puma_pct;
+run;
+
+proc surveymeans data = costb_index (where=(subpopvar=1));
+weight hhwt;
+strata strata;
+cluster cluster;
+domain subpopvar*race_cat1;
+var costburden;
+ods output Domain=costb_race_pct;
+run;
+
+proc surveymeans data = costb_index (where=(subpopvar=1));
+weight hhwt;
+strata strata;
+cluster cluster;
+domain subpopvar*race_cat1*puma;
+var costburden;
+ods output Domain=costb_allvars_pct;
+run;
+
+data costb_pct;
+set costb_total_pct (keep=mean stderr) costb_puma_pct (keep=mean puma stderr) costb_race_pct (keep=race_cat1 mean stderr) 
+costb_allvars_pct (keep=race_cat1 puma mean stderr);
+	category=.;
+		if race_cat1=1 then category=2;
+		if race_cat1=2 then category=3;
+		if race_cat1=3 then category=4; 
+run;
+
+data costb_totalr_freq2;
+	set costb_totalr_freq (keep=wgtfreq stddev puma race_cat1);
+		category=.;
+			if race_cat1=1 then category=2;
+			if race_cat1=2 then category=3;
+			if race_cat1=3 then category=4; 
+run;
+
+data costb_totalcb_freq2;
+	set costb_totalcb_freq (keep=wgtfreq stddev puma race_cat1);
+		category=.;
+			if race_cat1=1 then category=2;
+			if race_cat1=2 then category=3;
+			if race_cat1=3 then category=4; 
+run;
+
+proc sort data=costb_nhwh0
+	out=costb_freq_baser;
 	by PUMA category;
 	run;
 
-	proc sort data=test_pray
-		out=test_hope;
+proc sort data=costb_nhwh2
+	out=costb_freq_basecb;
+	by PUMA category;
+	run;
+
+proc sort data=costb_nhwh3
+	out=costb_pct_base;
+	by PUMA category;
+	run;
+
+proc sort data=costb_totalr_freq2
+	out=costb_std_r;
+	by PUMA category;
+	run;
+
+proc sort data=costb_totalcb_freq2
+	out=costb_std_cb;
+	by PUMA category;
+	run;
+
+proc sort data=costb_pct
+	out=costb_std_pct;
+	by PUMA category;
+	run;
+
+data merge_costb_freq_totalr;
+	merge costb_freq_baser costb_std_r (drop=wgtfreq race_cat1);
 		by PUMA category;
 		run;
 
-	data merge_pray4me;
-		merge costb_hope test_hope;
+data merge_costb_freq_totalcb;
+	merge costb_freq_basecb costb_std_cb (drop=wgtfreq race_cat1);
+		by PUMA category;
+		run;
+
+data merge_costb_pct;
+	merge costb_pct_base costb_std_pct (drop=mean race_cat1);
 		by PUMA category;
 		run;
 
