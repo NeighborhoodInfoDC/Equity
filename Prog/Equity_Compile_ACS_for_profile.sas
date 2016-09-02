@@ -19,7 +19,9 @@
 
 %let inc_dollar_yr=2015;
 %let racelist=W B H AIOM;
-%let racename= NH-White Black-Alone Hispanic All-Other;
+%let racename= NH-White Black-Alone Hispanic All-Other;+
+
++
 %let geography=city Ward2012 cluster_tr2000;
 %let _years=2010_14;
 
@@ -335,6 +337,11 @@
 	%Moe_prop_a( var=PctEmployed16to64_m_2010_14, mult=100, num=Pop16_64Employed_2010_14, den=Pop16_64years_2010_14, 
                        num_moe=mPop16_64Employed_2010_14, den_moe=mPop16_64years_2010_14 );
 
+	%Pct_calc( var=Pct16andOverEmploy, label=% pop. 16+ yrs. employed, num=Pop16andOverEmploy, den=Pop16andOverYears, years=2010_14 )
+
+    %Moe_prop_a( var=Pct16andOverEmploy_m_2010_14, mult=100, num=Pop16andOverEmploy_2010_14, den=Pop16andOverYears_2010_14, 
+                       num_moe=mPop16andOverEmploy_2010_14, den_moe=mPop16andOverYears_2010_14 );
+
 	%Pct_calc( var=Pct16andOverWages, label=% persons employed with earnings, num=PopWorkEarn, den=Pop16andOverYears, years=2010_14 )
 
 	%Moe_prop_a( var=Pct16andOverWages_m_2010_14, mult=100, num=PopWorkEarn_2010_14, den=Pop16andOverYears_2010_14, 
@@ -395,6 +402,11 @@
 	%Moe_prop_a( var=PctEmployed16to64&race._m_2010_14, mult=100, num=Pop16_64Employed&race._2010_14, den=Pop16_64years&race._2010_14, 
                        num_moe=mPop16_64Employed&race._2010_14, den_moe=mPop16_64years&race._2010_14 );
 
+	%Pct_calc( var=Pct16andOverEmploy&race., label=% pop. 16+ yrs. employed &name., num=Pop16andOverEmploy&race., den=Pop16andOverYears&race., years=2010_14 )
+
+    %Moe_prop_a( var=Pct16andOverEmploy&race._m_2010_14, mult=100, num=Pop16andOverEmploy&race._2010_14, den=Pop16andOverYears&race._2010_14, 
+                       num_moe=mPop16andOverEmploy&race._2010_14, den_moe=mPop16andOverYears&race._2010_14 );
+
 	%Pct_calc( var=Pct16andOverWages&race., label=% persons &name. employed with earnings, num=PopWorkEarn&race., den=Pop16andOverYears&race., years=2010_14 )
 
 	%Moe_prop_a( var=Pct16andOverWages&race._m_2010_14, mult=100, num=PopWorkEarn&race._2010_14, den=Pop16andOverYears&race._2010_14, 
@@ -442,30 +454,6 @@
 
 	%end;
 
-	%Pct_calc( var=Pct16andOverEmployed, label=% pop. 16+ yrs. employed, num=Pop16andOverEmployed, den=Pop16andOverYears, years=2010_14 )
-
-    %Moe_prop_a( var=Pct16andOverEmployed_m_2010_14, mult=100, num=Pop16andOverEmployed_2010_14, den=Pop16andOverYears_2010_14, 
-                       num_moe=mPop16andOverEmployed_2010_14, den_moe=mPop16andOverYears_2010_14 );
-
-	%Pct_calc( var=Pct16andOverEmployedW, label=% pop. 16+ yrs. employed NH-White, num=Pop16andOverEmployedW, den=Pop16andOverYearsW, years=2010_14 )
-
-    %Moe_prop_a( var=Pct16andOverEmployedW_m_2010_14, mult=100, num=Pop16andOverEmployedW_2010_14, den=Pop16andOverYearsW_2010_14, 
-                       num_moe=mPop16andOverEmployedW_2010_14, den_moe=mPop16andOverYearsW_2010_14 );
-
-    %Pct_calc( var=Pct16andOverEmployedB, label=% pop. 16+ yrs. employed Black-Alone, num=Pop16andOverEmployedB, den=Pop16andOverYearsB, years=2010_14 )
-
-    %Moe_prop_a( var=Pct16andOverEmployedB_m_2010_14, mult=100, num=Pop16andOverEmployedB_2010_14, den=Pop16andOverYearsB_2010_14, 
-                       num_moe=mPop16andOverEmployedB_2010_14, den_moe=mPop16andOverYearsB_2010_14 );
-
-	%Pct_calc( var=Pct16andOverEmployedH, label=% pop. 16+ yrs. employed Hispanic, num=Pop16andOverEmployedH, den=Pop16andOverYearsH, years=2010_14 )
-
-    %Moe_prop_a( var=Pct16andOverEmployedH_m_2010_14, mult=100, num=Pop16andOverEmployedH_2010_14, den=Pop16andOverYearsH_2010_14, 
-                       num_moe=mPop16andOverEmployedH_2010_14, den_moe=mPop16andOverYearsH_2010_14 );
-
-    %Pct_calc( var=Pct16andOverEmployAIOM, label=% pop. 16+ yrs. employed All-Other, num=Pop16andOverEmployAIOM, den=Pop16andOverYearsAIOM, years=2010_14 )
-
-    %Moe_prop_a( var=Pct16andOverEmployAIOM_m_2010_14, mult=100, num=Pop16andOverEmployAIOM_2010_14, den=Pop16andOverYearsAIOM_2010_14, 
-                       num_moe=mPop16andOverEmployAIOM_2010_14, den_moe=mPop16andOverYearsAIOM_2010_14 );
 
 	%do r=1 %to 4;
 

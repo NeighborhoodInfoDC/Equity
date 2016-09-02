@@ -1049,16 +1049,16 @@
 			PopInCivLaborForceIOM_&_years. = sum(PopCivilianEmployedIOM_&_years., PopUnemployedIOM_&_years.);
 			PopInCivLaborForceAIOM_&_years. = sum(PopCivilianEmployedAIOM_&_years., PopUnemployedAIOM_&_years.);
 
-      Pop16andOverEmployed_&_years. = PopCivilianEmployed_&_years. +
+      Pop16andOverEmploy_&_years. = PopCivilianEmployed_&_years. +
         sum( B23001e5, B23001e12, B23001e19, B23001e26, B23001e33, B23001e40, 
              B23001e47, B23001e54, B23001e61, B23001e68,
              B23001e91, B23001e98, B23001e105, B23001e112, B23001e119, B23001e126, 
              B23001e133, B23001e140, B23001e147, B23001e154 );
 
-		Pop16andOverEmployedB_&_years. = PopCivilianEmployedB_&_years. + sum(C23002Be5, C23002Be18);
-		Pop16andOverEmployedW_&_years. = PopCivilianEmployedW_&_years. + sum(C23002He5, C23002He18);
-		Pop16andOverEmployedH_&_years. = PopCivilianEmployedH_&_years. + sum(C23002Ie5, C23002Ie18);
-		Pop16andOverEmployedA_&_years. = PopCivilianEmployedA_&_years. + sum(C23002De5, C23002De18, C23002Ee5, C23002Ee18);
+		Pop16andOverEmployB_&_years. = PopCivilianEmployedB_&_years. + sum(C23002Be5, C23002Be18);
+		Pop16andOverEmployW_&_years. = PopCivilianEmployedW_&_years. + sum(C23002He5, C23002He18);
+		Pop16andOverEmployH_&_years. = PopCivilianEmployedH_&_years. + sum(C23002Ie5, C23002Ie18);
+		Pop16andOverEmployA_&_years. = PopCivilianEmployedA_&_years. + sum(C23002De5, C23002De18, C23002Ee5, C23002Ee18);
 		Pop16andOverEmployIOM_&_years. = PopCivilianEmployedIOM_&_years. + 
 			sum(C23002Ce5, C23002Ce18, C23002Fe5, C23002Fe18, C23002Ge5, C23002Ge18);
 		Pop16andOverEmployAIOM_&_years. = PopCivilianEmployedAIOM_&_years. + 
@@ -1379,18 +1379,18 @@
 			mPopInCivLaborForceAIOM_&_years. = %moe_sum( var=mPopCivilianEmployedAIOM_&_years. mPopUnemployedAIOM_&_years. );
 
 
-      mPop16andOverEmployed_&_years. =
+      mPop16andOverEmploy_&_years. =
         %moe_sum( var=mPopCivilianEmployed_&_years. B23001m5 B23001m12 B23001m19 B23001m26 B23001m33 B23001m40 
              B23001m47 B23001m54 B23001m61 B23001m68
              B23001m91 B23001m98 B23001m105 B23001m112 B23001m119 B23001m126 
              B23001m133 B23001m140 B23001m147 B23001m154 );
 
-		mPop16andOverEmployedB_&_years. = %moe_sum( var=mPopCivilianEmployedB_&_years. C23002Bm5 C23002Bm18 );
-		mPop16andOverEmployedW_&_years. =
+		mPop16andOverEmployB_&_years. = %moe_sum( var=mPopCivilianEmployedB_&_years. C23002Bm5 C23002Bm18 );
+		mPop16andOverEmployW_&_years. =
 		        %moe_sum( var=mPopCivilianEmployedW_&_years. C23002Hm5 C23002Hm18 );
-		mPop16andOverEmployedH_&_years. =
+		mPop16andOverEmployH_&_years. =
 		        %moe_sum( var=mPopCivilianEmployedH_&_years. C23002Im5 C23002Im18 );
-		mPop16andOverEmployedA_&_years. = 
+		mPop16andOverEmployA_&_years. = 
 				%moe_sum( var=mPopCivilianEmployedA_&_years. C23002Dm5 C23002Dm18 C23002Em5 C23002Em18 );
 		mPop16andOverEmployIOM_&_years. =
 		        %moe_sum( var=mPopCivilianEmployedIOM_&_years. C23002Cm5 C23002Cm18 C23002Fm5 C23002Fm18 C23002Gm5 C23002Gm18 );
@@ -1677,11 +1677,11 @@
 			PopInCivLaborForceA_&_years. = "Persons 16+ years old in the civilian labor force, Asian and Native Hawaiian and Other Pacific Islander, &_years_dash "
 			PopInCivLaborForceIOM_&_years. = "Persons 16+ years old in the civilian labor force, American Indian/Alaska Native, Some other race, Two or more races, &_years_dash "
 			PopInCivLaborForceAIOM_&_years. = "Persons 16+ years old in the civilian labor force, All remaining groups other than Black, Non-Hispanic White, Hispanic/Latino, &_years_dash "
-        Pop16andOverEmployed_&_years. = "Persons 16+ years old who are employed (includes armed forces), &_years_dash "
-			Pop16andOverEmployedB_&_years. = "Persons 16+ years old who are employed (includes armed forces), Black/African American, &_years_dash "
-			Pop16andOverEmployedW_&_years. = "Persons 16+ years old who are employed (includes armed forces), Non-Hispanic White, &_years_dash "
-			Pop16andOverEmployedH_&_years. = "Persons 16+ years old who are employed (includes armed forces), Hispanic/Latino, &_years_dash "
-			Pop16andOverEmployedA_&_years. = "Persons 16+ years old who are employed (includes armed forces), Asian and Native Hawaiian and Other Pacific Islander, &_years_dash "
+        Pop16andOverEmploy_&_years. = "Persons 16+ years old who are employed (includes armed forces), &_years_dash "
+			Pop16andOverEmployB_&_years. = "Persons 16+ years old who are employed (includes armed forces), Black/African American, &_years_dash "
+			Pop16andOverEmployW_&_years. = "Persons 16+ years old who are employed (includes armed forces), Non-Hispanic White, &_years_dash "
+			Pop16andOverEmployH_&_years. = "Persons 16+ years old who are employed (includes armed forces), Hispanic/Latino, &_years_dash "
+			Pop16andOverEmployA_&_years. = "Persons 16+ years old who are employed (includes armed forces), Asian and Native Hawaiian and Other Pacific Islander, &_years_dash "
 			Pop16andOverEmployIOM_&_years. = "Persons 16+ years old who are employed (includes armed forces), American Indian/Alaska Native, Some other race, Two or more races, &_years_dash "
 			Pop16andOverEmployAIOM_&_years. = "Persons 16+ years old who are employed (includes armed forces), All remaining groups other than Black, Non-Hispanic White, Hispanic/Latino, &_years_dash "
 		Pop16_64Employed_&_years. = "Persons 16-64 years old who are employed (includes armed forces), &_years_dash "
@@ -1762,11 +1762,11 @@
 			mPopInCivLaborForceA_&_years. = "Persons 16+ years old in the civilian labor force, Asian and Native Hawaiian and Other Pacific Islander, MOE, &_years_dash "
 			mPopInCivLaborForceIOM_&_years. = "Persons 16+ years old in the civilian labor force, American Indian/Alaska Native, Some other race, Two or more races, MOE, &_years_dash "
 			mPopInCivLaborForceAIOM_&_years. = "Persons 16+ years old in the civilian labor force, All remaining groups other than Black, Non-Hispanic White, Hispanic/Latino, MOE, &_years_dash "
-        mPop16andOverEmployed_&_years. = "Persons 16+ years old who are employed (includes armed forces), MOE, &_years_dash "
-			mPop16andOverEmployedB_&_years. = "Persons 16+ years old who are employed (includes armed forces), Black/African American, MOE, &_years_dash "
-			mPop16andOverEmployedW_&_years. = "Persons 16+ years old who are employed (includes armed forces), Non-Hispanic White, MOE, &_years_dash "
-			mPop16andOverEmployedH_&_years. = "Persons 16+ years old who are employed (includes armed forces), Hispanic/Latino, MOE, &_years_dash "
-			mPop16andOverEmployedA_&_years. = "Persons 16+ years old who are employed (includes armed forces), Asian and Native Hawaiian and Other Pacific Islander, MOE, &_years_dash "
+        mPop16andOverEmploy_&_years. = "Persons 16+ years old who are employed (includes armed forces), MOE, &_years_dash "
+			mPop16andOverEmployB_&_years. = "Persons 16+ years old who are employed (includes armed forces), Black/African American, MOE, &_years_dash "
+			mPop16andOverEmployW_&_years. = "Persons 16+ years old who are employed (includes armed forces), Non-Hispanic White, MOE, &_years_dash "
+			mPop16andOverEmployH_&_years. = "Persons 16+ years old who are employed (includes armed forces), Hispanic/Latino, MOE, &_years_dash "
+			mPop16andOverEmployA_&_years. = "Persons 16+ years old who are employed (includes armed forces), Asian and Native Hawaiian and Other Pacific Islander, MOE, &_years_dash "
 			mPop16andOverEmployIOM_&_years. = "Persons 16+ years old who are employed (includes armed forces), American Indian/Alaska Native, Some other race, Two or more races, MOE, &_years_dash "
 			mPop16andOverEmployAIOM_&_years. = "Persons 16+ years old who are employed (includes armed forces), All remaining groups other than Black, Non-Hispanic White, Hispanic/Latino, MOE, &_years_dash "
 		mPop16_64Employed_&_years. = "Persons 16-64 years old who are employed (includes armed forces), MOE, &_years_dash "
