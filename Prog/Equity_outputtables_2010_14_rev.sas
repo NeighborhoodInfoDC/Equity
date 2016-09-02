@@ -199,17 +199,17 @@ proc sort data=costb_cb_freq out=costb_cb_std; by PUMA category; run;
 proc sort data=costb_pct out=costb_pct_std; by PUMA category; run;
 
 data costb_nhwh0_stdincl;
-	merge costb_r_base costb_r_std (drop=wgtfreq race_cat1);
+	merge costb_r_base costb_r_std (drop=/*wgtfreq*/ race_cat1);
 		by PUMA category;
 		run;
 
 data costb_nhwh2_stdincl;
-	merge costb_cb_base costb_cb_std (drop=wgtfreq race_cat1);
+	merge costb_cb_base costb_cb_std (drop=/*wgtfreq*/ race_cat1);
 		by PUMA category;
 		run;
 
 data costb_nhwh3_stdincl;
-	merge costb_pct_base costb_pct_std (drop=mean race_cat1);
+	merge costb_pct_base costb_pct_std (drop=/*mean*/ race_cat1);
 		by PUMA category;
 		run;
 
@@ -330,7 +330,7 @@ data data costb_alone0_stdincl;;
 		run;
 
 data costb_alone2_stdincl;;
-	merge costb_cb_base_alone costb_cb_std_alone (drop=wgtfreq race_cat2);
+	merge costb_cb_base_alone costb_cb_std_alone (drop=/*wgtfreq*/ race_cat2);
 		by PUMA category;
 		run;
 
@@ -551,18 +551,18 @@ proc sort data=scostb_r_freq out=scostb_r_std; by PUMA category; run;
 proc sort data=scostb_cb_freq out=scostb_cb_std; by PUMA category; run;
 proc sort data=scostb_pct out=scostb_pct_std; by PUMA category; run;
 
-data costb_NHWH0_stdincl;
-	merge scostb_r_base scostb_r_std (drop=/*wgtfreq*/ race_cat1);
+data scostb_NHWH0_stdincl;
+	merge scostb_r_base scostb_r_std (drop=wgtfreq race_cat1);
 		by PUMA category;
 		run;
 
-data costb_NHWH2_stdincl;
-	merge scostb_cb_base scostb_cb_std (drop=/*wgtfreq*/ race_cat1);
+data scostb_NHWH2_stdincl;
+	merge scostb_cb_base scostb_cb_std (drop=wgtfreq race_cat1);
 		by PUMA category;
 		run;
 
-data costb_NHWH3_stdincl;
-	merge scostb_pct_base scostb_pct_std (drop=/*mean*/ race_cat1);
+data scostb_NHWH3_stdincl;
+	merge scostb_pct_base scostb_pct_std (drop=mean race_cat1);
 		by PUMA category;
 		run;
 
@@ -597,8 +597,8 @@ data costb_NHWH3_stdincl;
 		run; 
 
 		data scostb_alone3 (drop=_table_ sevcostburden _type_ total_PctSum_011 total_PctSum_001 total_PctSum_000 race_cat2);
-			set scostb_alone (where=(_table_=2 & sevcostburden=1) keep =_table_ puma sevcostburden race_cat2 _type_
-																	total_PctSum_010 total_PctSum_000 total_PctSum_010 total_PctSum_011 total_PctSum_010 total_PctSum_001)
+			set scostb_alone (where=(_table_=2 & sevcostburden=1) keep =_table_ puma sevcostburden race_cat2 _type_ 
+			total_PctSum_010 total_PctSum_000 total_PctSum_010 total_PctSum_011 total_PctSum_010 total_PctSum_001);
 		rename total_PctSum_010=PctRentSevCostB;
 		if puma=. then total_PctSum_010=total_PctSum_000;
 
@@ -672,17 +672,17 @@ proc sort data=scostb_cb_freq_alone out=scostb_cb_std_alone; by PUMA category; r
 proc sort data=scostb_pct_alone out=scostb_pct_std_alone; by PUMA category; run;
 
 data scostb_alone0_stdincl;
-	merge scostb_r_base_alone scostb_r_std_alone (drop=/*wgtfreq*/ race_cat2);
+	merge scostb_r_base_alone scostb_r_std_alone (drop=wgtfreq race_cat2);
 		by PUMA category;
 		run;
 
 data scostb_alone2_stdincl;
-	merge scostb_cb_base_alone scostb_cb_std_alone (drop=/*wgtfreq*/ race_cat2);
+	merge scostb_cb_base_alone scostb_cb_std_alone (drop=wgtfreq race_cat2);
 		by PUMA category;
 		run;
 
 data scostb_alone3_stdincl;
-	merge scostb_pct_base_alone scostb_pct_std_alone (drop=/*mean*/ race_cat2);
+	merge scostb_pct_base_alone scostb_pct_std_alone (drop=mean race_cat2);
 		by PUMA category;
 		run;
 
@@ -918,7 +918,7 @@ type=crosstabs, tables=emp25to64*puma*race_cat1, out=emp_emp_freqprelim);run;
 
 *StdDev on Unemployed for Ages 25 to 64 (by Race & PUMA)*;
 %survey_freq (input=emp_index, where=%str(subpopvar=1 and emp25to64=0), options=missing, weight=perwt, 
-type=crosstabs, tables=emp25to64*puma*race_cat1, out=emp_umemp_freqprelim);run;
+type=crosstabs, tables=emp25to64*puma*race_cat1, out=emp_unemp_freqprelim);run;
 
 *StdDev on Out of LF for Ages 25 to 64 (by Race & PUMA)*;
 %survey_freq (input=emp_index, where=%str(subpopvar=1 and emp25to64=.u), options=missing, weight=perwt, 
@@ -926,7 +926,7 @@ type=crosstabs, tables=emp25to64*puma*race_cat1, out=emp_outLF_freqprelim);run;
 
 /***SurveyMeans does not include emp25to64=. or emp25to64=0. Check Friday morning. Do either nomcar or emptext work??**/
 
-/*Try either NOMCAR or emptext
+/*Try either NOMCAR or emptext*/
 
 *StdDev on Pct Employed 25 to 64 (Total)*;
 %survey_means (input=emp_index, where=%str(subpopvar=1), weight=perwt, option=,
@@ -940,35 +940,26 @@ domain=subpopvar*puma, var=emptext, out=emp_puma_pctprelim);run;
 %survey_means (input=emp_index, where=%str(subpopvar=1), weight=perwt, option=, 
 domain=subpopvar*race_cat1, var=emptext, out=emp_race_pctprelim);run;
 
+/**Leah - Had to create a character variable in order for the Proc SurveyMeans to read employment as 3-part categorical variable. 
+The means are correct - does this look right to you?*/
+
 *StdDev on Pct Employed 25 to 64 (by Race & Puma)*;
 %survey_means (input=emp_index, where=%str(subpopvar=1), weight=perwt, option=, 
 domain=subpopvar*race_cat1*puma, var=emptext, out=emp_allvars_pctprelim);run;
 
-*StdDev on Pct Employed 25 to 64 (Total)*;
-%survey_means (input=emp_index, where=%str(subpopvar=1), weight=perwt, option=NOMCAR, 
-domain=subpopvar, var=emp25to64, out=emp_total_pctprelim);run;
-
-*StdDev on Pct Employed 25 to 64 (by Puma)*;
-%survey_means (input=emp_index, where=%str(subpopvar=1), weight=perwt, option=NOMCAR, 
-domain=subpopvar*puma, var=emp25to64, out=emp_puma_pctprelim);run;
-
-*StdDev on Pct Employed 25 to 64 (by Race)*;
-%survey_means (input=emp_index, where=%str(subpopvar=1), weight=perwt, option=NOMCAR, 
-domain=subpopvar*race_cat1, var=emp25to64, out=emp_race_pctprelim);run;
-
-*StdDev on Pct Employed 25 to 64 (by Race & Puma)*;
-%survey_means (input=emp_index, where=%str(subpopvar=1), weight=perwt, option=NOMCAR, 
-domain=subpopvar*race_cat1*puma, var=emp25to64, out=emp_allvars_pctprelim);run;
-
 data emp_pct;
-set emp_total_pctprelim (keep=mean stderr) emp_puma_pctprelim (keep=mean puma stderr) emp_race_pctprelim (keep=race_cat1 mean stderr) 
-emp_allvars_pctprelim (keep=race_cat1 puma mean stderr);
+set emp_total_pctprelim (keep=mean stderr varlevel) emp_puma_pctprelim (keep=mean puma stderr varlevel) 
+emp_race_pctprelim (keep=race_cat1 mean stderr varlevel) 
+emp_allvars_pctprelim (keep=race_cat1 puma mean stderr varlevel);
+if varlevel="Out of LF" then emp25to64=.u; 
+	else if varlevel="Employed" then emp25to64=1;
+	else emp25to64=0;
 	category=.;
 		if race_cat1=1 then category=2;
 		if race_cat1=2 then category=3;
 		if race_cat1=3 then category=4; 
 		format category category.;
-run;*/
+run;
 
 data emp_all_freq;
 	set emp_all_freqprelim (keep=wgtfreq stddev puma race_cat1);
@@ -1010,10 +1001,10 @@ proc sort data=emp_nhwh0 out=emp_all_base; by PUMA category; run;
 proc sort data=emp_nhwh2a out=emp_emp_base; by PUMA category; run;
 proc sort data=emp_nhwh2b out=emp_unemp_base; by PUMA category; run;
 proc sort data=emp_nhwh2c out=emp_outLF_base; by PUMA category; run;
-/*try pcts
+/*try pcts*/
 proc sort data=emp_nhwh3a out=emp_emp_pct_base; by PUMA category; run;
 proc sort data=emp_nhwh3b out=emp_unemp_pct_base; by PUMA category; run;
-proc sort data=emp_nhwh3c out=emp_outLF_pct_base; by PUMA category; run;*/
+proc sort data=emp_nhwh3c out=emp_outLF_pct_base; by PUMA category; run;
 proc sort data=emp_all_freq out=emp_all_std; by PUMA category; run;
 proc sort data=emp_emp_freq out=emp_emp_std; by PUMA category; run;
 proc sort data=emp_unemp_freq out=emp_unemp_std; by PUMA category; run;
@@ -1021,29 +1012,44 @@ proc sort data=emp_outLF_freq out=emp_outLF_std; by PUMA category; run;
 proc sort data=emp_pct out=emp_pct_std; by PUMA category; run;
 
 data emp_NHWH0_stdincl;
-	merge emp_all_base emp_all_std (drop=/*wgtfreq*/ race_cat1);
+	merge emp_all_base emp_all_std (drop=wgtfreq race_cat1);
 		by PUMA category;
 		run;
 		
 data emp_NHWH2a_stdincl;
-	merge emp_emp_base emp_emp_std (drop=/*wgtfreq*/ race_cat1);
+	merge emp_emp_base emp_emp_std (drop=wgtfreq race_cat1);
 		by PUMA category;
 		run;
 		
 data emp_NHWH2b_stdincl;
-	merge emp_unemp_base emp_unemp_std (drop=/*wgtfreq*/ race_cat1);
+	merge emp_unemp_base emp_unemp_std (drop=wgtfreq race_cat1);
 		by PUMA category;
 		run;
 
 data emp_NHWH2c_stdincl;
-	merge emp_outLF_base emp_outLF_std (drop=/*wgtfreq*/ race_cat1);
+	merge emp_outLF_base emp_outLF_std (drop=wgtfreq race_cat1);
 		by PUMA category;
 		run;
 /**Check and make match!*/
-data emp_pctincl;
-	merge emp_emp_pct_base emp_unemp_pct_base emp_outLF_pct_base emp_pct_std (drop=/*mean*/ race_cat1);
+
+data emp_nhwh3a_stdincl;
+	merge emp_emp_pct_base emp_pct_std (where=(emp25to64=1) drop=varlevel mean race_cat1);
 		by PUMA category;
-		run;
+		drop emp25to64;
+	run;
+
+data emp_nhwh3b_stdincl;
+	merge emp_unemp_pct_base emp_pct_std (where=(emp25to64=0) drop= varlevel mean race_cat1);
+		by PUMA category;
+		drop emp25to64;
+	run;
+
+data emp_nhwh3c_stdincl;
+	merge emp_outLF_pct_base emp_pct_std (where=(emp25to64=.u) drop= varlevel mean race_cat1);
+		by PUMA category;
+		drop emp25to64;
+	run;
+
 
 	%Count_table5( 
 	  where= %str(city=7230 and age25to64=1 ),
