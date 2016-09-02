@@ -252,8 +252,8 @@ data equity.assessedval_race (label="Assessed Value for Single Family Homes and 
 
 proc univariate data=equity.assessedval_race;
 CLASS tract_comp;
-var dollar_change avg_dollar_change percent_change;
-
+var dollar_changeR avg_dollar_changeR percent_changeR;
+id geo2010; 
 run;
 proc freq data=equity.assessedval_race;
 tables dollar_change avg_dollar_change percent_change;
@@ -263,3 +263,8 @@ proc export data=equity.assessedval_race
 	outfile="D:\DCDATA\Libraries\Equity\Prog\assessedval_race.csv"
 	dbms=csv replace;
 	run;
+
+proc means data=equity.assessedval_race mean n sum ;
+class tract_comp;
+var numsfcondo assess_val16 assess_val10r;
+run;
