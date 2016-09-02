@@ -30,7 +30,6 @@
 %include "D:\DCData\Libraries\Equity\Prog\Equity_formats_2010_14.sas";
 %include "D:\DCData\Libraries\Equity\Prog\Equity_macros_2010_14.sas";
 
-
 ***** Tables *****;
 
 options nospool;
@@ -140,23 +139,23 @@ proc sort data = costb_index;
 by strata cluster;
 run;
 
-*StdDev on Count Total Renters*;
+*StdDev on Count Total Renters (by Puma and Race))*;
 %survey_freq (input=costb_index, where=%str(subpopvar=1), weight=hhwt, 
 type=crosstabs, tables=puma*race_cat1, out=costb_totalr_freqprelim);run;
 
-*StdDev on Count Cost Burdened*;
+*StdDev on Count Cost Burdened (by Puma and Race)*;
 %survey_freq (input=costb_index, where=%str(subpopvar=1 and costburden=1), weight=hhwt, 
 type=crosstabs, tables=costburden*puma*race_cat1, out=costb_totalcb_freqprelim);run;
 
-*StdDev on Pct Cost Burdened (Total)*;
+*StdDev on Pct Cost Burdened (of Total)*;
 %survey_means (input=costb_index, where=%str(subpopvar=1), weight=hhwt, 
 domain=subpopvar, var=costburden, out=costb_total_pctprelim);run;
 
-*StdDev on Pct Cost Burdened (by Puma)*;
+*StdDev on Pct Cost Burdened (by Puma Only)*;
 %survey_means (input=costb_index, where=%str(subpopvar=1), weight=hhwt, 
 domain=subpopvar*puma, var=costburden, out=costb_puma_pctprelim);run;
 
-*StdDev on Pct Cost Burdened (by Race)*;
+*StdDev on Pct Cost Burdened (by Race Only)*;
 %survey_means (input=costb_index, where=%str(subpopvar=1), weight=hhwt, 
 domain=subpopvar*race_cat1, var=costburden, out=costb_race_pctprelim);run;
 
@@ -266,28 +265,27 @@ data costb_pctincl;
 		format category category.;
 		run; 
 
-*StdDev on Count Total Renters (Race Alone)*;
+*StdDev on Count Total Renters (for Race Alone by Puma and Race)*;
 %survey_freq (input=costb_index, where=%str(subpopvar=1), weight=hhwt, 
 type=crosstabs, tables=puma*race_cat2, out=costb_totalr_freqprelim_alone);run;
 
-*StdDev on Count Cost Burdened (Race Alone)*;
+*StdDev on Count Cost Burdened (for Race Alone by Puma and Race)*;
 %survey_freq (input=costb_index, where=%str(subpopvar=1 and costburden=1), weight=hhwt, 
 type=crosstabs, tables=costburden*puma*race_cat2, out=costb_totalcb_freqprelim_alone);run;
 
-*StdDev on Pct Cost Burdened (Total - Race Alone)*;
+*StdDev on Pct Cost Burdened (of Total - Race Alone)*;
 %survey_means (input=costb_index, where=%str(subpopvar=1), weight=hhwt, 
 domain=subpopvar, var=costburden, out=costb_total_pctprelim_alone);run;
 
-*StdDev on Pct Cost Burdened (by Puma)*;
+*StdDev on Pct Cost Burdened (for Race Alone by Puma)*;
 %survey_means (input=costb_index, where=%str(subpopvar=1), weight=hhwt, 
 domain=subpopvar*puma, var=costburden, out=costb_puma_pctprelim_alone);run;
 
-*StdDev on Pct Cost Burdened (by Race)*;
+*StdDev on Pct Cost Burdened (for Race Alone by Race)*;
 %survey_means (input=costb_index, where=%str(subpopvar=1), weight=hhwt, 
 domain=subpopvar*race_cat2, var=costburden, out=costb_race_pctprelim_alone);run;
 
-
-*StdDev on Pct Cost Burdened (by Race & Puma)*;
+*StdDev on Pct Cost Burdened (for Race Alone by Race & Puma)*;
 %survey_means (input=costb_index, where=%str(subpopvar=1), weight=hhwt, 
 domain=subpopvar*race_cat2*puma, var=costburden, out=costb_allvars_pctprelim_alone);run;
 
@@ -382,11 +380,11 @@ data costb_pctincl_alone;
 %survey_freq (input=costb_index, where=%str(subpopvar=1 and foreign=1), weight=hhwt, 
 type=oneway, tables=puma, out=costb_totalr_freqprelim_for);run;
 
-*StdDev on Count Cost Burdened (Foreign)*;
+*StdDev on Count Cost Burdened (Foreign by PUMA)*;
 %survey_freq (input=costb_index, where=%str(subpopvar=1 and costburden=1 and foreign=1), weight=hhwt, 
 type=crosstabs, tables=costburden*puma, out=costb_totalcb_freqprelim_for);run;
 
-*StdDev on Pct Cost Burdened (Total - Foreign)*;
+*StdDev on Pct Cost Burdened (of Total - Foreign)*;
 %survey_means (input=costb_index, where=%str(subpopvar=1 and foreign=1), weight=hhwt, 
 domain=subpopvar, var=costburden, out=costb_total_pctprelim_for);run;
 
@@ -510,7 +508,7 @@ type=crosstabs, tables=puma*race_cat1, out=scostb_totalr_freqprelim);run;
 %survey_freq (input=scostb_index, where=%str(subpopvar=1 and sevcostburden=1), weight=hhwt, 
 type=crosstabs, tables=sevcostburden*puma*race_cat1, out=scostb_totalcb_freqprelim);run;
 
-*StdDev on Pct Sev Cost Burdened (Total)*;
+*StdDev on Pct Sev Cost Burdened (of Total)*;
 %survey_means (input=scostb_index, where=%str(subpopvar=1), weight=hhwt, 
 domain=subpopvar, var=sevcostburden, out=scostb_total_pctprelim);run;
 
@@ -584,13 +582,10 @@ data scostb_pctincl;
 	  universe= Renters,
 	  out=scostb_Alone,
 	  title= "Table 5. Severe Cost Burden for Renters, Race Alone" );
-
 	run;
 
 		data scostb_alone0 (drop=_table_ sevcostburden race_cat2);
-
 			set scostb_alone (where=(_table_=1 & sevcostburden=.) keep =_table_ puma total_Sum sevcostburden race_cat2);
-
 		rename total_Sum=NumRenters;
 		category=.;
 		if race_cat2=1 then category=5;
@@ -598,10 +593,9 @@ data scostb_pctincl;
 		if race_cat2=3 then category=7; 
 		format category category.;
 		run; 
+		
 		data scostb_alone2 (drop=_table_ sevcostburden race_cat2);
-
 			set scostb_alone (where=(_table_=1 & sevcostburden=1) keep =_table_ puma total_Sum sevcostburden race_cat2);
-
 		rename total_Sum=NumRentSevCostB;
 		category=.;
 		if race_cat2=1 then category=5;
@@ -611,10 +605,8 @@ data scostb_pctincl;
 		run; 
 
 		data scostb_alone3 (drop=_table_ sevcostburden _type_ total_PctSum_011 total_PctSum_001 total_PctSum_000 race_cat2);
-
 			set scostb_alone (where=(_table_=2 & sevcostburden=1) keep =_table_ puma sevcostburden race_cat2 _type_
-																	total_PctSum_010 total_PctSum_000 total_PctSum_010 total_PctSum_011 total_PctSum_010 total_PctSum_001);
-
+																	total_PctSum_010 total_PctSum_000 total_PctSum_010 total_PctSum_011 total_PctSum_010 total_PctSum_001)
 		rename total_PctSum_010=PctRentSevCostB;
 		if puma=. then total_PctSum_010=total_PctSum_000;
 
@@ -923,11 +915,11 @@ run;
 %survey_freq (input=emp_index, where=%str(subpopvar=1), options=missing, weight=perwt, 
 type=crosstabs, tables=puma*race_cat1, out=emp_total_freqprelim);run;
 
-*StdDev on Count Total People ages 25 to 64 (by Race & Puma)*;
+*StdDev on Count Total People Ages 25 to 64 (by Race & Puma)*;
 %survey_freq (input=emp_index, where=%str(subpopvar=1), options=missing, weight=perwt, 
 type=crosstabs, tables=emp25to64*puma*race_cat1, out=emp_div_freqprelim);run;
 
-/***Does not include emp25to64=.**/
+/***Does not include emp25to64=. Check Friday morning. nomcar??**/
 *StdDev on Pct Employed 25 to 64 (Total)*;
 %survey_means (input=emp_index, where=%str(subpopvar=1), weight=perwt, 
 domain=subpopvar, var=emp25to64, out=emp_total_pctprelim);run;
@@ -942,6 +934,24 @@ domain=subpopvar*race_cat1, var=emp25to64, out=emp_race_pctprelim);run;
 
 *StdDev on Pct Employed 25 to 64 (by Race & Puma)*;
 %survey_means (input=emp_index, where=%str(subpopvar=1), weight=perwt, 
+domain=subpopvar*race_cat1*puma, var=emp25to64, out=emp_allvars_pctprelim);run;
+
+/*Try*/
+
+*StdDev on Pct Employed 25 to 64 (Total)*;
+%survey_means (input=emp_index, where=%str(subpopvar=1), weight=perwt, option=NOMCAR, 
+domain=subpopvar, var=emp25to64, out=emp_total_pctprelim);run;
+
+*StdDev on Pct Employed 25 to 64 (by Puma)*;
+%survey_means (input=emp_index, where=%str(subpopvar=1), weight=perwt, option=NOMCAR, 
+domain=subpopvar*puma, var=emp25to64, out=emp_puma_pctprelim);run;
+
+*StdDev on Pct Employed 25 to 64 (by Race)*;
+%survey_means (input=emp_index, where=%str(subpopvar=1), weight=perwt, option=NOMCAR, 
+domain=subpopvar*race_cat1, var=emp25to64, out=emp_race_pctprelim);run;
+
+*StdDev on Pct Employed 25 to 64 (by Race & Puma)*;
+%survey_means (input=emp_index, where=%str(subpopvar=1), weight=perwt, option=NOMCAR, 
 domain=subpopvar*race_cat1*puma, var=emp25to64, out=emp_allvars_pctprelim);run;
 
 data emp_pct;
