@@ -31,9 +31,9 @@ run;
 
 %mend survey_freq;
 
-%macro survey_means (input=, where=, weight=, domain=, var=, out=);
+%macro survey_means (input=, where=, option=, weight=, domain=, var=, out=);
 
-proc surveymeans data = &input (where=(&where));
+proc surveymeans data = &input (where=(&where)) &option;
 weight &weight;
 strata strata;
 cluster cluster;
