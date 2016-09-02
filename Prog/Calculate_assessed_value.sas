@@ -50,10 +50,7 @@ if a=1 and b=1 then in_both=1;
 label /*in_2016 ="Only in 2016 data" in_2010="Only in 2010 data"*/ in_both="In both years of data";
 
 run; 
-*For count of units in each;
-proc summary data=assessed_val print sum; var in_2016 in_2010 in_both;
-output out=Merge_results;
-run;
+
 proc means data=assessed_val  p99 p1;
 var assess_val10a assess_val16a;
 output out=assessed_val_extreme p99=assess_val10p99 assess_val16p99 p1=assess_val10p1 assess_val16p1 ;
@@ -116,7 +113,7 @@ data tract_assessed_val_change;
 
 		dollar_changeR=(assess_val16-assess_val10r)/1000;
 		  avg_dollar_changeR=(assess_val16-assess_val10r)/NumSFCondo;
-		  percent_changeR=((assess_val16-assess_val10r)/ assess_val10r) * 100);
+		  percent_changeR=((assess_val16-assess_val10r)/ assess_val10r) * 100;
 
 		label dollar_change="Nominal Change in Assessed Value, Single Family Homes and Condos ($000), 2010-16"
 			  avg_dollar_change="Avg. Nominal Change in Assessed Value, Single Family Homes and Condos, 2010-16"
