@@ -19,9 +19,9 @@
 
 %let inc_dollar_yr=2015;
 %let racelist=W B H AIOM;
-%let racename= NH-White Black-Alone Hispanic All-Other;+
+%let racename= NH-White Black-Alone Hispanic All-Other;
 
-+
+
 %let geography=city Ward2012 cluster_tr2000;
 %let _years=2010_14;
 
