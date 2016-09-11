@@ -14,7 +14,7 @@
 		PctFamilyLT75000W_2010_14
 		PctPoorPersonsW_2010_14
 		PctPoorChildrenW_2010_14
-		Pct16andOverEmployedW_2010_14
+		Pct16andOverEmployW_2010_14
 		PctEmployed16to64W_2010_14
 		PctUnemployedW_2010_14
 		Pct16andOverWagesW_2010_14
@@ -38,7 +38,7 @@
 		PctFamilyLT75000W_m_2010_14
 		PctPoorPersonsW_m_2010_14
 		PctPoorChildrenW_m_2010_14
-		Pct16andOverEmployedW_m_2010_14
+		Pct16andOverEmployW_m_2010_14
 		PctEmployed16to64W_m_2010_14
 		PctUnemployedW_m_2010_14
 		Pct16andOverWagesW_m_2010_14
@@ -62,7 +62,7 @@
 		cvPctFamilyLT75000W_2010_14
 		cvPctPoorPersonsW_2010_14
 		cvPctPoorChildrenW_2010_14
-		cvPct16andOverEmployedW_2010_14
+		cvPct16andOverEmployW_2010_14
 		cvPctEmployed16to64W_2010_14
 		cvPctUnemployedW_2010_14
 		cvPct16andOverWagesW_2010_14
@@ -86,7 +86,7 @@
 		uPctFamilyLT75000W_2010_14
 		uPctPoorPersonsW_2010_14
 		uPctPoorChildrenW_2010_14
-		uPct16andOverEmployedW_2010_14
+		uPct16andOverEmployW_2010_14
 		uPctEmployed16to64W_2010_14
 		uPctUnemployedW_2010_14
 		uPct16andOverWagesW_2010_14
@@ -110,7 +110,7 @@
 		lPctFamilyLT75000W_2010_14
 		lPctPoorPersonsW_2010_14
 		lPctPoorChildrenW_2010_14
-		lPct16andOverEmployedW_2010_14
+		lPct16andOverEmployW_2010_14
 		lPctEmployed16to64W_2010_14
 		lPctUnemployedW_2010_14
 		lPct16andOverWagesW_2010_14
@@ -134,7 +134,7 @@
 		GapFamilyLT75000&race._2010_14
 		GapPoorPersons&race._2010_14
 		GapPoorChildren&race._2010_14
-		Gap16andOverEmployed&race._2010_14
+		Gap16andOverEmploy&race._2010_14
 		GapEmployed16to64&race._2010_14
 		GapUnemployed&race._2010_14
 		Gap16andOverWages&race._2010_14

@@ -74,7 +74,7 @@ data whiterates;
            PctPoorPersonsW: PctPoorChildrenW:
            PctFamilyLT75000W: PctFamilyGT200000W:
            AvgHshldIncAdjW: PctUnemployedW: 
-           PctEmployed16to64W: Pct16andOverEmployedW:
+           PctEmployed16to64W: Pct16andOverEmployW:
            Pct16andOverWagesW: Pct16andOverWorkFTW: 
            PctWorkFTLT35kW:  PctWorkFTLT75kW:
            PctEmployedMngmtW: PctEmployedServW:
@@ -143,10 +143,10 @@ data city_ward_WR (drop=cPct: _make_profile);
 	GapEmployed16to64H_2010_14=cPctEmployed16to64W_2010_14/100*Pop16_64yearsH_2010_14-Pop16_64EmployedH_2010_14;
 	GapEmployed16to64AIOM_2010_14=cPctEmployed16to64W_2010_14/100*Pop16_64yearsAIOM_2010_14-Pop16_64EmployedAIOM_2010_14;
 
-	Gap16andOverEmployedB_2010_14=cPct16andOverEmployedW_2010_14/100*Pop16andOverYearsB_2010_14-Pop16andOverEmployedB_2010_14;
-	Gap16andOverEmployedW_2010_14=cPct16andOverEmployedW_2010_14/100*Pop16andOverYearsW_2010_14-Pop16andOverEmployedW_2010_14;
-	Gap16andOverEmployedH_2010_14=cPct16andOverEmployedW_2010_14/100*Pop16andOverYearsH_2010_14-Pop16andOverEmployedH_2010_14;
-	Gap16andOverEmployAIOM_2010_14=cPct16andOverEmployedW_2010_14/100*Pop16andOverYearsAIOM_2010_14-Pop16andOverEmployAIOM_2010_14;
+	Gap16andOverEmployB_2010_14=cPct16andOverEmployW_2010_14/100*Pop16andOverYearsB_2010_14-Pop16andOverEmployB_2010_14;
+	Gap16andOverEmployW_2010_14=cPct16andOverEmployW_2010_14/100*Pop16andOverYearsW_2010_14-Pop16andOverEmployW_2010_14;
+	Gap16andOverEmployH_2010_14=cPct16andOverEmployW_2010_14/100*Pop16andOverYearsH_2010_14-Pop16andOverEmployH_2010_14;
+	Gap16andOverEmployAIOM_2010_14=cPct16andOverEmployW_2010_14/100*Pop16andOverYearsAIOM_2010_14-Pop16andOverEmployAIOM_2010_14;
 
 	GapUnemployedB_2010_14=cPctUnemployedW_2010_14/100*PopInCivLaborForceB_2010_14-PopUnemployedB_2010_14;
 	GapUnemployedW_2010_14=cPctUnemployedW_2010_14/100*PopInCivLaborForceW_2010_14-PopUnemployedW_2010_14;
@@ -206,24 +206,7 @@ data city_ward_WR (drop=cPct: _make_profile);
 run;
 
 data equity.profile_tabs_ACS_suppress;
-	set city_ward_WR
-	(keep=PctBlackNonHispBridge: PctWhiteNonHispBridge:
-	PctHisp: PctAsnPINonHispBridge: PctOtherRace: PctOthRace:
-	PctAloneB: PctAloneW: PctAloneH: PctAloneA_:
-	PctAloneI_: PctAloneO: PctAloneM: PctAloneIOM: PctAloneAIOM:
-	PctOthLang: PctForeignBorn_: PctNativeBorn:
-	PctForeignBornB: PctForeignBornW:
-	PctForeignBornH: PctForeignBornAIOM:
-	PctPopUnder18Years_: PctPopUnder18YearsW_: 
-	PctPopUnder18YearsB_: PctPopUnder18YearsH_:
-	PctPopUnder18YearsAIOM_:
-	PctPop18_34Years_: PctPop18_34YearsW_: 
-	PctPop18_34YearsB_: PctPop18_34YearsH_:
-	PctPop18_34YearsAIOM_:
-	PctPop35_64Years_: PctPop35_64YearsW_: 
-	PctPop35_64YearsB_: PctPop35_64YearsH_:
-	PctPop35_64YearsAIOM_:)
-	;
+	set city_ward_WR;
 
 	array t_est {21} 
 		Pct25andOverWoutHS_2010_14
@@ -234,7 +217,7 @@ data equity.profile_tabs_ACS_suppress;
 		PctFamilyLT75000_2010_14
 		PctPoorPersons_2010_14
 		PctPoorChildren_2010_14
-		Pct16andOverEmployed_2010_14
+		Pct16andOverEmploy_2010_14
 		PctEmployed16to64_2010_14
 		PctUnemployed_2010_14
 		Pct16andOverWages_2010_14
@@ -258,7 +241,7 @@ data equity.profile_tabs_ACS_suppress;
 		PctFamilyLT75000_m_2010_14
 		PctPoorPersons_m_2010_14
 		PctPoorChildren_m_2010_14
-		Pct16andOverEmployed_m_2010_14
+		Pct16andOverEmploy_m_2010_14
 		PctEmployed16to64_m_2010_14
 		PctUnemployed_m_2010_14
 		Pct16andOverWages_m_2010_14
@@ -282,7 +265,7 @@ data equity.profile_tabs_ACS_suppress;
 		cvPctFamilyLT75000_2010_14
 		cvPctPoorPersons_2010_14
 		cvPctPoorChildren_2010_14
-		cvPct16andOverEmployed_2010_14
+		cvPct16andOverEmploy_2010_14
 		cvPctEmployed16to64_2010_14
 		cvPctUnemployed_2010_14
 		cvPct16andOverWages_2010_14
@@ -306,7 +289,7 @@ data equity.profile_tabs_ACS_suppress;
 		uPctFamilyLT75000_2010_14
 		uPctPoorPersons_2010_14
 		uPctPoorChildren_2010_14
-		uPct16andOverEmployed_2010_14
+		uPct16andOverEmploy_2010_14
 		uPctEmployed16to64_2010_14
 		uPctUnemployed_2010_14
 		uPct16andOverWages_2010_14
@@ -330,7 +313,7 @@ data equity.profile_tabs_ACS_suppress;
 		lPctFamilyLT75000_2010_14
 		lPctPoorPersons_2010_14
 		lPctPoorChildren_2010_14
-		lPct16andOverEmployed_2010_14
+		lPct16andOverEmploy_2010_14
 		lPctEmployed16to64_2010_14
 		lPctUnemployed_2010_14
 		lPct16andOverWages_2010_14
@@ -351,21 +334,18 @@ data equity.profile_tabs_ACS_suppress;
                 t_lower{t}=t_est{t}- t_moe{t};
                 t_upper{t}=t_est{t}+ t_moe{t};
               
-
                 if t_cv{t} > 30 then do; 
-									t_est{t}=.s; t_moe{t}=.s; 
-									end; 
+				t_est{t}=.s; t_moe{t}=.s; 
+				end; 
+
 	end;
 
-           
 	%suppress_gaps;
+	%suppress_gaps_fb;
 	%gap_calcs;
-
-
+	%gap_calcs_fb;
 
 run;
-
-	
 
 proc transpose data=equity.profile_tabs_ACS_suppress out=equity.profile_tabs_ACS; 
 var PctBlackNonHispBridge: PctWhiteNonHispBridge:
@@ -390,7 +370,7 @@ var PctBlackNonHispBridge: PctWhiteNonHispBridge:
 	PctPop35_64YearsB_: PctPop35_64YearsH_:
 	PctPop35_64YearsAIOM_:
 
-	PctPop65andOverYears: PctPop65andOverYrs:
+	PctPop65andOverYears_: PctPop65andOverYrs_:
 	PctPop65andOverYearsW: PctPop65andOverYrsW:
 	PctPop65andOverYearsB: PctPop65andOverYrsB:
 	PctPop65andOverYearsH: PctPop65andOverYrsH:
@@ -451,10 +431,10 @@ var PctBlackNonHispBridge: PctWhiteNonHispBridge:
 	PctPoorChildrenH: GapPoorChildrenH:
 	PctPoorChildrenAIOM: GapPoorChildrenAIOM:
 
-	Pct16andOverEmployed_: 
-	Pct16andOverEmployedW: Gap16andOverEmployedW:
-	Pct16andOverEmployedB: Gap16andOverEmployedB:
-	Pct16andOverEmployedH: Gap16andOverEmployedH:
+	Pct16andOverEmploy_: 
+	Pct16andOverEmployW: Gap16andOverEmployW:
+	Pct16andOverEmployB: Gap16andOverEmployB:
+	Pct16andOverEmployH: Gap16andOverEmployH:
 	Pct16andOverEmployAIOM: Gap16andOverEmployAIOM:
 
 	PctEmployed16to64_: 

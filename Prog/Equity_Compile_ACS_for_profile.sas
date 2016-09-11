@@ -19,9 +19,9 @@
 
 %let inc_dollar_yr=2015;
 %let racelist=W B H AIOM;
-%let racename= NH-White Black-Alone Hispanic All-Other;+
+%let racename= NH-White Black-Alone Hispanic All-Other;
 
-+
+
 %let geography=city Ward2012 cluster_tr2000;
 %let _years=2010_14;
 
@@ -199,7 +199,32 @@
     %Moe_prop_a( var=PctPop65andOverYrs_m_2010_14, mult=100, num=Pop65andOverYears_2010_14, den=PopWithRace_2010_14, 
                        num_moe=mPop65andOverYears_2010_14, den_moe=mPopWithRace_2010_14 );
 
-	%do r=1 %to 4;
+    %Pct_calc( var=PctPopUnder18YearsW, label=% children NH-White, num=PopUnder18YearsW, den=PopWhiteNonHispBridge, years= 2010_14 )
+    
+    %Moe_prop_a( var=PctPopUnder18YearsW_m_2010_14, mult=100, num=PopUnder18YearsW_2010_14, den=PopWhiteNonHispBridge_2010_14, 
+                       num_moe=mPopUnder18YearsW_2010_14, den_moe=mPopWhiteNonHispBridge_2010_14 );
+
+	%Pct_calc( var=PctPop18_34YearsW, label=% persons 18-34 years old NH-White, num=Pop18_34YearsW, den=PopWhiteNonHispBridge, years= 2010_14 )
+	
+	%Moe_prop_a( var=PctPop18_34YearsW_m_2010_14, mult=100, num=Pop18_34YearsW_2010_14, den=PopWhiteNonHispBridge_2010_14, 
+	                       num_moe=mPop18_34YearsW_2010_14, den_moe=mPopWhiteNonHispBridge_2010_14 );
+
+	%Pct_calc( var=PctPop35_64YearsW, label=% persons 35-64 years old NH-White, num=Pop35_64YearsW, den=PopWhiteNonHispBridge, years= 2010_14 )
+	
+	%Moe_prop_a( var=PctPop35_64YearsW_m_2010_14, mult=100, num=Pop35_64YearsW_2010_14, den=PopWhiteNonHispBridge_2010_14, 
+	                       num_moe=mPop35_64YearsW_2010_14, den_moe=mPopWhiteNonHispBridge_2010_14 );
+
+	%Pct_calc( var=PctPop65andOverYearsW, label=% seniors NH-White, num=Pop65andOverYearsW, den=PopWhiteNonHispBridge, years= 2010_14 )
+
+    %Moe_prop_a( var=PctPop65andOverYrsW_m_2010_14, mult=100, num=Pop65andOverYearsW_2010_14, den=PopWhiteNonHispBridge_2010_14, 
+                       num_moe=mPop65andOverYearsW_2010_14, den_moe=mPopWhiteNonHispBridge_2010_14 );
+
+	%Pct_calc( var=PctForeignBornW, label=% foreign born NH-White, num=PopForeignBornW, den=PopWhiteNonHispBridge, years=2010_14 )
+
+    %Moe_prop_a( var=PctForeignBornW_m_2010_14, mult=100, num=PopForeignBornW_2010_14, den=PopWhiteNonHispBridge_2010_14, 
+                       num_moe=mPopForeignBornW_2010_14, den_moe=mPopWhiteNonHispBridge_2010_14 );
+
+	%do r=2 %to 4;
 
 		%let race=%scan(&racelist.,&r.," ");
 		%let name=%scan(&racename.,&r.," ");
@@ -230,6 +255,8 @@
                        num_moe=mPopForeignBorn&race._2010_14, den_moe=mPopAlone&race._2010_14 );
 
 	%end;
+
+
 
     
     ** Population by Race/Ethnicity **;
