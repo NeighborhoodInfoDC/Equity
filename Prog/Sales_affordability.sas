@@ -11,7 +11,7 @@
 http://content.knowledgeplex.org/kp2/cache/documents/22736.pdf
 Homeownership Affordability in Urban America: Past and Future;
 
- Modifications: 
+ Modifications: 09/11/16 LH Added Price Adjustments and used 2015$ adj. income
 
 **************************************************************************/
 
@@ -51,38 +51,59 @@ data create_flags;
   	loan_multiplier_2014 =  month_int_rate_2014 *	( ( 1 + month_int_rate_2014 )**360	) / ( ( ( 1+ month_int_rate_2014 )**360 )-1 );
 
   *calculate monthly Principal and Interest for First time Homebuyer (10% down);
-    if sale_yr=2010 then PI_First=saleprice*.9*loan_multiplier_2010;
-	if sale_yr=2011 then PI_First=saleprice*.9*loan_multiplier_2011;
-	if sale_yr=2012 then PI_First=saleprice*.9*loan_multiplier_2012;
-	if sale_yr=2013 then PI_First=saleprice*.9*loan_multiplier_2013;
-	if sale_yr=2014 then PI_First=saleprice*.9*loan_multiplier_2014;
- 
+    if sale_yr=2010 then PI_First2010=saleprice*.9*loan_multiplier_2010;
+	if sale_yr=2011 then PI_First2011=saleprice*.9*loan_multiplier_2011;
+	if sale_yr=2012 then PI_First2012=saleprice*.9*loan_multiplier_2012;
+	if sale_yr=2013 then PI_First2013=saleprice*.9*loan_multiplier_2013;
+	if sale_yr=2014 then PI_First2014=saleprice*.9*loan_multiplier_2014;
+
+	%dollar_convert(PI_first2010,PI_first2010r,2010,2015);
+	%dollar_convert(PI_first2011,PI_first2011r,2011,2015);
+ 	%dollar_convert(PI_first2012,PI_first2012r,2012,2015);
+	%dollar_convert(PI_first2013,PI_first2013r,2013,2015);
+	%dollar_convert(PI_first2014,PI_first2014r,2014,2015);
+
   *calculate monthly PITI (Principal, Interest, Taxes and Insurance) for First Time Homebuyer (34% of PI = TI);
-    PITI_First=PI_First*1.34;
+	if sale_yr=2010 then PITI_First=PI_First2010r*1.34;
+	if sale_yr=2011 then PITI_First=PI_First2011r*1.34;
+	if sale_yr=2012 then PITI_First=PI_First2012r*1.34;
+	if sale_yr=2013 then PITI_First=PI_First2013r*1.34;
+	if sale_yr=2014 then PITI_First=PI_First2014r*1.34;
 
   *calculate monthly Principal and Interest for Repeat Homebuyer (20% down);
-    if sale_yr=2010 then PI_Repeat=saleprice*.8*loan_multiplier_2010;
-	if sale_yr=2011 then PI_Repeat=saleprice*.8*loan_multiplier_2011;
-	if sale_yr=2012 then PI_Repeat=saleprice*.8*loan_multiplier_2012;
-	if sale_yr=2013 then PI_Repeat=saleprice*.8*loan_multiplier_2013;
-	if sale_yr=2014 then PI_Repeat=saleprice*.8*loan_multiplier_2014;
- 
-  *calculate monthly PITI (Principal, Interest, Taxes and Insurance) for Repeat Homebuyer (25% of PI = TI);
-    PITI_Repeat=PI_Repeat*1.25;
+    if sale_yr=2010 then PI_Repeat2010=saleprice*.8*loan_multiplier_2010;
+	if sale_yr=2011 then PI_Repeat2011=saleprice*.8*loan_multiplier_2011;
+	if sale_yr=2012 then PI_Repeat2012=saleprice*.8*loan_multiplier_2012;
+	if sale_yr=2013 then PI_Repeat2013=saleprice*.8*loan_multiplier_2013;
+	if sale_yr=2014 then PI_Repeat2014=saleprice*.8*loan_multiplier_2014;
+
+	%dollar_convert(PI_Repeat2010,PI_Repeat2010r,2010,2015);
+	%dollar_convert(PI_Repeat2011,PI_Repeat2011r,2011,2015);
+ 	%dollar_convert(PI_Repeat2012,PI_Repeat2012r,2012,2015);
+	%dollar_convert(PI_Repeat2013,PI_Repeat2013r,2013,2015);
+	%dollar_convert(PI_Repeat2014,PI_Repeat2014r,2014,2015);
+
+	*calculate monthly PITI (Principal, Interest, Taxes and Insurance) for Repeat Homebuyer (25% of PI = TI);
+	if sale_yr=2010 then PITI_Repeat=PI_Repeat2010r*1.25;
+	if sale_yr=2011 then PITI_Repeat=PI_Repeat2011r*1.25;
+	if sale_yr=2012 then PITI_Repeat=PI_Repeat2012r*1.25;
+	if sale_yr=2013 then PITI_Repeat=PI_Repeat2013r*1.25;
+	if sale_yr=2014 then PITI_Repeat=PI_Repeat2014r*1.25;
+
 
 	/*Here are numbers for Average Household Income at the city level. 2010-14 ACS 
-Black	NH-White	Hispanic	AIOM	 Black, MOE		NH-White, MOE	Hispanic, MOE	AIOM, MOE
-59559.5	 157431		89889.9		76180.1	 1930.88		3872.54			8619.84			.*/
+Black	NH-White	Hispanic	AIOM	 
+59630	 157618		89997 	 	 76271		*/
 
 
-	if PITI_First <= (157431 / 12*.28) then white_first_afford=1; else white_first_afford=0; 
-		if PITI_Repeat <= (157431/ 12 *.28) then white_repeat_afford=1; else white_repeat_afford=0; 
-	if PITI_First <= (59559.5 / 12 *.28) then black_first_afford=1; else black_first_afford=0; 
-		if PITI_Repeat <= (59559.5 / 12 *.28) then black_repeat_afford=1; else black_repeat_afford=0; 
-	if PITI_First <= (89889.9 / 12*.28) then hispanic_first_afford=1; else hispanic_first_afford=0; 
-		if PITI_Repeat <= (89889.9/ 12*.28 ) then hispanic_repeat_afford=1; else hispanic_repeat_afford=0; 
-	if PITI_First <= (76180.1 / 12*.28 ) then aiom_first_afford=1; else aiom_first_afford=0; 
-		if PITI_Repeat <= (76180.1 / 12*.28 ) then aiom_repeat_afford=1; else aiom_repeat_afford=0; 
+	if PITI_First <= (157618 / 12*.28) then white_first_afford=1; else white_first_afford=0; 
+		if PITI_Repeat <= (157618/ 12 *.28) then white_repeat_afford=1; else white_repeat_afford=0; 
+	if PITI_First <= (59630 / 12 *.28) then black_first_afford=1; else black_first_afford=0; 
+		if PITI_Repeat <= (59630 / 12 *.28) then black_repeat_afford=1; else black_repeat_afford=0; 
+	if PITI_First <= (89997 / 12*.28) then hispanic_first_afford=1; else hispanic_first_afford=0; 
+		if PITI_Repeat <= (89997/ 12*.28 ) then hispanic_repeat_afford=1; else hispanic_repeat_afford=0; 
+	if PITI_First <= (76271 / 12*.28 ) then aiom_first_afford=1; else aiom_first_afford=0; 
+		if PITI_Repeat <= (76271 / 12*.28 ) then aiom_repeat_afford=1; else aiom_repeat_afford=0; 
 
 
 	total_sales=1;
