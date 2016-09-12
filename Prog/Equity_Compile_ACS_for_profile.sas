@@ -10,6 +10,8 @@
  Description:  Creates calculated statistics for ACS by geography to feed into Equity Profiles. 
 
  Modifications: 8/8/16 - SD wrote formulas for Equity indicators
+
+ Note: MOEs for AIOM average household income and average adjusted are blank because they are suppressed by the Census.
  **************************************************************************/
 %include "L:\SAS\Inc\StdLocal.sas";
 

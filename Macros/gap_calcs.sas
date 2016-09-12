@@ -159,11 +159,10 @@
 					w_est&race.{m}=.s; w_moe&race.{m}=.s; 
 				end; 
 
-	 *write code to suppress gaps if not sign. diff from white rates - probably need to add to array list;  
-				if e_upper&race.{m} < w_upper&race.{m} and e_upper&race.{m} > w_lower&race.{m} then e_gap&race.{m}=.s;
-				if e_lower&race.{m} > w_lower&race.{m} and e_lower&race.{m} < w_upper&race.{m} then e_gap&race.{m}=.s;  
+	 *suppress gaps if not sign. diff from white rates - probably need to add to array list;  
+				if e_upper&race.{m} < w_upper&race.{m} and e_upper&race.{m} > w_lower&race.{m} then e_gap&race.{m}=.n;
+				if e_lower&race.{m} > w_lower&race.{m} and e_lower&race.{m} < w_upper&race.{m} then e_gap&race.{m}=.n;  
 	end;
-
-           
+       
 	%end;
 	%mend gap_calcs;

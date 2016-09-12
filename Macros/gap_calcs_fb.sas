@@ -71,8 +71,8 @@
 				end; 
 
 	 *write code to suppress gaps if not sign. diff froj white rates - probably need to add to array list;  
-				if n_upper{j} < y_upper{j} and n_upper{j} > y_lower{j} then n_gap{j}=.s;
-				if n_lower{j} > y_lower{j} and n_lower{j} < y_upper{j} then n_gap{j}=.s;  
+				if n_upper{j} < y_upper{j} and n_upper{j} > y_lower{j} then n_gap{j}=.n;
+				if n_lower{j} > y_lower{j} and n_lower{j} < y_upper{j} then n_gap{j}=.n;  
 	end;
 
 %mend gap_calcs_fb;
