@@ -38,30 +38,20 @@
   %let geosuf = %sysfunc( putc( %upcase( &geo ), $geosuf. ) );
   %let geoafmt = %sysfunc( putc( %upcase( &geo ), $geoafmt. ) );
 
-  data Equity_profile_births&geosuf._A (compress=no);    
+  data Equity_profile_births&geosuf._C (compress=no);    
      set Vital.Births_sum&geosuf
         (keep=&geo births_total: 
 				births_w_race: births_black: births_asian: births_hisp: births_white: births_oth_rac:
 				Births_w_age: births_15to19: births_teen: Births_low_wt: Births_w_weight:
-				births_prenat_adeq: births_w_prenat:
-		   )
+				births_prenat_adeq: births_w_prenat: )
          ;
     	 by &geo;
    
   run;
 
-
-  /* i do not think we need this proc summary....
-  proc summary data=Nbr_profile&geosuf._A;
-    var _numeric_;
-    class &geo;
-    output out=Nbr_profile&geosuf._B (compress=no) mean=;
-
-  run;*/
-
-  data equity.Equity_profile_births&geosuf (compress=no); 
+  data Equity_profile_births&geosuf._B (compress=no); 
   
-    set Equity_profile_births&geosuf._A;
+    set Equity_profile_births&geosuf._C;
     
     ** Total births **;
     
@@ -83,59 +73,76 @@
     %Pct_calc( var=Pct_births_low_wt, label=% low weight births (under 5.5 lbs), num=Births_low_wt, den=Births_w_weight, from=&births_start_yr, to=&births_end_yr )
     %Pct_calc( var=Pct_births_teen, label=% births to teen mothers, num=Births_teen, den=Births_w_age, from=&births_start_yr, to=&births_end_yr )
 
-    ** Total teen births - ages 15-19**;
-
-	%Pct_calc( var=Pct_births_15to19, label=% Births to mothers 15-19 years old, num=births_15to19, den=Births_w_age, from=&births_start_yr, to=&births_end_yr )
-
-    ** Total teen births - under 20 years old**;
-	%Pct_calc( var=Pct_births_teen, label=% Births to teen mothers, num=births_teen, den=Births_w_agerace, from=&births_start_yr, to=&births_end_yr )
-
-	** Total low-birth weight births**;
-
-	%Pct_calc( var=Pct_births_low_wt, label=% low weight births (under 5.5 lbs), num=Births_low_wt, den=Births_w_weight, from=&births_start_yr, to=&births_end_yr  )
-
-    ** Total births with adequate prenatal care**;
 	%Pct_calc( var=Pct_births_prenat_adeq, label=% Births to mothers with adequate prenatal care, num=births_prenat_adeq, den=births_w_prenat, from=&births_start_yr, to=&births_end_yr )
+
+
+		if births_total_2011 <=5 then Pct_births_w_race=.s; 
+		if births_w_race_2011 <=5 then do; Pct_births_black_2011=.s; Pct_births_asian_2011=.s; Pct_births_hisp_2011=.s; Pct_births_white_2011=.s; Pct_births_oth_rac_2011=.s; end; 
+		if births_black_3yr_2011 <= 5 then Pct_births_black_3yr_2011=.s;
+		if births_asian_3yr_2011 <=5 then Pct_births_asian_3yr_2011=.s;
+		if births_hisp_3yr_2011 <=5 then  Pct_births_hisp_3yr_2011=.s;
+		if births_white_3yr_2011 <=5 then Pct_births_white_3yr_2011=.s;
+		if births_oth_rac_3yr_2011 <=5 then Pct_births_oth_rac_3yr_2011=.s;
+
+	 	if Births_w_weight_2011 <=5 then Pct_births_low_wt_2011 =.s;
+		if births_w_prenat_2011 <=5 then Pct_births_prenat_adeq_2011=.s;
+		if Births_w_age_2011 <=5 then Pct_births_teen_2011 =.s;
 
 
 	%do r=1 %to 6;
 
 		%let race=%scan(&racelist.,&r.," ");
 		%let name=%scan(&racename.,&r.," ");
+		 
 	 
-     ** Teen births - ages 15-19, by race**;
+	    ** Teen births - under 20 years old, by race**;
+		%Pct_calc( var=Pct_births_teen_&race., label=% Births to &name. teen mothers, num=births_teen_&race., den=Births_w_age_&race., from=&births_start_yr, to=&births_end_yr )
 
-	%Pct_calc( var=Pct_births_15to19_&race., label=% Births to &name. mothers 15-19 years old, num=births_15to19_&race., den=Births_w_age_&race., from=&births_start_yr, to=&births_end_yr )
+		** Low-birth weight births, by race**;
 
-    ** Teen births - under 20 years old, by race**;
-	%Pct_calc( var=Pct_births_teen_&race., label=% Births to &name. teen mothers, num=births_teen_&race., den=Births_w_age_&race., from=&births_start_yr, to=&births_end_yr )
+		%Pct_calc( var=Pct_births_low_wt_&race., label=% &name. low weight births (under 5.5 lbs), num=Births_low_wt_&race., den=Births_w_weight_&race., from=&births_start_yr, to=&births_end_yr  )
 
-	** Low-birth weight births, by race**;
-
-	%Pct_calc( var=Pct_births_low_wt_&race., label=% &name. low weight births (under 5.5 lbs), num=Births_low_wt_&race., den=Births_w_weight_&race., from=&births_start_yr, to=&births_end_yr  )
-
-    ** Births with adequate prenatal care, by race**;
-	%Pct_calc( var=Pct_births_prenat_adeq_&race., label=% Births to &name. mothers with adequate prenatal care, num=births_prenat_adeq_&race., den=births_w_prenat_&race., from=&births_start_yr, to=&births_end_yr )
+	    ** Births with adequate prenatal care, by race**;
+		%Pct_calc( var=Pct_births_prenat_adeq_&race., label=% Births to &name. mothers with adequate prenatal care, num=births_prenat_adeq_&race., den=births_w_prenat_&race., from=&births_start_yr, to=&births_end_yr )
+		
+		if Births_w_age_&race._2011 <= 5 then Pct_births_teen_&race._2011=.s;
+		if Births_low_wt_&race._2011 <= 5 then Pct_births_low_wt_&race._2011=.s;
+		if births_prenat_adeq_&race._2011 <=5 then Pct_births_prenat_adeq_&race._2011=.s;
+			
 
 	%end;
 
-
-    ** Create flag for generating profile **;
-    
-    if TotPop_2010_14 >= 100 then _make_profile = 1;
-    else _make_profile = 0;
-    
  
   run;
     
-  %File_info( data=Equity.Equity_profile_births&geosuf, printobs=0, contents=n )
-  
-%end; 
-  
+data equity.Equity_profile_births&geosuf.;
+set Equity_profile_births&geosuf._B; 
+keep &geo Births_asian_2011 Births_asian_3yr_2011 Births_black_2011 Births_black_3yr_2011 Births_hisp_2011 Births_hisp_3yr_2011 Births_low_wt_2011
+Births_low_wt_asn_2011 Births_low_wt_blk_2011 Births_low_wt_hsp_2011 Births_low_wt_oth_2011 Births_low_wt_wht_2011 Births_oth_rac_2011
+Births_oth_rac_3yr_2011 Births_prenat_adeq_2011 Births_prenat_adeq_asn_2011 Births_prenat_adeq_blk_2011 Births_prenat_adeq_hsp_2011
+Births_prenat_adeq_oth_2011 Births_prenat_adeq_wht_2011 Births_total_2011 Births_total_3yr_2011 Births_w_age_2011 Births_w_age_asn_2011
+Births_w_age_blk_2011 Births_w_age_hsp_2011 Births_w_age_oth_2011 Births_w_age_wht_2011 Births_w_agerace_2011 Births_w_prenat_2011
+Births_w_prenat_asn_2011 Births_w_prenat_blk_2011 Births_w_prenat_hsp_2011 Births_w_prenat_oth_2011 Births_w_prenat_wht_2011 Births_w_race_2011
+Births_w_weight_2011 Births_w_weight_asn_2011 Births_w_weight_blk_2011 Births_w_weight_hsp_2011 Births_w_weight_oth_2011 Births_w_weight_wht_2011
+Births_white_2011 Births_white_3yr_2011 Pct_births_asian_2011 Pct_births_asian_3yr_2011 Pct_births_black_2011
+Pct_births_black_3yr_2011 Pct_births_hisp_2011 Pct_births_hisp_3yr_2011 Pct_births_low_wt_2011 Pct_births_low_wt_asn_2011 Pct_births_low_wt_blk_2011
+Pct_births_low_wt_hsp_2011 Pct_births_low_wt_oth_2011 Pct_births_low_wt_wht_2011 Pct_births_oth_rac_2011 Pct_births_oth_rac_3yr_2011
+Pct_births_prenat_adeq_2011 Pct_births_prenat_adeq_asn_2011 Pct_births_prenat_adeq_blk_2011 Pct_births_prenat_adeq_hsp_2011
+Pct_births_prenat_adeq_oth_2011 Pct_births_prenat_adeq_wht_2011 Pct_births_teen_2011 Pct_births_teen_asn_2011 Pct_births_teen_blk_2011
+Pct_births_teen_hsp_2011 Pct_births_teen_oth_2011 Pct_births_teen_wht_2011 Pct_births_w_race_2011 Pct_births_white_2011 Pct_births_white_3yr_2011
+Births_teen_wht_2011 Births_teen_oth_2011 Births_teen_blk_2011 Births_teen_hsp_2011 Births_teen_asn_2011 Births_teen_2011;
+ 
+ run;
+
+ %File_info( data=Equity.Equity_profile_births&geosuf, printobs=0, contents=n )
+ 
+ %end;
+
 %mend add_percents;
 
 /** End Macro Definition **/
 
 %add_percents; 
 
-run; 
+
+
