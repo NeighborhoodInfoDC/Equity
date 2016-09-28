@@ -18,14 +18,15 @@
 		%let race=%scan(&racelist.,&r.," ");
 		%let name=%scan(&racename.,&r.," ");
 
+		*white estimates; 
 			array w_est&race. {21} 
 				Pct25andOverWoutHSW_2010_14
 				Pct25andOverWHSW_2010_14
 				Pct25andOverWSCW_2010_14
 				AvgHshldIncAdjW_2010_14
-				PctFamilyGT200000W_2010_14
+				PctFamilyGT200000W_2010_14 
 				PctFamilyLT75000W_2010_14
-				PctPoorPersonsW_2010_14
+				PctPoorPersonsW_2010_14 
 				PctPoorChildrenW_2010_14
 				Pct16andOverEmployW_2010_14
 				PctEmployed16to64W_2010_14
@@ -41,6 +42,8 @@
 				PctEmployedProdW_2010_14
 				PctOwnerOccupiedHUW_2010_14
 				;
+
+			*white MOE; 
 
 			array w_moe&race. {21} 	
 				Pct25andOverWoutHSW_m_2010_14
@@ -66,6 +69,8 @@
 				PctOwnerOccupiedHUW_m_2010_14
 				;
 
+				*cv white MOE; 
+
 			array w_cv&race. {21} 
 				cvPct25andOverWoutHSW_2010_14
 				cvPct25andOverWHSW_2010_14
@@ -90,6 +95,7 @@
 				cvPctOwnerOccupiedHUW_2010_14
 				;
 
+				*white upper bound;
 			array w_upper&race. {21} 		
 				uPct25andOverWoutHSW_2010_14
 				uPct25andOverWHSW_2010_14
@@ -113,6 +119,8 @@
 				uPctEmployedProdW_2010_14
 				uPctOwnerOccupiedHUW_2010_14
 				;
+
+				*white lower bound; 
 
 			array w_lower&race. {21} 		
 				lPct25andOverWoutHSW_2010_14
@@ -138,6 +146,7 @@
 				lPctOwnerOccupiedHUW_2010_14
 				;
 
+				*gap race; 
 			array e_gap&race. {21} 
 				Gap25andOverWoutHS&race._2010_14
 				Gap25andOverWHS&race._2010_14
