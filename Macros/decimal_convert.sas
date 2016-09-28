@@ -2,7 +2,7 @@
  Program:  decimal_convert.sas
  Library:  Equity
  Project:  NeighborhoodInfo DC
- Author:   P. Tatian
+ Author:   S. Diby
  Created:  09/12/16
  Version:  SAS 9.2
  Environment:  Local Windows session (desktop)
@@ -109,10 +109,18 @@ array oldvars_e {45}
 				nPctOwnerOccupiedHU_m_2010_14
 				;
 
+
 				do q=1 to 45; 
-			   
+
+				   
 						newvars_e{q}=oldvars_e{q}/100;
 						newvars_m{q}=oldvars_m{q}/100;
+					
+					if oldvars_e{q}=.n then newvars_e{q}=.n;
+					if oldvars_e{q}=.s then newvars_e{q}=.s;
+					if oldvars_m{q}=.n then newvars_m{q}=.n;
+					if oldvars_m{q}=.s then newvars_m{q}=.s;
+
 				end;
 
 	%do r=1 %to 4;
@@ -190,8 +198,15 @@ array oldvars_e {45}
 
 				do b=1 to 27; 
 		   
+				
+
 					newvarsr_e&race.{b}=oldvarsr_e&race.{b}/100;
 					newvarsr_m&race.{b}=oldvarsr_m&race.{b}/100;
+
+					if oldvarsr_e&race.{b}=.n then newvarsr_e&race.{b}=.n;
+					if oldvarsr_e&race.{b}=.s then newvarsr_e&race.{b}=.s;
+					if oldvarsr_m&race.{b}=.n then newvarsr_m&race.{b}=.n;
+					if oldvarsr_m&race.{b}=.s then newvarsr_m&race.{b}=.s;
 				end;
 	%end;
 

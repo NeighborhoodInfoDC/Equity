@@ -51,7 +51,7 @@ data whiterates;
 %rename(whiterates);
 run;
 
-data city_ward_WR (drop=cPct: _make_profile);
+data city_ward_WR (drop=_make_profile);
 	merge city_ward whiterates_new (rename=(c_make_profile=_make_profile));
 	by _make_profile;
 	
@@ -303,204 +303,16 @@ data equity.profile_tabs_ACS_suppress;
 				end; 
 
 	end;
-
+	
 	%suppress_vars;
 	%suppress_vars_fb;
+
 	%suppress_gaps;
 	%suppress_gaps_fb;
 
+	
 run;
 
-%macro decimal_convert;
-
-data equity.profile_tabs_ACS_suppress_dec;
-	set equity.profile_tabs_ACS_suppress;
-
-			array oldvars_e {45}
-				PctBlackNonHispBridge_2010_14 PctWhiteNonHispBridge_2010_14 PctHisp_2010_14 
-				PctAsnPINonHispBridge_2010_14 PctOtherRaceNonHispBridg_2010_14 
-
-				PctAloneA_2010_14 PctAloneI_2010_14 PctAloneO_2010_14 
-				PctAloneM_2010_14 PctAloneIOM_2010_14 
-
-				PctNativeBorn_2010_14 PctForeignBorn_2010_14 PctOthLang_2010_14
-
-				PctPopUnder18Years_2010_14 PctPop18_34Years_2010_14 
-				PctPop35_64Years_2010_14 PctPop65andOverYears_2010_14
-
-				Pct25andOverWoutHS_2010_14 Pct25andOverWoutHSFB_2010_14 Pct25andOverWoutHSNB_2010_14
-				Pct25andOverWHS_2010_14 Pct25andOverWHSFB_2010_14 Pct25andOverWHSNB_2010_14
-				Pct25andOverWSC_2010_14 Pct25andOverWSCFB_2010_14 Pct25andOverWSCNB_2010_14
-				AvgHshldIncAdj_2010_14 PctFamilyGT200000_2010_14 PctFamilyLT75000_2010_14
-				PctPoorPersons_2010_14 PctPoorPersonsFB_2010_14 PctPoorChildren_2010_14
-				Pct16andOverEmploy_2010_14 PctEmployed16to64_2010_14 PctUnemployed_2010_14 
-				Pct16andOverWages_2010_14 Pct16andOverWorkFT_2010_14 PctWorkFTLT35k_2010_14
-				PctWorkFTLT75k_2010_14 PctEmployedMngmt_2010_14 PctEmployedServ_2010_14 
-				PctEmployedSales_2010_14 PctEmployedNatRes_2010_14 PctEmployedProd_2010_14
-				PctOwnerOccupiedHU_2010_14
-				;
-
-			array oldvars_m {45}
-				PctBlackNonHispBridge_m_2010_14 PctWhiteNonHispBridge_m_2010_14 PctHisp_m_2010_14 
-				PctAsnPINonHispBridge_m_2010_14 PctOthRaceNonHispBridg_m_2010_14 
-
-				PctAloneA_m_2010_14 PctAloneI_m_2010_14 PctAloneO_m_2010_14 
-				PctAloneM_m_2010_14 PctAloneIOM_m_2010_14 
-
-				PctNativeBorn_m_2010_14 PctForeignBorn_m_2010_14 PctOthLang_m_2010_14
-
-				PctPopUnder18Years_m_2010_14 PctPop18_34Years_m_2010_14 
-				PctPop35_64Years_m_2010_14 PctPop65andOverYrs_m_2010_14
-
-				Pct25andOverWoutHS_m_2010_14 Pct25andOverWoutHSFB_m_2010_14 Pct25andOverWoutHSNB_m_2010_14
-				Pct25andOverWHS_m_2010_14 Pct25andOverWHSFB_m_2010_14 Pct25andOverWHSNB_m_2010_14
-				Pct25andOverWSC_m_2010_14 Pct25andOverWSCFB_m_2010_14 Pct25andOverWSCNB_m_2010_14
-				AvgHshldIncAdj_m_2010_14 PctFamilyGT200000_m_2010_14 PctFamilyLT75000_m_2010_14
-				PctPoorPersons_m_2010_14 PctPoorPersonsFB_m_2010_14 PctPoorChildren_m_2010_14
-				Pct16andOverEmploy_m_2010_14 PctEmployed16to64_m_2010_14 PctUnemployed_m_2010_14 
-				Pct16andOverWages_m_2010_14 Pct16andOverWorkFT_m_2010_14 PctWorkFTLT35k_m_2010_14
-				PctWorkFTLT75k_m_2010_14 PctEmployedMngmt_m_2010_14 PctEmployedServ_m_2010_14 
-				PctEmployedSales_m_2010_14 PctEmployedNatRes_m_2010_14 PctEmployedProd_m_2010_14
-				PctOwnerOccupiedHU_m_2010_14
-				;
-
-			array newvars_e {45}
-				nPctBlackNonHispBridge_2010_14 nPctWhiteNonHispBridge_2010_14 nPctHisp_2010_14 
-				nPctAsnPINonHispBridge_2010_14 nPctOthRaceNonHispBridg_2010_14 
-
-				nPctAloneA_2010_14 nPctAloneI_2010_14 nPctAloneO_2010_14 
-				nPctAloneM_2010_14 nPctAloneIOM_2010_14 
-
-				nPctNativeBorn_2010_14 nPctForeignBorn_2010_14 nPctOthLang_2010_14
-
-				nPctPopUnder18Years_2010_14 nPctPop18_34Years_2010_14 
-				nPctPop35_64Years_2010_14 nPctPop65andOverYears_2010_14 
-
-				nPct25andOverWoutHS_2010_14 nPct25andOverWoutHSFB_2010_14 nPct25andOverWoutHSNB_2010_14
-				nPct25andOverWHS_2010_14 nPct25andOverWHSFB_2010_14 nPct25andOverWHSNB_2010_14
-				nPct25andOverWSC_2010_14 nPct25andOverWSCFB_2010_14 nPct25andOverWSCNB_2010_14
-				nAvgHshldIncAdj_2010_14 nPctFamilyGT200000_2010_14 nPctFamilyLT75000_2010_14
-				nPctPoorPersons_2010_14 nPctPoorPersonsFB_2010_14 nPctPoorChildren_2010_14
-				nPct16andOverEmploy_2010_14 nPctEmployed16to64_2010_14 nPctUnemployed_2010_14 
-				nPct16andOverWages_2010_14 nPct16andOverWorkFT_2010_14 nPctWorkFTLT35k_2010_14
-				nPctWorkFTLT75k_2010_14 nPctEmployedMngmt_2010_14 nPctEmployedServ_2010_14 
-				nPctEmployedSales_2010_14 nPctEmployedNatRes_2010_14 nPctEmployedProd_2010_14
-				nPctOwnerOccupiedHU_2010_14
-				;
-
-			array newvars_m {45}
-				nPctBlackNonHispBridge_m_2010_14 nPctWhiteNonHispBridge_m_2010_14 nPctHisp_m_2010_14
-				nPctAsnPINonHispBridge_m_2010_14 nPctOthRaceNonHisBridg_m_2010_14 
-
-				nPctAloneA_m_2010_14 nPctAloneI_m_2010_14 nPctAloneO_m_2010_14 
-				nPctAloneM_m_2010_14 nPctAloneIOM_m_2010_14 
-
-				nPctNativeBorn_m_2010_14 nPctForeignBorn_m_2010_14 nPctOthLang_m_2010_14
-
-				nPctPopUnder18Years_m_2010_14 nPctPop18_34Years_m_2010_14 
-				nPctPop35_64Years_m_2010_14 nPctPop65andOverYrs_m_2010_14
-
-				nPct25andOverWoutHS_m_2010_14 nPct25andOverWoutHSFB_m_2010_14 nPct25andOverWoutHSNB_m_2010_14
-				nPct25andOverWHS_m_2010_14 nPct25andOverWHSFB_m_2010_14 nPct25andOverWHSNB_m_2010_14
-				nPct25andOverWSC_m_2010_14 nPct25andOverWSCFB_m_2010_14 nPct25andOverWSCNB_m_2010_14
-				nAvgHshldIncAdj_m_2010_14 nPctFamilyGT200000_m_2010_14 nPctFamilyLT75000_m_2010_14
-				nPctPoorPersons_m_2010_14 nPctPoorPersonsFB_m_2010_14 nPctPoorChildren_m_2010_14
-				nPct16andOverEmploy_m_2010_14 nPctEmployed16to64_m_2010_14 nPctUnemployed_m_2010_14 
-				nPct16andOverWages_m_2010_14 nPct16andOverWorkFT_m_2010_14 nPctWorkFTLT35k_m_2010_14 
-				nPctWorkFTLT75k_m_2010_14 nPctEmployedMngmt_m_2010_14 nPctEmployedServ_m_2010_14
-				nPctEmployedSales_m_2010_14 nPctEmployedNatRes_m_2010_14 nPctEmployedProd_m_2010_14
-				nPctOwnerOccupiedHU_m_2010_14
-				;
-
-				do q=1 to 45; 
-			   
-						newvars_e{q}=oldvars_e{q}/100;
-						newvars_m{q}=oldvars_m{q}/100;
-				end;
-
-	%do r=1 %to 4;
-
-		%let race=%scan(&racelist.,&r.," ");
-		%let name=%scan(&racename.,&r.," ");
-
-			array oldvarsr_e&race. {27}
-				PctAlone&race._2010_14 PctForeignBorn&race._2010_14
-				PctPopUnder18Years&race._2010_14 PctPop18_34Years&race._2010_14 
-				PctPop35_64Years&race._2010_14 PctPop65andOverYears&race._2010_14 
-				Pct25andOverWoutHS&race._2010_14 Pct25andOverWHS&race._2010_14
-				Pct25andOverWSC&race._2010_14 AvgHshldIncAdj&race._2010_14
-				PctFamilyGT200000&race._2010_14 PctFamilyLT75000&race._2010_14
-				PctPoorPersons&race._2010_14 PctPoorChildren&race._2010_14
-				Pct16andOverEmploy&race._2010_14 PctEmployed16to64&race._2010_14
-				PctUnemployed&race._2010_14 Pct16andOverWages&race._2010_14
-				Pct16andOverWorkFT&race._2010_14 PctWorkFTLT35k&race._2010_14
-				PctWorkFTLT75k&race._2010_14 PctEmployedMngmt&race._2010_14
-				PctEmployedServ&race._2010_14 PctEmployedSales&race._2010_14
-				PctEmployedNatRes&race._2010_14 PctEmployedProd&race._2010_14
-				PctOwnerOccupiedHU&race._2010_14
-				;
-
-			array oldvarsr_m&race. {27}
-				PctAlone&race._m_2010_14 PctForeignBorn&race._m_2010_14 
-				PctPopUnder18Years&race._m_2010_14 PctPop18_34Years&race._m_2010_14
-				PctPop35_64Years&race._m_2010_14 PctPop65andOverYrs&race._m_2010_14
-				Pct25andOverWoutHS&race._m_2010_14 Pct25andOverWHS&race._m_2010_14
-				Pct25andOverWSC&race._m_2010_14 AvgHshldIncAdj&race._m_2010_14
-				PctFamilyGT200000&race._m_2010_14 PctFamilyLT75000&race._m_2010_14
-				PctPoorPersons&race._m_2010_14 PctPoorChildren&race._m_2010_14
-				Pct16andOverEmploy&race._m_2010_14 PctEmployed16to64&race._m_2010_14
-				PctUnemployed&race._m_2010_14 Pct16andOverWages&race._m_2010_14
-				Pct16andOverWorkFT&race._m_2010_14 PctWorkFTLT35k&race._m_2010_14
-				PctWorkFTLT75k&race._m_2010_14 PctEmployedMngmt&race._m_2010_14
-				PctEmployedServ&race._m_2010_14 PctEmployedSales&race._m_2010_14
-				PctEmployedNatRes&race._m_2010_14 PctEmployedProd&race._m_2010_14
-				PctOwnerOccupiedHU&race._m_2010_14
-				;
-
-			array newvarsr_e&race. {27}
-				nPctAlone&race._2010_14 nPctForeignBorn&race._2010_14
-				nPctPopUnder18Yrs&race._2010_14 nPctPop18_34Years&race._2010_14 
-				nPctPop35_64Years&race._2010_14 nPctPop65andOverYrs&race._2010_14 
-				nPct25andOverWoutHS&race._2010_14 nPct25andOverWHS&race._2010_14
-				nPct25andOverWSC&race._2010_14 nAvgHshldIncAdj&race._2010_14
-				nPctFamilyGT200000&race._2010_14 nPctFamilyLT75000&race._2010_14
-				nPctPoorPersons&race._2010_14 nPctPoorChildren&race._2010_14
-				nPct16andOverEmploy&race._2010_14 nPctEmployed16to64&race._2010_14
-				nPctUnemployed&race._2010_14 nPct16andOverWages&race._2010_14
-				nPct16andOverWorkFT&race._2010_14 nPctWorkFTLT35k&race._2010_14
-				nPctWorkFTLT75k&race._2010_14 nPctEmployedMngmt&race._2010_14
-				nPctEmployedServ&race._2010_14 nPctEmployedSales&race._2010_14
-				nPctEmployedNatRes&race._2010_14 nPctEmployedProd&race._2010_14
-				nPctOwnerOccupiedHU&race._2010_14
-				;
-
-			array newvarsr_m&race. {27}
-				nPctAlone&race._m_2010_14 nPctForeignBorn&race._m_2010_14 
-				nPctPopUnder18Yrs&race._m_2010_14 nPctPop18_34Years&race._m_2010_14
-				nPctPop35_64Years&race._m_2010_14 nPctPop65andOvrYrs&race._m_2010_14
-				nPct25andOvrWoutHS&race._m_2010_14 nPct25andOverWHS&race._m_2010_14
-				nPct25andOverWSC&race._m_2010_14 nAvgHshldIncAdj&race._m_2010_14
-				nPctFamilyGT200000&race._m_2010_14 nPctFamilyLT75000&race._m_2010_14
-				nPctPoorPersons&race._m_2010_14 nPctPoorChildren&race._m_2010_14
-				nPct16andOverEmply&race._m_2010_14 nPctEmployed16to64&race._m_2010_14
-				nPctUnemployed&race._m_2010_14 nPct16andOverWages&race._m_2010_14
-				nPct16andOverWrkFT&race._m_2010_14 nPctWorkFTLT35k&race._m_2010_14
-				nPctWorkFTLT75k&race._m_2010_14 nPctEmployedMngmt&race._m_2010_14
-				nPctEmployedServ&race._m_2010_14 nPctEmployedSales&race._m_2010_14
-				nPctEmployedNatRes&race._m_2010_14 nPctEmployedProd&race._m_2010_14
-				nPctOwnerOccpiedHU&race._m_2010_14
-				;
-
-				do b=1 to 27; 
-		   
-					newvarsr_e&race.{b}=oldvarsr_e&race.{b}/100;
-					newvarsr_m&race.{b}=oldvarsr_m&race.{b}/100;
-				end;
-	%end;
-
-%mend decimal_convert;
-
-run;
 
 proc transpose data=equity.profile_tabs_ACS_suppress out=equity.profile_tabs_ACS; 
 var PctBlackNonHispBridge: PctWhiteNonHispBridge:
@@ -672,9 +484,15 @@ var PctBlackNonHispBridge: PctWhiteNonHispBridge:
  ;
 id ward2012; 
 run; 
+* convert to decimal;
+data convert;
+	set equity.profile_tabs_ACS_suppress (drop=cPct: cv: l: u:) ; 
 
+%decimal_convert;
 
-proc transpose data=equity.profile_tabs_ACS_suppress_dec out=equity.profile_tabs_ACS_dec; 
+run; 
+
+proc transpose data=convert out=profile_tabs_ACS_dec; 
 var nPctBlackNonHispBridge: nPctWhiteNonHispBridge:
 	nPctHisp: nPctAsnPINonHispBridge: nPctOthRace:
 	nPctAloneB: nPctAloneW: nPctAloneH: nPctAloneA_:
@@ -691,7 +509,7 @@ var nPctBlackNonHispBridge: nPctWhiteNonHispBridge:
 	nPctPopUnder18YearsW_: nPctPopUnder18YrsW_:
 	nPctPopUnder18YearsB_: nPctPopUnder18YrsB_:
 	nPctPopUnder18YearsH_: nPctPopUnder18YrsH_:
-	nPctPopUnder18YearsAIOM_: nPctPopUnder18YrsAIOM_:
+	nPctPopUnder18YearsAIOM_: nPctPopUnder18YrsAIOM_: nPctPopUnder18YrsAIOM
 
 	nPctPop18_34Years_: nPctPop18_34YearsW_: 
 	nPctPop18_34YearsB_: nPctPop18_34YearsH_:
@@ -847,71 +665,15 @@ var nPctBlackNonHispBridge: nPctWhiteNonHispBridge:
 id ward2012; 
 run;
 
+data equity.profile_tabs_ACS_dec;
+	set profile_tabs_ACS_dec;
 
-/*data equity.profile_tabs_ACS (where=(category ~=.));
-	set transposed_data;
-
-total=index(_name_, "_2010_14");
-if total=0 then total=index(_name_, "_m_2010_14");
-
-black=index(_name_, "B_2010_14");
-if black=0 then black=index(_name_,"B_m_2010_14");
-
-white=index(_name_, "W_2010_14");
-if white=0 then white=index(_name_,"W_m_2010_14");
-
-hispanic=index(_name_, "H_2010_14");
-if hispanic=0 then hispanic=index(_name_,"H_m_2010_14");
-
-AIOM=index(_name_, "AIOM_2010_14");
-if AIOM=0 then AIOM=index(_name_,"AIOM_m_2010_14");
-
-if total >0 then category=1;
-if black > 0 then category=5;
-if white > 0 then category=2;
-if hispanic > 0 then category=4; 
-if AIOM  > 0 then category=6; 
-
- if _name_ in ("PctWhiteNonHispBridge_2010_14") then category=2;
- if _name_ in ("PctWhiteNonHispBridge_m_2010_14") then category=2;
- if _name_ in ("PctBlackNonHispBridge_2010_14") then category=5;
- if _name_ in ("PctBlackNonHispBridge_m_2010_14") then category=5;
- if _name_ in ("PctHisp_2010_14") then category=4;
- if _name_ in ("PctHisp_m_2010_14") then category=4;
- if _name_ in ("PctAsnPINonHispBridge_2010_14") then category=0;
- if _name_ in ("PctAsnPINonHispBridge_m_2010_14") then category=0;
- if _name_ in ("PctOth_2010_14") then category=0;
- if _name_ in ("PctOth_m_2010_14") then category=0;
- if _name_ in ("PctForeignBorn_2010_14") then category=0;
- if _name_ in ("PctForeignBorn_m_2010_14") then category=0;
- if _name_ in ("PctNativeBorn_2010_14") then category=0;
- if _name_ in ("PctNativeBorn_m_2010_14") then category=0;
- if _name_ in ("PctOthLang_2010_14") then category=0;
- if _name_ in ("PctOthLang_m_2010_14") then category=0;
-
- if _name_ ="Gap25andOverWoutHSFB_2010_14" then do; black=0; category=.; end;
- if _name_ ="Pct25andOverWoutHSFB_2010_14" then do; black=0; category=.; end;
- if _name_ ="Pct25andOverWoutHSFB_m_2010_14" then do; black=0; category=.; end;
- if _name_ ="Gap25andOverWoutHSNB_2010_14" then do; black=0; category=.; end;
- if _name_ ="Pct25andOverWoutHSNB_2010_14" then do; black=0; category=.; end;
- if _name_ ="Pct25andOverWoutHSNB_m_2010_14" then do; black=0; category=.; end;
- if _name_ ="Gap25andOverWHSFB_2010_14" then do; black=0; category=.; end;
- if _name_ ="Pct25andOverWHSFB_2010_14" then do; black=0; category=.; end;
- if _name_ ="Pct25andOverWHSFB_m_2010_14" then do; black=0; category=.; end;
- if _name_ ="Gap25andOverWHSNB_2010_14" then do; black=0; category=.; end;
- if _name_ ="Pct25andOverWHSNB_2010_14" then do; black=0; category=.; end;
- if _name_ ="Pct25andOverWHSNB_m_2010_14" then do; black=0; category=.; end;
- if _name_ ="Gap25andOverWSCFB_2010_14" then do; black=0; category=.; end;
- if _name_ ="Pct25andOverWSCFB_2010_14" then do; black=0; category=.; end;
- if _name_ ="Pct25andOverWSCFB_m_2010_14" then do; black=0; category=.; end;
- if _name_ ="Gap25andOverWSCNB_2010_14" then do; black=0; category=.; end;
- if _name_ ="Pct25andOverWSCNB_2010_14" then do; black=0; category=.; end;
- if _name_ ="Pct25andOverWSCNB_m_2010_14" then do; black=0; category=.; end;
+_name_=substr(_name_,2);
 
 
-order=.;
+run;
+*add step to merge labels on from profiles_tabs_acs (by _name_); 
 
-run;*/
 
 proc export data=equity.profile_tabs_ACS
 	outfile="D:\DCDATA\Libraries\Equity\Prog\profile_tabs_ACS.csv"
@@ -922,15 +684,3 @@ proc export data=equity.profile_tabs_ACS_dec
 	outfile="D:\DCDATA\Libraries\Equity\Prog\profile_tabs_ACS_comms.csv"
 	dbms=csv replace;
 	run;
-
-  proc format;
-  	value category
-   	1= "Total"
-  	2= "Non-Hispanic White"
-    3= "Non-Hispanic All Other"
-	4= "Hispanic"
-	5= "Black Alone"
- 	6= "Asian, American Indian, Other Alone and Multiple Race"
-	7= "White Alone"
- 	8= "Foreign Born";
-
