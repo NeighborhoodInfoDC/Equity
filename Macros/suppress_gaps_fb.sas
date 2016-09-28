@@ -88,7 +88,7 @@
 				if n_lower{j} > y_lower{j} and n_lower{j} < y_upper{j} then n_gap{j}=.n;  
 
 	*suppressing gaps where estimates are suppresed;
-				if n_est{f}=.s then n_gap{j}=.s;
+				if n_est{j}=.s then n_gap{j}=.s;
 	end;
 
 %mend suppress_gaps_fb;
