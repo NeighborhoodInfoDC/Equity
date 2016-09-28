@@ -18,55 +18,55 @@
 		%let race=%scan(&racelist.,&r.," ");
 		%let name=%scan(&racename.,&r.," ");
 
-		*white estimates; 
+		*CITY white estimates; 
 			array w_est&race. {21} 
-				Pct25andOverWoutHSW_2010_14
-				Pct25andOverWHSW_2010_14
-				Pct25andOverWSCW_2010_14
-				AvgHshldIncAdjW_2010_14
-				PctFamilyGT200000W_2010_14 
-				PctFamilyLT75000W_2010_14
-				PctPoorPersonsW_2010_14 
-				PctPoorChildrenW_2010_14
-				Pct16andOverEmployW_2010_14
-				PctEmployed16to64W_2010_14
-				PctUnemployedW_2010_14
-				Pct16andOverWagesW_2010_14
-				Pct16andOverWorkFTW_2010_14
-				PctWorkFTLT35kW_2010_14
-				PctWorkFTLT75kW_2010_14
-				PctEmployedMngmtW_2010_14
-				PctEmployedServW_2010_14
-				PctEmployedSalesW_2010_14
-				PctEmployedNatResW_2010_14
-				PctEmployedProdW_2010_14
-				PctOwnerOccupiedHUW_2010_14
+				cPct25andOverWoutHSW_2010_14
+				cPct25andOverWHSW_2010_14
+				cPct25andOverWSCW_2010_14
+				cAvgHshldIncAdjW_2010_14
+				cPctFamilyGT200000W_2010_14 
+				cPctFamilyLT75000W_2010_14
+				cPctPoorPersonsW_2010_14 
+				cPctPoorChildrenW_2010_14
+				cPct16andOverEmployW_2010_14
+				cPctEmployed16to64W_2010_14
+				cPctUnemployedW_2010_14
+				cPct16andOverWagesW_2010_14
+				cPct16andOverWorkFTW_2010_14
+				cPctWorkFTLT35kW_2010_14
+				cPctWorkFTLT75kW_2010_14
+				cPctEmployedMngmtW_2010_14
+				cPctEmployedServW_2010_14
+				cPctEmployedSalesW_2010_14
+				cPctEmployedNatResW_2010_14
+				cPctEmployedProdW_2010_14
+				cPctOwnerOccupiedHUW_2010_14
 				;
 
-			*white MOE; 
+			*CITY white MOE; 
 
 			array w_moe&race. {21} 	
-				Pct25andOverWoutHSW_m_2010_14
-				Pct25andOverWHSW_m_2010_14
-				Pct25andOverWSCW_m_2010_14
-				AvgHshldIncAdjW_m_2010_14
-				PctFamilyGT200000W_m_2010_14
-				PctFamilyLT75000W_m_2010_14
-				PctPoorPersonsW_m_2010_14
-				PctPoorChildrenW_m_2010_14
-				Pct16andOverEmployW_m_2010_14
-				PctEmployed16to64W_m_2010_14
-				PctUnemployedW_m_2010_14
-				Pct16andOverWagesW_m_2010_14
-				Pct16andOverWorkFTW_m_2010_14
-				PctWorkFTLT35kW_m_2010_14
-				PctWorkFTLT75kW_m_2010_14
-				PctEmployedMngmtW_m_2010_14
-				PctEmployedServW_m_2010_14
-				PctEmployedSalesW_m_2010_14
-				PctEmployedNatResW_m_2010_14
-				PctEmployedProdW_m_2010_14
-				PctOwnerOccupiedHUW_m_2010_14
+				cPct25andOverWoutHSW_m_2010_14
+				cPct25andOverWHSW_m_2010_14
+				cPct25andOverWSCW_m_2010_14
+				cAvgHshldIncAdjW_m_2010_14
+				cPctFamilyGT200000W_m_2010_14
+				cPctFamilyLT75000W_m_2010_14
+				cPctPoorPersonsW_m_2010_14
+				cPctPoorChildrenW_m_2010_14
+				cPct16andOverEmployW_m_2010_14
+				cPctEmployed16to64W_m_2010_14
+				cPctUnemployedW_m_2010_14
+				cPct16andOverWagesW_m_2010_14
+				cPct16andOverWorkFTW_m_2010_14
+				cPctWorkFTLT35kW_m_2010_14
+				cPctWorkFTLT75kW_m_2010_14
+				cPctEmployedMngmtW_m_2010_14
+				cPctEmployedServW_m_2010_14
+				cPctEmployedSalesW_m_2010_14
+				cPctEmployedNatResW_m_2010_14
+				cPctEmployedProdW_m_2010_14
+				cPctOwnerOccupiedHUW_m_2010_14
 				;
 
 				*cv white MOE; 
