@@ -13,13 +13,9 @@
 
 %macro suppress_gaps;
 
-	%do r=1 %to 4;
-
-		%let race=%scan(&racelist.,&r.," ");
-		%let name=%scan(&racename.,&r.," ");
-
+	
 		*CITY white estimates; 
-			array w_est&race. {21} 
+			array w_est{21} 
 				cPct25andOverWoutHSW_2010_14
 				cPct25andOverWHSW_2010_14
 				cPct25andOverWSCW_2010_14
@@ -45,7 +41,7 @@
 
 			*CITY white MOE; 
 
-			array w_moe&race. {21} 	
+			array w_moe{21} 	
 				cPct25andOverWoutHSW_m_2010_14
 				cPct25andOverWHSW_m_2010_14
 				cPct25andOverWSCW_m_2010_14
@@ -71,7 +67,7 @@
 
 				*cv white MOE; 
 
-			array w_cv&race. {21} 
+			array w_cv{21} 
 				cvPct25andOverWoutHSW_2010_14
 				cvPct25andOverWHSW_2010_14
 				cvPct25andOverWSCW_2010_14
@@ -96,7 +92,7 @@
 				;
 
 				*white upper bound;
-			array w_upper&race. {21} 		
+			array w_upper{21} 		
 				uPct25andOverWoutHSW_2010_14
 				uPct25andOverWHSW_2010_14
 				uPct25andOverWSCW_2010_14
@@ -122,7 +118,7 @@
 
 				*white lower bound; 
 
-			array w_lower&race. {21} 		
+			array w_lower{21} 		
 				lPct25andOverWoutHSW_2010_14
 				lPct25andOverWHSW_2010_14
 				lPct25andOverWSCW_2010_14
@@ -146,9 +142,26 @@
 				lPctOwnerOccupiedHUW_2010_14
 				;
 
+				  	do m=1 to 21; 
+		   
+		                w_cv{m}=w_moe{m}/1.645/w_est{m}*100;
+		                w_lower{m}=w_est{m}- w_moe{m};
+		                w_upper{m}=w_est{m}+ w_moe{m};
+		          
+		                if w_cv{m} > 30 then do; 
+						w_est{m}=.s; w_moe{m}=.s; 
+						end; 
+
+					end;
+
+		%do r=1 %to 4;
+
+		%let race=%scan(&racelist.,&r.," ");
+		%let name=%scan(&racename.,&r.," ");
+
 				*gap race; 
 			array e_gap&race. {21} 
-				Gap25andOverWoutHS&race._2010_14
+				Gap25andOverWoutHS&race._2010_1
 				Gap25andOverWHS&race._2010_14
 				Gap25andOverWSC&race._2010_14
 				GapAvgHshldIncAdj&race._2010_14
@@ -171,24 +184,16 @@
 				GapOwnerOccupiedHU&race._2010_14
 				;
 
-		  	do m=1 to 21; 
-		   
-		                w_cv&race.{m}=w_moe&race.{m}/1.645/w_est&race.{m}*100;
-		                w_lower&race.{m}=w_est&race.{m}- w_moe&race.{m};
-		                w_upper&race.{m}=w_est&race.{m}+ w_moe&race.{m};
-		          
-		                if w_cv&race.{m} > 30 then do; 
-							w_est&race.{m}=.s; w_moe&race.{m}=.s; 
-						end; 
-
-			 *suppress gaps if not significantly different from white rates;  
-						if e_upper&race.{m} < w_upper&race.{m} and e_upper&race.{m} > w_lower&race.{m} then e_gap&race.{m}=.n;
-						if e_lower&race.{m} > w_lower&race.{m} and e_lower&race.{m} < w_upper&race.{m} then e_gap&race.{m}=.n;  
+		 	do X=1 to 21; 
+		 	*suppress gaps if not significantly different from white rates;  
+						if e_upper&race.{X} < w_upper{X} and e_upper&race.{X} > w_lower{X} then e_gap&race.{X}=.n;
+						if e_lower&race.{X} > w_lower{X} and e_lower&race.{X} < w_upper{X} then e_gap&race.{X}=.n;  
 
 			 *suppress gaps where estimates are suppresed;
-						if e_est&race.{k}=.s then e_gap&race.{m}=.s;
+						if e_est&race.{X}=.s then e_gap&race.{X}=.s;
 			end;
        
 	%end;
+					
 
 	%mend suppress_gaps;
