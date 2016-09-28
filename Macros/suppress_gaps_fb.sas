@@ -14,23 +14,23 @@
 %macro suppress_gaps_fb;
 
 	array y_est {7} 
-		Pct25andOverWoutHSW_2010_14
-		Pct25andOverWoutHSW_2010_14
-		Pct25andOverWHSW_2010_14
-		Pct25andOverWHSW_2010_14
-		Pct25andOverWSCW_2010_14
-		Pct25andOverWSCW_2010_14
-		PctPoorPersonsW_2010_14
+		CPct25andOverWoutHSW_2010_14
+		CPct25andOverWoutHSW_2010_14
+		CPct25andOverWHSW_2010_14
+		CPct25andOverWHSW_2010_14
+		CPct25andOverWSCW_2010_14
+		CPct25andOverWSCW_2010_14
+		CPctPoorPersonsW_2010_14
 		;
 
 	array y_moe {7} 	
-		Pct25andOverWoutHSW_m_2010_14
-		Pct25andOverWoutHSW_m_2010_14
-		Pct25andOverWHSW_m_2010_14
-		Pct25andOverWHSW_m_2010_14
-		Pct25andOverWSCW_m_2010_14
-		Pct25andOverWSCW_m_2010_14
-		PctPoorPersonsW_m_2010_14
+		CPct25andOverWoutHSW_m_2010_14
+		CPct25andOverWoutHSW_m_2010_14
+		CPct25andOverWHSW_m_2010_14
+		CPct25andOverWHSW_m_2010_14
+		CPct25andOverWSCW_m_2010_14
+		CPct25andOverWSCW_m_2010_14
+		CPctPoorPersonsW_m_2010_14
 		;
 
 	array y_cv {7} 
