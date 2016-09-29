@@ -212,10 +212,10 @@ var nPct_births_w_race_2011
 
 	nPct_births_low_wt_2011 	
 	nPct_births_low_wt_wht_2011 	
-	nPct_births_low_wt_blk_2011		nGap_births_low_wt_blk_2011
-	nPct_births_low_wt_hsp_2011 	nGap_births_low_wt_hsp_2011
-	nPct_births_low_wt_asn_2011 	nGap_births_low_wt_asn_2011
-	nPct_births_low_wt_oth_2011 	nGap_births_low_wt_oth_2011
+	nPct_births_low_wt_blk_2011	nGap_births_low_wt_blk_2011
+	nPct_births_low_wt_hsp_2011 nGap_births_low_wt_hsp_2011
+	nPct_births_low_wt_asn_2011 nGap_births_low_wt_asn_2011
+	nPct_births_low_wt_oth_2011 nGap_births_low_wt_oth_2011
 		
 	nPct_births_prenat_adeq_2011 	
 	nPct_births_prenat_adeq_wht_2011 	
@@ -234,7 +234,7 @@ var nPct_births_w_race_2011
 id ward2012; 
 run; 
 
-proc transpose data=convert_births_cltr00 out=profile_tabs_births_cltr00_dec_temp; 
+proc transpose data=convert_births_cltr00 out=profile_tabs_births_cltr00_dec_1; 
 var nPct_births_w_race_2011 
 
 	nPct_births_white_2011 
@@ -277,15 +277,15 @@ run;
 
 *first, drop the "n" from the var names in profile_tabs_births_wd12_dec_transpose;
 
-data profile_tabs_births_wd12_dec_temp_2;
-	set profile_tabs_births_wd12_dec_temp;
+data profile_tabs_births_wd12_dec_2;
+	set profile_tabs_births_wd12_dec_1;
 
 _name_=substr(_name_,2);
 
 run;
 
-data profile_tabs_births_cltr00_dec_temp_2;
-	set profile_tabs_births_cltr00_dec_temp;
+data profile_tabs_births_cltr00_dec_2;
+	set profile_tabs_births_cltr00_dec_1;
 
 _name_=substr(_name_,2);
 
@@ -294,11 +294,11 @@ run;
 
 *then, sort data by _name_ field and merge;
 
-proc sort data=profile_tabs_births_wd12_dec_temp_2;
+proc sort data=profile_tabs_births_wd12_dec_2;
 	by _name_;
 run;
 
-proc sort data=profile_tabs_births_cltr00_dec_temp_2;
+proc sort data=profile_tabs_births_cltr00_dec_2;
 	by _name_;
 run;
 
@@ -311,14 +311,14 @@ proc sort data=equity.profile_tabs_births_cltr00 out=profile_tabs_births_cltr00_
 run;
 
 data equity.profile_tabs_ACS_dec_wd12;
-	merge profile_tabs_births_wd12_dec_temp_2
+	merge profile_tabs_births_wd12_dec_2
 		  profile_tabs_births_wd12_temp (keep=_name_ _label_);
 	by _name_;	
 run;
 
 
 data equity.profile_tabs_ACS_dec_cltr00;
-	merge profile_tabs_births_cltr00_dec_temp_2 
+	merge profile_tabs_births_cltr00_dec_2 
 		  profile_tabs_births_cltr00_temp (keep=_name_ _label_);
 	by _name_;	
 run;
