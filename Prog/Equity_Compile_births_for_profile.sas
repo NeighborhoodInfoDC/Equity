@@ -111,51 +111,54 @@
 			
 
 	%end;
-
  
+	if births_w_race_2011 >= 5 then _make_profile = 1;
+	else _make_profile = 0;
+
   run;
     
-data equity.Equity_profile_births&geosuf.;
+  data equity.Equity_profile_births&geosuf.;
 	set Equity_profile_births&geosuf._B; 
 
-keep &geo 
-Births_total_2011 Births_total_3yr_2011 Births_w_race_2011
-Births_asian_2011 Births_asian_3yr_2011 Births_black_2011 Births_black_3yr_2011 
-Births_hisp_2011 Births_hisp_3yr_2011 Births_oth_rac_2011 Births_oth_rac_3yr_2011 
-Births_white_2011 Births_white_3yr_2011 
+		keep &geo _make_profile
+		Births_total_2011 Births_total_3yr_2011 Births_w_race_2011
+		Births_asian_2011 Births_asian_3yr_2011 Births_black_2011 Births_black_3yr_2011 
+		Births_hisp_2011 Births_hisp_3yr_2011 Births_oth_rac_2011 Births_oth_rac_3yr_2011 
+		Births_white_2011 Births_white_3yr_2011 
 
-Births_w_weight_2011 Births_w_weight_asn_2011 Births_w_weight_blk_2011 
-Births_w_weight_hsp_2011 Births_w_weight_oth_2011 Births_w_weight_wht_2011
+		Births_w_weight_2011 Births_w_weight_asn_2011 Births_w_weight_blk_2011 
+		Births_w_weight_hsp_2011 Births_w_weight_oth_2011 Births_w_weight_wht_2011
 
-Births_low_wt_2011 Births_low_wt_asn_2011 Births_low_wt_blk_2011 
-Births_low_wt_hsp_2011 Births_low_wt_oth_2011 Births_low_wt_wht_2011 
+		Births_low_wt_2011 Births_low_wt_asn_2011 Births_low_wt_blk_2011 
+		Births_low_wt_hsp_2011 Births_low_wt_oth_2011 Births_low_wt_wht_2011 
 
-Births_w_prenat_2011 Births_w_prenat_asn_2011 Births_w_prenat_blk_2011 
-Births_w_prenat_hsp_2011 Births_w_prenat_oth_2011 Births_w_prenat_wht_2011 
+		Births_w_prenat_2011 Births_w_prenat_asn_2011 Births_w_prenat_blk_2011 
+		Births_w_prenat_hsp_2011 Births_w_prenat_oth_2011 Births_w_prenat_wht_2011 
 
-Births_prenat_adeq_2011 Births_prenat_adeq_asn_2011 Births_prenat_adeq_blk_2011 Births_prenat_adeq_hsp_2011
-Births_prenat_adeq_oth_2011 Births_prenat_adeq_wht_2011 
+		Births_prenat_adeq_2011 Births_prenat_adeq_asn_2011 Births_prenat_adeq_blk_2011 Births_prenat_adeq_hsp_2011
+		Births_prenat_adeq_oth_2011 Births_prenat_adeq_wht_2011 
 
-Births_w_age_2011 Births_w_agerace_2011 Births_w_age_asn_2011 
-Births_w_age_blk_2011 Births_w_age_hsp_2011 Births_w_age_oth_2011 Births_w_age_wht_2011 
+		Births_w_age_2011 Births_w_agerace_2011 Births_w_age_asn_2011 
+		Births_w_age_blk_2011 Births_w_age_hsp_2011 Births_w_age_oth_2011 Births_w_age_wht_2011 
 
-Births_teen_wht_2011 Births_teen_oth_2011 Births_teen_blk_2011 Births_teen_hsp_2011 Births_teen_asn_2011 Births_teen_2011
+		Births_teen_wht_2011 Births_teen_oth_2011 Births_teen_blk_2011 Births_teen_hsp_2011 Births_teen_asn_2011 Births_teen_2011
 
-Pct_births_w_race_2011 Pct_births_white_2011 Pct_births_white_3yr_2011
-Pct_births_asian_2011 Pct_births_asian_3yr_2011 Pct_births_black_2011 Pct_births_black_3yr_2011 
-Pct_births_hisp_2011 Pct_births_hisp_3yr_2011 Pct_births_oth_rac_2011 Pct_births_oth_rac_3yr_2011
+		Pct_births_w_race_2011 Pct_births_white_2011 Pct_births_white_3yr_2011
+		Pct_births_asian_2011 Pct_births_asian_3yr_2011 Pct_births_black_2011 Pct_births_black_3yr_2011 
+		Pct_births_hisp_2011 Pct_births_hisp_3yr_2011 Pct_births_oth_rac_2011 Pct_births_oth_rac_3yr_2011
 
-Pct_births_low_wt_2011 Pct_births_low_wt_asn_2011 Pct_births_low_wt_blk_2011
-Pct_births_low_wt_hsp_2011 Pct_births_low_wt_oth_2011 Pct_births_low_wt_wht_2011 
+		Pct_births_low_wt_2011 Pct_births_low_wt_asn_2011 Pct_births_low_wt_blk_2011
+		Pct_births_low_wt_hsp_2011 Pct_births_low_wt_oth_2011 Pct_births_low_wt_wht_2011 
 
-Pct_births_prenat_adeq_2011 Pct_births_prenat_adeq_asn_2011 Pct_births_prenat_adeq_blk_2011 
-Pct_births_prenat_adeq_hsp_2011 Pct_births_prenat_adeq_oth_2011 Pct_births_prenat_adeq_wht_2011 
+		Pct_births_prenat_adeq_2011 Pct_births_prenat_adeq_asn_2011 Pct_births_prenat_adeq_blk_2011 
+		Pct_births_prenat_adeq_hsp_2011 Pct_births_prenat_adeq_oth_2011 Pct_births_prenat_adeq_wht_2011 
 
-Pct_births_teen_2011 Pct_births_teen_asn_2011 Pct_births_teen_blk_2011
-Pct_births_teen_hsp_2011 Pct_births_teen_oth_2011 Pct_births_teen_wht_2011 
-;
- 
+		Pct_births_teen_2011 Pct_births_teen_asn_2011 Pct_births_teen_blk_2011
+		Pct_births_teen_hsp_2011 Pct_births_teen_oth_2011 Pct_births_teen_wht_2011 
+		;
+		 
  run;
+
 
  %File_info( data=Equity.Equity_profile_births&geosuf, printobs=0, contents=n )
  

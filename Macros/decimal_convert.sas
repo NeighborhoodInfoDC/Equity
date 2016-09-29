@@ -128,14 +128,14 @@ Arrays list existing variables in percent format and new arrays will be in decim
 
 	*Create and convert arrays for foreign born gaps.;
 
-			array oldgapsn {7} 		
+			array oldgapsn {7}
 			  	Gap25andOverWoutHSFB_2010_14 Gap25andOverWoutHSNB_2010_14
 				Gap25andOverWHSFB_2010_14 Gap25andOverWHSNB_2010_14 
 				Gap25andOverWSCFB_2010_14 Gap25andOverWSCNB_2010_14
 				GapPoorPersonsFB_2010_14
 				;
 
-			array newgapsn {7} 		
+			array newgapsn {7} 
 			  	nGap25andOverWoutHSFB_2010_14 nGap25andOverWoutHSNB_2010_14
 				nGap25andOverWHSFB_2010_14 nGap25andOverWHSNB_2010_14 
 				nGap25andOverWSCFB_2010_14 nGap25andOverWSCNB_2010_14

@@ -480,20 +480,19 @@ var PctBlackNonHispBridge: PctWhiteNonHispBridge:
 	PctOwnerOccupiedHUB: GapOwnerOccupiedHUB:
 	PctOwnerOccupiedHUH: GapOwnerOccupiedHUH:
 	PctOwnerOccupiedHUAIOM: GapOwnerOccupiedHUAIOM:
-
- ;
+ 	;
 id ward2012; 
 run; 
 
 * convert to decimal;
 data convert;
-	set equity.profile_tabs_ACS_suppress (drop=cPct: cv: l: u:) ; 
+	set equity.profile_tabs_ACS; 
 
 %decimal_convert;
 
 run; 
 
-proc transpose data=convert out=profile_tabs_ACS_dec; 
+proc transpose data=convert out=profile_tabs_ACS_dec_transpose; 
 var nPctBlackNonHispBridge: nPctWhiteNonHispBridge:
 	nPctHisp: nPctAsnPINonHispBridge: nPctOthRace:
 	nPctAloneB: nPctAloneW: nPctAloneH: nPctAloneA_:
@@ -661,26 +660,41 @@ var nPctBlackNonHispBridge: nPctWhiteNonHispBridge:
 	nPctOwnerOccupiedHUB: nPctOwnerOccpiedHUB: nGapOwnerOccupiedHUB:
 	nPctOwnerOccupiedHUH: nPctOwnerOccpiedHUH: nGapOwnerOccupiedHUH:
 	nPctOwnerOccupiedHUAIOM: nPctOwnerOccpiedHUAIOM: nGapOwnerOccupiedHUAIOM:
-
- ;
+ 	;
 id ward2012; 
 run;
 
-data equity.profile_tabs_ACS_dec;
-	set profile_tabs_ACS_dec;
+*import labels from profile_tabs_ACS into decimal convert dataset;
 
-_name_=substr(_name_,2);
-call execute (
-
+data profile_tabs_ACS_dec_transpose_2;
+	set profile_tabs_ACS_dec_transpose;
+	_name_=substr(_name_,2);
 run;
-*add step to merge labels on from profiles_tabs_acs (by _name_); 
+
+
+proc sort data=profile_tabs_ACS_dec_transpose_2;
+	by _name_;
+run;
+
+
+proc sort data=equity.profile_tabs_ACS 
+	out=profile_tabs_ACS_sort;
+	by _name_;
+run;
+ 
+data equity.profile_tabs_ACS_dec;
+	merge profile_tabs_ACS_dec_transpose_2 
+		  profile_tabs_ACS_sort (keep=_name_ _label_);
+	by _name_;	
+run;
+	
 
 proc export data=equity.profile_tabs_ACS
-	outfile="D:\DCDATA\Libraries\Equity\Prog\profile_tabs_ACS.csv"
+	outfile="D:\DCDATA\Libraries\Equity\Data\profile_tabs_ACS.csv"
 	dbms=csv replace;
 	run;
 
-proc export data=equity.profile_tabs_ACS_dec
-	outfile="D:\DCDATA\Libraries\Equity\Prog\profile_tabs_ACS_comms.csv"
+proc export data=equity.profile_tabs_ACS_tranpose
+	outfile="D:\DCDATA\Libraries\Equity\Data\profile_tabs_ACS_dec.csv"
 	dbms=csv replace;
 	run;
