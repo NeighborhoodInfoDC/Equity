@@ -373,7 +373,7 @@ var PctBlackNonHispBridge: PctWhiteNonHispBridge:
 	AvgHshldIncAdjW: GapAvgHshldIncAdjW:
 	AvgHshldIncAdjB: GapAvgHshldIncAdjB:
 	AvgHshldIncAdjH: GapAvgHshldIncAdjH:
-	AvgHshldIncAdjAIOM_2010_14 GapAvgHshldIncAdjAIOM:
+	AvgHshldIncAdjAIOM: GapAvgHshldIncAdjAIOM:
 
 	PctFamilyGT200000_:
 	PctFamilyGT200000W: GapFamilyGT200000W: 
@@ -484,6 +484,7 @@ var PctBlackNonHispBridge: PctWhiteNonHispBridge:
  ;
 id ward2012; 
 run; 
+
 * convert to decimal;
 data convert;
 	set equity.profile_tabs_ACS_suppress (drop=cPct: cv: l: u:) ; 
@@ -509,7 +510,7 @@ var nPctBlackNonHispBridge: nPctWhiteNonHispBridge:
 	nPctPopUnder18YearsW_: nPctPopUnder18YrsW_:
 	nPctPopUnder18YearsB_: nPctPopUnder18YrsB_:
 	nPctPopUnder18YearsH_: nPctPopUnder18YrsH_:
-	nPctPopUnder18YearsAIOM_: nPctPopUnder18YrsAIOM_: nPctPopUnder18YrsAIOM
+	nPctPopUnder18YearsAIOM_: nPctPopUnder18YrsAIOM_:
 
 	nPctPop18_34Years_: nPctPop18_34YearsW_: 
 	nPctPop18_34YearsB_: nPctPop18_34YearsH_:
@@ -526,10 +527,10 @@ var nPctBlackNonHispBridge: nPctWhiteNonHispBridge:
 	nPctPop65andOverYrsAIOM: nPctPop65andOvrYrsAIOM:
 
 	nPct25andOverWoutHS_: 
-	nPct25andOverWoutHSW: Pct25andOvrWoutHSW: nGap25andOverWoutHSW:
-	nPct25andOverWoutHSB: Pct25andOvrWoutHSB: nGap25andOverWoutHSB:
-	nPct25andOverWoutHSH: Pct25andOvrWoutHSH: nGap25andOverWoutHSH:
-	nPct25andOverWoutHSAIOM: Pct25andOvrWoutHSAIOM: nGap25andOverWoutHSAIOM:
+	nPct25andOverWoutHSW: nPct25andOvrWoutHSW: nGap25andOverWoutHSW:
+	nPct25andOverWoutHSB: nPct25andOvrWoutHSB: nGap25andOverWoutHSB:
+	nPct25andOverWoutHSH: nPct25andOvrWoutHSH: nGap25andOverWoutHSH:
+	nPct25andOverWoutHSAIOM: nPct25andOvrWoutHSAIOM: nGap25andOverWoutHSAIOM:
 	nPct25andOverWoutHSFB: nGap25andOverWoutHSFB:
 	nPct25andOverWoutHSNB: nGap25andOverWoutHSNB:
 
@@ -550,10 +551,10 @@ var nPctBlackNonHispBridge: nPctWhiteNonHispBridge:
 	nPct25andOverWSCNB: nGap25andOverWSCNB:
 
 	nAvgHshldIncAdj_: 
-	nAvgHshldIncAdjW: nGapnAvgHshldIncAdjW:
-	nAvgHshldIncAdjB: nGapnAvgHshldIncAdjB:
-	nAvgHshldIncAdjH: nGapnAvgHshldIncAdjH:
-	nAvgHshldIncAdjAIOM_2010_14 nGapnAvgHshldIncAdjAIOM:
+	nAvgHshldIncAdjW: nGapAvgHshldIncAdjW:
+	nAvgHshldIncAdjB: nGapAvgHshldIncAdjB:
+	nAvgHshldIncAdjH: nGapAvgHshldIncAdjH:
+	nAvgHshldIncAdjAIOM_2010_14 nGapAvgHshldIncAdjAIOM:
 
 	nPctFamilyGT200000_:
 	nPctFamilyGT200000W: nGapFamilyGT200000W: 
@@ -669,11 +670,10 @@ data equity.profile_tabs_ACS_dec;
 	set profile_tabs_ACS_dec;
 
 _name_=substr(_name_,2);
-
+call execute (
 
 run;
 *add step to merge labels on from profiles_tabs_acs (by _name_); 
-
 
 proc export data=equity.profile_tabs_ACS
 	outfile="D:\DCDATA\Libraries\Equity\Prog\profile_tabs_ACS.csv"

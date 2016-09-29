@@ -1,13 +1,13 @@
 /**************************************************************************
- Program:  decimal_convert.sas
+ Program:  decimal_convert_births.sas
  Library:  Equity
  Project:  NeighborhoodInfo DC
  Author:   S. Diby
- Created:  09/12/16
+ Created:  09/29/16
  Version:  SAS 9.2
  Environment:  Local Windows session (desktop)
  
- Description:  Converts percentages for by-race and total variable estimates and MOEs to decimals. 
+ Description:  Converts percentages for by-race and total birth variable percentages and gaps decimals. 
 			   Created in anticipation of Racial Equity interactive feature published on Urban.org--
 			   Comms prefers decimals for csv format.
 **************************************************************************/
