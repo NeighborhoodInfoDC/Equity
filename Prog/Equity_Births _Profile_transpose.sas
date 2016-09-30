@@ -323,20 +323,26 @@ proc sort data=equity.profile_tabs_births_cltr00 out=profile_tabs_births_cltr00_
 	by _name_;
 run;
 
-data equity.profile_tabs_births_wd12_dec;
-	merge profile_tabs_births_wd12_dec_2
-		  profile_tabs_births_wd12_pct (keep=_name_ _label_);
+data profile_tabs_births_wd12_dec_notsort;
+	merge profile_tabs_births_wd12_pct (keep=_name_ _label_)
+		  profile_tabs_births_wd12_dec_2;
 	by _name_;	
 run;
 
 
-data equity.profile_tabs_births_cltr00_dec;
-	merge profile_tabs_births_cltr00_dec_2 
-		  profile_tabs_births_cltr00_pct (keep=_name_ _label_);
+data profile_tabs_births_cltr00_dec_notsort;
+	merge profile_tabs_births_cltr00_pct (keep=_name_ _label_)
+		  profile_tabs_births_cltr00_dec_2;
 	by _name_;	
 run;
 
+proc sort data=profile_tabs_births_wd12_dec_notsort out=equity.profile_tabs_births_wd12_dec; 
+	by id;
+run;
 
+proc sort data=profile_tabs_births_cltr00_dec_notsort out=equity.profile_tabs_births_cltr00_dec; 
+	by id;
+run;
 proc export data=equity.profile_tabs_births_wd12
 	outfile="D:\DCDATA\Libraries\Equity\Prog\profile_tabs_births_ward.csv"
 	dbms=csv replace;

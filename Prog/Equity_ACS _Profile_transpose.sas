@@ -488,7 +488,6 @@ run;
 data convert;
 	set equity.profile_tabs_ACS_suppress; 
 
-
 %decimal_convert;
 
 run; 
@@ -670,7 +669,7 @@ run;
 data profile_tabs_ACS_dec_transpose_2;
 	set profile_tabs_ACS_dec_transpose;
 	_name_=substr(_name_,2);
-	id=_n_; *this will allow us to resort later; 
+	id=_n_; *this will allow us to resort later;
 run;
 
 
@@ -684,13 +683,17 @@ proc sort data=equity.profile_tabs_ACS
 	by _name_;
 run;
  
+*merging to add labels to decimal out dataset and dropping variables that were renamed in decimal convert to keep under 32 charaacter;
 data profile_tabs_ACS_dec_Notsort;
-	merge profile_tabs_ACS_dec_transpose_2 
-		  profile_tabs_ACS_sort (keep=_name_ _label_);
+	merge profile_tabs_ACS_sort 
+			(keep=_name_ _label_ )
+		  profile_tabs_ACS_dec_transpose_2 
+		  ;
 	by _name_;	
 run;
 	
-proc sort data=profile_tabs_ACS_dec_notsort out=equity.profile_tabs_ACS_dec;
+proc sort data=profile_tabs_ACS_dec_notsort 
+			out=equity.profile_tabs_ACS_dec;
 by id; 
 run; 
 
