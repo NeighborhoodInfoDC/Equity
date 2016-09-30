@@ -283,7 +283,7 @@ run;
 
 *import labels from profile_tabs_births_wd12 into decimal convert dataset;
 
-*first, drop the "n" from the var names in profile_tabs_births_wd12_dec_transpose;
+*first, drop the "n" from the var names in profile_tabs_births_wd12_dec_1;
 
 data profile_tabs_births_wd12_dec_2;
 	set profile_tabs_births_wd12_dec_1;
@@ -310,7 +310,7 @@ proc sort data=profile_tabs_births_cltr00_dec_2;
 	by _name_;
 run;
 
-proc sort data=equity.profile_tabs_births_wd12 out=profile_tabs_births_wd12_pct 
+proc sort data=equity.profile_tabs_births_wd12 out=profile_tabs_births_wd12_pct; 
 	by _name_;
 run;
 
@@ -320,14 +320,14 @@ run;
 
 data equity.profile_tabs_births_wd12_dec;
 	merge profile_tabs_births_wd12_dec_2
-		  profile_tabs_births_wd12_temp (keep=_name_ _label_);
+		  profile_tabs_births_wd12_pct (keep=_name_ _label_);
 	by _name_;	
 run;
 
 
 data equity.profile_tabs_births_cltr00_dec;
 	merge profile_tabs_births_cltr00_dec_2 
-		  profile_tabs_births_cltr00_temp (keep=_name_ _label_);
+		  profile_tabs_births_cltr00_pct (keep=_name_ _label_);
 	by _name_;	
 run;
 
