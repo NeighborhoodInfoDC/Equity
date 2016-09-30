@@ -106,7 +106,8 @@ data city_births_gaps (drop=_make_profile);
 run;
 
 proc transpose data=city_births_gaps out=equity.profile_tabs_births_wd12; 
-var Pct_births_w_race_2011 
+var Births_total_2011
+	Pct_births_w_race_2011 
 
 	Pct_births_white_2011 
 	Pct_births_asian_2011 
@@ -145,7 +146,8 @@ id ward2012;
 run; 
 
 proc transpose data=city_births_gaps out=equity.profile_tabs_births_cltr00; 
-var Pct_births_w_race_2011 
+var Births_total_2011
+	Pct_births_w_race_2011 
 
 	Pct_births_white_2011 
 	Pct_births_asian_2011 
@@ -204,7 +206,8 @@ data convert_births_cltr00
 
 run; 
 proc transpose data=convert_births_wd12 out=profile_tabs_births_wd12_dec_1; 
-var nPct_births_w_race_2011 
+var nBirths_total_2011
+	nPct_births_w_race_2011 
 
 	nPct_births_white_2011 
 	nPct_births_asian_2011 
@@ -243,7 +246,8 @@ id ward2012;
 run; 
 
 proc transpose data=convert_births_cltr00 out=profile_tabs_births_cltr00_dec_1; 
-var nPct_births_w_race_2011 
+var Births_total_2011
+	nPct_births_w_race_2011 
 
 	nPct_births_white_2011 
 	nPct_births_asian_2011 
