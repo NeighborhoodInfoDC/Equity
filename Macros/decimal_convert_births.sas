@@ -101,7 +101,8 @@
 
 	*Create and convert arrays for birth var gaps.;
 
-			array oldbirthgaps {12} 		
+			array oldbirthgaps {13} 		
+				births_total_2011
 				Gap_births_low_wt_blk_2011
 				Gap_births_low_wt_hsp_2011
 				Gap_births_low_wt_asn_2011
@@ -116,7 +117,8 @@
 				Gap_births_teen_oth_2011
 				;
 
-			array newbirthgaps {12} 	
+			array newbirthgaps {13} 	
+				nbirths_total_2011
 				nGap_births_low_wt_blk_2011
 				nGap_births_low_wt_hsp_2011
 				nGap_births_low_wt_asn_2011
@@ -131,7 +133,7 @@
 				nGap_births_teen_oth_2011				
 				;
 
-				do y=1 to 12; 
+				do y=1 to 13; 
 
 					newbirthgaps{y}=oldbirthgaps{y};
 	

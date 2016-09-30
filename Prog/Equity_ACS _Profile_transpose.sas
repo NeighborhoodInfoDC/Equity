@@ -669,7 +669,7 @@ run;
 data profile_tabs_ACS_dec_transpose_2;
 	set profile_tabs_ACS_dec_transpose;
 	_name_=substr(_name_,2);
-	id=_n_; *this will allow us to resort later;
+	id=_n_; 
 run;
 
 
@@ -683,18 +683,19 @@ proc sort data=equity.profile_tabs_ACS
 	by _name_;
 run;
  
-*merging to add labels to decimal out dataset and dropping variables that were renamed in decimal convert to keep under 32 charaacter;
-data profile_tabs_ACS_dec_Notsort;
-	merge profile_tabs_ACS_sort 
-			(keep=_name_ _label_ )
+data profile_tabs_ACS_dec_notsort;
+	merge profile_tabs_ACS_sort (keep=_name_ _label_)
 		  profile_tabs_ACS_dec_transpose_2 
 		  ;
 	by _name_;	
 run;
 	
-proc sort data=profile_tabs_ACS_dec_notsort 
+* where statement included to drop variables that were renamed in decimal convert to keep under 32 charaacter;
+
+proc sort data=profile_tabs_ACS_dec_notsort
 			out=equity.profile_tabs_ACS_dec;
 by id; 
+where id ^= .;
 run; 
 
 proc export data=equity.profile_tabs_ACS
@@ -706,3 +707,5 @@ proc export data=equity.profile_tabs_ACS_dec
 	outfile="D:\DCDATA\Libraries\Equity\Prog\profile_tabs_ACS_dec.csv"
 	dbms=csv replace;
 	run;
+
+					
