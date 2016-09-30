@@ -486,7 +486,8 @@ run;
 
 * convert to decimal;
 data convert;
-	set equity.profile_tabs_ACS; 
+	set equity.profile_tabs_ACS_suppress; 
+
 
 %decimal_convert;
 
@@ -669,6 +670,7 @@ run;
 data profile_tabs_ACS_dec_transpose_2;
 	set profile_tabs_ACS_dec_transpose;
 	_name_=substr(_name_,2);
+	id=_n_; *this will allow us to resort later; 
 run;
 
 
@@ -682,19 +684,22 @@ proc sort data=equity.profile_tabs_ACS
 	by _name_;
 run;
  
-data equity.profile_tabs_ACS_dec;
+data profile_tabs_ACS_dec_Notsort;
 	merge profile_tabs_ACS_dec_transpose_2 
 		  profile_tabs_ACS_sort (keep=_name_ _label_);
 	by _name_;	
 run;
 	
+proc sort data=profile_tabs_ACS_dec_notsort out=equity.profile_tabs_ACS_dec;
+by id; 
+run; 
 
 proc export data=equity.profile_tabs_ACS
-	outfile="D:\DCDATA\Libraries\Equity\Data\profile_tabs_ACS.csv"
+	outfile="D:\DCDATA\Libraries\Equity\prog\profile_tabs_ACS.csv"
 	dbms=csv replace;
 	run;
 
-proc export data=equity.profile_tabs_ACS_tranpose
-	outfile="D:\DCDATA\Libraries\Equity\Data\profile_tabs_ACS_dec.csv"
+proc export data=equity.profile_tabs_ACS_dec
+	outfile="D:\DCDATA\Libraries\Equity\prog\profile_tabs_ACS_dec.csv"
 	dbms=csv replace;
 	run;
