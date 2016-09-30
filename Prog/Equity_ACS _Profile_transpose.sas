@@ -695,11 +695,11 @@ by id;
 run; 
 
 proc export data=equity.profile_tabs_ACS
-	outfile="D:\DCDATA\Libraries\Equity\prog\profile_tabs_ACS.csv"
+	outfile="D:\DCDATA\Libraries\Equity\Prog\profile_tabs_ACS.csv"
 	dbms=csv replace;
 	run;
 
 proc export data=equity.profile_tabs_ACS_dec
-	outfile="D:\DCDATA\Libraries\Equity\prog\profile_tabs_ACS_dec.csv"
+	outfile="D:\DCDATA\Libraries\Equity\Prog\profile_tabs_ACS_dec.csv"
 	dbms=csv replace;
 	run;

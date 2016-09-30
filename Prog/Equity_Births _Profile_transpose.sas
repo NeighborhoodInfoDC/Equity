@@ -289,6 +289,7 @@ data profile_tabs_births_wd12_dec_2;
 	set profile_tabs_births_wd12_dec_1;
 
 _name_=substr(_name_,2);
+id=_n_;
 
 run;
 
@@ -296,7 +297,7 @@ data profile_tabs_births_cltr00_dec_2;
 	set profile_tabs_births_cltr00_dec_1;
 
 _name_=substr(_name_,2);
-
+id=_n_;
 run;
 
 
@@ -333,21 +334,21 @@ run;
 
 
 proc export data=equity.profile_tabs_births_wd12
-	outfile="D:\DCDATA\Libraries\Equity\prog\profile_tabs_births_ward.csv"
+	outfile="D:\DCDATA\Libraries\Equity\Prog\profile_tabs_births_ward.csv"
 	dbms=csv replace;
 	run;
 
 proc export data=equity.profile_tabs_births_cltr00
-	outfile="D:\DCDATA\Libraries\Equity\prog\profile_tabs_births_cluster.csv"
+	outfile="D:\DCDATA\Libraries\Equity\Prog\profile_tabs_births_cluster.csv"
 	dbms=csv replace;
 	run;
 
 proc export data=equity.profile_tabs_births_wd12_dec
-	outfile="D:\DCDATA\Libraries\Equity\prg\profile_tabs_births_ward_dec.csv"
+	outfile="D:\DCDATA\Libraries\Equity\Prog\profile_tabs_births_ward_dec.csv"
 	dbms=csv replace;
 	run;
 
 proc export data=equity.profile_tabs_births_cltr00_dec
-	outfile="D:\DCDATA\Libraries\Equity\prog\profile_tabs_births_cluster_dec.csv"
+	outfile="D:\DCDATA\Libraries\Equity\Prog\profile_tabs_births_cluster_dec.csv"
 	dbms=csv replace;
 	run;
