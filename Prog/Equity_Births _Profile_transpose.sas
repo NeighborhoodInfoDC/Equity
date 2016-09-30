@@ -344,11 +344,7 @@ proc export data=equity.profile_tabs_births_cltr00
 	run;
 
 proc export data=equity.profile_tabs_births_wd12_dec
-<<<<<<< HEAD
 	outfile="D:\DCDATA\Libraries\Equity\Prog\profile_tabs_births_ward_dec.csv"
-=======
-	outfile="D:\DCDATA\Libraries\Equity\prog\profile_tabs_births_ward_dec.csv"
->>>>>>> origin/develop_2
 	dbms=csv replace;
 	run;
 
