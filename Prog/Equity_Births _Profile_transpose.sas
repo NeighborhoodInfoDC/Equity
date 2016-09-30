@@ -27,9 +27,9 @@ data city_births;
 			equity.equity_profile_births_wd12
 			equity.equity_profile_births_cltr00;
 
-			if city=1 then ward2012=0;
-			if city=1 then cluster_tr2000=0;
-			;
+			if city="1" then ward2012="0";
+			if city="1" then cluster_tr2000="00";
+			
 
 run; 
 
@@ -289,6 +289,7 @@ data profile_tabs_births_wd12_dec_2;
 	set profile_tabs_births_wd12_dec_1;
 
 _name_=substr(_name_,2);
+id=_n_;
 
 run;
 
@@ -296,7 +297,7 @@ data profile_tabs_births_cltr00_dec_2;
 	set profile_tabs_births_cltr00_dec_1;
 
 _name_=substr(_name_,2);
-
+id=_n_;
 run;
 
 
@@ -343,7 +344,7 @@ proc export data=equity.profile_tabs_births_cltr00
 	run;
 
 proc export data=equity.profile_tabs_births_wd12_dec
-	outfile="D:\DCDATA\Libraries\Equity\prg\profile_tabs_births_ward_dec.csv"
+	outfile="D:\DCDATA\Libraries\Equity\prog\profile_tabs_births_ward_dec.csv"
 	dbms=csv replace;
 	run;
 
