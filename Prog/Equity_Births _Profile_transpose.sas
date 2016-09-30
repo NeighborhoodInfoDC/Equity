@@ -13,6 +13,8 @@
 **************************************************************************/
 %include "L:\SAS\Inc\StdLocal.sas";
 
+options symbolgen mprint;
+
 ** Define libraries **;
 %DCData_lib( ACS )
 %DCData_lib( Equity )
@@ -182,15 +184,21 @@ id cluster_tr2000;
 run; 
 
 * convert to decimal;
-data convert_births_wd12;
-	set equity.profile_tabs_births_wd12 (keep=_name_ _label_); 
+data convert_births_wd12 
+		(drop=births_w_race: births_black: births_asian: births_hisp: births_white: births_oth_rac:
+			Births_w_age: births_teen: Births_low_wt: Births_w_weight:
+			births_prenat_adeq: births_w_prenat:);
+	set city_births_gaps; 
 
 %decimal_convert_births;
 
 run; 
 
-data convert_births_cltr00;
-	set equity.profile_tabs_births_cltr00; 
+data convert_births_cltr00
+	(drop=births_w_race: births_black: births_asian: births_hisp: births_white: births_oth_rac:
+			Births_w_age: births_teen: Births_low_wt: Births_w_weight:
+			births_prenat_adeq: births_w_prenat:);
+	set city_births_gaps; 
 
 %decimal_convert_births;
 
@@ -302,22 +310,22 @@ proc sort data=profile_tabs_births_cltr00_dec_2;
 	by _name_;
 run;
 
-proc sort data=equity.profile_tabs_births_wd12 out=profile_tabs_births_wd12_temp; 
+proc sort data=equity.profile_tabs_births_wd12 out=profile_tabs_births_wd12_pct 
 	by _name_;
 run;
 
-proc sort data=equity.profile_tabs_births_cltr00 out=profile_tabs_births_cltr00_temp; 
+proc sort data=equity.profile_tabs_births_cltr00 out=profile_tabs_births_cltr00_pct; 
 	by _name_;
 run;
 
-data equity.profile_tabs_ACS_dec_wd12;
+data equity.profile_tabs_births_wd12_dec;
 	merge profile_tabs_births_wd12_dec_2
 		  profile_tabs_births_wd12_temp (keep=_name_ _label_);
 	by _name_;	
 run;
 
 
-data equity.profile_tabs_ACS_dec_cltr00;
+data equity.profile_tabs_births_cltr00_dec;
 	merge profile_tabs_births_cltr00_dec_2 
 		  profile_tabs_births_cltr00_temp (keep=_name_ _label_);
 	by _name_;	
@@ -325,21 +333,21 @@ run;
 
 
 proc export data=equity.profile_tabs_births_wd12
-	outfile="D:\DCDATA\Libraries\Equity\Prog\profile_tabs_births_ward.csv"
+	outfile="D:\DCDATA\Libraries\Equity\Data\profile_tabs_births_ward.csv"
 	dbms=csv replace;
 	run;
 
 proc export data=equity.profile_tabs_births_cltr00
-	outfile="D:\DCDATA\Libraries\Equity\Prog\profile_tabs_births_cluster.csv"
+	outfile="D:\DCDATA\Libraries\Equity\Data\profile_tabs_births_cluster.csv"
 	dbms=csv replace;
 	run;
 
 proc export data=equity.profile_tabs_births_wd12_dec
-	outfile="D:\DCDATA\Libraries\Equity\Prog\profile_tabs_births_ward_dec.csv"
+	outfile="D:\DCDATA\Libraries\Equity\Data\profile_tabs_births_ward_dec.csv"
 	dbms=csv replace;
 	run;
 
 proc export data=equity.profile_tabs_births_cltr00_dec
-	outfile="D:\DCDATA\Libraries\Equity\Prog\profile_tabs_births_cluster_dec.csv"
+	outfile="D:\DCDATA\Libraries\Equity\Data\profile_tabs_births_cluster_dec.csv"
 	dbms=csv replace;
 	run;

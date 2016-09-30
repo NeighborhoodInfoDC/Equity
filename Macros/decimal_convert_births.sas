@@ -16,7 +16,7 @@
 
 *Create arrays for birth indicators--Arrays list existing variables in percent format and new arrays will be in decimal format;
 
-			array pctbirthvars {29}
+			array pctbirthvars{29}
 				Pct_births_w_race_2011
 
 				Pct_births_white_2011
@@ -54,7 +54,7 @@
 
 				;
 
-			array decibirthvars {29}
+			array decibirthvars{29}
 				nPct_births_w_race_2011
 
 				nPct_births_white_2011
@@ -91,11 +91,11 @@
 				nPct_births_teen_oth_2011
 				;
 
-				do d=1 to 29; 
+				do z=1 to 29; 
 
-					pctbirthvars{d}=decibirthvars{d}/100;
+					decibirthvars{z}=pctbirthvars{z}/100;
 					
-					if pctbirthvars{d}=.s then decibirthvars{d}=.s;
+					if pctbirthvars{z}=.s then decibirthvars{z}=.s;
 
 				end;
 
@@ -116,7 +116,7 @@
 				Gap_births_teen_oth_2011
 				;
 
-			array newbirthgaps {12} 		
+			array newbirthgaps {12} 	
 				nGap_births_low_wt_blk_2011
 				nGap_births_low_wt_hsp_2011
 				nGap_births_low_wt_asn_2011
@@ -131,13 +131,12 @@
 				nGap_births_teen_oth_2011				
 				;
 
-				do e=1 to 12; 
+				do y=1 to 12; 
 
-					oldbirthgaps{e}=newbirthgaps{e};
+					newbirthgaps{y}=oldbirthgaps{y};
 	
-					if oldbirthgaps{e}=.s then newbirthgaps{e}=.s;
+					if oldbirthgaps{y}=.s then newbirthgaps{y}=.s;
 
 				end;
-
 
 %mend decimal_convert_births;
