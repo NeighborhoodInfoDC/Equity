@@ -13,8 +13,6 @@
 **************************************************************************/
 %include "L:\SAS\Inc\StdLocal.sas";
 
-options symbolgen mprint;
-
 ** Define libraries **;
 %DCData_lib( ACS )
 %DCData_lib( Equity )
