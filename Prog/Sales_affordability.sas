@@ -12,6 +12,7 @@ http://content.knowledgeplex.org/kp2/cache/documents/22736.pdf
 Homeownership Affordability in Urban America: Past and Future;
 
  Modifications: 09/11/16 LH Added Price Adjustments and used 2015$ adj. income
+				10/07/16 LH Added output for COMM. 
 
 **************************************************************************/
 
@@ -170,7 +171,7 @@ proc summary data=create_flags;
 
 
 
-	data equity.sales_afford_all (label="Homes Sales Affordabilty for Average Household Income" drop=_type_);
+	data equity.sales_afford_all (label="DC Homes Sales Affordabilty for Average Household Income, 2010-14" drop=_type_ _freq_);
 
 	set city_level ward_level cluster_level tract_level; 
 
@@ -199,8 +200,23 @@ proc summary data=create_flags;
 		PctAffordRepeat_White="Pct. of SF/Condo Sales 2010-14 Affordable to Repeat Buyer at Avg. Household Inc. NH White"
 		PctAffordRepeat_Black="Pct. of SF/Condo Sales 2010-14 Affordable to Repeat Buyer at Avg. Household Inc. Black Alone"
 		PctAffordRepeat_Hispanic="Pct. of SF/Condo Sales 2010-14 Affordable to Repeat Buyer at Avg. Household Inc. Hispanic"
-		PctAffordRepeat_AIOM="Pct. of SF/Condo Sales 2010-14 Affordable to First-time Buyer at Avg. Household Inc. Asian, Native American, Other, Multiple Race";
-		
+		PctAffordRepeat_AIOM="Pct. of SF/Condo Sales 2010-14 Affordable to First-time Buyer at Avg. Household Inc. Asian, Native American, Other, Multiple Race"
+	clusterlabel="Neighborhood Cluster Label" 
+clustername="Name of Neighborhood Cluster"
+total_sales="Total Number of Sales of Single Family Homes and Condiminium Units in Geography, 2010-14"
+tractlabel="Census Tract Label"
+		white_first_afford = "Number of SF/Condo Sales 2010-14 Affordable for FT White Owners"
+			black_first_afford = "Number of SF/Condo Sales 2010-14 Affordable for FT Black Owners"
+			hispanic_first_afford = "Number of SF/Condo Sales 2010-14 Affordable for FT Hispanic Owners"
+			AIOM_first_afford = "Number of SF/Condo Sales 2010-14 Affordable for FT Owners of Asian, Pacific Islander, American Indian, Alaskan Native Descent, Other, Two or More Races"
+			white_repeat_afford = "Number of SF/Condo Sales 2010-14  Affordable for Repeat White Owners"
+			black_repeat_afford = "Number of SF/Condo Sales 2010-14 Affordable for Repeat Black Owners"
+			hispanic_repeat_afford = "Number of SF/Condo Sales 2010-14 Affordable for Repeat Hispanic Owners"
+			AIOM_repeat_afford = "AffordableProperty Sale is Affordable Asian, Pacific Islander, American Indian, Alaskan Native Descent, Other, Two or More Races"
+			;
+
+
+	
 	run;
 
 data wardonly;
@@ -233,3 +249,106 @@ proc export data=output_table
 	outfile="D:\DCDATA\Libraries\Equity\Prog\profile_tabs_aff.csv"
 	dbms=csv replace;
 	run;
+
+
+/***
+	create out put file for comms
+Geography	Race	Var1	Var2	Var3
+City		All		Value	Value	Value
+City		White	Value	Value	Value
+City		Black	Value	Value	Value
+City		Hispanic	Value	Value	Value
+Ward 1		All	Value	Value	Value
+Ward 1		White	Value	Value	Value
+Ward 1		Black	Value	Value	Value
+Ward 1		Hispanic	Value	Value	Value
+*/
+	
+
+	data white;
+		set equity.sales_afford_all (drop= PctAffordFirst_Black PctAffordFirst_Hispanic PctAffordFirst_AIOM
+											PctAffordRepeat_Black PctAffordRepeat_Hispanic PctAffordRepeat_AIOM
+											black_first_afford Hispanic_first_afford AIOM_first_afford 
+											black_Repeat_afford Hispanic_Repeat_afford AIOM_Repeat_afford );
+
+	length race $10. ID $11.;
+	race="White"; 
+
+	if city="1" then ID="0";
+	if Ward2012~=" " then ID=Ward2012;
+	if cluster_tr2000~=" " then ID=Cluster_Tr2000;
+	if geo2010~=" " then ID=geo2010; 
+
+	Rename PctAffordFirst_White=PctAffordFirst
+		   PctAffordRepeat_White=PctAffordRepeat
+		   white_first_afford=first_afford
+		   white_Repeat_afford=repeat_afford;
+	run;	
+
+		data black;
+		set equity.sales_afford_all (drop= PctAffordFirst_white PctAffordFirst_Hispanic PctAffordFirst_AIOM
+											PctAffordRepeat_white PctAffordRepeat_Hispanic PctAffordRepeat_AIOM
+											white_first_afford Hispanic_first_afford AIOM_first_afford 
+											white_Repeat_afford Hispanic_Repeat_afford AIOM_Repeat_afford );
+
+	length race $10. ID $11.;
+	race="Black"; 
+
+	if city="1" then ID="0";
+	if Ward2012~=" " then ID=Ward2012;
+	if cluster_tr2000~=" " then ID=Cluster_Tr2000;
+	if geo2010~=" " then ID=geo2010; 
+
+	Rename PctAffordFirst_black=PctAffordFirst
+		   PctAffordRepeat_black=PctAffordRepeat
+		   black_first_afford=first_afford
+		   black_Repeat_afford=repeat_afford;
+	run;	
+
+	
+		data hispanic;
+		set equity.sales_afford_all (drop= PctAffordFirst_white PctAffordFirst_black PctAffordFirst_AIOM
+											PctAffordRepeat_white PctAffordRepeat_black PctAffordRepeat_AIOM
+											white_first_afford black_first_afford AIOM_first_afford 
+											white_Repeat_afford black_Repeat_afford AIOM_Repeat_afford );
+
+	length race $10. ID $11.;
+	race="Hispanic"; 
+
+	if city="1" then ID="0";
+	if Ward2012~=" " then ID=Ward2012;
+	if cluster_tr2000~=" " then ID=Cluster_Tr2000;
+	if geo2010~=" " then ID=geo2010; 
+
+	Rename PctAffordFirst_Hispanic=PctAffordFirst
+		   PctAffordRepeat_Hispanic=PctAffordRepeat
+		   Hispanic_first_afford=first_afford
+		   Hispanic_Repeat_afford=repeat_afford;
+	run;	
+
+	data all_race (label="DC Sales Affordability for COMM" drop=PctAffordFirst PctAffordRepeat);
+	set white black hispanic;
+	
+	 PctAffordFirst_dec= PctAffordFirst/100; 
+	PctAffordRepeat_dec=PctAffordRepeat/100; 
+	label 
+	 PctAffordFirst_dec="Pct. of SF/Condo Sales 2010-14 Affordable to First-time Buyer at Avg. Household Inc."
+		 PctAffordRepeat_dec="Pct. of SF/Condo Sales 2010-14 Affordable to Repeat Buyer at Avg. Household Inc."
+		
+		first_afford = "Number of SF/Condo Sales 2010-14 Affordable for First Time Buyer"
+		repeat_afford = "Number of SF/Condo Sales 2010-14  Affordable for Repeat Owners"
+		race="Race of Householder";
+
+	
+	
+	run;
+
+	proc sort data=all_race;
+	by  geo2010 cluster_tr2000 ward2012 city  ;
+	run;
+proc export data=all_race 
+	outfile="D:\DCDATA\Libraries\Equity\Prog\Sales_affordability_allgeo.csv"
+	dbms=csv replace;
+	run;
+	proc contents data=all_race;
+	run; 
