@@ -11,7 +11,8 @@
 http://content.knowledgeplex.org/kp2/cache/documents/22736.pdf
 Homeownership Affordability in Urban America: Past and Future;
 
- Modifications: 
+ Modifications: 09/11/16 LH Added Price Adjustments and used 2015$ adj. income
+				10/07/16 LH Added output for COMM. 
 
 **************************************************************************/
 
@@ -51,38 +52,59 @@ data create_flags;
   	loan_multiplier_2014 =  month_int_rate_2014 *	( ( 1 + month_int_rate_2014 )**360	) / ( ( ( 1+ month_int_rate_2014 )**360 )-1 );
 
   *calculate monthly Principal and Interest for First time Homebuyer (10% down);
-    if sale_yr=2010 then PI_First=saleprice*.9*loan_multiplier_2010;
-	if sale_yr=2011 then PI_First=saleprice*.9*loan_multiplier_2011;
-	if sale_yr=2012 then PI_First=saleprice*.9*loan_multiplier_2012;
-	if sale_yr=2013 then PI_First=saleprice*.9*loan_multiplier_2013;
-	if sale_yr=2014 then PI_First=saleprice*.9*loan_multiplier_2014;
- 
+    if sale_yr=2010 then PI_First2010=saleprice*.9*loan_multiplier_2010;
+	if sale_yr=2011 then PI_First2011=saleprice*.9*loan_multiplier_2011;
+	if sale_yr=2012 then PI_First2012=saleprice*.9*loan_multiplier_2012;
+	if sale_yr=2013 then PI_First2013=saleprice*.9*loan_multiplier_2013;
+	if sale_yr=2014 then PI_First2014=saleprice*.9*loan_multiplier_2014;
+
+	%dollar_convert(PI_first2010,PI_first2010r,2010,2015);
+	%dollar_convert(PI_first2011,PI_first2011r,2011,2015);
+ 	%dollar_convert(PI_first2012,PI_first2012r,2012,2015);
+	%dollar_convert(PI_first2013,PI_first2013r,2013,2015);
+	%dollar_convert(PI_first2014,PI_first2014r,2014,2015);
+
   *calculate monthly PITI (Principal, Interest, Taxes and Insurance) for First Time Homebuyer (34% of PI = TI);
-    PITI_First=PI_First*1.34;
+	if sale_yr=2010 then PITI_First=PI_First2010r*1.34;
+	if sale_yr=2011 then PITI_First=PI_First2011r*1.34;
+	if sale_yr=2012 then PITI_First=PI_First2012r*1.34;
+	if sale_yr=2013 then PITI_First=PI_First2013r*1.34;
+	if sale_yr=2014 then PITI_First=PI_First2014r*1.34;
 
   *calculate monthly Principal and Interest for Repeat Homebuyer (20% down);
-    if sale_yr=2010 then PI_Repeat=saleprice*.8*loan_multiplier_2010;
-	if sale_yr=2011 then PI_Repeat=saleprice*.8*loan_multiplier_2011;
-	if sale_yr=2012 then PI_Repeat=saleprice*.8*loan_multiplier_2012;
-	if sale_yr=2013 then PI_Repeat=saleprice*.8*loan_multiplier_2013;
-	if sale_yr=2014 then PI_Repeat=saleprice*.8*loan_multiplier_2014;
- 
-  *calculate monthly PITI (Principal, Interest, Taxes and Insurance) for Repeat Homebuyer (25% of PI = TI);
-    PITI_Repeat=PI_Repeat*1.25;
+    if sale_yr=2010 then PI_Repeat2010=saleprice*.8*loan_multiplier_2010;
+	if sale_yr=2011 then PI_Repeat2011=saleprice*.8*loan_multiplier_2011;
+	if sale_yr=2012 then PI_Repeat2012=saleprice*.8*loan_multiplier_2012;
+	if sale_yr=2013 then PI_Repeat2013=saleprice*.8*loan_multiplier_2013;
+	if sale_yr=2014 then PI_Repeat2014=saleprice*.8*loan_multiplier_2014;
+
+	%dollar_convert(PI_Repeat2010,PI_Repeat2010r,2010,2015);
+	%dollar_convert(PI_Repeat2011,PI_Repeat2011r,2011,2015);
+ 	%dollar_convert(PI_Repeat2012,PI_Repeat2012r,2012,2015);
+	%dollar_convert(PI_Repeat2013,PI_Repeat2013r,2013,2015);
+	%dollar_convert(PI_Repeat2014,PI_Repeat2014r,2014,2015);
+
+	*calculate monthly PITI (Principal, Interest, Taxes and Insurance) for Repeat Homebuyer (25% of PI = TI);
+	if sale_yr=2010 then PITI_Repeat=PI_Repeat2010r*1.25;
+	if sale_yr=2011 then PITI_Repeat=PI_Repeat2011r*1.25;
+	if sale_yr=2012 then PITI_Repeat=PI_Repeat2012r*1.25;
+	if sale_yr=2013 then PITI_Repeat=PI_Repeat2013r*1.25;
+	if sale_yr=2014 then PITI_Repeat=PI_Repeat2014r*1.25;
+
 
 	/*Here are numbers for Average Household Income at the city level. 2010-14 ACS 
-Black	NH-White	Hispanic	AIOM	 Black, MOE		NH-White, MOE	Hispanic, MOE	AIOM, MOE
-59559.5	 157431		89889.9		76180.1	 1930.88		3872.54			8619.84			.*/
+Black	NH-White	Hispanic	AIOM	 
+59630	 157618		89997 	 	 76271		*/
 
 
-	if PITI_First <= (157431 / 12*.28) then white_first_afford=1; else white_first_afford=0; 
-		if PITI_Repeat <= (157431/ 12 *.28) then white_repeat_afford=1; else white_repeat_afford=0; 
-	if PITI_First <= (59559.5 / 12 *.28) then black_first_afford=1; else black_first_afford=0; 
-		if PITI_Repeat <= (59559.5 / 12 *.28) then black_repeat_afford=1; else black_repeat_afford=0; 
-	if PITI_First <= (89889.9 / 12*.28) then hispanic_first_afford=1; else hispanic_first_afford=0; 
-		if PITI_Repeat <= (89889.9/ 12*.28 ) then hispanic_repeat_afford=1; else hispanic_repeat_afford=0; 
-	if PITI_First <= (76180.1 / 12*.28 ) then aiom_first_afford=1; else aiom_first_afford=0; 
-		if PITI_Repeat <= (76180.1 / 12*.28 ) then aiom_repeat_afford=1; else aiom_repeat_afford=0; 
+	if PITI_First <= (157618 / 12*.28) then white_first_afford=1; else white_first_afford=0; 
+		if PITI_Repeat <= (157618/ 12 *.28) then white_repeat_afford=1; else white_repeat_afford=0; 
+	if PITI_First <= (59630 / 12 *.28) then black_first_afford=1; else black_first_afford=0; 
+		if PITI_Repeat <= (59630 / 12 *.28) then black_repeat_afford=1; else black_repeat_afford=0; 
+	if PITI_First <= (89997 / 12*.28) then hispanic_first_afford=1; else hispanic_first_afford=0; 
+		if PITI_Repeat <= (89997/ 12*.28 ) then hispanic_repeat_afford=1; else hispanic_repeat_afford=0; 
+	if PITI_First <= (76271 / 12*.28 ) then aiom_first_afford=1; else aiom_first_afford=0; 
+		if PITI_Repeat <= (76271 / 12*.28 ) then aiom_repeat_afford=1; else aiom_repeat_afford=0; 
 
 
 	total_sales=1;
@@ -149,7 +171,7 @@ proc summary data=create_flags;
 
 
 
-	data equity.sales_afford_all (label="Homes Sales Affordabilty for Average Household Income" drop=_type_);
+	data equity.sales_afford_all (label="DC Homes Sales Affordabilty for Average Household Income, 2010-14" drop=_type_ _freq_);
 
 	set city_level ward_level cluster_level tract_level; 
 
@@ -178,8 +200,23 @@ proc summary data=create_flags;
 		PctAffordRepeat_White="Pct. of SF/Condo Sales 2010-14 Affordable to Repeat Buyer at Avg. Household Inc. NH White"
 		PctAffordRepeat_Black="Pct. of SF/Condo Sales 2010-14 Affordable to Repeat Buyer at Avg. Household Inc. Black Alone"
 		PctAffordRepeat_Hispanic="Pct. of SF/Condo Sales 2010-14 Affordable to Repeat Buyer at Avg. Household Inc. Hispanic"
-		PctAffordRepeat_AIOM="Pct. of SF/Condo Sales 2010-14 Affordable to First-time Buyer at Avg. Household Inc. Asian, Native American, Other, Multiple Race";
-		
+		PctAffordRepeat_AIOM="Pct. of SF/Condo Sales 2010-14 Affordable to First-time Buyer at Avg. Household Inc. Asian, Native American, Other, Multiple Race"
+	clusterlabel="Neighborhood Cluster Label" 
+clustername="Name of Neighborhood Cluster"
+total_sales="Total Number of Sales of Single Family Homes and Condiminium Units in Geography, 2010-14"
+tractlabel="Census Tract Label"
+		white_first_afford = "Number of SF/Condo Sales 2010-14 Affordable for FT White Owners"
+			black_first_afford = "Number of SF/Condo Sales 2010-14 Affordable for FT Black Owners"
+			hispanic_first_afford = "Number of SF/Condo Sales 2010-14 Affordable for FT Hispanic Owners"
+			AIOM_first_afford = "Number of SF/Condo Sales 2010-14 Affordable for FT Owners of Asian, Pacific Islander, American Indian, Alaskan Native Descent, Other, Two or More Races"
+			white_repeat_afford = "Number of SF/Condo Sales 2010-14  Affordable for Repeat White Owners"
+			black_repeat_afford = "Number of SF/Condo Sales 2010-14 Affordable for Repeat Black Owners"
+			hispanic_repeat_afford = "Number of SF/Condo Sales 2010-14 Affordable for Repeat Hispanic Owners"
+			AIOM_repeat_afford = "AffordableProperty Sale is Affordable Asian, Pacific Islander, American Indian, Alaskan Native Descent, Other, Two or More Races"
+			;
+
+
+	
 	run;
 
 data wardonly;
@@ -212,3 +249,106 @@ proc export data=output_table
 	outfile="D:\DCDATA\Libraries\Equity\Prog\profile_tabs_aff.csv"
 	dbms=csv replace;
 	run;
+
+
+/***
+	create out put file for comms
+Geography	Race	Var1	Var2	Var3
+City		All		Value	Value	Value
+City		White	Value	Value	Value
+City		Black	Value	Value	Value
+City		Hispanic	Value	Value	Value
+Ward 1		All	Value	Value	Value
+Ward 1		White	Value	Value	Value
+Ward 1		Black	Value	Value	Value
+Ward 1		Hispanic	Value	Value	Value
+*/
+	
+
+	data white;
+		set equity.sales_afford_all (drop= PctAffordFirst_Black PctAffordFirst_Hispanic PctAffordFirst_AIOM
+											PctAffordRepeat_Black PctAffordRepeat_Hispanic PctAffordRepeat_AIOM
+											black_first_afford Hispanic_first_afford AIOM_first_afford 
+											black_Repeat_afford Hispanic_Repeat_afford AIOM_Repeat_afford );
+
+	length race $10. ID $11.;
+	race="White"; 
+
+	if city="1" then ID="0";
+	if Ward2012~=" " then ID=Ward2012;
+	if cluster_tr2000~=" " then ID=Cluster_Tr2000;
+	if geo2010~=" " then ID=geo2010; 
+
+	Rename PctAffordFirst_White=PctAffordFirst
+		   PctAffordRepeat_White=PctAffordRepeat
+		   white_first_afford=first_afford
+		   white_Repeat_afford=repeat_afford;
+	run;	
+
+		data black;
+		set equity.sales_afford_all (drop= PctAffordFirst_white PctAffordFirst_Hispanic PctAffordFirst_AIOM
+											PctAffordRepeat_white PctAffordRepeat_Hispanic PctAffordRepeat_AIOM
+											white_first_afford Hispanic_first_afford AIOM_first_afford 
+											white_Repeat_afford Hispanic_Repeat_afford AIOM_Repeat_afford );
+
+	length race $10. ID $11.;
+	race="Black"; 
+
+	if city="1" then ID="0";
+	if Ward2012~=" " then ID=Ward2012;
+	if cluster_tr2000~=" " then ID=Cluster_Tr2000;
+	if geo2010~=" " then ID=geo2010; 
+
+	Rename PctAffordFirst_black=PctAffordFirst
+		   PctAffordRepeat_black=PctAffordRepeat
+		   black_first_afford=first_afford
+		   black_Repeat_afford=repeat_afford;
+	run;	
+
+	
+		data hispanic;
+		set equity.sales_afford_all (drop= PctAffordFirst_white PctAffordFirst_black PctAffordFirst_AIOM
+											PctAffordRepeat_white PctAffordRepeat_black PctAffordRepeat_AIOM
+											white_first_afford black_first_afford AIOM_first_afford 
+											white_Repeat_afford black_Repeat_afford AIOM_Repeat_afford );
+
+	length race $10. ID $11.;
+	race="Hispanic"; 
+
+	if city="1" then ID="0";
+	if Ward2012~=" " then ID=Ward2012;
+	if cluster_tr2000~=" " then ID=Cluster_Tr2000;
+	if geo2010~=" " then ID=geo2010; 
+
+	Rename PctAffordFirst_Hispanic=PctAffordFirst
+		   PctAffordRepeat_Hispanic=PctAffordRepeat
+		   Hispanic_first_afford=first_afford
+		   Hispanic_Repeat_afford=repeat_afford;
+	run;	
+
+	data all_race (label="DC Sales Affordability for COMM" drop=PctAffordFirst PctAffordRepeat);
+	set white black hispanic;
+	
+	 PctAffordFirst_dec= PctAffordFirst/100; 
+	PctAffordRepeat_dec=PctAffordRepeat/100; 
+	label 
+	 PctAffordFirst_dec="Pct. of SF/Condo Sales 2010-14 Affordable to First-time Buyer at Avg. Household Inc."
+		 PctAffordRepeat_dec="Pct. of SF/Condo Sales 2010-14 Affordable to Repeat Buyer at Avg. Household Inc."
+		
+		first_afford = "Number of SF/Condo Sales 2010-14 Affordable for First Time Buyer"
+		repeat_afford = "Number of SF/Condo Sales 2010-14  Affordable for Repeat Owners"
+		race="Race of Householder";
+
+	
+	
+	run;
+
+	proc sort data=all_race;
+	by  geo2010 cluster_tr2000 ward2012 city  ;
+	run;
+proc export data=all_race 
+	outfile="D:\DCDATA\Libraries\Equity\Prog\Sales_affordability_allgeo.csv"
+	dbms=csv replace;
+	run;
+	proc contents data=all_race;
+	run; 

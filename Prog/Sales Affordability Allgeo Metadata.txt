@@ -1,0 +1,56 @@
+EQUITY/Sales_affordability.sas:  NeighborhoodInfo DC                                       11:31 Friday, October 7, 2016   3
+
+The CONTENTS Procedure
+
+Data Set Name        WORK.ALL_RACE                      Observations           669 
+Member Type          DATA                               Variables              14  
+Engine               V9                                 Indexes                0   
+Created              10/07/2016 11:31:11                Observation Length     91  
+Last Modified        10/07/2016 11:31:11                Deleted Observations   0   
+Protection                                              Compressed             CHAR
+Data Set Type                                           Reuse Space            NO  
+Label                DC Sales Affordability for COMM    Point to Observations  YES 
+Data Representation  WINDOWS_64                         Sorted                 YES 
+Encoding             wlatin1  Western (Windows)                                    
+
+
+                                             Engine/Host Dependent Information
+
+Data Set Page Size          65536                                                                                           
+Number of Data Set Pages    2                                                                                               
+Number of Data Set Repairs  0                                                                                               
+Filename                    D:\Users\LHendey\AppData\Local\Temp\SAS Temporary Files\_TD1652_MET-D13158-W7_\all_race.sas7bdat
+Release Created             9.0401M1                                                                                        
+Host Created                X64_7PRO                                                                                        
+
+
+                                        Alphabetic List of Variables and Attributes
+ 
+ # Variable           Type Len Format      Label
+
+ 1 City               Char   1 $CITY16.    Washington, D.C.                                                                
+ 6 Cluster_tr2000     Char   2             Neighborhood cluster (tract-based, 2000)                                        
+ 7 Geo2010            Char  11             Full census tract ID (2010): ssccctttttt                                        
+12 ID                 Char  11                                                                                             
+13 PctAffordFirst_dec Num    8             Pct. of SF/Condo Sales 2010-14 Affordable                                       
+                                           to First-time Buyer at Avg. Household Inc.                                      
+14 PctAffordRepeat_   Num    8             Pct. of SF/Condo Sales 2010-14 Affordable to Repeat Buyer at Avg. Household Inc.
+   dec                                                                                                                     
+ 5 Ward2012           Char   1 $WD12.      Ward (2012)                                                                     
+10 clusterlabel       Char   2 $CLUS00A16. Neighborhood Cluster Label                                                      
+ 9 clustername        Char   2 $CLUS00S.   Name of Neighborhood Cluster                                                    
+ 3 first_afford       Num    8             Number of SF/Condo Sales 2010-14 Affordable for First Time Buyer                
+11 race               Char  10             Race of Householder                                                             
+ 4 repeat_afford      Num    8             Number of SF/Condo Sales 2010-14  Affordable for Repeat Owners                  
+ 2 total_sales        Num    8             Total Number of Sales of Single Family Homes                                    
+                                           and Condiminium Units in Geography, 2010-14                                     
+ 8 tractlabel         Char  11 $GEO10A11.  Census Tract Label                                                              
+EQUITY/Sales_affordability.sas:  NeighborhoodInfo DC                                       11:31 Friday, October 7, 2016   4
+
+The CONTENTS Procedure
+
+                 Sort Information
+
+Sortedby       Geo2010 Cluster_tr2000 Ward2012 City
+Validated      YES                                 
+Character Set  ANSI                                

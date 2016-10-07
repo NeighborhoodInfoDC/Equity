@@ -248,12 +248,18 @@ data equity.assessedval_race (label="Assessed Value for Single Family Homes and 
 	by geo2010;
 
 	format geo2010;
+	
+	label majblack="Tract Population in 2010-14 is at least 75% Black"
+	      majwhite="Tract Popuation in 2010-14 is at least 75% White" 
+	      mixedngh="Tract Population is not 75% white or 75% Black" 
+	      NumSFCondo ="Number of Single Family Homes and Condominium Units"
+	      tract_comp="Tract Racial Composition 1=White 2=Black 3=Mixed";
 	run;
 
 proc univariate data=equity.assessedval_race;
 CLASS tract_comp;
-var dollar_change avg_dollar_change percent_change;
-
+var dollar_changeR avg_dollar_changeR percent_changeR;
+id geo2010; 
 run;
 proc freq data=equity.assessedval_race;
 tables dollar_change avg_dollar_change percent_change;
@@ -261,5 +267,29 @@ run;
 
 proc export data=equity.assessedval_race
 	outfile="D:\DCDATA\Libraries\Equity\Prog\assessedval_race.csv"
+	dbms=csv replace;
+	run;
+
+proc means data=equity.assessedval_race mean n sum ;
+class tract_comp;
+var numsfcondo assess_val16 assess_val10r;
+run;
+
+*output for comms;
+data comms_out (Label="Tract Level Assessed Value by Race of Tract for COMM");
+	set equity.assessedval_race;
+
+percent_change_dec=percent_change/100; 
+percent_changeR_dec=percent_changeR/100; 
+
+label 
+			  percent_change_dec="Pct. Change in Nominal Assessed Value, Single Family Homes and Condos, 2010-16 (decimal)"
+			  percent_changeR_dec="Pct. Change in Real Assessed Value, Single Family Homes and Condos $2016, 2010-16 (decimal)";
+run; 
+
+proc contents data=comms_out; 
+run;
+proc export data=comms_out
+	outfile="D:\DCDATA\Libraries\Equity\Prog\assessedval_tractrace_comm.csv"
 	dbms=csv replace;
 	run;
