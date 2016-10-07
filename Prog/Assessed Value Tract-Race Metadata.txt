@@ -1,12 +1,12 @@
-EQUITY/Calculate_assessed_value.sas:  NeighborhoodInfo DC                                  12:06 Friday, October 7, 2016  58
+EQUITY/Calculate_assessed_value.sas:  NeighborhoodInfo DC                                  12:22 Friday, October 7, 2016  58
 
 The CONTENTS Procedure
 
 Data Set Name        WORK.COMMS_OUT                                          Observations           179 
 Member Type          DATA                                                    Variables              17  
 Engine               V9                                                      Indexes                0   
-Created              10/07/2016 12:07:15                                     Observation Length     139 
-Last Modified        10/07/2016 12:07:15                                     Deleted Observations   0   
+Created              10/07/2016 12:22:16                                     Observation Length     139 
+Last Modified        10/07/2016 12:22:16                                     Deleted Observations   0   
 Protection                                                                   Compressed             CHAR
 Data Set Type                                                                Reuse Space            NO  
 Label                Tract Level Assessed Value by Race of Tract for COMM    Point to Observations  YES 
@@ -20,7 +20,7 @@ Data Set Page Size          65536
 Number of Data Set Pages    2                                                                                               
 Number of Data Set Repairs  0                                                                                               
 Filename                    D:\Users\LHendey\AppData\Local\Temp\SAS Temporary                                               
-                            Files\_TD9660_MET-D13158-W7_\comms_out.sas7bdat                                                 
+                            Files\_TD9536_MET-D13158-W7_\comms_out.sas7bdat                                                 
 Release Created             9.0401M1                                                                                        
 Host Created                X64_7PRO                                                                                        
 
@@ -34,15 +34,15 @@ Host Created                X64_7PRO
  7 assess_val10        Num    8 Property Assessed Value 2010 extreme obs removed                                           
  8 assess_val16        Num    8 Property Assessed Value 2016 extreme obs removed                                           
  9 assess_val10r       Num    8 Property Assessed Value 2010 in $2016 extreme obs removed                                  
-11 avg_dollar_change   Num    8 Avg. Nominal Change in Assessed Value, Single Family Homes and Condos, 2010-16             
-14 avg_dollar_changeR  Num    8 Avg. Real Change in Assessed Value, Single Family Homes and Condos $2016, 2010-16          
-10 dollar_change       Num    8 Nominal Change in Assessed Value, Single Family Homes and Condos ($000), 2010-16           
-13 dollar_changeR      Num    8 Real Change in Assessed Value, Single Family Homes and Condos ($000) $2016, 2010-16        
+10 avg_dollar_change   Num    8 Avg. Nominal Change in Assessed Value, Single Family Homes and Condos, 2010-16             
+12 avg_dollar_changeR  Num    8 Avg. Real Change in Assessed Value, Single Family Homes and Condos $2016, 2010-16          
+17 dollar_changeR_new  Num    8 Real Change in Assessed Value, Single Family Homes and Condos $2016, 2010-16               
+16 dollar_change_new   Num    8 Nominal Change in Assessed Value, Single Family Homes and Condos, 2010-16                  
  3 majblack            Num    8 Tract Population in 2010-14 is at least 75% Black                                          
  4 majwhite            Num    8 Tract Popuation in 2010-14 is at least 75% White                                           
  5 mixedngh            Num    8 Tract Population is not 75% white or 75% Black                                             
-12 percent_change      Num    8 Pct. Change in Nominal Assessed Value, Single Family Homes and Condos, 2010-16             
-15 percent_changeR     Num    8 Pct. Change in Real Assessed Value, Single Family Homes and Condos $2016, 2010-16          
-17 percent_changeR_dec Num    8 Pct. Change in Real Assessed Value, Single Family Homes and Condos $2016, 2010-16 (decimal)
-16 percent_change_dec  Num    8 Pct. Change in Nominal Assessed Value, Single Family Homes and Condos, 2010-16 (decimal)   
- 2 tract_comp          Num    8 Tract Racial Composition 1=White 2=Black 3=Mixed        
+11 percent_change      Num    8 Pct. Change in Nominal Assessed Value, Single Family Homes and Condos, 2010-16             
+13 percent_changeR     Num    8 Pct. Change in Real Assessed Value, Single Family Homes and Condos $2016, 2010-16          
+15 percent_changeR_dec Num    8 Pct. Change in Real Assessed Value, Single Family Homes and Condos $2016, 2010-16 (decimal)
+14 percent_change_dec  Num    8 Pct. Change in Nominal Assessed Value, Single Family Homes and Condos, 2010-16 (decimal)   
+ 2 tract_comp          Num    8 Tract Racial Composition 1=White 2=Black 3=Mixed 
