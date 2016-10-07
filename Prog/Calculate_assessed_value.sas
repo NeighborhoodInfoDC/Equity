@@ -276,15 +276,21 @@ var numsfcondo assess_val16 assess_val10r;
 run;
 
 *output for comms;
-data comms_out (Label="Tract Level Assessed Value by Race of Tract for COMM");
+data comms_out (Label="Tract Level Assessed Value by Race of Tract for COMM" drop=dollar_change dollar_changeR);
 	set equity.assessedval_race;
 
 percent_change_dec=percent_change/100; 
 percent_changeR_dec=percent_changeR/100; 
+dollar_change_new=dollar_change*1000;
+dollar_changeR_new=dollar_changeR*1000; 
 
 label 
 			  percent_change_dec="Pct. Change in Nominal Assessed Value, Single Family Homes and Condos, 2010-16 (decimal)"
-			  percent_changeR_dec="Pct. Change in Real Assessed Value, Single Family Homes and Condos $2016, 2010-16 (decimal)";
+			  percent_changeR_dec="Pct. Change in Real Assessed Value, Single Family Homes and Condos $2016, 2010-16 (decimal)"
+dollar_change_new="Nominal Change in Assessed Value, Single Family Homes and Condos, 2010-16"
+	dollar_changeR_new="Real Change in Assessed Value, Single Family Homes and Condos $2016, 2010-16";
+
+
 run; 
 
 proc contents data=comms_out; 
