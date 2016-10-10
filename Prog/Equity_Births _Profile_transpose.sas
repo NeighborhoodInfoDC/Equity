@@ -44,7 +44,7 @@ data whiterates_births;
 %rename(whiterates_births);
 run;
 
-data city_births_gaps (drop=_make_profile);
+data equity.city_births_gaps (drop=_make_profile);
 	merge city_births whiterates_births_new(rename=(c_make_profile=_make_profile));
 	by _make_profile;
 	
@@ -103,7 +103,7 @@ data city_births_gaps (drop=_make_profile);
 
 run;
 
-proc transpose data=city_births_gaps out=equity.profile_tabs_births_wd12; 
+proc transpose data=equity.city_births_gaps out=equity.profile_tabs_births_wd12; 
 var Births_total_2011
 	Pct_births_w_race_2011 
 
@@ -143,7 +143,7 @@ var Births_total_2011
 id ward2012; 
 run; 
 
-proc transpose data=city_births_gaps out=equity.profile_tabs_births_cltr00; 
+proc transpose data=equity.city_births_gaps out=equity.profile_tabs_births_cltr00; 
 var Births_total_2011
 	Pct_births_w_race_2011 
 
@@ -188,7 +188,7 @@ data convert_births_wd12
 		(drop=births_w_race: births_black: births_asian: births_hisp: births_white: births_oth_rac:
 			Births_w_age: births_teen: Births_low_wt: Births_w_weight:
 			births_prenat_adeq: births_w_prenat:);
-	set city_births_gaps; 
+	set equity.city_births_gaps; 
 
 %decimal_convert_births;
 
@@ -198,7 +198,7 @@ data convert_births_cltr00
 	(drop=births_w_race: births_black: births_asian: births_hisp: births_white: births_oth_rac:
 			Births_w_age: births_teen: Births_low_wt: Births_w_weight:
 			births_prenat_adeq: births_w_prenat:);
-	set city_births_gaps; 
+	set equity.city_births_gaps; 
 
 %decimal_convert_births;
 

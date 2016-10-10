@@ -161,7 +161,7 @@
 
 				*gap race; 
 			array e_gap&race. {21} 
-				Gap25andOverWoutHS&race._2010_1
+				Gap25andOverWoutHS&race._2010_14
 				Gap25andOverWHS&race._2010_14
 				Gap25andOverWSC&race._2010_14
 				GapAvgHshldIncAdj&race._2010_14
