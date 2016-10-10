@@ -21,7 +21,7 @@
 	/*Make sure all vars are labeled*/;
 
 /*Birth indicators by race*/
-data all (drop=q); 
+data all (drop=q Pct:); 
 set equity.city_births_gaps
 	(keep= 	city ward2012 cluster_tr2000 
 			Births_total_2011 births_total_3yr_2011
@@ -36,8 +36,8 @@ race="All";
 array old {4} 	Pct_births_w_race_2011 Pct_births_low_wt_2011 
 				Pct_births_prenat_adeq_2011 Pct_births_teen_2011;
 
-array new {4}  	Pct_births_w_race_2011 Pct_births_low_wt_2011 
-			   	Pct_births_prenat_adeq_2011 Pct_births_teen_2011;
+array new {4}  	nPct_births_w_race_2011 nPct_births_low_wt_2011 
+			   	nPct_births_prenat_adeq_2011 nPct_births_teen_2011;
 ;
 
 				do q=1 to 4; 
@@ -47,7 +47,7 @@ array new {4}  	Pct_births_w_race_2011 Pct_births_low_wt_2011
 
 				end; 
 run;
-data white (drop=q); 
+data white (drop=q Pct:); 
 set equity.city_births_gaps
 	(keep= 	city ward2012 cluster_tr2000 
 			Pct_births_white_2011 Births_white_2011 
@@ -66,11 +66,11 @@ array old {5} 	Pct_births_white_2011
 				Pct_births_prenat_adeq_wht_2011 	
 				Pct_births_teen_wht_2011;
 
-array new {5} 	nPct_births_white_2011 
-				nPct_births_white_3yr_2011
-				nPct_births_low_wt_wht_2011 	
-				nPct_births_prenat_adeq_wht_2011 	
-				nPct_births_teen_wht_2011;
+array new {5} 	nPct_births_w_race_2011 
+				nPct_births_w_race_3yr_2011
+				nPct_births_low_wt_2011 	
+				nPct_births_prenat_adeq_2011 	
+				nPct_births_teen_2011;
 
 				do q=1 to 5; 
 
@@ -90,7 +90,7 @@ array new {5} 	nPct_births_white_2011
 
 run;
 
-data black (drop=q); 
+data black (drop=q Pct:); 
 set equity.city_births_gaps
 	(keep= 	city ward2012 cluster_tr2000 
 
@@ -116,11 +116,11 @@ array old {5} 	Pct_births_black_2011
 				Pct_births_prenat_adeq_blk_2011 	
 				Pct_births_teen_blk_2011;
 
-array new {5} 	nPct_births_black_2011 
-				nPct_births_black_3yr_2011
-				nPct_births_low_wt_blk_2011 	
-				nPct_births_prenat_adeq_blk_2011 	
-				nPct_births_teen_blk_2011;
+array new {5} 	nPct_births_w_race_2011 
+				nPct_births_w_race_3yr_2011
+				nPct_births_low_wt_2011 	
+				nPct_births_prenat_adeq_2011 	
+				nPct_births_teen_2011;
 
 				do q=1 to 5; 
 
@@ -144,7 +144,7 @@ array new {5} 	nPct_births_black_2011
 
 run;
 
-data hispanic (drop=q); 
+data hispanic (drop=q Pct:); 
 set equity.city_births_gaps
 	(keep= 	city ward2012 cluster_tr2000 
 			Pct_births_hisp_2011 Births_hisp_2011 
@@ -169,11 +169,11 @@ array old {5} 	Pct_births_hisp_2011
 				Pct_births_prenat_adeq_hsp_2011 	
 				Pct_births_teen_hsp_2011;
 
-array new {5} 	nPct_births_hisp_2011 
-				nPct_births_hisp_3yr_2011
-				nPct_births_low_wt_hsp_2011 	
-				nPct_births_prenat_adeq_hsp_2011 	
-				nPct_births_teen_hsp_2011;
+array new {5} 	nPct_births_w_race_2011 
+				nPct_births_w_race_3yr_2011
+				nPct_births_low_wt_2011 	
+				nPct_births_prenat_adeq_2011 	
+				nPct_births_teen_2011;
 
 				do q=1 to 5; 
 
@@ -204,20 +204,20 @@ data all_race (label="Births Tabulations for COMM");
 proc sort data=all_race out=equity.births_ward_comm (drop=cluster_tr2000);
 by ward2012 race;
 
-/*proc sort data=all_race out=equity.births_cluster_comm (drop=ward2012);
-by cluster_tr2000 race;*/
+proc sort data=all_race out=equity.births_cluster_comm (drop=ward2012);
+by cluster_tr2000 race;
 
 proc export data=equity.births_ward_comm
 	outfile="D:\DCDATA\Libraries\Equity\Prog\Births_Ward_COMMOutput.csv"
 	dbms=csv replace;
 	run;
-/*proc export data=equity.births_cluster_comm
+proc export data=equity.births_cluster_comm
 	outfile="D:\DCDATA\Libraries\Equity\Prog\Births_Cluster_COMMOutput.csv"
 	dbms=csv replace;
-	run;*/
+	run;
 
 proc contents data=equity.births_ward_comm;
 run;
 
-/*proc contents data=equity.births_cluster_comm;
-run;*/
+proc contents data=equity.births_cluster_comm;
+run;
