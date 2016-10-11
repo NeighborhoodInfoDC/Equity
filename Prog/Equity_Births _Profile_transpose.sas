@@ -44,7 +44,7 @@ data whiterates_births;
 %rename(whiterates_births);
 run;
 
-data equity.city_births_gaps (drop=_make_profile);
+data equity.city_births_gaps (drop=_make_profile b);
 	merge city_births whiterates_births_new(rename=(c_make_profile=_make_profile));
 	by _make_profile;
 	
@@ -98,7 +98,7 @@ data equity.city_births_gaps (drop=_make_profile);
 		;
 
 	do b=1 to 12;
-		if birthpcts{12}=.s then birthgaps{12}=.s;
+		if birthpcts{b}=.s then birthgaps{b}=.s;
 	end;
 
 run;
