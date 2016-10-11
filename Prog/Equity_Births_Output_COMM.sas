@@ -212,31 +212,24 @@ array new {5} 	nPct_births_w_race_2011
 run;
 
 data all_race (label="Births Tabulations for COMM");
-	rename 
-		nPct_births_w_race_2011 =  Pct_births_w_race_2011 
-		nPct_births_w_race_3yr_2011 = Pct_births_w_race_3yr_2011
-		nPct_births_low_wt_2011 =  Pct_births_low_wt_2011 
-		nPct_births_prenat_adeq_2011 =  Pct_births_prenat_adeq_2011 
-		nPct_births_teen_2011 = Pct_births_teen_2011;
 	retain  ID city ward2012 cluster_tr2000 race
-			Births_w_race_2011 Pct_births_w_race_2011 
-			Births_total_3yr_2011 Pct_births_w_race_3yr_2011  
+			Births_w_race_2011 nPct_births_w_race_2011 
+			Births_total_3yr_2011 nPct_births_w_race_3yr_2011  
 			Births_w_weight_2011
-			Births_low_wt_2011 Pct_births_low_wt_2011 Gap_births_low_wt_2011 
+			Births_low_wt_2011 nPct_births_low_wt_2011 Gap_births_low_wt_2011 
 			Births_w_prenat_2011
-			Births_prenat_adeq_2011 Pct_births_prenat_adeq_2011 Gap_births_prenat_adeq_2011
+			Births_prenat_adeq_2011 nPct_births_prenat_adeq_2011 Gap_births_prenat_adeq_2011
 			Births_w_age_2011
-			Births_teen_2011 Pct_births_teen_2011 Gap_births_teen_2011
+			Births_teen_2011 nPct_births_teen_2011 Gap_births_teen_2011
 			;
 	set all white black hispanic;
 
-
 	label
-		Pct_births_w_race_2011 = "% Births with mothers race reported"
-		Pct_births_w_race_3yr_2011 = "% Births with mothers race reported, 3-year avg."
-		Pct_births_low_wt_2011 = "% low weight births (under 5.5 lbs)"
-		Pct_births_prenat_adeq_2011 = "% Births to mothers with adequate prenatal care"
-		Pct_births_teen_2011 = "% births to teen mothers"
+		nPct_births_w_race_2011 = "% Births with mothers race reported"
+		nPct_births_w_race_3yr_2011 = "% Births with mothers race reported, 3-year avg."
+		nPct_births_low_wt_2011 = "% low weight births (under 5.5 lbs)"
+		nPct_births_prenat_adeq_2011 = "% Births to mothers with adequate prenatal care"
+		nPct_births_teen_2011 = "% births to teen mothers"
 		Births_w_race_2011 = "Total births with mothers race reported"
 		Births_total_3yr_2011 = "Total births, 3-year averages"
 		Births_low_wt_2011 = "Low weight births (under 5.5 lbs)"
@@ -257,7 +250,7 @@ proc sort data=all_race out=equity.births_comm;
 by cluster_tr2000 Ward2012 city;
 
 proc export data=equity.births_comm
-	outfile="D:\DCDATA\Libraries\Equity\Prog\Births_COMM.csv"
+	outfile="D:\DCDATA\Libraries\Equity\Prog\Births_Comm.csv"
 	dbms=csv replace;
 	run;
 

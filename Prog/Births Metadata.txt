@@ -1,0 +1,60 @@
+/(Interactive): NeighborhoodInfo DC 
+
+
+The CONTENTS Procedure
+
+Data Set Name EQUITY.BIRTHS_COMM Observations 196 
+Member Type DATA Variables 22 
+Engine V9 Indexes 0 
+Created 10/11/2016 11:30:24 Observation Length 161 
+Last Modified 10/11/2016 11:30:24 Deleted Observations 0 
+Protection   Compressed CHAR 
+Data Set Type   Reuse Space NO 
+Label Births Tabulations for COMM Point to Observations YES 
+Data Representation WINDOWS_64 Sorted YES 
+Encoding wlatin1 Western (Windows)     
+
+
+
+Engine/Host Dependent Information 
+Data Set Page Size 65536 
+Number of Data Set Pages 2 
+Number of Data Set Repairs 0 
+Filename D:\DCData\Libraries\Equity\Data\births_comm.sas7bdat 
+Release Created 9.0401M1 
+Host Created X64_7PRO 
+
+
+
+Alphabetic List of Variables and Attributes 
+# Variable Type Len Format Label 
+11 Births_low_wt_2011 Num 8   Low weight births (under 5.5 lbs) 
+15 Births_prenat_adeq_2011 Num 8   Births with adequate prenatal care (Kessner index) 
+19 Births_teen_2011 Num 8   Births to mothers under 20 years old 
+22 Births_total_2011 Num 8   Total births, 2011 
+8 Births_total_3yr_2011 Num 8   Total births, 3-year averages 
+18 Births_w_age_2011 Num 8   Births with mother's age reported 
+14 Births_w_prenat_2011 Num 8   Births with prenatal care reported (Kessner index) 
+6 Births_w_race_2011 Num 8   Total births with mothers race reported 
+10 Births_w_weight_2011 Num 8   Births with birth weight reported 
+13 Gap_births_low_wt_2011 Num 8   Racial gap, low birth weight 
+17 Gap_births_prenat_adeq_2011 Num 8   Racial gap, adequate prenatal care 
+21 Gap_births_teen_2011 Num 8   Racial gap, teen births 
+1 ID Char 11     
+2 city Char 1 $CITY. Washington, D.C. 
+4 cluster_tr2000 Char 2 $CLUS00A. Neighborhood cluster (tract-based, 2000) 
+12 nPct_births_low_wt_2011 Num 8   % low weight births (under 5.5 lbs) 
+16 nPct_births_prenat_adeq_2011 Num 8   % Births to mothers with adequate prenatal care 
+20 nPct_births_teen_2011 Num 8   % births to teen mothers 
+7 nPct_births_w_race_2011 Num 8   % Births with mothers race reported 
+9 nPct_births_w_race_3yr_2011 Num 8   % Births with mothers race reported, 3-year avg. 
+5 race Char 10     
+3 ward2012 Char 1 $WARD12A. Ward (2012) 
+
+
+
+Sort Information 
+Sortedby cluster_tr2000 ward2012 city 
+Validated YES 
+Character Set ANSI 
+
