@@ -43,47 +43,47 @@ set equity.profile_tabs_ACS_suppress (keep=  city ward2012
 	PopNonEnglish_2010_14  mPopNonEnglish_2010_14 Pop5andOverYears_2010_14 mPop5andOverYears_2010_14);
 
 
-			array oldvars_e {12}
+			array oldvars_e {14}
 				PctBlackNonHispBridge_2010_14 PctWhiteNonHispBridge_2010_14 PctHisp_2010_14 
 				PctAsnPINonHispBridge_2010_14 PctOtherRaceNonHispBridg_2010_14 
 
-				PctAloneA_2010_14 PctAloneI_2010_14 PctAloneO_2010_14 
-				PctAloneM_2010_14 PctAloneIOM_2010_14 
+				PctAloneA_2010_14 PctAloneB_2010_14 PctAloneW_2010_14 PctAloneI_2010_14 PctAloneO_2010_14 
+				PctAloneM_2010_14 PctAloneAIOM_2010_14 
 
 				PctForeignBorn_2010_14 PctOthLang_2010_14
 				;
 
-			array oldvars_m {12}
+			array oldvars_m {14}
 				PctBlackNonHispBridge_m_2010_14 PctWhiteNonHispBridge_m_2010_14 PctHisp_m_2010_14 
 				PctAsnPINonHispBridge_m_2010_14 PctOthRaceNonHispBridg_m_2010_14 
 
-				PctAloneA_m_2010_14 PctAloneI_m_2010_14 PctAloneO_m_2010_14 
-				PctAloneM_m_2010_14 PctAloneIOM_m_2010_14 
+				PctAloneA_m_2010_14 PctAloneB_m_2010_14 PctAloneW_m_2010_14 PctAloneI_m_2010_14 PctAloneO_m_2010_14 
+				PctAloneM_m_2010_14 PctAloneAIOM_m_2010_14 
 
 				PctForeignBorn_m_2010_14 PctOthLang_m_2010_14
 				;
 
-			array newvars_e {12}
+			array newvars_e {14}
 				nPctBlackNonHispBridge_2010_14 nPctWhiteNonHispBridge_2010_14 nPctHisp_2010_14 
 				nPctAsnPINonHispBridge_2010_14 nPctOthRaceNonHispBridg_2010_14 
 
-				nPctAloneA_2010_14 nPctAloneI_2010_14 nPctAloneO_2010_14 
-				nPctAloneM_2010_14 nPctAloneIOM_2010_14 
+				nPctAloneA_2010_14 nPctAloneB_2010_14 nPctAloneW_2010_14 nPctAloneI_2010_14 nPctAloneO_2010_14 
+				nPctAloneM_2010_14 nPctAloneAIOM_2010_14 
 
 				nPctForeignBorn_2010_14 nPctOthLang_2010_14	
 				;
 
-			array newvars_m {12}
+			array newvars_m {14}
 				nPctBlackNonHispBridge_m_2010_14 nPctWhiteNonHispBridge_m_2010_14 nPctHisp_m_2010_14
 				nPctAsnPINonHispBridge_m_2010_14 nPctOthRaceNonHisBridg_m_2010_14 
 
-				nPctAloneA_m_2010_14 nPctAloneI_m_2010_14 nPctAloneO_m_2010_14 
-				nPctAloneM_m_2010_14 nPctAloneIOM_m_2010_14 
+				nPctAloneA_m_2010_14 nPctAloneB_m_2010_14 nPctAloneW_m_2010_14 nPctAloneI_m_2010_14 nPctAloneO_m_2010_14 
+				nPctAloneM_m_2010_14 nPctAloneAIOM_m_2010_14 
 
 				nPctForeignBorn_m_2010_14 nPctOthLang_m_2010_14
 				;
 
-				do q=1 to 12; 
+				do q=1 to 14; 
 
 				   
 						newvars_e{q}=oldvars_e{q}/100;
@@ -96,7 +96,36 @@ set equity.profile_tabs_ACS_suppress (keep=  city ward2012
 
 				end;
 
-	/*Make sure all vars are labeled*/;
+	label
+	nPctAloneA_2010_14="% Asian/P.I. alone, 2010-14"     
+nPctAloneA_m_2010_14="MOE for % Asian/P.I. alone, 2010-14"
+nPctAloneAIOM_2010_14="% All other than Black-White-Hispanic, 2010-14"    
+nPctAloneAIOM_m_2010_14="MOE for % All other than Black-White-Hispanic, 2010-14"     
+nPctAloneI_2010_14="% Indigenous alone, 2010-14"    
+nPctAloneI_m_2010_14="MOE for % Indigenous alone, 2010-14"    
+nPctAloneM_2010_14="% Multiracial, 2010-14"
+nPctAloneM_m_2010_14="MOE for% Multiracial, 2010-14"
+nPctAloneO_2010_14="% Other race alone, 2010-14"
+nPctAloneO_m_2010_14="MOE for % Other race alone, 2010-14"
+nPctAsnPINonHispBridge_2010_14="% Asian/P.I. non-Hispanic, 2010-14"     
+nPctAsnPINonHispBridge_m_2010_14="MOE for % Asian/P.I. non-Hispanic, 2010-14"
+nPctBlackNonHispBridge_2010_14="% black non-Hispanic, 2010-14"     
+nPctBlackNonHispBridge_m_2010_14="MOE for % black non-Hispanic, 2010-14"
+nPctForeignBorn_2010_14="% foreign born, 2010-14"     
+nPctForeignBorn_m_2010_14="MOE for % foreign born, 2010-14"   
+nPctHisp_2010_14="% Hispanic, 2010-14"    
+nPctHisp_m_2010_14="MOE for % Hispanic, 2010-14"
+nPctOthLang_2010_14="% pop. that speaks a language other than English at home, 2010-14"
+nPctOthLang_m_2010_14="MOE for % pop. that speaks a language other than English at home, 2010-14"  
+nPctOthRaceNonHisBridg_m_2010_14="MOE for % Non-Hispanic Black/African American population, 2010-14"
+nPctOthRaceNonHispBridg_2010_14="% Non-Hispanic Black/African American population, 2010-14"  
+nPctWhiteNonHispBridge_2010_14="% Non-Hispanic White population, 2010-14"     
+nPctWhiteNonHispBridge_m_2010_14="MOE for % Non-Hispanic White population, 2010-14"     
+nPctAloneB_2010_14="% black alone, 2010-14"
+nPctAloneW_2010_14="% white alone, 2010-14" 
+nPctAloneB_m_2010_14="MOE for % black alone, 2010-14"
+nPctAloneW_m_2010_14="MOE for % white alone, 2010-14"
+;
 
 
 	run;
@@ -430,10 +459,36 @@ array new {14} nPct25andOverWHS_2010_14 nPct25andOverWHS_m_2010_14
 				GapUnemployedH_2010_14=GapUnemployed_2010_14
 				GapWorkFTLT35kH_2010_14=GapWorkFTLT35k_2010_14
 				GapWorkFTLT75kH_2010_14=GapWorkFTLT75k_2010_14;
+
+
+
 run;
 
 data all_race (label="ACS Tabulations Edu, Pov, Unemp, Living Wage for COMM");
 	set all white black hispanic;
+label Gap25andOverWHS_2010_14="Gap in number of adults over age 25 with HS degree compared to white rate citywide, 2010-14"
+Gap25andOverWSC_2010_14="Gap in number of adults over age 25 with some college compared to white rate citywide, 2010-14"   
+GapPoorPersons_2010_14="Gap in number of poor people compared to white rate citywide, 2010-14" 
+GapUnemployed_2010_14="Gap in number of unemployed people over age 16 compared to white rate citywide, 2010-14"  
+GapWorkFTLT35k_2010_14="Gap in number of people over age 16 working full-time earning less than $35K/yr compared to white rate citywide, 2010-14"  
+GapWorkFTLT75k_2010_14="Gap in number of peoplee over age 16 working full-time earning less than $75K/yr compared to white rate citywide, 2010-14"   
+nPct25andOverWHS_2010_14="Pct. Persons 25 years old and over with a high school diploma or GED, 2010-14"  
+nPct25andOverWHS_m_2010_14="MOE for Pct. Persons 25 years old and over with a high school diploma or GED, 2010-14"      
+nPct25andOverWSC_2010_14="Pct. Persons 25 years old and over with some college, 2010-14"  
+nPct25andOverWSC_m_2010_14="MOE for Pct. Persons 25 years old and over with some college, 2010-14"      
+nPctPoorChildren_2010_14="Pct. Children under 18 years old below the poverty level last year, 2010-14"  
+nPctPoorChildren_m_2010_14="MOE for Pct. Children under 18 years old below the poverty level last year, 2010-14"      
+nPctPoorPersons_2010_14="Pct. Persons below the poverty level last year, 2010-14" 
+nPctPoorPersons_m_2010_14="MOE for Pct. Persons below the poverty level last year, 2010-14"    
+nPctUnemployed_2010_14="Pct. Persons 16+ years old in the civilian labor force and unemployed, 2010-14"
+nPctUnemployed_m_2010_14="MOE for Pct. Persons 16+ years old in the civilian labor force and unemployed, 2010-14" 
+nPctWorkFTLT35k_2010_14="Pct. Persons 16+ years old working full time with earnings less than $35K/yr, 2010-14"
+nPctWorkFTLT35k_m_2010_14="MOE for Pct. Persons 16+ years old working full time with earnings less than $35K/yr, 2010-14"    
+nPctWorkFTLT75k_2010_14="Pct. Persons 16+ years old working full time with earnings less than $75K/yr, 2010-14" 
+nPctWorkFTLT75k_m_2010_14="MOE for Pct. Persons 16+ years old working full time with earnings less than $75K/yr, 2010-14"   
+race="Race Indicator"  
+
+; 
 
 	run;
 proc sort data=all_race;

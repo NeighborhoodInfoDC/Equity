@@ -228,11 +228,11 @@ data all_race (label="Births Tabulations for COMM");
 
 	run;
 
-proc sort data=all_race out=equity.births_comm;
+proc sort data=all_race;
 
 by cluster_tr2000 Ward2012 city;
 
-proc export data=equity.births_comm
+proc export data=all_race
 	outfile="D:\DCDATA\Libraries\Equity\Prog\Births_Comm.csv"
 	dbms=csv replace;
 	run;
