@@ -198,7 +198,7 @@ array new {4} 	nPct_births_w_race_2011
 run;
 
 data all_race (label="Births Tabulations for COMM");
-	retain  ID city ward2012 cluster_tr2000 race
+	retain  ID city ward2012 cluster_tr2000 race Births_total_2011
 			Births_w_race_2011 nPct_births_w_race_2011 
 			Births_w_weight_2011
 			Births_low_wt_2011 nPct_births_low_wt_2011 Gap_births_low_wt_2011 
