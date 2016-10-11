@@ -526,10 +526,10 @@ var nPctBlackNonHispBridge: nPctWhiteNonHispBridge:
 	nPctPop65andOverYrsAIOM: nPctPop65andOvrYrsAIOM:
 
 	nPct25andOverWoutHS_: 
-	nPct25andOverWoutHSW: nPct25andOvrWoutHSW: nGap25andOverWoutHSW:
-	nPct25andOverWoutHSB: nPct25andOvrWoutHSB: nGap25andOverWoutHSB:
-	nPct25andOverWoutHSH: nPct25andOvrWoutHSH: nGap25andOverWoutHSH:
-	nPct25andOverWoutHSAIOM: nPct25andOvrWoutHSAIOM: nGap25andOverWoutHSAIOM:
+	nPct25andOverWoutHSW: nPct25andOvrWoutHSW: nGap25andOvrWoutHSW:
+	nPct25andOverWoutHSB: nPct25andOvrWoutHSB: nGap25andOvrWoutHSB:
+	nPct25andOverWoutHSH: nPct25andOvrWoutHSH: nGap25andOvrWoutHSH:
+	nPct25andOverWoutHSAIOM: nPct25andOvrWoutHSAIOM: nGap25andOvrWoutHSAIOM:
 	nPct25andOverWoutHSFB: nGap25andOverWoutHSFB:
 	nPct25andOverWoutHSNB: nGap25andOverWoutHSNB:
 

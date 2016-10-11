@@ -256,7 +256,7 @@ Arrays list existing variables in percent format and new arrays will be in decim
 				nGapAlone&race._2010_14 nGapForeignBorn&race._2010_14 
 				nGapPopUnder18Years&race._2010_14 nGapPop18_34Years&race._2010_14
 				nGapPop35_64Years&race._2010_14 nGapPop65andOvrYrs&race._2010_14
-				nGap25andOverWoutHS&race._2010_14 nGap25andOverWHS&race._2010_14
+				nGap25andOvrWoutHS&race._2010_14 nGap25andOverWHS&race._2010_14
 				nGap25andOverWSC&race._2010_14 nGapAvgHshldIncAdj&race._2010_14
 				nGapFamilyGT200000&race._2010_14 nGapFamilyLT75000&race._2010_14
 				nGapPoorPersons&race._2010_14 nGapPoorChildren&race._2010_14
