@@ -128,7 +128,7 @@
     
     ** Population **;
     
-	%Label_var_years( var=TotPop, label=Population, years= 2010_14 )
+	%Label_var_years( var=TotPop_tr, label=Population, years= 2010_14 )
 
 	%Pct_calc( var=PctForeignBorn, label=% foreign born, num=PopForeignBorn, den=PopWithRace, years=2010_14 )
 
@@ -622,7 +622,7 @@
 
     ** Create flag for generating profile **;
     
-    if TotPop_2010_14 >= 100 then _make_profile = 1;
+    if TotPop_tr_2010_14 >= 100 then _make_profile = 1;
     else _make_profile = 0;
     
  
