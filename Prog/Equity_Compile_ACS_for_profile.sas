@@ -10,6 +10,8 @@
  Description:  Creates calculated statistics for ACS by geography to feed into Equity Profiles. 
 
  Modifications: 8/8/16 - SD wrote formulas for Equity indicators
+
+ Note: MOEs for AIOM average household income and average adjusted are blank because they are suppressed by the Census.
  **************************************************************************/
 %include "L:\SAS\Inc\StdLocal.sas";
 
@@ -40,47 +42,6 @@
 
   data Equity_profile&geosuf._A (compress=no);  
   	merge  
-          equity.acs_2010_14_dc_sum_bg&geosuf
-        (keep=&geo TotPop: mTotPop: 
-		   PopUnder5Years_: mPopUnder5Years_:
-		   PopUnder18Years_: mPopUnder18Years_:
-		   Pop18_34Years_:mPop18_34Years_:
-		   Pop35_64Years_: mPop35_64Years_:
-		   Pop65andOverYears_: mPop65andOverYears_:
-		   Pop25andOverYears_: mPop25andOverYears_:
-		   PopWithRace: mPopWithRace:
-		   PopBlackNonHispBridge: mPopBlackNonHispBridge:
-           PopWhiteNonHispBridge: mPopWhiteNonHispBridge:
-		   PopHisp: mPopHisp:
-		   PopAsianPINonHispBridge: mPopAsianPINonHispBridge:
-		   PopOtherRaceNonHispBridg: mPopOtherRaceNonHispBr:
-		   PopMultiracialNonHisp: mPopMultiracialNonHisp:
-		   PopAlone: mPopAlone:
-           NumFamilies_: mNumFamilies_:
-		   PopEmployed:  mPopEmployed:
-		   PopEmployedByOcc: mPopEmployedByOcc: 
-		   PopEmployedMngmt: mPopEmployedMngmt:
-		   PopEmployedServ: mPopEmployedServ: 
-		   PopEmployedSales: mPopEmployedSales:
-		   PopEmployedNatRes: mPopEmployedNatRes: 
-		   PopEmployedProd: mPopEmployedProd:
-           Pop25andOverWoutHS: mPop25andOverWoutHS: 
-		   Pop25andOverWHS_: mPop25andOverWHS_:
-		   Pop25andOverWSC_: mPop25andOverWSC_:
-		   Pop25andOverWCollege_: mPop25andOverWCollege_:
-		   AggIncome: mAggIncome:
-		   AggHshldIncome: mAggHshldIncome:
-		   FamIncomeLT75k_: mFamIncomeLT75k_:
-		   FamIncomeGT200k_: mFamIncomeGT200k_:
-		   NumOccupiedHsgUnits: mNumOccupiedHsgUnits:
-		   NumOwnerOccupiedHU: mNumOwnerOccupiedHU:
-           NumRenterHsgUnits: mNumRenterHsgUnits:
-		   NumRenterOccupiedHU: mNumRenterOccupiedHU:
-		   NumVacantHsgUnits: mNumVacantHsgUnits:
-		   NumVacantHsgUnitsForRent: mNumVacantHUForRent: 
-		   NumVacantHsgUnitsForSale: mNumVacantHUForSale:
-           NumOwnerOccupiedHU: mNumOwnerOccupiedHU:)
-
       equity.Acs_2010_14_dc_sum_tr&geosuf
         (keep=&geo TotPop: mTotPop: 
 		   PopUnder5Years: mPopUnder5Years:
@@ -167,7 +128,7 @@
     
     ** Population **;
     
-	%Label_var_years( var=TotPop, label=Population, years= 2010_14 )
+	%Label_var_years( var=TotPop_tr, label=Population, years= 2010_14 )
 
 	%Pct_calc( var=PctForeignBorn, label=% foreign born, num=PopForeignBorn, den=PopWithRace, years=2010_14 )
 
@@ -661,7 +622,7 @@
 
     ** Create flag for generating profile **;
     
-    if TotPop_2010_14 >= 100 then _make_profile = 1;
+    if TotPop_tr_2010_14 >= 100 then _make_profile = 1;
     else _make_profile = 0;
     
  

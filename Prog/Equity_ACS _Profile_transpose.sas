@@ -8,7 +8,8 @@
  Environment:  Windows
  
  Description:  Transposes calculated indicators for Equity profiles 
-			   and merges calculated statistics for ACS data at different geographies. 
+			   and merges calculated statistics for ACS data at different geographies.
+			   Outputs transposed data in percent and decimal formats. 
 **************************************************************************/
 %include "L:\SAS\Inc\StdLocal.sas";
 
@@ -19,43 +20,6 @@
 %let racelist=W B H AIOM;
 %let racename= NH-White Black-Alone Hispanic All-Other;
 
-%macro rename(data);
-/** First, create a data set with the list of variables in your input data set **/
-
-proc contents data=&data out=_contents noprint;
-
-/** Then, turn the list into a macro variable list: **/
-
-proc sql noprint;
-  select name 
-  into :varlist separated by ' '
-  from _contents
-  ;
-quit;
-
-/** Next, you need to process each var in the list into a rename statement. **/
-
-%let i = 1;
-%let v = %scan( &varlist, &i );
-%let rename = ;
-
-%do %while ( &v ~= );
-  
-  %let rename = &rename &v=c&v.;
-
-  %let i = %eval( &i + 1 );
-  %let v = %scan( &varlist, &i );
-
-%end;
-
-/** Finally, you apply the rename statement to your data set. **/
-
-data &data._new;
-  set &data;
-  rename &rename ;
-run;
-%mend rename;
-
 data city_ward;
 	set equity.equity_profile_city
 			equity.equity_profile_wd12;
@@ -65,7 +29,7 @@ data city_ward;
 
 run; 
 
-*Add gap calculation;
+*Add gap calculation - separate out city level white rates; 
 
 data whiterates;
 	set equity.equity_profile_city 
@@ -87,7 +51,7 @@ data whiterates;
 %rename(whiterates);
 run;
 
-data city_ward_WR (drop=cPct: _make_profile);
+data city_ward_WR (drop=_make_profile);
 	merge city_ward whiterates_new (rename=(c_make_profile=_make_profile));
 	by _make_profile;
 	
@@ -339,13 +303,16 @@ data equity.profile_tabs_ACS_suppress;
 				end; 
 
 	end;
+	
+	%suppress_vars;
+	%suppress_vars_fb;
 
 	%suppress_gaps;
 	%suppress_gaps_fb;
-	%gap_calcs;
-	%gap_calcs_fb;
 
+	
 run;
+
 
 proc transpose data=equity.profile_tabs_ACS_suppress out=equity.profile_tabs_ACS; 
 var PctBlackNonHispBridge: PctWhiteNonHispBridge:
@@ -353,10 +320,12 @@ var PctBlackNonHispBridge: PctWhiteNonHispBridge:
 	PctAloneB: PctAloneW: PctAloneH: PctAloneA_:
 	PctAloneI_: PctAloneO: PctAloneM: PctAloneIOM: PctAloneAIOM:
 
-	PctForeignBorn_: PctNativeBorn:
+	PctForeignBorn_: PctNativeBorn: 
 
 	PctForeignBornB: PctForeignBornW:
 	PctForeignBornH: PctForeignBornAIOM:
+
+	PctOthLang:
 
 	PctPopUnder18Years_: PctPopUnder18YearsW_: 
 	PctPopUnder18YearsB_: PctPopUnder18YearsH_:
@@ -425,11 +394,14 @@ var PctBlackNonHispBridge: PctWhiteNonHispBridge:
 	PctPoorPersonsAIOM: GapPoorPersonsAIOM:
 	PctPoorPersonsFB: GapPoorPersonsFB:
 
+	/*note that child poverty gaps have been excluded from output
+	because White child poverty rate is near to 0*/
+
 	PctPoorChildren_: 
-	PctPoorChildrenW: GapPoorChildrenW:
-	PctPoorChildrenB: GapPoorChildrenB:
-	PctPoorChildrenH: GapPoorChildrenH:
-	PctPoorChildrenAIOM: GapPoorChildrenAIOM:
+	PctPoorChildrenW:
+	PctPoorChildrenB:
+	PctPoorChildrenH:
+	PctPoorChildrenAIOM:
 
 	Pct16andOverEmploy_: 
 	Pct16andOverEmployW: Gap16andOverEmployW:
@@ -508,91 +480,232 @@ var PctBlackNonHispBridge: PctWhiteNonHispBridge:
 	PctOwnerOccupiedHUB: GapOwnerOccupiedHUB:
 	PctOwnerOccupiedHUH: GapOwnerOccupiedHUH:
 	PctOwnerOccupiedHUAIOM: GapOwnerOccupiedHUAIOM:
- ;
+ 	;
 id ward2012; 
 run; 
 
+* convert to decimal;
+data convert;
+	set equity.profile_tabs_ACS_suppress; 
+
+%decimal_convert;
+
+run; 
+
+proc transpose data=convert out=profile_tabs_ACS_dec_transpose; 
+var nPctBlackNonHispBridge: nPctWhiteNonHispBridge:
+	nPctHisp: nPctAsnPINonHispBridge: nPctOthRace:
+	nPctAloneB: nPctAloneW: nPctAloneH: nPctAloneA_:
+	nPctAloneI_: nPctAloneO: nPctAloneM: nPctAloneIOM: nPctAloneAIOM:
+
+	nPctForeignBorn_: nPctNativeBorn: 
+
+	nPctForeignBornB: nPctForeignBornW:
+	nPctForeignBornH: nPctForeignBornAIOM:
+
+	nPctOthLang:
+
+	nPctPopUnder18Years_: 
+	nPctPopUnder18YearsW_: nPctPopUnder18YrsW_:
+	nPctPopUnder18YearsB_: nPctPopUnder18YrsB_:
+	nPctPopUnder18YearsH_: nPctPopUnder18YrsH_:
+	nPctPopUnder18YearsAIOM_: nPctPopUnder18YrsAIOM_:
+
+	nPctPop18_34Years_: nPctPop18_34YearsW_: 
+	nPctPop18_34YearsB_: nPctPop18_34YearsH_:
+	nPctPop18_34YearsAIOM_:
+
+	nPctPop35_64Years_: nPctPop35_64YearsW_: 
+	nPctPop35_64YearsB_: nPctPop35_64YearsH_:
+	nPctPop35_64YearsAIOM_:
+
+	nPctPop65andOverYears_: nPctPop65andOverYrs_:
+	nPctPop65andOverYrsW: nPctPop65andOvrYrsW:
+	nPctPop65andOverYrsB: nPctPop65andOvrYrsB:
+	nPctPop65andOverYrsH: nPctPop65andOvrYrsH:
+	nPctPop65andOverYrsAIOM: nPctPop65andOvrYrsAIOM:
+
+	nPct25andOverWoutHS_: 
+	nPct25andOverWoutHSW: nPct25andOvrWoutHSW: nGap25andOvrWoutHSW:
+	nPct25andOverWoutHSB: nPct25andOvrWoutHSB: nGap25andOvrWoutHSB:
+	nPct25andOverWoutHSH: nPct25andOvrWoutHSH: nGap25andOvrWoutHSH:
+	nPct25andOverWoutHSAIOM: nPct25andOvrWoutHSAIOM: nGap25andOvrWoutHSAIOM:
+	nPct25andOverWoutHSFB: nGap25andOverWoutHSFB:
+	nPct25andOverWoutHSNB: nGap25andOverWoutHSNB:
+
+	nPct25andOverWHS_:  
+	nPct25andOverWHSW: nGap25andOverWHSW:  
+	nPct25andOverWHSB: nGap25andOverWHSB:  
+	nPct25andOverWHSH: nGap25andOverWHSH:  
+	nPct25andOverWHSAIOM: nGap25andOverWHSAIOM:  
+	nPct25andOverWHSFB: nGap25andOverWHSFB:  
+	nPct25andOverWHSNB: nGap25andOverWHSNB:  
+
+	nPct25andOverWSC_: 
+	nPct25andOverWSCW: nGap25andOverWSCW:
+	nPct25andOverWSCB: nGap25andOverWSCB:
+	nPct25andOverWSCH: nGap25andOverWSCH:
+	nPct25andOverWSCAIOM: nGap25andOverWSCAIOM:
+	nPct25andOverWSCFB: nGap25andOverWSCFB:
+	nPct25andOverWSCNB: nGap25andOverWSCNB:
+
+	nAvgHshldIncAdj_: 
+	nAvgHshldIncAdjW: nGapAvgHshldIncAdjW:
+	nAvgHshldIncAdjB: nGapAvgHshldIncAdjB:
+	nAvgHshldIncAdjH: nGapAvgHshldIncAdjH:
+	nAvgHshldIncAdjAIOM_2010_14 nGapAvgHshldIncAdjAIOM:
+
+	nPctFamilyGT200000_:
+	nPctFamilyGT200000W: nGapFamilyGT200000W: 
+	nPctFamilyGT200000B: nGapFamilyGT200000B: 
+	nPctFamilyGT200000H: nGapFamilyGT200000H: 
+	nPctFamilyGT200000AIOM: nGapFamilyGT200000AIOM: 
+
+	nPctFamilyLT75000_: 
+	nPctFamilyLT75000W: nGapFamilyLT75000W: 
+	nPctFamilyLT75000B: nGapFamilyLT75000B: 
+	nPctFamilyLT75000H: nGapFamilyLT75000H: 
+	nPctFamilyLT75000AIOM: nGapFamilyLT75000AIOM: 
+
+	nPctPoorPersons_: 
+	nPctPoorPersonsW: nGapPoorPersonsW:
+	nPctPoorPersonsB: nGapPoorPersonsB:
+	nPctPoorPersonsH: nGapPoorPersonsH:
+	nPctPoorPersonsAIOM: nGapPoorPersonsAIOM:
+	nPctPoorPersonsFB: nGapPoorPersonsFB:
+
+	/*note that child poverty gaps have been excluded from output
+	because White child poverty rate is near to 0*/
+
+	nPctPoorChildren_: 
+	nPctPoorChildrenW:
+	nPctPoorChildrenB:
+	nPctPoorChildrenH:
+	nPctPoorChildrenAIOM:
+
+	nPct16andOverEmploy_: 
+	nPct16andOverEmployW: nPct16andOverEmplyW: nGap16andOverEmployW:
+	nPct16andOverEmployB: nPct16andOverEmplyB: nGap16andOverEmployB:
+	nPct16andOverEmployH: nPct16andOverEmplyH: nGap16andOverEmployH:
+	nPct16andOverEmployAIOM: nPct16andOverEmplyAIOM: nGap16andOverEmployAIOM:
+
+	nPctEmployed16to64_: 
+	nPctEmployed16to64W: nGapEmployed16to64W:
+	nPctEmployed16to64B: nGapEmployed16to64B:
+	nPctEmployed16to64H: nGapEmployed16to64H:
+	nPctEmployed16to64AIOM: nGapEmployed16to64AIOM:
+
+	nPctUnemployed_: 
+	nPctUnemployedW: nGapUnemployedW:
+	nPctUnemployedB: nGapUnemployedB:
+	nPctUnemployedH: nGapUnemployedH:
+	nPctUnemployedAIOM: nGapUnemployedAIOM:
+
+	nPct16andOverWages_: 
+	nPct16andOverWagesW: nGap16andOverWagesW:
+	nPct16andOverWagesB: nGap16andOverWagesB:
+	nPct16andOverWagesH: nGap16andOverWagesH:
+	nPct16andOverWagesAIOM: nGap16andOverWagesAIOM:
+
+	nPct16andOverWorkFT_: 
+	nPct16andOverWorkFTW: nPct16andOverWrkFTW: nGap16andOverWorkFTW:
+	nPct16andOverWorkFTB: nPct16andOverWrkFTB: nGap16andOverWorkFTB:
+	nPct16andOverWorkFTH: nPct16andOverWrkFTH: nGap16andOverWorkFTH:
+	nPct16andOverWorkFTAIOM: nPct16andOverWrkFTAIOM: nGap16andOverWorkFTAIOM:
+
+	nPctWorkFTLT35k_: 
+	nPctWorkFTLT35kW: nGapWorkFTLT35kW:
+	nPctWorkFTLT35kB: nGapWorkFTLT35kB:
+	nPctWorkFTLT35kH: nGapWorkFTLT35kH:
+	nPctWorkFTLT35kAIOM: nGapWorkFTLT35kAIOM:
+
+	nPctWorkFTLT75k_: 
+	nPctWorkFTLT75kW: nGapWorkFTLT75kW:
+	nPctWorkFTLT75kB: nGapWorkFTLT75kB:
+	nPctWorkFTLT75kH: nGapWorkFTLT75kH:
+	nPctWorkFTLT75kAIOM: nGapWorkFTLT75kAIOM:
+
+	nPctEmployedMngmt_: 
+	nPctEmployedMngmtW: nGapEmployedMngmtW:
+	nPctEmployedMngmtB: nGapEmployedMngmtB:
+	nPctEmployedMngmtH: nGapEmployedMngmtH:
+	nPctEmployedMngmtAIOM: nGapEmployedMngmtAIOM:
+
+	nPctEmployedServ_: 
+	nPctEmployedServW: nGapEmployedServW:
+	nPctEmployedServB: nGapEmployedServB:
+	nPctEmployedServH: nGapEmployedServH:
+	nPctEmployedServAIOM: nGapEmployedServAIOM:
+
+	nPctEmployedSales_: 
+	nPctEmployedSalesW: nGapEmployedSalesW:
+	nPctEmployedSalesB: nGapEmployedSalesB:
+	nPctEmployedSalesH: nGapEmployedSalesH:
+	nPctEmployedSalesAIOM: nGapEmployedSalesAIOM:
+
+	nPctEmployedNatRes_: 
+	nPctEmployedNatResW: nGapEmployedNatResW:
+	nPctEmployedNatResB: nGapEmployedNatResB:
+	nPctEmployedNatResH: nGapEmployedNatResH:
+	nPctEmployedNatResAIOM: nGapEmployedNatResAIOM:
+
+	nPctEmployedProd_: 
+	nPctEmployedProdW: nGapEmployedProdW:
+	nPctEmployedProdB: nGapEmployedProdB:
+	nPctEmployedProdH: nGapEmployedProdH:
+	nPctEmployedProdAIOM: nGapEmployedProdAIOM:
+
+	nPctOwnerOccupiedHU_: 
+	nPctOwnerOccupiedHUW: nPctOwnerOccpiedHUW: nGapOwnerOccupiedHUW:
+	nPctOwnerOccupiedHUB: nPctOwnerOccpiedHUB: nGapOwnerOccupiedHUB:
+	nPctOwnerOccupiedHUH: nPctOwnerOccpiedHUH: nGapOwnerOccupiedHUH:
+	nPctOwnerOccupiedHUAIOM: nPctOwnerOccpiedHUAIOM: nGapOwnerOccupiedHUAIOM:
+ 	;
+id ward2012; 
+run;
+
+*import labels from profile_tabs_ACS into decimal convert dataset;
+
+data profile_tabs_ACS_dec_transpose_2;
+	set profile_tabs_ACS_dec_transpose;
+	_name_=substr(_name_,2);
+	id=_n_; 
+run;
 
 
-
-/*data equity.profile_tabs_ACS (where=(category ~=.));
-	set transposed_data;
-
-total=index(_name_, "_2010_14");
-if total=0 then total=index(_name_, "_m_2010_14");
-
-black=index(_name_, "B_2010_14");
-if black=0 then black=index(_name_,"B_m_2010_14");
-
-white=index(_name_, "W_2010_14");
-if white=0 then white=index(_name_,"W_m_2010_14");
-
-hispanic=index(_name_, "H_2010_14");
-if hispanic=0 then hispanic=index(_name_,"H_m_2010_14");
-
-AIOM=index(_name_, "AIOM_2010_14");
-if AIOM=0 then AIOM=index(_name_,"AIOM_m_2010_14");
-
-if total >0 then category=1;
-if black > 0 then category=5;
-if white > 0 then category=2;
-if hispanic > 0 then category=4; 
-if AIOM  > 0 then category=6; 
-
- if _name_ in ("PctWhiteNonHispBridge_2010_14") then category=2;
- if _name_ in ("PctWhiteNonHispBridge_m_2010_14") then category=2;
- if _name_ in ("PctBlackNonHispBridge_2010_14") then category=5;
- if _name_ in ("PctBlackNonHispBridge_m_2010_14") then category=5;
- if _name_ in ("PctHisp_2010_14") then category=4;
- if _name_ in ("PctHisp_m_2010_14") then category=4;
- if _name_ in ("PctAsnPINonHispBridge_2010_14") then category=0;
- if _name_ in ("PctAsnPINonHispBridge_m_2010_14") then category=0;
- if _name_ in ("PctOth_2010_14") then category=0;
- if _name_ in ("PctOth_m_2010_14") then category=0;
- if _name_ in ("PctForeignBorn_2010_14") then category=0;
- if _name_ in ("PctForeignBorn_m_2010_14") then category=0;
- if _name_ in ("PctNativeBorn_2010_14") then category=0;
- if _name_ in ("PctNativeBorn_m_2010_14") then category=0;
- if _name_ in ("PctOthLang_2010_14") then category=0;
- if _name_ in ("PctOthLang_m_2010_14") then category=0;
-
- if _name_ ="Gap25andOverWoutHSFB_2010_14" then do; black=0; category=.; end;
- if _name_ ="Pct25andOverWoutHSFB_2010_14" then do; black=0; category=.; end;
- if _name_ ="Pct25andOverWoutHSFB_m_2010_14" then do; black=0; category=.; end;
- if _name_ ="Gap25andOverWoutHSNB_2010_14" then do; black=0; category=.; end;
- if _name_ ="Pct25andOverWoutHSNB_2010_14" then do; black=0; category=.; end;
- if _name_ ="Pct25andOverWoutHSNB_m_2010_14" then do; black=0; category=.; end;
- if _name_ ="Gap25andOverWHSFB_2010_14" then do; black=0; category=.; end;
- if _name_ ="Pct25andOverWHSFB_2010_14" then do; black=0; category=.; end;
- if _name_ ="Pct25andOverWHSFB_m_2010_14" then do; black=0; category=.; end;
- if _name_ ="Gap25andOverWHSNB_2010_14" then do; black=0; category=.; end;
- if _name_ ="Pct25andOverWHSNB_2010_14" then do; black=0; category=.; end;
- if _name_ ="Pct25andOverWHSNB_m_2010_14" then do; black=0; category=.; end;
- if _name_ ="Gap25andOverWSCFB_2010_14" then do; black=0; category=.; end;
- if _name_ ="Pct25andOverWSCFB_2010_14" then do; black=0; category=.; end;
- if _name_ ="Pct25andOverWSCFB_m_2010_14" then do; black=0; category=.; end;
- if _name_ ="Gap25andOverWSCNB_2010_14" then do; black=0; category=.; end;
- if _name_ ="Pct25andOverWSCNB_2010_14" then do; black=0; category=.; end;
- if _name_ ="Pct25andOverWSCNB_m_2010_14" then do; black=0; category=.; end;
+proc sort data=profile_tabs_ACS_dec_transpose_2;
+	by _name_;
+run;
 
 
-order=.;
+proc sort data=equity.profile_tabs_ACS 
+	out=profile_tabs_ACS_sort;
+	by _name_;
+run;
+ 
+data profile_tabs_ACS_dec_notsort;
+	merge profile_tabs_ACS_sort (keep=_name_ _label_)
+		  profile_tabs_ACS_dec_transpose_2 
+		  ;
+	by _name_;	
+run;
+	
+* where statement included to drop variables that were renamed in decimal convert to keep under 32 charaacter;
 
-run;*/
+proc sort data=profile_tabs_ACS_dec_notsort
+			out=equity.profile_tabs_ACS_dec;
+by id; 
+where id ^= .;
+run; 
 
 proc export data=equity.profile_tabs_ACS
 	outfile="D:\DCDATA\Libraries\Equity\Prog\profile_tabs_ACS.csv"
 	dbms=csv replace;
 	run;
 
-  proc format;
-  	value category
-   	1= "Total"
-  	2= "Non-Hispanic White"
-    3= "Non-Hispanic All Other"
-	4= "Hispanic"
-	5= "Black Alone"
- 	6= "Asian, American Indian, Other Alone and Multiple Race"
-	7= "White Alone"
- 	8= "Foreign Born";
+proc export data=equity.profile_tabs_ACS_dec
+	outfile="D:\DCDATA\Libraries\Equity\Prog\profile_tabs_ACS_dec.csv"
+	dbms=csv replace;
+	run;
 
+					

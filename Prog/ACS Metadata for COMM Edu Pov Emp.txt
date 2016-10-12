@@ -1,0 +1,103 @@
+EQUITY/Equity_ACS_Output_COMM.sas:  NeighborhoodInfo DC                                    16:06 Friday, October 7, 2016   4
+
+The CONTENTS Procedure
+
+Data Set Name        WORK.ALL_RACE                                            Observations           36  
+Member Type          DATA                                                     Variables              47  
+Engine               V9                                                       Indexes                0   
+Created              10/07/2016 16:06:38                                      Observation Length     364 
+Last Modified        10/07/2016 16:06:38                                      Deleted Observations   0   
+Protection                                                                    Compressed             CHAR
+Data Set Type                                                                 Reuse Space            NO  
+Label                ACS Tabulations Edu, Pov, Unemp, Living Wage for COMM    Point to Observations  YES 
+Data Representation  WINDOWS_64                                               Sorted                 YES 
+Encoding             wlatin1  Western (Windows)                                                          
+
+
+                                             Engine/Host Dependent Information
+
+Data Set Page Size          65536                                                                                           
+Number of Data Set Pages    2                                                                                               
+Number of Data Set Repairs  0                                                                                               
+Filename                    D:\Users\LHendey\AppData\Local\Temp\SAS Temporary                                               
+                            Files\_TD14768_MET-D13158-W7_\all_race.sas7bdat                                                 
+Release Created             9.0401M1                                                                                        
+Host Created                X64_7PRO                                                                                        
+
+
+                                        Alphabetic List of Variables and Attributes
+ 
+ # Variable                      Type Len Format    Label
+
+16 ChildrenPoverty               Num    8           Children under 18 years old with poverty status determined, 2010-14    
+   Defined_2010_14                                                                                                         
+ 1 City                          Char   1 $CITY.    Washington, D.C.                                                       
+42 Gap25andOverWHS_2010_14       Num    8                                                                                  
+43 Gap25andOverWSC_2010_14       Num    8                                                                                  
+44 GapPoorPersons_2010_14        Num    8                                                                                  
+45 GapUnemployed_2010_14         Num    8                                                                                  
+46 GapWorkFTLT35k_2010_14        Num    8                                                                                  
+47 GapWorkFTLT75k_2010_14        Num    8                                                                                  
+15 PersonsPovertyDefined_2010_14 Num    8           Persons with poverty status determined, 2010-14                        
+ 3 Pop25andOverWHS_2010_14       Num    8           Persons 25 years old and over with a                                   
+                                                    high school diploma or GED, 2010-14                                    
+ 4 Pop25andOverWSC_2010_14       Num    8           Persons 25 years old and over with some college, 2010-14               
+ 2 Pop25andOverYears_2010_14     Num    8           Persons 25 years old and over, 2010-14                                 
+10 PopInCivLaborForce_2010_14    Num    8           Persons 16+ years old in the civilian labor force, 2010-14             
+ 8 PopPoorChildren_2010_14       Num    8           Children under 18 years old below the poverty level last year, 2010-14 
+ 9 PopPoorPersons_2010_14        Num    8           Persons below the poverty level last year, 2010-14                     
+EQUITY/Equity_ACS_Output_COMM.sas:  NeighborhoodInfo DC                                    16:06 Friday, October 7, 2016   5
+
+The CONTENTS Procedure
+
+                                        Alphabetic List of Variables and Attributes
+ 
+ # Variable                      Type Len Format    Label
+
+11 PopUnemployed_2010_14         Num    8           Persons 16+ years old in the civilian                                  
+                                                    labor force and unemployed, 2010-14                                    
+13 PopWorkFTLT35K_2010_14        Num    8           Worked full-time with earnings less than $35000, 2010-14               
+14 PopWorkFTLT75K_2010_14        Num    8           Worked full-time with earnings less than $75000, 2010-14               
+12 PopWorkFT_2010_14             Num    8           Worked full-time, 2010-14                                              
+26 Ward2012                      Char   1 $WARD12A. Ward (2012)                                                            
+20 mChildrenPoverty              Num    8           Children under 18 years old with poverty                               
+   Defined_2010_14                                  status determined, MOE, 2010-14                                        
+18 mPersonsPoverty               Num    8           Persons with poverty status determined, MOE, 2010-14                   
+   Defined_2010_14                                                                                                         
+ 6 mPop25andOverWHS_2010_14      Num    8           Persons 25 years old and over with a high                              
+                                                    school diploma or GED, MOE, 2010-14                                    
+ 7 mPop25andOverWSC_2010_14      Num    8           Persons 25 years old and over with some college, MOE, 2010-14          
+ 5 mPop25andOverYears_2010_14    Num    8           Persons 25 years old and over, MOE, 2010-14                            
+22 mPopInCivLaborForce_2010_14   Num    8           Persons 16+ years old in the civilian labor force, MOE, 2010-14        
+19 mPopPoorChildren_2010_14      Num    8           Children under 18 years old below the                                  
+                                                    poverty level last year, MOE, 2010-14                                  
+17 mPopPoorPersons_2010_14       Num    8           Persons below the poverty level last year, MOE, 2010-14                
+21 mPopUnemployed_2010_14        Num    8           Persons 16+ years old in the civilian labor                            
+                                                    force and unemployed, MOE, 2010-14                                     
+24 mPopWorkFTLT35K_2010_14       Num    8           Worked full-time with earnings less than $35000, MOE, 2010-14          
+25 mPopWorkFTLT75K_2010_14       Num    8           Worked full-time with earnings less than $75000, MOE, 2010-14          
+23 mPopWorkFT_2010_14            Num    8           Worked full-time, MOE, 2010-14                                         
+28 nPct25andOverWHS_2010_14      Num    8                                                                                  
+29 nPct25andOverWHS_m_2010_14    Num    8                                                                                  
+30 nPct25andOverWSC_2010_14      Num    8                                                                                  
+31 nPct25andOverWSC_m_2010_14    Num    8                                                                                  
+34 nPctPoorChildren_2010_14      Num    8                                                                                  
+35 nPctPoorChildren_m_2010_14    Num    8                                                                                  
+32 nPctPoorPersons_2010_14       Num    8                                                                                  
+33 nPctPoorPersons_m_2010_14     Num    8                                                                                  
+36 nPctUnemployed_2010_14        Num    8                                                                                  
+37 nPctUnemployed_m_2010_14      Num    8                                                                                  
+38 nPctWorkFTLT35k_2010_14       Num    8                                                                                  
+39 nPctWorkFTLT35k_m_2010_14     Num    8                                                                                  
+40 nPctWorkFTLT75k_2010_14       Num    8                                                                                  
+41 nPctWorkFTLT75k_m_2010_14     Num    8                                                                                  
+27 race                          Char  10                                                                                  
+EQUITY/Equity_ACS_Output_COMM.sas:  NeighborhoodInfo DC                                    16:06 Friday, October 7, 2016   6
+
+The CONTENTS Procedure
+
+      Sort Information
+
+Sortedby       Ward2012 race
+Validated      YES          
+Character Set  ANSI         
