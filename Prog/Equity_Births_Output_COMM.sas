@@ -1,5 +1,5 @@
 /**************************************************************************
- Program:  Equity_ACS_profile_COMM.sas
+ Program:  Equity_Births_Output_COMM.sas
  Library:  Equity
  Project:  NeighborhoodInfo DC
  Author:   L. Hendey & S. Diby

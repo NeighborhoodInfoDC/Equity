@@ -17,7 +17,7 @@
 
 
 *output population by race;
-data population (drop=Pct: q);  
+data population (label="Population Race Variables for COMM" drop=Pct: q);  
 set equity.profile_tabs_ACS_suppress (keep=  city ward2012 
 
 		   PopWithRace: mPopWithRace:
@@ -135,7 +135,7 @@ nPctAloneW_m_2010_14="MOE for % white alone, 2010-14"
 	outfile="D:\DCDATA\Libraries\Equity\Prog\ACS_ward_population_COMM.csv"
 	dbms=csv replace;
 	run;
-data all (drop= q Pct:); 
+data all (label="ACS Vars Edu Pov EMP for COMM" drop= q Pct:); 
 set equity.profile_tabs_ACS_suppress 
 	(keep=city ward2012 
 				Pct25andOverWHS_2010_14 Pct25andOverWHS_m_2010_14
