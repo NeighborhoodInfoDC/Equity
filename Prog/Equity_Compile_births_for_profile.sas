@@ -1,5 +1,5 @@
 /**************************************************************************
- Program:  Compile_ACS_for_profile_births.sas
+ Program:  Equity_Compile_Births_for_profile.sas
  Library:  Equity
  Project:  NeighborhoodInfo DC
  Author:   L. Hendey & S. Diby
@@ -37,7 +37,7 @@
   %let geosuf = %sysfunc( putc( %upcase( &geo ), $geosuf. ) );
   %let geoafmt = %sysfunc( putc( %upcase( &geo ), $geoafmt. ) );
 
-  data Equity_profile_births&geosuf._C (compress=no);    
+  data profile_births&geosuf._C (compress=no);    
      set Vital.Births_sum&geosuf
         (keep=&geo births_total: 
 				births_w_race: births_black: births_asian: births_hisp: births_white: births_oth_rac:
@@ -48,9 +48,9 @@
    
   run;
 
-  data Equity_profile_births&geosuf._B (compress=no); 
+  data profile_births&geosuf._B (compress=no); 
   
-    set Equity_profile_births&geosuf._C;
+    set profile_births&geosuf._C;
     
     ** Total births **;
     
@@ -117,8 +117,8 @@
 
   run;
     
-  data equity.Equity_profile_births&geosuf.;
-	set Equity_profile_births&geosuf._B; 
+  data equity.profile_births&geosuf.;
+	set profile_births&geosuf._B; 
 
 		keep &geo _make_profile
 		Births_total_2011 Births_total_3yr_2011 Births_w_race_2011
@@ -160,7 +160,7 @@
  run;
 
 
- %File_info( data=Equity.Equity_profile_births&geosuf, printobs=0, contents=n )
+ %File_info( data=Equity.profile_births&geosuf, printobs=0, contents=n )
  
  %end;
 
