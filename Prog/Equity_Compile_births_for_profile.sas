@@ -164,6 +164,16 @@
  
  %end;
 
+** Register metadata **;
+
+%Dc_update_meta_file(
+      ds_lib=Equity,
+      ds_name=Equity_profile_births&geosuf,
+	  creator=L Hendey and S Diby,
+      creator_process=Equity_profile_births&geosuf.sas,
+      restrictions=None
+      )
+
 %mend add_percents;
 
 /** End Macro Definition **/

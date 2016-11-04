@@ -9,7 +9,6 @@
  
  Description:  Transposes calculated indicators for Equity profiles 
 			   and merges calculated statistics for ACS data at different geographies.
-			   Outputs transposed data in percent and decimal formats. 
 **************************************************************************/
 %include "L:\SAS\Inc\StdLocal.sas";
 
@@ -310,402 +309,487 @@ data equity.profile_tabs_ACS_suppress;
 	%suppress_gaps;
 	%suppress_gaps_fb;
 
+	label
+		PctBlackNonHispBridge_m_2010_14 = "% black non-Hispanic, MOE, 2010-14 "
+		PctWhiteNonHispBridge_m_2010_14 = "% white non-Hispanic, MOE, 2010-14 "
+		PctHisp_m_2010_14 = "% Hispanic, MOE, 2010-14 " 
+		PctAsnPINonHispBridge_m_2010_14 = "% Asian/P.I., MOE, 2010-14 " 
+		PctOthRaceNonHispBridg_m_2010_14 = "% All other than Black White Asian P.I. Hispanic, MOE, 2010-14 "
+		PctAloneB_m_2010_14 = "% black non-Hispanic, MOE, 2010-14 " 
+		PctAloneW_m_2010_14 = "% white alone, MOE, 2010-14 " 
+		PctAloneH_m_2010_14 = "% Hispanic alone, MOE, 2010-14 " 
+		PctAloneA_m_2010_14 = "% Asian/P.I. alone, MOE, 2010-14 "
+		PctAloneI_m_2010_14 = "% Indigenous alone, MOE, 2010-14 " 
+		PctAloneO_m_2010_14 = "% Other race alone, MOE, 2010-14 " 
+		PctAloneM_m_2010_14 = "% Multiracial alone, MOE, 2010-14 " 
+		PctAloneIOM_m_2010_14 = "% Indigienous-other-multi-alone alone, MOE, 2010-14 " 
+		PctAloneAIOM_m_2010_14 = "% All other than Black-White-Hispanic alone, MOE, 2010-14 "
+
+		PctForeignBorn_m_2010_14 = "% foreign born, MOE, 2010-14 "
+		PctNativeBorn_m_2010_14 = "% native born, MOE, 2010-14 " 
+		PctForeignBornB_m_2010_14 = "% foreign born Black-Alone, MOE, 2010-14 " 
+		PctForeignBornW_m_2010_14 = "% foreign born NH-White, MOE, 2010-14 "
+		PctForeignBornH_m_2010_14 = "% foreign born Hispanic, MOE, 2010-14 " 
+		PctForeignBornAIOM_m_2010_14 = "% foreign born All-Other, MOE, 2010-14 "
+		PctOthLang_m_2010_14 = "% pop. that speaks a language other than English at home, MOE, 2010-14 "
+
+		PctPopUnder18Years_m_2010_14 = "% children, MOE, 2010-14 "
+		PctPopUnder18YearsW_m_2010_14 = "% children NH-White, MOE, 2010-14 " 
+		PctPopUnder18YearsB_m_2010_14 = "% children Black-Alone, MOE, 2010-14 " 
+		PctPopUnder18YearsH_m_2010_14 = "% children Hispanic, MOE, 2010-14 "
+		PctPopUnder18YearsAIOM_m_2010_14 = "% children All-Other, MOE, 2010-14 "
+
+		PctPop18_34Years_m_2010_14 = "% persons 18-34 years old, MOE, 2010-14 "
+		PctPop18_34YearsW_m_2010_14 = "% persons 18-34 years old NH-White, MOE, 2010-14 " 
+		PctPop18_34YearsB_m_2010_14 = "% persons 18-34 years old Black-Alone, MOE, 2010-14 " 
+		PctPop18_34YearsH_m_2010_14 = "% persons 18-34 years old Hispanic, MOE, 2010-14 "
+		PctPop18_34YearsAIOM_m_2010_14 = "% persons 18-34 years old All-Other, MOE, 2010-14 "
+
+		PctPop35_64Years_m_2010_14 = "% persons 35-64 years old, MOE, 2010-14 "
+		PctPop35_64YearsW_m_2010_14 = "% persons 35-64 years old NH-White, MOE, 2010-14 " 
+		PctPop35_64YearsB_m_2010_14 = "% persons 35-64 years old Black-Alone, MOE, 2010-14 " 
+		PctPop35_64YearsH_m_2010_14 = "% persons 35-64 years old Hispanic, MOE, 2010-14 "
+		PctPop35_64YearsAIOM_m_2010_14 = "% persons 35-64 years old All-Other, MOE, 2010-14 "
+
+		PctPop65andOverYrs_m_2010_14 = "% seniors, MOE, 2010-14 "
+		PctPop65andOverYrsW_m_2010_14 = "% seniors NH-White, MOE, 2010-14 " 
+		PctPop65andOverYrsB_m_2010_14 = "% seniors Black-Alone, MOE, 2010-14 " 
+		PctPop65andOverYrsH_m_2010_14 = "% seniors Hispanic, MOE, 2010-14 "
+		PctPop65andOverYrsAIOM_m_2010_14 = "% seniors All-Other, MOE, 2010-14 "
+
+		Pct25andOverWoutHS_m_2010_14 = "% persons without HS diploma, MOE, 2010-14 "
+		Pct25andOverWoutHSW_m_2010_14 = "% persons NH-White without HS diploma, MOE, 2010-14 "
+		Pct25andOverWoutHSB_m_2010_14 = "% persons Black-Alone without HS diploma, MOE, 2010-14 "
+		Pct25andOverWoutHSH_m_2010_14 = "% persons Hispanic without HS diploma, MOE, 2010-14 "
+		Pct25andOverWoutHSAIOM_m_2010_14 = "% persons All-Other without HS diploma, MOE, 2010-14 "
+		Pct25andOverWoutHSFB_m_2010_14 = "% persons foreign-born without HS diploma, MOE, 2010-14 "
+		Pct25andOverWoutHSNB_m_2010_14 = "% persons native-born without HS diploma, MOE, 2010-14 "
+
+		Pct25andOverWHS_m_2010_14 = "% persons with HS diploma, MOE, 2010-14 "
+		Pct25andOverWHSW_m_2010_14 = "% persons NH-White with HS diploma, MOE, 2010-14 "
+		Pct25andOverWHSB_m_2010_14 = "% persons Black-Alone with HS diploma, MOE, 2010-14 "
+		Pct25andOverWHSH_m_2010_14 = "% persons Hispanic with HS diploma, MOE, 2010-14 "
+		Pct25andOverWHSAIOM_m_2010_14 = "% persons All-Other with HS diploma, MOE, 2010-14 "
+		Pct25andOverWHSFB_m_2010_14 = "% persons foreign-born with HS diploma, MOE, 2010-14 "
+		Pct25andOverWHSNB_m_2010_14 = "% persons native-born with HS diploma, MOE, 2010-14 "
+
+		Pct25andOverWSC_m_2010_14 = "% persons with some college, MOE, 2010-14 "
+		Pct25andOverWSCW_m_2010_14 = "% persons NH-White with some college, MOE, 2010-14 "
+		Pct25andOverWSCB_m_2010_14 = "% persons Black-Alone with some college, MOE, 2010-14 "
+		Pct25andOverWSCH_m_2010_14 = "% persons Hispanic with some college, MOE, 2010-14 "
+		Pct25andOverWSCAIOM_m_2010_14 = "% persons All-Other with some college, MOE, 2010-14 "
+		Pct25andOverWSCFB_m_2010_14 = "% persons foreign-born with some college, MOE, 2010-14 "
+		Pct25andOverWSCNB_m_2010_14 = "% persons native-born with some college, MOE, 2010-14 "
+
+		AvgHshldIncAdj_m_2010_14 = "Average household income last year ($), MOE, 2010-14 "
+		AvgHshldIncAdjW_m_2010_14 = "Average household income last year NH-White ($), MOE, 2010-14 "
+		AvgHshldIncAdjB_m_2010_14 = "Average household income last year Black-Alone ($), MOE, 2010-14 "
+		AvgHshldIncAdjH_m_2010_14 = "Average household income last year Hispanic ($), MOE, 2010-14 "
+		AvgHshldIncAdjAIOM_m_2010_14 = "Average household income last year All-Other ($), MOE, 2010-14 "
+
+		PctFamilyGT200000_m_2010_14 = "% families with income greater than 200000, MOE, 2010-14 "
+		PctFamilyGT200000W_m_2010_14 = "% families NH-White with income greater than 200000, MOE, 2010-14 "
+		PctFamilyGT200000B_m_2010_14 = "% families Black-Alone with income greater than 200000, MOE, 2010-14 "
+		PctFamilyGT200000H_m_2010_14 = "% families Hispanic with income greater than 200000, MOE, 2010-14 "
+		PctFamilyGT200000AIOM_m_2010_14 = "% families All-Other with income greater than 200000, MOE, 2010-14 "
+
+		PctFamilyLT75000_m_2010_14 = "% families with income less than 75000, MOE, 2010-14 "
+		PctFamilyLT75000W_m_2010_14 = "% families NH-White with income less than 75000, MOE, 2010-14 "
+		PctFamilyLT75000B_m_2010_14 = "% families Black-Alone with income less than 75000, MOE, 2010-14 "
+		PctFamilyLT75000H_m_2010_14 = "% families Hispanic with income less than 75000, MOE, 2010-14 "
+		PctFamilyLT75000AIOM_m_2010_14 = "% families All-Other with income less than 75000, MOE, 2010-14 "
+
+		PctPoorPersons_m_2010_14 = "Poverty rate (%), MOE, 2010-14 "
+		PctPoorPersonsW_m_2010_14 = "Poverty rate NH-White (%), MOE, 2010-14 "
+		PctPoorPersonsB_m_2010_14 = "Poverty rate Black-Alone (%), MOE, 2010-14 "
+		PctPoorPersonsH_m_2010_14 = "Poverty rate Hispanic (%), MOE, 2010-14 "
+		PctPoorPersonsAIOM_m_2010_14 = "Poverty rate All-Other (%), MOE, 2010-14 "
+		PctPoorPersonsFB_m_2010_14 = "Poverty rate foreign born (%), MOE, 2010-14 "
+
+		PctPoorChildren_m_2010_14 = "% children in poverty, MOE, 2010-14 "
+		PctPoorChildrenW_m_2010_14 = "% children NH-White in poverty, MOE, 2010-14 "
+		PctPoorChildrenB_m_2010_14 = "% children Black-Alone in poverty, MOE, 2010-14 "
+		PctPoorChildrenH_m_2010_14 = "% children Hispanic in poverty, MOE, 2010-14 "
+		PctPoorChildrenAIOM_m_2010_14 = "% children All-Other in poverty, MOE, 2010-14 "
+		PctPoorChildrenFB_m_2010_14 = "% children foreign born in poverty, MOE, 2010-14 "
+
+		Pct16andOverEmploy_m_2010_14 = "% pop. 16+ yrs. employed, MOE, 2010-14 "
+		Pct16andOverEmployW_m_2010_14 = "% pop. 16+ yrs. employed NH-White, MOE, 2010-14 "
+		Pct16andOverEmployB_m_2010_14 = "% pop. 16+ yrs. employed Black-Alone, MOE, 2010-14 "
+		Pct16andOverEmployH_m_2010_14 = "% pop. 16+ yrs. employed Hispanic, MOE, 2010-14"
+		Pct16andOverEmployAIOM_m_2010_14 = "% pop. 16+ yrs. employed All-Other, MOE, 2010-14"
+
+		PctEmployed16to64_m_2010_14 = "% persons employed between 16 and 64 years old, MOE, 2010-14 "
+		PctEmployed16to64W_m_2010_14 = "% persons NH-White employed between 16 and 64 years old, MOE, 2010-14 "
+		PctEmployed16to64B_m_2010_14 = "% persons Black-Alone employed between 16 and 64 years old, MOE, 2010-14 "
+		PctEmployed16to64H_m_2010_14 = "% persons Hispanic employed between 16 and 64 years old, MOE, 2010-14"
+		PctEmployed16to64AIOM_m_2010_14 = "% persons All-Other employed between 16 and 64 years old, MOE, 2010-14"
+
+		PctUnemployed_m_2010_14 = "Unemployment rate (%), MOE, 2010-14 "
+		PctUnemployedW_m_2010_14 = "NH-White Unemployment rate (%), MOE, 2010-14 "
+		PctUnemployedB_m_2010_14 = "Black-Alone Unemployment rate (%), MOE, 2010-14 "
+		PctUnemployedH_m_2010_14 = "Hispanic Unemployment rate (%), MOE, 2010-14"
+		PctUnemployedAIOM_m_2010_14 = "All-Other Unemployment rate (%), MOE, 2010-14"
+
+		Pct16andOverWages_m_2010_14 = "% persons employed with earnings, MOE, 2010-14 "
+		Pct16andOverWagesW_m_2010_14 = "% persons NH-White employed with earnings, MOE, 2010-14 "
+		Pct16andOverWagesB_m_2010_14 = "% persons Black-Alone employed with earnings, MOE, 2010-14 "
+		Pct16andOverWagesH_m_2010_14 = "% persons Hispanic employed with earnings, MOE, 2010-14"
+		Pct16andOverWagesAIOM_m_2010_14 = "% persons All-Other employed with earnings, MOE, 2010-14"
+
+		Pct16andOverWorkFT_m_2010_14 = "% persons employed full time, MOE, 2010-14 "
+		Pct16andOverWorkFTW_m_2010_14 = "% persons NH-White employed full time, MOE, 2010-14 "
+		Pct16andOverWorkFTB_m_2010_14 = "% persons Black-Alone employed full time, MOE, 2010-14 "
+		Pct16andOverWorkFTH_m_2010_14 = "% persons Hispanic employed full time, MOE, 2010-14"
+		Pct16andOverWorkFTAIOM_m_2010_14 = "% persons All-Other employed full time, MOE, 2010-14"
+
+		PctWorkFTLT35k_m_2010_14 = "% persons employed full time with earnings less than 35000, MOE, 2010-14 "
+		PctWorkFTLT35kW_m_2010_14 = "% persons NH-White employed full time with earnings less than 35000, MOE, 2010-14 "
+		PctWorkFTLT35kB_m_2010_14 = "% persons Black-Alone employed full time with earnings less than 35000, MOE, 2010-14 "
+		PctWorkFTLT35kH_m_2010_14 = "% persons Hispanic employed full time with earnings less than 35000, MOE, 2010-14"
+		PctWorkFTLT35kAIOM_m_2010_14 = "% persons All-Other employed full time with earnings less than 35000, MOE, 2010-14"
+
+		PctWorkFTLT75k_m_2010_14 = "% persons employed full time with earnings less than 75000, MOE, 2010-14 "
+		PctWorkFTLT75kW_m_2010_14 = "% persons NH-White employed full time with earnings less than 75000, MOE, 2010-14 "
+		PctWorkFTLT75kB_m_2010_14 = "% persons Black-Alone employed full time with earnings less than 75000, MOE, 2010-14 "
+		PctWorkFTLT75kH_m_2010_14 = "% persons Hispanic employed full time with earnings less than 75000, MOE, 2010-14"
+		PctWorkFTLT75kAIOM_m_2010_14 = "% persons All-Other employed full time with earnings less than 75000, MOE, 2010-14"
+
+		PctEmployedMngmt_m_2010_14 = "% persons employed in management business science and arts occupations, MOE, 2010-14 "
+		PctEmployedMngmtW_m_2010_14 = "% persons NH-White employed in management business science and arts occupations, MOE, 2010-14 "
+		PctEmployedMngmtB_m_2010_14 = "% persons Black-Alone employed in management business science and arts occupations, MOE, 2010-14 "
+		PctEmployedMngmtH_m_2010_14 = "% persons Hispanic employed in management business science and arts occupations, MOE, 2010-14"
+		PctEmployedMngmtAIOM_m_2010_14 = "% persons All-Other employed in management business science and arts occupations, MOE, 2010-14"
+
+		PctEmployedServ_m_2010_14 = "% persons employed in service occupations, MOE, 2010-14 "
+		PctEmployedServW_m_2010_14 = "% persons NH-White employed in service occupations, MOE, 2010-14 "
+		PctEmployedServB_m_2010_14 = "% persons Black-Alone employed in service occupations, MOE, 2010-14 "
+		PctEmployedServH_m_2010_14 = "% persons Hispanic employed in service occupations, MOE, 2010-14"
+		PctEmployedServAIOM_m_2010_14 = "% persons All-Other employed in service occupations, MOE, 2010-14"
+
+		PctEmployedSales_m_2010_14 = "% persons employed in sales and office occupations, MOE, 2010-14 "
+		PctEmployedSalesW_m_2010_14 = "% persons NH-White employed in sales and office occupations, MOE, 2010-14 "
+		PctEmployedSalesB_m_2010_14 = "% persons Black-Alone employed in sales and office occupations, MOE, 2010-14 "
+		PctEmployedSalesH_m_2010_14 = "% persons Hispanic employed in sales and office occupations, MOE, 2010-14"
+		PctEmployedSalesAIOM_m_2010_14 = "% persons All-Other employed in sales and office occupations, MOE, 2010-14"
+
+		PctEmployedNatRes_m_2010_14 = "% persons employed in natural resources construction and maintenance occupations, MOE, 2010-14 "
+		PctEmployedNatResW_m_2010_14 = "% persons NH-White employed in natural resources construction and maintenance occupations, MOE, 2010-14 "
+		PctEmployedNatResB_m_2010_14 = "% persons Black-Alone employed in natural resources construction and maintenance occupations, MOE, 2010-14 "
+		PctEmployedNatResH_m_2010_14 = "% persons Hispanic employed in natural resources construction and maintenance occupations, MOE, 2010-14"
+		PctEmployedNatResAIOM_m_2010_14 = "% persons All-Other employed in natural resources construction and maintenance occupations, MOE, 2010-14"
+
+		PctEmployedProd_m_2010_14 = "% persons employed in production transportation and material moving occupations, MOE, 2010-14 "
+		PctEmployedProdW_m_2010_14 = "% persons NH-White employed in production transportation and material moving occupations, MOE, 2010-14 "
+		PctEmployedProdB_m_2010_14 = "% persons Black-Alone employed in production transportation and material moving occupations, MOE, 2010-14 "
+		PctEmployedProdH_m_2010_14 = "% persons Hispanic employed in production transportation and material moving occupations, MOE, 2010-14"
+		PctEmployedProdAIOM_m_2010_14 = "% persons All-Other employed in production transportation and material moving occupations, MOE, 2010-14"
+
+		PctOwnerOccupiedHU_m_2010_14 = "Homeownership rate (%), MOE, 2010-14 "
+		PctOwnerOccupiedHUW_m_2010_14 = "Homeownership rate NH-White(%), MOE, 2010-14 "
+		PctOwnerOccupiedHUB_m_2010_14 = "Homeownership rate Black-Alone(%), MOE, 2010-14 "
+		PctOwnerOccupiedHUH_m_2010_14 = "Homeownership rate Hispanic (%), MOE, 2010-14 "
+		PctOwnerOccupiedHUAIOM_m_2010_14 = "Homeownership rate All-Other (%), MOE, 2010-14 "
+
+
+		Gap25andOverWoutHSW_2010_14 = "Difference in # of NH-White people without HS diploma with equity, 2010-14 "
+		Gap25andOverWoutHSB_2010_14 = "Difference in # of Black-Alone people without HS diploma with equity, 2010-14 "
+		Gap25andOverWoutHSH_2010_14 = "Difference in # of Hispanic people without HS diploma with equity, 2010-14 "
+		Gap25andOverWoutHSAIOM_2010_14 = "Difference in # of All-Other people without HS diploma with equity, 2010-14 "
+		Gap25andOverWoutHSFB_2010_14 = "Difference in # of people foreign-born without HS diploma with equity, 2010-14 "
+		Gap25andOverWoutHSNB_2010_14 = "Difference in # of people native-born without HS diploma with equity, 2010-14 "
+
+		Gap25andOverWHSW_2010_14 = "Difference in # of NH-White people with HS diploma with equity, 2010-14 "
+		Gap25andOverWHSB_2010_14 = "Difference in # of Black-Alone people with HS diploma with equity, 2010-14 "
+		Gap25andOverWHSH_2010_14 = "Difference in # of Hispanic people with HS diploma with equity, 2010-14 "
+		Gap25andOverWHSAIOM_2010_14 = "Difference in # of All-Other people with HS diploma with equity, 2010-14 "
+		Gap25andOverWHSFB_2010_14 = "Difference in # of people foreign-born with HS diploma with equity, 2010-14 "
+		Gap25andOverWHSNB_2010_14 = "Difference in # of people native-born with HS diploma with equity, 2010-14 "
+
+		Gap25andOverWSCW_2010_14 = "Difference in # of NH-White people with some college with equity, 2010-14 "
+		Gap25andOverWSCB_2010_14 = "Difference in # of Black-Alone people with some college with equity, 2010-14 "
+		Gap25andOverWSCH_2010_14 = "Difference in # of Hispanic people with some college with equity, 2010-14 "
+		Gap25andOverWSCAIOM_2010_14 = "Difference in # of All-Other people with some college with equity, 2010-14 "
+		Gap25andOverWSCFB_2010_14 = "Difference in # of people foreign-born with some college with equity, 2010-14 "
+		Gap25andOverWSCNB_2010_14 = "Difference in # of people native-born with some college with equity, 2010-14 "
+
+		GapAvgHshldIncAdjW_2010_14 = "Average household income last year NH-White ($) with equity, 2010-14 "
+		GapAvgHshldIncAdjB_2010_14 = "Average household income last year Black-Alone ($) with equity, 2010-14 "
+		GapAvgHshldIncAdjH_2010_14 = "Average household income last year Hispanic ($) with equity, 2010-14 "
+		GapAvgHshldIncAdjAIOM_2010_14 = "Average household income last year All-Other ($) with equity, 2010-14 "
+
+		GapFamilyGT200000W_2010_14 = "Difference in # of families NH-White with income greater than 200000 with equity, 2010-14 "
+		GapFamilyGT200000B_2010_14 = "Difference in # of families Black-Alone with income greater than 200000 with equity, 2010-14 "
+		GapFamilyGT200000H_2010_14 = "Difference in # of families Hispanic with income greater than 200000 with equity, 2010-14 "
+		GapFamilyGT200000AIOM_2010_14 = "Difference in # of families All-Other with income greater than 200000 with equity, 2010-14 "
+
+		GapFamilyLT75000W_2010_14 = "Difference in # of families NH-White with income less than 75000 with equity, 2010-14 "
+		GapFamilyLT75000B_2010_14 = "Difference in # of families Black-Alone with income less than 75000 with equity, 2010-14 "
+		GapFamilyLT75000H_2010_14 = "Difference in # of families Hispanic with income less than 75000 with equity, 2010-14 "
+		GapFamilyLT75000AIOM_2010_14 = "Difference in # of families All-Other with income less than 75000 with equity, 2010-14 "
+
+		GapPoorPersonsW_2010_14 = "Difference in # of NH-White people living below poverty line with equity, 2010-14 "
+		GapPoorPersonsB_2010_14 = "Difference in # of Black-Alone people living below poverty line with equity, 2010-14 "
+		GapPoorPersonsH_2010_14 = "Difference in # of Hispanic people living below poverty line with equity, 2010-14 "
+		GapPoorPersonsAIOM_2010_14 = "Difference in # of All-Other people living below poverty line with equity, 2010-14 "
+		GapPoorPersonsFB_2010_14 = "Difference in # of foreign born people living below poverty line with equity, 2010-14 "
+
+		Gap16andOverEmployW_2010_14 = "Difference in # of people 16+ yrs. employed NH-White with equity, 2010-14 "
+		Gap16andOverEmployB_2010_14 = "Difference in # of people 16+ yrs. employed Black-Alone with equity, 2010-14 "
+		Gap16andOverEmployH_2010_14 = "Difference in # of people 16+ yrs. employed Hispanic with equity, 2010-14 "
+		Gap16andOverEmployAIOM_2010_14 = "Difference in # of people 16+ yrs. employed All-Other with equity, 2010-14 "
+
+		GapEmployed16to64W_2010_14 = "Difference in # of NH-White people employed between 16 and 64 years old with equity, 2010-14 "
+		GapEmployed16to64B_2010_14 = "Difference in # of Black-Alone people employed between 16 and 64 years old with equity, 2010-14 "
+		GapEmployed16to64H_2010_14 = "Difference in # of Hispanic people employed between 16 and 64 years old with equity, 2010-14 "
+		GapEmployed16to64AIOM_2010_14 = "Difference in # of All-Other people employed between 16 and 64 years old with equity, 2010-14 "
+
+		GapUnemployedW_2010_14 = "Difference in # of NH-White unemployed people with equity, 2010-14 "
+		GapUnemployedB_2010_14 = "Difference in # of Black-Alone unemployed people with equity, 2010-14 "
+		GapUnemployedH_2010_14 = "Difference in # of Hispanic unemployed people with equity, 2010-14 "
+		GapUnemployedAIOM_2010_14 = "Difference in # of All-Other unemployed people with equity, 2010-14 "
+
+		Gap16andOverWagesW_2010_14 = "Difference in # of NH-White people employed with earnings with equity, 2010-14 "
+		Gap16andOverWagesB_2010_14 = "Difference in # of Black-Alone people employed with earnings with equity, 2010-14 "
+		Gap16andOverWagesH_2010_14 = "Difference in # of Hispanic people employed with earnings with equity, 2010-14 "
+		Gap16andOverWagesAIOM_2010_14 = "Difference in # of All-Other people employed with earnings with equity, 2010-14 "
+
+		Gap16andOverWorkFTW_2010_14 = "Difference in # of NH-White people employed full time with equity, 2010-14 "
+		Gap16andOverWorkFTB_2010_14 = "Difference in # of Black-Alone people employed full time with equity, 2010-14 "
+		Gap16andOverWorkFTH_2010_14 = "Difference in # of Hispanic people employed full time with equity, 2010-14 "
+		Gap16andOverWorkFTAIOM_2010_14 = "Difference in # of All-Other people employed full time with equity, 2010-1 4"
+
+		GapWorkFTLT35kW_2010_14 = "Difference in # of NH-White people employed full time with earnings less than 35000 with equity, 2010-14 "
+		GapWorkFTLT35kB_2010_14 = "Difference in # of Black-Alone people employed full time with earnings less than 35000 with equity, 2010-14 "
+		GapWorkFTLT35kH_2010_14 = "Difference in # of Hispanic people employed full time with earnings less than 35000 with equity, 2010-14 "
+		GapWorkFTLT35kAIOM_2010_14 = "Difference in # of All-Other people employed full time with earnings less than 35000 with equity, 2010-14 "
+
+		GapWorkFTLT75kW_2010_14 = "Difference in # of NH-White people employed full time with earnings less than 75000 with equity, 2010-14 "
+		GapWorkFTLT75kB_2010_14 = "Difference in # of Black-Alone people employed full time with earnings less than 75000 with equity, 2010-14 "
+		GapWorkFTLT75kH_2010_14 = "Difference in # of Hispanic people employed full time with earnings less than 75000 with equity, 2010-14 "
+		GapWorkFTLT75kAIOM_2010_14 = "Difference in # of All-Other people employed full time with earnings less than 75000 with equity, 2010-14 "
+
+		GapEmployedMngmtW_2010_14 = "Difference in # of NH-White people employed in management business science and arts occupations with equity, 2010-14 "
+		GapEmployedMngmtB_2010_14 = "Difference in # of Black-Alone people employed in management business science and arts occupations with equity, 2010-14 "
+		GapEmployedMngmtH_2010_14 = "Difference in # of Hispanic people employed in management business science and arts occupations with equity, 2010-14 "
+		GapEmployedMngmtAIOM_2010_14 = "Difference in # of All-Other people employed in management business science and arts occupations with equity, 2010-14 "
+
+		GapEmployedServW_2010_14 = "Difference in # of NH-White people employed in service occupations with equity, 2010-14 "
+		GapEmployedServB_2010_14 = "Difference in # of Black-Alone people employed in service occupations with equity, 2010-14 "
+		GapEmployedServH_2010_14 = "Difference in # of Hispanic people employed in service occupations with equity, 2010-14 "
+		GapEmployedServAIOM_2010_14 = "Difference in # of All-Other people employed in service occupations with equity, 2010-14"
+
+		GapEmployedSalesW_2010_14 = "Difference in # of NH-White people employed in sales and office occupations with equity, 2010-14 "
+		GapEmployedSalesB_2010_14 = "Difference in # of Black-Alone people employed in sales and office occupations with equity, 2010-14 "
+		GapEmployedSalesH_2010_14 = "Difference in # of Hispanic people employed in sales and office occupations with equity, 2010-14 "
+		GapEmployedSalesAIOM_2010_14 = "Difference in # of All-Other people employed in sales and office occupations with equity, 2010-14 "
+
+		GapEmployedNatResW_2010_14 = "Difference in # of NH-White people employed in natural resources construction and maintenance occupations with equity, 2010-14 "
+		GapEmployedNatResB_2010_14 = "Difference in # of Black-Alone people employed in natural resources construction and maintenance occupations with equity, 2010-14 "
+		GapEmployedNatResH_2010_14 = "Difference in # of Hispanic people employed in natural resources construction and maintenance occupations with equity, 2010-14 "
+		GapEmployedNatResAIOM_2010_14 = "Difference in # of All-Other people employed in natural resources construction and maintenance occupations with equity, 2010-14 "
+
+		GapEmployedProdW_2010_14 = "Difference in # of NH-White people employed in production transportation and material moving occupations with equity, 2010-14 "
+		GapEmployedProdB_2010_14 = "Difference in # of Black-Alone people employed in production transportation and material moving occupations with equity, 2010-14 "
+		GapEmployedProdH_2010_14 = "Difference in # of Hispanic people employed in production transportation and material moving occupations with equity, 2010-14 "
+		GapEmployedProdAIOM_2010_14 = "Difference in # of All-Other people employed in production transportation and material moving occupations with equity, 2010-14 "
+
+		GapOwnerOccupiedHUW_2010_14 = "Difference in # of NH-White homeowners with equity, 2010-14 "
+		GapOwnerOccupiedHUB_2010_14 = "Difference in # of Black-Alone homeowners with equity, 2010-14 "
+		GapOwnerOccupiedHUH_2010_14 = "Difference in # of Hispanic homeowners with equity, 2010-14 "
+		GapOwnerOccupiedHUAIOM_2010_14 = "Difference in # of All-Other homeowners with equity, 2010-14 "
+		;
 	
 run;
 
 
 proc transpose data=equity.profile_tabs_ACS_suppress out=equity.profile_tabs_ACS; 
-var PctBlackNonHispBridge: PctWhiteNonHispBridge:
-	PctHisp: PctAsnPINonHispBridge: PctOtherRace: PctOthRace:
-	PctAloneB: PctAloneW: PctAloneH: PctAloneA_:
-	PctAloneI_: PctAloneO: PctAloneM: PctAloneIOM: PctAloneAIOM:
+	var PctBlackNonHispBridge: PctWhiteNonHispBridge:
+		PctHisp: PctAsnPINonHispBridge: PctOtherRace: PctOthRace:
+		PctAloneB: PctAloneW: PctAloneH: PctAloneA_:
+		PctAloneI_: PctAloneO: PctAloneM: PctAloneIOM: PctAloneAIOM:
 
-	PctForeignBorn_: PctNativeBorn: 
+		PctForeignBorn_: PctNativeBorn: 
 
-	PctForeignBornB: PctForeignBornW:
-	PctForeignBornH: PctForeignBornAIOM:
+		PctForeignBornB: PctForeignBornW:
+		PctForeignBornH: PctForeignBornAIOM:
 
-	PctOthLang:
+		PctOthLang:
 
-	PctPopUnder18Years_: PctPopUnder18YearsW_: 
-	PctPopUnder18YearsB_: PctPopUnder18YearsH_:
-	PctPopUnder18YearsAIOM_:
+		PctPopUnder18Years_: PctPopUnder18YearsW_: 
+		PctPopUnder18YearsB_: PctPopUnder18YearsH_:
+		PctPopUnder18YearsAIOM_:
 
-	PctPop18_34Years_: PctPop18_34YearsW_: 
-	PctPop18_34YearsB_: PctPop18_34YearsH_:
-	PctPop18_34YearsAIOM_:
+		PctPop18_34Years_: PctPop18_34YearsW_: 
+		PctPop18_34YearsB_: PctPop18_34YearsH_:
+		PctPop18_34YearsAIOM_:
 
-	PctPop35_64Years_: PctPop35_64YearsW_: 
-	PctPop35_64YearsB_: PctPop35_64YearsH_:
-	PctPop35_64YearsAIOM_:
+		PctPop35_64Years_: PctPop35_64YearsW_: 
+		PctPop35_64YearsB_: PctPop35_64YearsH_:
+		PctPop35_64YearsAIOM_:
 
-	PctPop65andOverYears_: PctPop65andOverYrs_:
-	PctPop65andOverYearsW: PctPop65andOverYrsW:
-	PctPop65andOverYearsB: PctPop65andOverYrsB:
-	PctPop65andOverYearsH: PctPop65andOverYrsH:
-	PctPop65andOverYearsAIOM: PctPop65andOverYrsAIOM:
+		PctPop65andOverYears_: PctPop65andOverYrs_:
+		PctPop65andOverYearsW: PctPop65andOverYrsW:
+		PctPop65andOverYearsB: PctPop65andOverYrsB:
+		PctPop65andOverYearsH: PctPop65andOverYrsH:
+		PctPop65andOverYearsAIOM: PctPop65andOverYrsAIOM:
 
-	Pct25andOverWoutHS_: 
-	Pct25andOverWoutHSW: Gap25andOverWoutHSW:
-	Pct25andOverWoutHSB: Gap25andOverWoutHSB:
-	Pct25andOverWoutHSH: Gap25andOverWoutHSH:
-	Pct25andOverWoutHSAIOM: Gap25andOverWoutHSAIOM:
-	Pct25andOverWoutHSFB: Gap25andOverWoutHSFB:
-	Pct25andOverWoutHSNB: Gap25andOverWoutHSNB:
+		Pct25andOverWoutHS_: 
+		Pct25andOverWoutHSW: Gap25andOverWoutHSW:
+		Pct25andOverWoutHSB: Gap25andOverWoutHSB:
+		Pct25andOverWoutHSH: Gap25andOverWoutHSH:
+		Pct25andOverWoutHSAIOM: Gap25andOverWoutHSAIOM:
+		Pct25andOverWoutHSFB: Gap25andOverWoutHSFB:
+		Pct25andOverWoutHSNB: Gap25andOverWoutHSNB:
 
-	Pct25andOverWHS_:  
-	Pct25andOverWHSW: Gap25andOverWHSW:  
-	Pct25andOverWHSB: Gap25andOverWHSB:  
-	Pct25andOverWHSH: Gap25andOverWHSH:  
-	Pct25andOverWHSAIOM: Gap25andOverWHSAIOM:  
-	Pct25andOverWHSFB: Gap25andOverWHSFB:  
-	Pct25andOverWHSNB: Gap25andOverWHSNB:  
+		Pct25andOverWHS_:  
+		Pct25andOverWHSW: Gap25andOverWHSW:  
+		Pct25andOverWHSB: Gap25andOverWHSB:  
+		Pct25andOverWHSH: Gap25andOverWHSH:  
+		Pct25andOverWHSAIOM: Gap25andOverWHSAIOM:  
+		Pct25andOverWHSFB: Gap25andOverWHSFB:  
+		Pct25andOverWHSNB: Gap25andOverWHSNB:  
 
-	Pct25andOverWSC_: 
-	Pct25andOverWSCW: Gap25andOverWSCW:
-	Pct25andOverWSCB: Gap25andOverWSCB:
-	Pct25andOverWSCH: Gap25andOverWSCH:
-	Pct25andOverWSCAIOM: Gap25andOverWSCAIOM:
-	Pct25andOverWSCFB: Gap25andOverWSCFB:
-	Pct25andOverWSCNB: Gap25andOverWSCNB:
+		Pct25andOverWSC_: 
+		Pct25andOverWSCW: Gap25andOverWSCW:
+		Pct25andOverWSCB: Gap25andOverWSCB:
+		Pct25andOverWSCH: Gap25andOverWSCH:
+		Pct25andOverWSCAIOM: Gap25andOverWSCAIOM:
+		Pct25andOverWSCFB: Gap25andOverWSCFB:
+		Pct25andOverWSCNB: Gap25andOverWSCNB:
 
-	AvgHshldIncAdj_: 
-	AvgHshldIncAdjW: GapAvgHshldIncAdjW:
-	AvgHshldIncAdjB: GapAvgHshldIncAdjB:
-	AvgHshldIncAdjH: GapAvgHshldIncAdjH:
-	AvgHshldIncAdjAIOM: GapAvgHshldIncAdjAIOM:
+		AvgHshldIncAdj_: 
+		AvgHshldIncAdjW: GapAvgHshldIncAdjW:
+		AvgHshldIncAdjB: GapAvgHshldIncAdjB:
+		AvgHshldIncAdjH: GapAvgHshldIncAdjH:
+		AvgHshldIncAdjAIOM: GapAvgHshldIncAdjAIOM:
 
-	PctFamilyGT200000_:
-	PctFamilyGT200000W: GapFamilyGT200000W: 
-	PctFamilyGT200000B: GapFamilyGT200000B: 
-	PctFamilyGT200000H: GapFamilyGT200000H: 
-	PctFamilyGT200000AIOM: GapFamilyGT200000AIOM: 
+		PctFamilyGT200000_:
+		PctFamilyGT200000W: GapFamilyGT200000W: 
+		PctFamilyGT200000B: GapFamilyGT200000B: 
+		PctFamilyGT200000H: GapFamilyGT200000H: 
+		PctFamilyGT200000AIOM: GapFamilyGT200000AIOM: 
 
-	PctFamilyLT75000_: 
-	PctFamilyLT75000W: GapFamilyLT75000W: 
-	PctFamilyLT75000B: GapFamilyLT75000B: 
-	PctFamilyLT75000H: GapFamilyLT75000H: 
-	PctFamilyLT75000AIOM: GapFamilyLT75000AIOM: 
+		PctFamilyLT75000_: 
+		PctFamilyLT75000W: GapFamilyLT75000W: 
+		PctFamilyLT75000B: GapFamilyLT75000B: 
+		PctFamilyLT75000H: GapFamilyLT75000H: 
+		PctFamilyLT75000AIOM: GapFamilyLT75000AIOM: 
 
-	PctPoorPersons_: 
-	PctPoorPersonsW: GapPoorPersonsW:
-	PctPoorPersonsB: GapPoorPersonsB:
-	PctPoorPersonsH: GapPoorPersonsH:
-	PctPoorPersonsAIOM: GapPoorPersonsAIOM:
-	PctPoorPersonsFB: GapPoorPersonsFB:
+		PctPoorPersons_: 
+		PctPoorPersonsW: GapPoorPersonsW:
+		PctPoorPersonsB: GapPoorPersonsB:
+		PctPoorPersonsH: GapPoorPersonsH:
+		PctPoorPersonsAIOM: GapPoorPersonsAIOM:
+		PctPoorPersonsFB: GapPoorPersonsFB:
 
-	/*note that child poverty gaps have been excluded from output
-	because White child poverty rate is near to 0*/
+		/*note that child poverty gaps have been excluded from output
+		because White child poverty rate is near to 0*/
 
-	PctPoorChildren_: 
-	PctPoorChildrenW:
-	PctPoorChildrenB:
-	PctPoorChildrenH:
-	PctPoorChildrenAIOM:
+		PctPoorChildren_: 
+		PctPoorChildrenW:
+		PctPoorChildrenB:
+		PctPoorChildrenH:
+		PctPoorChildrenAIOM:
 
-	Pct16andOverEmploy_: 
-	Pct16andOverEmployW: Gap16andOverEmployW:
-	Pct16andOverEmployB: Gap16andOverEmployB:
-	Pct16andOverEmployH: Gap16andOverEmployH:
-	Pct16andOverEmployAIOM: Gap16andOverEmployAIOM:
+		Pct16andOverEmploy_: 
+		Pct16andOverEmployW: Gap16andOverEmployW:
+		Pct16andOverEmployB: Gap16andOverEmployB:
+		Pct16andOverEmployH: Gap16andOverEmployH:
+		Pct16andOverEmployAIOM: Gap16andOverEmployAIOM:
 
-	PctEmployed16to64_: 
-	PctEmployed16to64W: GapEmployed16to64W:
-	PctEmployed16to64B: GapEmployed16to64B:
-	PctEmployed16to64H: GapEmployed16to64H:
-	PctEmployed16to64AIOM: GapEmployed16to64AIOM:
+		PctEmployed16to64_: 
+		PctEmployed16to64W: GapEmployed16to64W:
+		PctEmployed16to64B: GapEmployed16to64B:
+		PctEmployed16to64H: GapEmployed16to64H:
+		PctEmployed16to64AIOM: GapEmployed16to64AIOM:
 
-	PctUnemployed_: 
-	PctUnemployedW: GapUnemployedW:
-	PctUnemployedB: GapUnemployedB:
-	PctUnemployedH: GapUnemployedH:
-	PctUnemployedAIOM: GapUnemployedAIOM:
+		PctUnemployed_: 
+		PctUnemployedW: GapUnemployedW:
+		PctUnemployedB: GapUnemployedB:
+		PctUnemployedH: GapUnemployedH:
+		PctUnemployedAIOM: GapUnemployedAIOM:
 
-	Pct16andOverWages_: 
-	Pct16andOverWagesW: Gap16andOverWagesW:
-	Pct16andOverWagesB: Gap16andOverWagesB:
-	Pct16andOverWagesH: Gap16andOverWagesH:
-	Pct16andOverWagesAIOM: Gap16andOverWagesAIOM:
+		Pct16andOverWages_: 
+		Pct16andOverWagesW: Gap16andOverWagesW:
+		Pct16andOverWagesB: Gap16andOverWagesB:
+		Pct16andOverWagesH: Gap16andOverWagesH:
+		Pct16andOverWagesAIOM: Gap16andOverWagesAIOM:
 
-	Pct16andOverWorkFT_: 
-	Pct16andOverWorkFTW: Gap16andOverWorkFTW:
-	Pct16andOverWorkFTB: Gap16andOverWorkFTB:
-	Pct16andOverWorkFTH: Gap16andOverWorkFTH:
-	Pct16andOverWorkFTAIOM: Gap16andOverWorkFTAIOM:
+		Pct16andOverWorkFT_: 
+		Pct16andOverWorkFTW: Gap16andOverWorkFTW:
+		Pct16andOverWorkFTB: Gap16andOverWorkFTB:
+		Pct16andOverWorkFTH: Gap16andOverWorkFTH:
+		Pct16andOverWorkFTAIOM: Gap16andOverWorkFTAIOM:
 
-	PctWorkFTLT35k_: 
-	PctWorkFTLT35kW: GapWorkFTLT35kW:
-	PctWorkFTLT35kB: GapWorkFTLT35kB:
-	PctWorkFTLT35kH: GapWorkFTLT35kH:
-	PctWorkFTLT35kAIOM: GapWorkFTLT35kAIOM:
+		PctWorkFTLT35k_: 
+		PctWorkFTLT35kW: GapWorkFTLT35kW:
+		PctWorkFTLT35kB: GapWorkFTLT35kB:
+		PctWorkFTLT35kH: GapWorkFTLT35kH:
+		PctWorkFTLT35kAIOM: GapWorkFTLT35kAIOM:
 
-	PctWorkFTLT75k_: 
-	PctWorkFTLT75kW: GapWorkFTLT75kW:
-	PctWorkFTLT75kB: GapWorkFTLT75kB:
-	PctWorkFTLT75kH: GapWorkFTLT75kH:
-	PctWorkFTLT75kAIOM: GapWorkFTLT75kAIOM:
+		PctWorkFTLT75k_: 
+		PctWorkFTLT75kW: GapWorkFTLT75kW:
+		PctWorkFTLT75kB: GapWorkFTLT75kB:
+		PctWorkFTLT75kH: GapWorkFTLT75kH:
+		PctWorkFTLT75kAIOM: GapWorkFTLT75kAIOM:
 
-	PctEmployedMngmt_: 
-	PctEmployedMngmtW: GapEmployedMngmtW:
-	PctEmployedMngmtB: GapEmployedMngmtB:
-	PctEmployedMngmtH: GapEmployedMngmtH:
-	PctEmployedMngmtAIOM: GapEmployedMngmtAIOM:
+		PctEmployedMngmt_: 
+		PctEmployedMngmtW: GapEmployedMngmtW:
+		PctEmployedMngmtB: GapEmployedMngmtB:
+		PctEmployedMngmtH: GapEmployedMngmtH:
+		PctEmployedMngmtAIOM: GapEmployedMngmtAIOM:
 
-	PctEmployedServ_: 
-	PctEmployedServW: GapEmployedServW:
-	PctEmployedServB: GapEmployedServB:
-	PctEmployedServH: GapEmployedServH:
-	PctEmployedServAIOM: GapEmployedServAIOM:
+		PctEmployedServ_: 
+		PctEmployedServW: GapEmployedServW:
+		PctEmployedServB: GapEmployedServB:
+		PctEmployedServH: GapEmployedServH:
+		PctEmployedServAIOM: GapEmployedServAIOM:
 
-	PctEmployedSales_: 
-	PctEmployedSalesW: GapEmployedSalesW:
-	PctEmployedSalesB: GapEmployedSalesB:
-	PctEmployedSalesH: GapEmployedSalesH:
-	PctEmployedSalesAIOM: GapEmployedSalesAIOM:
+		PctEmployedSales_: 
+		PctEmployedSalesW: GapEmployedSalesW:
+		PctEmployedSalesB: GapEmployedSalesB:
+		PctEmployedSalesH: GapEmployedSalesH:
+		PctEmployedSalesAIOM: GapEmployedSalesAIOM:
 
-	PctEmployedNatRes_: 
-	PctEmployedNatResW: GapEmployedNatResW:
-	PctEmployedNatResB: GapEmployedNatResB:
-	PctEmployedNatResH: GapEmployedNatResH:
-	PctEmployedNatResAIOM: GapEmployedNatResAIOM:
+		PctEmployedNatRes_: 
+		PctEmployedNatResW: GapEmployedNatResW:
+		PctEmployedNatResB: GapEmployedNatResB:
+		PctEmployedNatResH: GapEmployedNatResH:
+		PctEmployedNatResAIOM: GapEmployedNatResAIOM:
 
-	PctEmployedProd_: 
-	PctEmployedProdW: GapEmployedProdW:
-	PctEmployedProdB: GapEmployedProdB:
-	PctEmployedProdH: GapEmployedProdH:
-	PctEmployedProdAIOM: GapEmployedProdAIOM:
+		PctEmployedProd_: 
+		PctEmployedProdW: GapEmployedProdW:
+		PctEmployedProdB: GapEmployedProdB:
+		PctEmployedProdH: GapEmployedProdH:
+		PctEmployedProdAIOM: GapEmployedProdAIOM:
 
-	PctOwnerOccupiedHU_: 
-	PctOwnerOccupiedHUW: GapOwnerOccupiedHUW:
-	PctOwnerOccupiedHUB: GapOwnerOccupiedHUB:
-	PctOwnerOccupiedHUH: GapOwnerOccupiedHUH:
-	PctOwnerOccupiedHUAIOM: GapOwnerOccupiedHUAIOM:
- 	;
-id ward2012; 
+		PctOwnerOccupiedHU_: 
+		PctOwnerOccupiedHUW: GapOwnerOccupiedHUW:
+		PctOwnerOccupiedHUB: GapOwnerOccupiedHUB:
+		PctOwnerOccupiedHUH: GapOwnerOccupiedHUH:
+		PctOwnerOccupiedHUAIOM: GapOwnerOccupiedHUAIOM:
+	 	;
+
+	id ward2012; 
 run; 
 
-* convert to decimal;
-data convert;
-	set equity.profile_tabs_ACS_suppress; 
-
-%decimal_convert;
-
-run; 
-
-proc transpose data=convert out=profile_tabs_ACS_dec_transpose; 
-var nPctBlackNonHispBridge: nPctWhiteNonHispBridge:
-	nPctHisp: nPctAsnPINonHispBridge: nPctOthRace:
-	nPctAloneB: nPctAloneW: nPctAloneH: nPctAloneA_:
-	nPctAloneI_: nPctAloneO: nPctAloneM: nPctAloneIOM: nPctAloneAIOM:
-
-	nPctForeignBorn_: nPctNativeBorn: 
-
-	nPctForeignBornB: nPctForeignBornW:
-	nPctForeignBornH: nPctForeignBornAIOM:
-
-	nPctOthLang:
-
-	nPctPopUnder18Years_: 
-	nPctPopUnder18YearsW_: nPctPopUnder18YrsW_:
-	nPctPopUnder18YearsB_: nPctPopUnder18YrsB_:
-	nPctPopUnder18YearsH_: nPctPopUnder18YrsH_:
-	nPctPopUnder18YearsAIOM_: nPctPopUnder18YrsAIOM_:
-
-	nPctPop18_34Years_: nPctPop18_34YearsW_: 
-	nPctPop18_34YearsB_: nPctPop18_34YearsH_:
-	nPctPop18_34YearsAIOM_:
-
-	nPctPop35_64Years_: nPctPop35_64YearsW_: 
-	nPctPop35_64YearsB_: nPctPop35_64YearsH_:
-	nPctPop35_64YearsAIOM_:
-
-	nPctPop65andOverYears_: nPctPop65andOverYrs_:
-	nPctPop65andOverYrsW: nPctPop65andOvrYrsW:
-	nPctPop65andOverYrsB: nPctPop65andOvrYrsB:
-	nPctPop65andOverYrsH: nPctPop65andOvrYrsH:
-	nPctPop65andOverYrsAIOM: nPctPop65andOvrYrsAIOM:
-
-	nPct25andOverWoutHS_: 
-	nPct25andOverWoutHSW: nPct25andOvrWoutHSW: nGap25andOvrWoutHSW:
-	nPct25andOverWoutHSB: nPct25andOvrWoutHSB: nGap25andOvrWoutHSB:
-	nPct25andOverWoutHSH: nPct25andOvrWoutHSH: nGap25andOvrWoutHSH:
-	nPct25andOverWoutHSAIOM: nPct25andOvrWoutHSAIOM: nGap25andOvrWoutHSAIOM:
-	nPct25andOverWoutHSFB: nGap25andOverWoutHSFB:
-	nPct25andOverWoutHSNB: nGap25andOverWoutHSNB:
-
-	nPct25andOverWHS_:  
-	nPct25andOverWHSW: nGap25andOverWHSW:  
-	nPct25andOverWHSB: nGap25andOverWHSB:  
-	nPct25andOverWHSH: nGap25andOverWHSH:  
-	nPct25andOverWHSAIOM: nGap25andOverWHSAIOM:  
-	nPct25andOverWHSFB: nGap25andOverWHSFB:  
-	nPct25andOverWHSNB: nGap25andOverWHSNB:  
-
-	nPct25andOverWSC_: 
-	nPct25andOverWSCW: nGap25andOverWSCW:
-	nPct25andOverWSCB: nGap25andOverWSCB:
-	nPct25andOverWSCH: nGap25andOverWSCH:
-	nPct25andOverWSCAIOM: nGap25andOverWSCAIOM:
-	nPct25andOverWSCFB: nGap25andOverWSCFB:
-	nPct25andOverWSCNB: nGap25andOverWSCNB:
-
-	nAvgHshldIncAdj_: 
-	nAvgHshldIncAdjW: nGapAvgHshldIncAdjW:
-	nAvgHshldIncAdjB: nGapAvgHshldIncAdjB:
-	nAvgHshldIncAdjH: nGapAvgHshldIncAdjH:
-	nAvgHshldIncAdjAIOM_2010_14 nGapAvgHshldIncAdjAIOM:
-
-	nPctFamilyGT200000_:
-	nPctFamilyGT200000W: nGapFamilyGT200000W: 
-	nPctFamilyGT200000B: nGapFamilyGT200000B: 
-	nPctFamilyGT200000H: nGapFamilyGT200000H: 
-	nPctFamilyGT200000AIOM: nGapFamilyGT200000AIOM: 
-
-	nPctFamilyLT75000_: 
-	nPctFamilyLT75000W: nGapFamilyLT75000W: 
-	nPctFamilyLT75000B: nGapFamilyLT75000B: 
-	nPctFamilyLT75000H: nGapFamilyLT75000H: 
-	nPctFamilyLT75000AIOM: nGapFamilyLT75000AIOM: 
-
-	nPctPoorPersons_: 
-	nPctPoorPersonsW: nGapPoorPersonsW:
-	nPctPoorPersonsB: nGapPoorPersonsB:
-	nPctPoorPersonsH: nGapPoorPersonsH:
-	nPctPoorPersonsAIOM: nGapPoorPersonsAIOM:
-	nPctPoorPersonsFB: nGapPoorPersonsFB:
-
-	/*note that child poverty gaps have been excluded from output
-	because White child poverty rate is near to 0*/
-
-	nPctPoorChildren_: 
-	nPctPoorChildrenW:
-	nPctPoorChildrenB:
-	nPctPoorChildrenH:
-	nPctPoorChildrenAIOM:
-
-	nPct16andOverEmploy_: 
-	nPct16andOverEmployW: nPct16andOverEmplyW: nGap16andOverEmployW:
-	nPct16andOverEmployB: nPct16andOverEmplyB: nGap16andOverEmployB:
-	nPct16andOverEmployH: nPct16andOverEmplyH: nGap16andOverEmployH:
-	nPct16andOverEmployAIOM: nPct16andOverEmplyAIOM: nGap16andOverEmployAIOM:
-
-	nPctEmployed16to64_: 
-	nPctEmployed16to64W: nGapEmployed16to64W:
-	nPctEmployed16to64B: nGapEmployed16to64B:
-	nPctEmployed16to64H: nGapEmployed16to64H:
-	nPctEmployed16to64AIOM: nGapEmployed16to64AIOM:
-
-	nPctUnemployed_: 
-	nPctUnemployedW: nGapUnemployedW:
-	nPctUnemployedB: nGapUnemployedB:
-	nPctUnemployedH: nGapUnemployedH:
-	nPctUnemployedAIOM: nGapUnemployedAIOM:
-
-	nPct16andOverWages_: 
-	nPct16andOverWagesW: nGap16andOverWagesW:
-	nPct16andOverWagesB: nGap16andOverWagesB:
-	nPct16andOverWagesH: nGap16andOverWagesH:
-	nPct16andOverWagesAIOM: nGap16andOverWagesAIOM:
-
-	nPct16andOverWorkFT_: 
-	nPct16andOverWorkFTW: nPct16andOverWrkFTW: nGap16andOverWorkFTW:
-	nPct16andOverWorkFTB: nPct16andOverWrkFTB: nGap16andOverWorkFTB:
-	nPct16andOverWorkFTH: nPct16andOverWrkFTH: nGap16andOverWorkFTH:
-	nPct16andOverWorkFTAIOM: nPct16andOverWrkFTAIOM: nGap16andOverWorkFTAIOM:
-
-	nPctWorkFTLT35k_: 
-	nPctWorkFTLT35kW: nGapWorkFTLT35kW:
-	nPctWorkFTLT35kB: nGapWorkFTLT35kB:
-	nPctWorkFTLT35kH: nGapWorkFTLT35kH:
-	nPctWorkFTLT35kAIOM: nGapWorkFTLT35kAIOM:
-
-	nPctWorkFTLT75k_: 
-	nPctWorkFTLT75kW: nGapWorkFTLT75kW:
-	nPctWorkFTLT75kB: nGapWorkFTLT75kB:
-	nPctWorkFTLT75kH: nGapWorkFTLT75kH:
-	nPctWorkFTLT75kAIOM: nGapWorkFTLT75kAIOM:
-
-	nPctEmployedMngmt_: 
-	nPctEmployedMngmtW: nGapEmployedMngmtW:
-	nPctEmployedMngmtB: nGapEmployedMngmtB:
-	nPctEmployedMngmtH: nGapEmployedMngmtH:
-	nPctEmployedMngmtAIOM: nGapEmployedMngmtAIOM:
-
-	nPctEmployedServ_: 
-	nPctEmployedServW: nGapEmployedServW:
-	nPctEmployedServB: nGapEmployedServB:
-	nPctEmployedServH: nGapEmployedServH:
-	nPctEmployedServAIOM: nGapEmployedServAIOM:
-
-	nPctEmployedSales_: 
-	nPctEmployedSalesW: nGapEmployedSalesW:
-	nPctEmployedSalesB: nGapEmployedSalesB:
-	nPctEmployedSalesH: nGapEmployedSalesH:
-	nPctEmployedSalesAIOM: nGapEmployedSalesAIOM:
-
-	nPctEmployedNatRes_: 
-	nPctEmployedNatResW: nGapEmployedNatResW:
-	nPctEmployedNatResB: nGapEmployedNatResB:
-	nPctEmployedNatResH: nGapEmployedNatResH:
-	nPctEmployedNatResAIOM: nGapEmployedNatResAIOM:
-
-	nPctEmployedProd_: 
-	nPctEmployedProdW: nGapEmployedProdW:
-	nPctEmployedProdB: nGapEmployedProdB:
-	nPctEmployedProdH: nGapEmployedProdH:
-	nPctEmployedProdAIOM: nGapEmployedProdAIOM:
-
-	nPctOwnerOccupiedHU_: 
-	nPctOwnerOccupiedHUW: nPctOwnerOccpiedHUW: nGapOwnerOccupiedHUW:
-	nPctOwnerOccupiedHUB: nPctOwnerOccpiedHUB: nGapOwnerOccupiedHUB:
-	nPctOwnerOccupiedHUH: nPctOwnerOccpiedHUH: nGapOwnerOccupiedHUH:
-	nPctOwnerOccupiedHUAIOM: nPctOwnerOccpiedHUAIOM: nGapOwnerOccupiedHUAIOM:
- 	;
-id ward2012; 
-run;
-
-*import labels from profile_tabs_ACS into decimal convert dataset;
-
-data profile_tabs_ACS_dec_transpose_2;
-	set profile_tabs_ACS_dec_transpose;
-	_name_=substr(_name_,2);
-	id=_n_; 
-run;
-
-
-proc sort data=profile_tabs_ACS_dec_transpose_2;
-	by _name_;
-run;
-
-
-proc sort data=equity.profile_tabs_ACS 
-	out=profile_tabs_ACS_sort;
-	by _name_;
-run;
- 
-data profile_tabs_ACS_dec_notsort;
-	merge profile_tabs_ACS_sort (keep=_name_ _label_)
-		  profile_tabs_ACS_dec_transpose_2 
-		  ;
-	by _name_;	
-run;
-	
-* where statement included to drop variables that were renamed in decimal convert to keep under 32 charaacter;
-
-proc sort data=profile_tabs_ACS_dec_notsort
-			out=equity.profile_tabs_ACS_dec;
-by id; 
-where id ^= .;
-run; 
 
 proc export data=equity.profile_tabs_ACS
 	outfile="D:\DCDATA\Libraries\Equity\Prog\profile_tabs_ACS.csv"
 	dbms=csv replace;
 	run;
 
-proc export data=equity.profile_tabs_ACS_dec
-	outfile="D:\DCDATA\Libraries\Equity\Prog\profile_tabs_ACS_dec.csv"
-	dbms=csv replace;
-	run;
+
+** Register metadata **;
+
+%Dc_update_meta_file(
+      ds_lib=Equity,
+      ds_name=profile_tabs_ACS,
+	  creator=L Hendey and S Diby,
+      creator_process=profile_tabs_ACS.sas,
+      restrictions=None
+      )
+
 
 					

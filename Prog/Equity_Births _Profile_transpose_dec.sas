@@ -9,6 +9,7 @@
  
  Description:  Transposes calculated indicators for Equity profiles 
 			   and merges calculated statistics for ACS data at different geographies.
+			   Outputs transposed data in percent and decimal formats. 
 **************************************************************************/
 %include "L:\SAS\Inc\StdLocal.sas";
 
@@ -100,22 +101,6 @@ data equity.city_births_gaps (drop=_make_profile b);
 		if birthpcts{b}=.s then birthgaps{b}=.s;
 	end;
 
-	label
-		Gap_births_low_wt_blk_2011 = "Difference in # of NH-Black low weight births (under 5.5 lbs) with equity, 2011 "
-		Gap_births_low_wt_hsp_2011 = "Difference in # of Hispanic low weight births (under 5.5 lbs) with equity, 2011 "
-		Gap_births_low_wt_asn_2011 = "Difference in # of NH-AsianPI low weight births (under 5.5 lbs) with equity, 2011 "
-		Gap_births_low_wt_oth_2011 = "Difference in # of NH-Other low weight births (under 5.5 lbs) with equity, 2011 "
-
-		Gap_births_prenat_adeq_blk_2011 = "Difference in # of births to NH-Black mothers with adequate prenatal care with equity, 2011 "
-		Gap_births_prenat_adeq_hsp_2011 = "Difference in # of births to Hispanic mothers with adequate prenatal care with equity, 2011 "
-		Gap_births_prenat_adeq_asn_2011 = "Difference in # of births to NH-AsianPI mothers with adequate prenatal care with equity, 2011 "
-		Gap_births_prenat_adeq_oth_2011 = "Difference in # of births to NH-Other mothers with adequate prenatal care with equity, 2011 "
-
-		Gap_births_teen_blk_2011 = "Difference in # of births to NH-Black teen mothers with equity, 2011 "
-		Gap_births_teen_hsp_2011 = "Difference in # of births to Hispanic teen mothers with equity, 2011 "
-		Gap_births_teen_asn_2011 = "Difference in # of births to NH-AsianPI teen mothers with equity, 2011 "
-		Gap_births_teen_oth_2011 = "Difference in # of births to NH-Other teen mothers with equity, 2011 "
-		;
 run;
 
 proc transpose data=equity.city_births_gaps out=equity.profile_tabs_births_wd12; 
@@ -207,7 +192,6 @@ proc sort data=equity.profile_tabs_births_cltr00 out=profile_tabs_births_cltr00_
 	by _name_;
 run;
 
-
 proc export data=equity.profile_tabs_births_wd12
 	outfile="D:\DCDATA\Libraries\Equity\Prog\profile_tabs_births_ward.csv"
 	dbms=csv replace;
@@ -218,20 +202,3 @@ proc export data=equity.profile_tabs_births_cltr00
 	dbms=csv replace;
 	run;
 
-** Register metadata **;
-
-%Dc_update_meta_file(
-      ds_lib=Equity,
-      ds_name=profile_tabs_births_wd12,
-	  creator=L Hendey and S Diby,
-      creator_process=profile_tabs_births_wd12.sas,
-      restrictions=None
-      )
-
-%Dc_update_meta_file(
-      ds_lib=Equity,
-      ds_name=profile_tabs_births_wd12,
-	  creator=L Hendey and S Diby,
-      creator_process=profile_tabs_births_cltr00.sas,
-      restrictions=None
-      )
