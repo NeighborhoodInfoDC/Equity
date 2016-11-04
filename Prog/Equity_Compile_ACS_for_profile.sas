@@ -585,10 +585,16 @@
 	%end;
 
 	label
-	  AvgHshldIncAdjB_2010_14 = "Average household income, Black/African American, 2010-14"
-	  AvgHshldIncAdjW_2010_14 = "Average household income, Non-Hispanic White, 2010-14"
-	  AvgHshldIncAdjH_2010_14 = "Average household income, Hispanic/Latino, 2010-14"
-	  AvgHshldIncAdjAIOM_2010_14 = "Average household income, All remaining groups other than Black, Non-Hispanic White, Hispanic, 2010-14"
+	  AvgHshldIncAdj_2010_14 = "Average household income (adjusted), 2010-14"
+	  AvgHshldIncAdjB_2010_14 = "Average household income (adjusted), Black/African American, 2010-14"
+	  AvgHshldIncAdjW_2010_14 = "Average household income (adjusted), Non-Hispanic White, 2010-14"
+	  AvgHshldIncAdjH_2010_14 = "Average household income (adjusted), Hispanic/Latino, 2010-14"
+	  AvgHshldIncAdjAIOM_2010_14 = "Average household income (adjusted), All remaining groups other than Black, Non-Hispanic White, Hispanic, 2010-14"
+	  AvgHshldIncome_m_2010_14 = "Average household income, MOE, 2010-14"
+	  AvgHshldIncome_m_2010_14 = "Average household income, Black/African American, MOE, 2010-14"
+	  AvgHshldIncome_m_2010_14 = "Average household income, Non-Hispanic White, MOE, 2010-14"
+	  AvgHshldIncome_m_2010_14 = "Average household income, Hispanic/Latino, MOE, 2010-14"
+	  AvgHshldIncome_m_2010_14 = "Average household income, All remaining groups other than Black, Non-Hispanic White, Hispanic, MOE, 2010-14"
       ;
 
         

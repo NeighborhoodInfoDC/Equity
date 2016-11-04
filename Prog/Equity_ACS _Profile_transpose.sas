@@ -411,7 +411,6 @@ data equity.profile_tabs_ACS_suppress;
 		PctPoorChildrenB_m_2010_14 = "% children Black-Alone in poverty, MOE, 2010-14 "
 		PctPoorChildrenH_m_2010_14 = "% children Hispanic in poverty, MOE, 2010-14 "
 		PctPoorChildrenAIOM_m_2010_14 = "% children All-Other in poverty, MOE, 2010-14 "
-		PctPoorChildrenFB_m_2010_14 = "% children foreign born in poverty, MOE, 2010-14 "
 
 		Pct16andOverEmploy_m_2010_14 = "% pop. 16+ yrs. employed, MOE, 2010-14 "
 		Pct16andOverEmployW_m_2010_14 = "% pop. 16+ yrs. employed NH-White, MOE, 2010-14 "
