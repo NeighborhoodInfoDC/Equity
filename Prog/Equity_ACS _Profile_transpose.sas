@@ -643,141 +643,246 @@ proc transpose data=equity.profile_tabs_ACS_suppress out=equity.profile_tabs_ACS
 		PctPop65andOverYearsH: PctPop65andOverYrsH:
 		PctPop65andOverYearsAIOM: PctPop65andOverYrsAIOM:
 
-		Pct25andOverWoutHS_: 
-		Pct25andOverWoutHSW: Gap25andOverWoutHSW:
-		Pct25andOverWoutHSB: Gap25andOverWoutHSB:
-		Pct25andOverWoutHSH: Gap25andOverWoutHSH:
-		Pct25andOverWoutHSAIOM: Gap25andOverWoutHSAIOM:
-		Pct25andOverWoutHSFB: Gap25andOverWoutHSFB:
-		Pct25andOverWoutHSNB: Gap25andOverWoutHSNB:
+		Pct25andOverWoutHS_:
+		Pct25andOverWoutHSW:
+		Pct25andOverWoutHSB:
+		Pct25andOverWoutHSH:
+		Pct25andOverWoutHSAIOM:
+		Pct25andOverWoutHSFB:
+		Pct25andOverWoutHSNB:
 
-		Pct25andOverWHS_:  
-		Pct25andOverWHSW: Gap25andOverWHSW:  
-		Pct25andOverWHSB: Gap25andOverWHSB:  
-		Pct25andOverWHSH: Gap25andOverWHSH:  
-		Pct25andOverWHSAIOM: Gap25andOverWHSAIOM:  
-		Pct25andOverWHSFB: Gap25andOverWHSFB:  
-		Pct25andOverWHSNB: Gap25andOverWHSNB:  
+		Gap25andOverWoutHSW:
+		Gap25andOverWoutHSB:
+		Gap25andOverWoutHSH:
+		Gap25andOverWoutHSAIOM:
+		Gap25andOverWoutHSFB:
+		Gap25andOverWoutHSNB:
 
-		Pct25andOverWSC_: 
-		Pct25andOverWSCW: Gap25andOverWSCW:
-		Pct25andOverWSCB: Gap25andOverWSCB:
-		Pct25andOverWSCH: Gap25andOverWSCH:
-		Pct25andOverWSCAIOM: Gap25andOverWSCAIOM:
-		Pct25andOverWSCFB: Gap25andOverWSCFB:
-		Pct25andOverWSCNB: Gap25andOverWSCNB:
 
-		AvgHshldIncAdj_: 
-		AvgHshldIncAdjW: GapAvgHshldIncAdjW:
-		AvgHshldIncAdjB: GapAvgHshldIncAdjB:
-		AvgHshldIncAdjH: GapAvgHshldIncAdjH:
-		AvgHshldIncAdjAIOM: GapAvgHshldIncAdjAIOM:
+		Pct25andOverWHS_:
+		Pct25andOverWHSW:
+		Pct25andOverWHSB:
+		Pct25andOverWHSH:
+		Pct25andOverWHSAIOM:
+		Pct25andOverWHSFB:
+		Pct25andOverWHSNB:
+
+		Gap25andOverWHSW:
+		Gap25andOverWHSB:
+		Gap25andOverWHSH:
+		Gap25andOverWHSAIOM:
+		Gap25andOverWHSFB:
+		Gap25andOverWHSNB:
+
+		Pct25andOverWSC_:
+		Pct25andOverWSCW:
+		Pct25andOverWSCB:
+		Pct25andOverWSCH:
+		Pct25andOverWSCAIOM:
+		Pct25andOverWSCFB:
+		Pct25andOverWSCNB:
+
+		Gap25andOverWSCW:
+		Gap25andOverWSCB:
+		Gap25andOverWSCH:
+		Gap25andOverWSCAIOM:
+		Gap25andOverWSCFB:
+		Gap25andOverWSCNB:
+
+		AvgHshldIncAdj_:
+		AvgHshldIncAdjW:
+		AvgHshldIncAdjB:
+		AvgHshldIncAdjH:
+		AvgHshldIncAdjAIOM:
+
+		GapAvgHshldIncAdjW:
+		GapAvgHshldIncAdjB:
+		GapAvgHshldIncAdjH:
+		GapAvgHshldIncAdjAIOM:
 
 		PctFamilyGT200000_:
-		PctFamilyGT200000W: GapFamilyGT200000W: 
-		PctFamilyGT200000B: GapFamilyGT200000B: 
-		PctFamilyGT200000H: GapFamilyGT200000H: 
-		PctFamilyGT200000AIOM: GapFamilyGT200000AIOM: 
+		PctFamilyGT200000W:
+		PctFamilyGT200000B:
+		PctFamilyGT200000H:
+		PctFamilyGT200000AIOM:
 
-		PctFamilyLT75000_: 
-		PctFamilyLT75000W: GapFamilyLT75000W: 
-		PctFamilyLT75000B: GapFamilyLT75000B: 
-		PctFamilyLT75000H: GapFamilyLT75000H: 
-		PctFamilyLT75000AIOM: GapFamilyLT75000AIOM: 
+		GapFamilyGT200000W:
+		GapFamilyGT200000B:
+		GapFamilyGT200000H:
+		GapFamilyGT200000AIOM:
 
-		PctPoorPersons_: 
-		PctPoorPersonsW: GapPoorPersonsW:
-		PctPoorPersonsB: GapPoorPersonsB:
-		PctPoorPersonsH: GapPoorPersonsH:
-		PctPoorPersonsAIOM: GapPoorPersonsAIOM:
-		PctPoorPersonsFB: GapPoorPersonsFB:
+		PctFamilyLT75000_:
+		PctFamilyLT75000W:
+		PctFamilyLT75000B:
+		PctFamilyLT75000H:
+		PctFamilyLT75000AIOM:
 
-		/*note that child poverty gaps have been excluded from output
-		because White child poverty rate is near to 0*/
+		GapFamilyLT75000W:
+		GapFamilyLT75000B:
+		GapFamilyLT75000H:
+		GapFamilyLT75000AIOM:
 
-		PctPoorChildren_: 
+		PctPoorPersons_:
+		PctPoorPersonsW:
+		PctPoorPersonsB:
+		PctPoorPersonsH:
+		PctPoorPersonsAIOM:
+		PctPoorPersonsFB:
+
+		GapPoorPersonsW:
+		GapPoorPersonsB:
+		GapPoorPersonsH:
+		GapPoorPersonsAIOM:
+		GapPoorPersonsFB:
+
+		PctPoorChildren_:
 		PctPoorChildrenW:
 		PctPoorChildrenB:
 		PctPoorChildrenH:
 		PctPoorChildrenAIOM:
 
-		Pct16andOverEmploy_: 
-		Pct16andOverEmployW: Gap16andOverEmployW:
-		Pct16andOverEmployB: Gap16andOverEmployB:
-		Pct16andOverEmployH: Gap16andOverEmployH:
-		Pct16andOverEmployAIOM: Gap16andOverEmployAIOM:
+		Pct16andOverEmploy_:
+		Pct16andOverEmployW:
+		Pct16andOverEmployB:
+		Pct16andOverEmployH:
+		Pct16andOverEmployAIOM:
 
-		PctEmployed16to64_: 
-		PctEmployed16to64W: GapEmployed16to64W:
-		PctEmployed16to64B: GapEmployed16to64B:
-		PctEmployed16to64H: GapEmployed16to64H:
-		PctEmployed16to64AIOM: GapEmployed16to64AIOM:
+		Gap16andOverEmployW:
+		Gap16andOverEmployB:
+		Gap16andOverEmployH:
+		Gap16andOverEmployAIOM:
 
-		PctUnemployed_: 
-		PctUnemployedW: GapUnemployedW:
-		PctUnemployedB: GapUnemployedB:
-		PctUnemployedH: GapUnemployedH:
-		PctUnemployedAIOM: GapUnemployedAIOM:
+		PctEmployed16to64_:
+		PctEmployed16to64W:
+		PctEmployed16to64B:
+		PctEmployed16to64H:
+		PctEmployed16to64AIOM:
 
-		Pct16andOverWages_: 
-		Pct16andOverWagesW: Gap16andOverWagesW:
-		Pct16andOverWagesB: Gap16andOverWagesB:
-		Pct16andOverWagesH: Gap16andOverWagesH:
-		Pct16andOverWagesAIOM: Gap16andOverWagesAIOM:
+		GapEmployed16to64W:
+		GapEmployed16to64B:
+		GapEmployed16to64H:
+		GapEmployed16to64AIOM:
 
-		Pct16andOverWorkFT_: 
-		Pct16andOverWorkFTW: Gap16andOverWorkFTW:
-		Pct16andOverWorkFTB: Gap16andOverWorkFTB:
-		Pct16andOverWorkFTH: Gap16andOverWorkFTH:
-		Pct16andOverWorkFTAIOM: Gap16andOverWorkFTAIOM:
+		PctUnemployed_:
+		PctUnemployedW:
+		PctUnemployedB:
+		PctUnemployedH:
+		PctUnemployedAIOM:
 
-		PctWorkFTLT35k_: 
-		PctWorkFTLT35kW: GapWorkFTLT35kW:
-		PctWorkFTLT35kB: GapWorkFTLT35kB:
-		PctWorkFTLT35kH: GapWorkFTLT35kH:
-		PctWorkFTLT35kAIOM: GapWorkFTLT35kAIOM:
+		GapUnemployedW:
+		GapUnemployedB:
+		GapUnemployedH:
+		GapUnemployedAIOM:
 
-		PctWorkFTLT75k_: 
-		PctWorkFTLT75kW: GapWorkFTLT75kW:
-		PctWorkFTLT75kB: GapWorkFTLT75kB:
-		PctWorkFTLT75kH: GapWorkFTLT75kH:
-		PctWorkFTLT75kAIOM: GapWorkFTLT75kAIOM:
+		Pct16andOverWages_:
+		Pct16andOverWagesW:
+		Pct16andOverWagesB:
+		Pct16andOverWagesH:
+		Pct16andOverWagesAIOM:
 
-		PctEmployedMngmt_: 
-		PctEmployedMngmtW: GapEmployedMngmtW:
-		PctEmployedMngmtB: GapEmployedMngmtB:
-		PctEmployedMngmtH: GapEmployedMngmtH:
-		PctEmployedMngmtAIOM: GapEmployedMngmtAIOM:
+		Gap16andOverWagesW:
+		Gap16andOverWagesB:
+		Gap16andOverWagesH:
+		Gap16andOverWagesAIOM:
 
-		PctEmployedServ_: 
-		PctEmployedServW: GapEmployedServW:
-		PctEmployedServB: GapEmployedServB:
-		PctEmployedServH: GapEmployedServH:
-		PctEmployedServAIOM: GapEmployedServAIOM:
+		Pct16andOverWorkFT_:
+		Pct16andOverWorkFTW:
+		Pct16andOverWorkFTB:
+		Pct16andOverWorkFTH:
+		Pct16andOverWorkFTAIOM:
 
-		PctEmployedSales_: 
-		PctEmployedSalesW: GapEmployedSalesW:
-		PctEmployedSalesB: GapEmployedSalesB:
-		PctEmployedSalesH: GapEmployedSalesH:
-		PctEmployedSalesAIOM: GapEmployedSalesAIOM:
+		Gap16andOverWorkFTW:
+		Gap16andOverWorkFTB:
+		Gap16andOverWorkFTH:
+		Gap16andOverWorkFTAIOM:
 
-		PctEmployedNatRes_: 
-		PctEmployedNatResW: GapEmployedNatResW:
-		PctEmployedNatResB: GapEmployedNatResB:
-		PctEmployedNatResH: GapEmployedNatResH:
-		PctEmployedNatResAIOM: GapEmployedNatResAIOM:
+		PctWorkFTLT35k_:
+		PctWorkFTLT35kW:
+		PctWorkFTLT35kB:
+		PctWorkFTLT35kH:
+		PctWorkFTLT35kAIOM:
 
-		PctEmployedProd_: 
-		PctEmployedProdW: GapEmployedProdW:
-		PctEmployedProdB: GapEmployedProdB:
-		PctEmployedProdH: GapEmployedProdH:
-		PctEmployedProdAIOM: GapEmployedProdAIOM:
+		GapWorkFTLT35kW:
+		GapWorkFTLT35kB:
+		GapWorkFTLT35kH:
+		GapWorkFTLT35kAIOM:
 
-		PctOwnerOccupiedHU_: 
-		PctOwnerOccupiedHUW: GapOwnerOccupiedHUW:
-		PctOwnerOccupiedHUB: GapOwnerOccupiedHUB:
-		PctOwnerOccupiedHUH: GapOwnerOccupiedHUH:
-		PctOwnerOccupiedHUAIOM: GapOwnerOccupiedHUAIOM:
+		PctWorkFTLT75k_:
+		PctWorkFTLT75kW:
+		PctWorkFTLT75kB:
+		PctWorkFTLT75kH:
+		PctWorkFTLT75kAIOM:
+
+		GapWorkFTLT75kW:
+		GapWorkFTLT75kB:
+		GapWorkFTLT75kH:
+		GapWorkFTLT75kAIOM:
+
+		PctEmployedMngmt_:
+		PctEmployedMngmtW:
+		PctEmployedMngmtB:
+		PctEmployedMngmtH:
+		PctEmployedMngmtAIOM:
+
+		GapEmployedMngmtW:
+		GapEmployedMngmtB:
+		GapEmployedMngmtH:
+		GapEmployedMngmtAIOM:
+
+		PctEmployedServ_:
+		PctEmployedServW:
+		PctEmployedServB:
+		PctEmployedServH:
+		PctEmployedServAIOM:
+
+		GapEmployedServW:
+		GapEmployedServB:
+		GapEmployedServH:
+		GapEmployedServAIOM:
+
+		PctEmployedSales_:
+		PctEmployedSalesW:
+		PctEmployedSalesB:
+		PctEmployedSalesH:
+		PctEmployedSalesAIOM:
+
+		GapEmployedSalesW:
+		GapEmployedSalesB:
+		GapEmployedSalesH:
+		GapEmployedSalesAIOM:
+
+		PctEmployedNatRes_:
+		PctEmployedNatResW:
+		PctEmployedNatResB:
+		PctEmployedNatResH:
+		PctEmployedNatResAIOM:
+
+		GapEmployedNatResW:
+		GapEmployedNatResB:
+		GapEmployedNatResH:
+		GapEmployedNatResAIOM:
+
+		PctEmployedProd_:
+		PctEmployedProdW:
+		PctEmployedProdB:
+		PctEmployedProdH:
+		PctEmployedProdAIOM:
+
+		GapEmployedProdW:
+		GapEmployedProdB:
+		GapEmployedProdH:
+		GapEmployedProdAIOM:
+
+		PctOwnerOccupiedHU_:
+		PctOwnerOccupiedHUW:
+		PctOwnerOccupiedHUB:
+		PctOwnerOccupiedHUH:
+		PctOwnerOccupiedHUAIOM:
+
+		GapOwnerOccupiedHUW:
+		GapOwnerOccupiedHUB:
+		GapOwnerOccupiedHUH:
+		GapOwnerOccupiedHUAIOM:
 	 	;
 
 	id ward2012; 
