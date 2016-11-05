@@ -233,7 +233,7 @@ proc sort data=all_race;
 by cluster_tr2000 Ward2012 city;
 
 proc export data=all_race
-	outfile="D:\DCDATA\Libraries\Equity\Prog\profile_tabs_births_Comms.csv"
+	outfile="D:\DCDATA\Libraries\Equity\Prog\Racial Equity Feature\profile_tabs_births_Comms.csv"
 	dbms=csv replace;
 	run;
 

@@ -1,5 +1,5 @@
 /**************************************************************************
- Program:  Equity_ACS_profile_transpose.sas
+ Program:  Equity_ACS_profile_transpose_count.sas
  Library:  Equity
  Project:  NeighborhoodInfo DC
  Author:   L. Hendey & S. Diby
@@ -8,7 +8,8 @@
  Environment:  Windows
  
  Description:  Transposes calculated indicators for Equity profiles 
-			   and merges calculated statistics for ACS data at different geographies.
+			   and merges calculated statistics for ACS data at different geographies. 
+			   Counts only (not percentages). Based on Equity_ACS_profile_transpose program.
 **************************************************************************/
 %include "L:\SAS\Inc\StdLocal.sas";
 
@@ -285,7 +286,7 @@ run;
 
 
 proc export data=equity.profile_tabs_ACS_count
-	outfile="D:\DCDATA\Libraries\Equity\Prog\profile_tabs_ACS_count.csv"
+	outfile="D:\DCDATA\Libraries\Equity\Prog\Racial Equity Feature\profile_tabs_ACS_count.csv"
 	dbms=csv replace;
 	run;
 
