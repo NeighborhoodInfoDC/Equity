@@ -1,0 +1,66 @@
+EQUITY/Equity_Births_Output_COMM.sas:  NeighborhoodInfo DC                               12:10 Tuesday, October 11, 2016   1 
+                                                                                                                             
+The CONTENTS Procedure                                                                                                       
+                                                                                                                             
+Data Set Name        EQUITY.BIRTHS_COMM             Observations           196                                               
+Member Type          DATA                           Variables              20                                                
+Engine               V9                             Indexes                0                                                 
+Created              10/11/2016 12:10:25            Observation Length     145                                               
+Last Modified        10/11/2016 12:10:25            Deleted Observations   0                                                 
+Protection                                          Compressed             CHAR                                              
+Data Set Type                                       Reuse Space            NO                                                
+Label                Births Tabulations for COMM    Point to Observations  YES                                               
+Data Representation  WINDOWS_64                     Sorted                 YES                                               
+Encoding             wlatin1  Western (Windows)                                                                              
+                                                                                                                             
+                                                                                                                             
+                       Engine/Host Dependent Information                                                                     
+                                                                                                                             
+Data Set Page Size          65536                                                                                            
+Number of Data Set Pages    2                                                                                                
+Number of Data Set Repairs  0                                                                                                
+Filename                    D:\DCData\Libraries\Equity\Data\births_comm.sas7bdat                                             
+Release Created             9.0401M1                                                                                         
+Host Created                X64_7PRO                                                                                         
+                                                                                                                             
+                                                                                                                             
+                                     Alphabetic List of Variables and Attributes                                             
+                                                                                                                             
+ #    Variable                        Type    Len    Format       Label                                                      
+                                                                                                                             
+10    Births_low_wt_2011              Num       8                 Low weight births (under 5.5 lbs)                          
+14    Births_prenat_adeq_2011         Num       8                 Births with adequate prenatal care (Kessner index)         
+18    Births_teen_2011                Num       8                 Births to mothers under 20 years old                       
+ 6    Births_total_2011               Num       8                 Total births, 2011                                         
+17    Births_w_age_2011               Num       8                 Births with mother's age reported                          
+13    Births_w_prenat_2011            Num       8                 Births with prenatal care reported (Kessner index)         
+ 7    Births_w_race_2011              Num       8                 Total births with mothers race reported                    
+ 9    Births_w_weight_2011            Num       8                 Births with birth weight reported                          
+12    Gap_births_low_wt_2011          Num       8                 Racial gap, low birth weight                               
+16    Gap_births_prenat_adeq_2011     Num       8                 Racial gap, adequate prenatal care                         
+20    Gap_births_teen_2011            Num       8                 Racial gap, teen births                                    
+ 1    ID                              Char     11                                                                            
+ 2    city                            Char      1    $CITY.       Washington, D.C.                                           
+ 4    cluster_tr2000                  Char      2    $CLUS00A.    Neighborhood cluster (tract-based, 2000)                   
+11    nPct_births_low_wt_2011         Num       8                 % low weight births (under 5.5 lbs)                        
+15    nPct_births_prenat_adeq_2011    Num       8                 % Births to mothers with adequate prenatal care            
+19    nPct_births_teen_2011           Num       8                 % births to teen mothers                                   
+ 8    nPct_births_w_race_2011         Num       8                 % Births with mothers race reported                        
+EQUITY/Equity_Births_Output_COMM.sas:  NeighborhoodInfo DC                               12:10 Tuesday, October 11, 2016   2
+                                                                                                                             
+The CONTENTS Procedure                                                                                                       
+                                                                                                                             
+                                     Alphabetic List of Variables and Attributes                                             
+                                                                                                                             
+ #    Variable                        Type    Len    Format       Label                                                      
+                                                                                                                             
+ 5    race                            Char     10                                                                            
+ 3    ward2012                        Char      1    $WARD12A.    Ward (2012)                                                
+                                                                                                                             
+                                                                                                                             
+             Sort Information                                                                                                
+                                                                                                                             
+Sortedby       cluster_tr2000 ward2012 city                                                                                  
+Validated      YES                                                                                                           
+Character Set  ANSI                                                                                                          
+                                                                                   
