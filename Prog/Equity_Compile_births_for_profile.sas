@@ -106,8 +106,7 @@
 		%Pct_calc( var=Pct_births_prenat_adeq_&race., label=% Births to &name. mothers with adequate prenatal care, num=births_prenat_adeq_&race., den=births_w_prenat_&race., from=&births_start_yr, to=&births_end_yr )
 		
 		if Births_w_age_&race._2011 <= 5 then Pct_births_teen_&race._2011=.s;
-		if Births_low_wt_&race._2011 <= 5 then Pct_births_low_wt_&race._2011=.s;
-		if births_prenat_adeq_&race._2011 <=5 then Pct_births_prenat_adeq_&race._2011=.s;
+		if births_w_prenat_&race._2011 <=5 then Pct_births_prenat_adeq_&race._2011=.s;
 			
 
 	%end;
