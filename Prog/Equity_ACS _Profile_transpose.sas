@@ -8,7 +8,7 @@
  Environment:  Windows
  
  Description:  Transposes calculated indicators for Equity profiles 
-			   and merges calculated statistics for ACS data at different geographies.
+			   and merges calculated statistics for ACS data at different geographies. 
 **************************************************************************/
 %include "L:\SAS\Inc\StdLocal.sas";
 
@@ -18,6 +18,7 @@
 
 %let racelist=W B H AIOM;
 %let racename= NH-White Black-Alone Hispanic All-Other;
+
 
 data city_ward;
 	set equity.equity_profile_city
@@ -30,10 +31,11 @@ run;
 
 *Add gap calculation - separate out city level white rates; 
 
+
 data whiterates;
 	set equity.equity_profile_city 
 	(keep= _make_profile
-		   Pct25andOverWoutHSW: Pct25andOverWHSW: Pct25andOverWSCW:
+		   			Pct25andOverWoutHSW: Pct25andOverWHSW: Pct25andOverWSCW:
            PctPoorPersonsW: PctPoorChildrenW:
            PctFamilyLT75000W: PctFamilyGT200000W:
            AvgHshldIncAdjW: PctUnemployedW: 
@@ -43,12 +45,13 @@ data whiterates;
            PctEmployedMngmtW: PctEmployedServW:
            PctEmployedSalesW: PctEmployedNatResW: 
            PctEmployedProdW: PctOwnerOccupiedHUW: )
-		   ;
+		   			;
 	_make_profile=1;
 	run;
 
 %rename(whiterates);
 run;
+
 
 data city_ward_WR (drop=_make_profile);
 	merge city_ward whiterates_new (rename=(c_make_profile=_make_profile));
@@ -81,25 +84,30 @@ data city_ward_WR (drop=_make_profile);
 	GapPoorPersonsAIOM_2010_14=cPctPoorPersonsW_2010_14/100*PersonsPovertyDefAIOM_2010_14-PopPoorPersonsAIOM_2010_14;
 	GapPoorPersonsFB_2010_14=cPctPoorPersonsW_2010_14/100*PersonsPovertyDefinedFB_2010_14-PopPoorPersonsFB_2010_14;
 
+
 	GapPoorChildrenB_2010_14=cPctPoorChildrenW_2010_14/100*ChildrenPovertyDefinedB_2010_14-PopPoorChildrenB_2010_14;
 	GapPoorChildrenW_2010_14=cPctPoorChildrenW_2010_14/100*ChildrenPovertyDefinedW_2010_14-PopPoorChildrenW_2010_14;
 	GapPoorChildrenH_2010_14=cPctPoorChildrenW_2010_14/100*ChildrenPovertyDefinedH_2010_14-PopPoorChildrenH_2010_14;
 	GapPoorChildrenAIOM_2010_14=cPctPoorChildrenW_2010_14/100*ChildrenPovertyDefAIOM_2010_14-PopPoorChildrenAIOM_2010_14;
+
 
 	GapFamilyLT75000B_2010_14=cPctFamilyLT75000W_2010_14/100*NumFamiliesB_2010_14-FamIncomeLT75kB_2010_14;
 	GapFamilyLT75000W_2010_14=cPctFamilyLT75000W_2010_14/100*NumFamiliesW_2010_14-FamIncomeLT75kW_2010_14;
 	GapFamilyLT75000H_2010_14=cPctFamilyLT75000W_2010_14/100*NumFamiliesH_2010_14-FamIncomeLT75kH_2010_14;
 	GapFamilyLT75000AIOM_2010_14=cPctFamilyLT75000W_2010_14/100*NumFamiliesAIOM_2010_14-FamIncomeLT75kAIOM_2010_14;
 
+
 	GapFamilyGT200000B_2010_14=cPctFamilyGT200000W_2010_14/100*NumFamiliesB_2010_14-FamIncomeGT200kB_2010_14;
 	GapFamilyGT200000W_2010_14=cPctFamilyGT200000W_2010_14/100*NumFamiliesW_2010_14-FamIncomeGT200kW_2010_14;
 	GapFamilyGT200000H_2010_14=cPctFamilyGT200000W_2010_14/100*NumFamiliesH_2010_14-FamIncomeGT200kH_2010_14;
 	GapFamilyGT200000AIOM_2010_14=cPctFamilyGT200000W_2010_14/100*NumFamiliesAIOM_2010_14-FamIncomeGT200kAIOM_2010_14;
 
+
 	GapAvgHshldIncAdjB_2010_14=cAvgHshldIncAdjW_2010_14/100*NumHshldsB_2010_14-AggHshldIncomeB_2010_14;
 	GapAvgHshldIncAdjW_2010_14=cAvgHshldIncAdjW_2010_14/100*NumHshldsW_2010_14-AggHshldIncomeW_2010_14;
 	GapAvgHshldIncAdjH_2010_14=cAvgHshldIncAdjW_2010_14/100*NumHshldsH_2010_14-AggHshldIncomeH_2010_14;
 	GapAvgHshldIncAdjAIOM_2010_14=cAvgHshldIncAdjW_2010_14/100*NumHshldsAIOM_2010_14-AggHshldIncomeAIOM_2010_14;
+
 
 	GapEmployed16to64B_2010_14=cPctEmployed16to64W_2010_14/100*Pop16_64yearsB_2010_14-Pop16_64EmployedB_2010_14;
 	GapEmployed16to64W_2010_14=cPctEmployed16to64W_2010_14/100*Pop16_64yearsW_2010_14-Pop16_64EmployedW_2010_14;
@@ -167,6 +175,7 @@ data city_ward_WR (drop=_make_profile);
 	GapOwnerOccupiedHUAIOM_2010_14=cPctOwnerOccupiedHUW_2010_14/100*NumOccupiedHsgUnitsAIOM_2010_14-NumOwnerOccupiedHUAIOM_2010_14;
 
 run;
+
 
 data equity.profile_tabs_ACS_suppress;
 	set city_ward_WR;
@@ -309,7 +318,8 @@ data equity.profile_tabs_ACS_suppress;
 	%suppress_gaps;
 	%suppress_gaps_fb;
 
-	label
+	
+label
 		PctBlackNonHispBridge_m_2010_14 = "% black non-Hispanic, MOE, 2010-14 "
 		PctWhiteNonHispBridge_m_2010_14 = "% white non-Hispanic, MOE, 2010-14 "
 		PctHisp_m_2010_14 = "% Hispanic, MOE, 2010-14 " 
@@ -779,7 +789,6 @@ proc export data=equity.profile_tabs_ACS
 	dbms=csv replace;
 	run;
 
-
 ** Register metadata **;
 
 %Dc_update_meta_file(
@@ -789,6 +798,3 @@ proc export data=equity.profile_tabs_ACS
       creator_process=profile_tabs_ACS.sas,
       restrictions=None
       )
-
-
-					

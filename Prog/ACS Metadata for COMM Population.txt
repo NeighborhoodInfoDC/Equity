@@ -1,0 +1,96 @@
+EQUITY/Equity_ACS_Output_COMM.sas:  NeighborhoodInfo DC                                  15:56 Tuesday, October 11, 2016   1
+
+The CONTENTS Procedure
+
+Data Set Name        WORK.POPULATION                       Observations           9   
+Member Type          DATA                                  Variables              67  
+Engine               V9                                    Indexes                0   
+Created              10/11/2016 15:56:44                   Observation Length     522 
+Last Modified        10/11/2016 15:56:44                   Deleted Observations   0   
+Protection                                                 Compressed             CHAR
+Data Set Type                                              Reuse Space            NO  
+Label                Population Race Variables for COMM    Point to Observations  YES 
+Data Representation  WINDOWS_64                            Sorted                 NO  
+Encoding             wlatin1  Western (Windows)                                       
+
+
+                                             Engine/Host Dependent Information
+
+Data Set Page Size          65536                                                                                           
+Number of Data Set Pages    2                                                                                               
+Number of Data Set Repairs  0                                                                                               
+Filename                    D:\Users\LHendey\AppData\Local\Temp\SAS Temporary                                               
+                            Files\_TD7240_MET-D13158-W7_\population.sas7bdat                                                
+Release Created             9.0401M1                                                                                        
+Host Created                X64_7PRO                                                                                        
+
+
+                                        Alphabetic List of Variables and Attributes
+ 
+ # Variable                     Type Len Format    Label
+
+ 1 City                         Char   1 $CITY.    Washington, D.C.                                                        
+ 2 Pop5andOverYears_2010_14     Num    8           Persons 5 years old and over, 2010-14                                   
+12 PopAloneAIOM_2010_14         Num    8           All remaining groups other than Black,                                  
+                                                   Non-Hispanic White, Hispanic, 2010-14                                   
+ 7 PopAloneA_2010_14            Num    8           Asian alone and Native Hawaiian and Other                               
+                                                   Pacific Islander alone, 2010-14                                         
+ 4 PopAloneB_2010_14            Num    8           Black alone population, 2010-14                                         
+ 6 PopAloneH_2010_14            Num    8           Hispanic/Latino alone population, 2010-14                               
+11 PopAloneIOM_2010_14          Num    8           American Indian/Alaska Native, other race, two or more races, 2010-14   
+ 8 PopAloneI_2010_14            Num    8           American Indian and Alaska Native alone, 2010-14                        
+10 PopAloneM_2010_14            Num    8           Two or more races alone, 2010-14                                        
+ 9 PopAloneO_2010_14            Num    8           Some other race alone, 2010-14                                          
+ 5 PopAloneW_2010_14            Num    8           White alone population, 2010-14                                         
+17 PopAsianPINonHisp            Num    8           Non-Hispanic Asian, Hawaiian and other Pacific Islander pop., 2010-14   
+   Bridge_2010_14                                                                                                          
+14 PopBlackNonHisp              Num    8           Non-Hispanic Black/African American population, 2010-14                 
+   Bridge_2010_14                                                                                                          
+EQUITY/Equity_ACS_Output_COMM.sas:  NeighborhoodInfo DC                                  15:56 Tuesday, October 11, 2016   2
+
+The CONTENTS Procedure
+
+                                        Alphabetic List of Variables and Attributes
+ 
+ # Variable                     Type Len Format    Label
+
+ 3 PopForeignBorn_2010_14       Num    8           Foreign born population, 2010-14                                        
+16 PopHisp_2010_14              Num    8           Hispanic/Latino population, 2010-14                                     
+20 PopMultiracialNon            Num    8           Non-Hispanic multiracial population, 2010-14                            
+   Hisp_2010_14                                                                                                            
+18 PopNonEnglish_2010_14        Num    8           Speak a language other than English at home, 2010-14                    
+19 PopOtherRaceNonHisp          Num    8           All remaining groups other than black,                                  
+   Bridg_2010_14                                   white, Hispanic, and Asian/PI, 2010-14                                  
+15 PopWhiteNonHisp              Num    8           Non-Hispanic White population, 2010-14                                  
+   Bridge_2010_14                                                                                                          
+13 PopWithRace_2010_14          Num    8           Total population for race/ethnicity, 2010-14                            
+39 Ward2012                     Char   1 $WARD12A. Ward (2012)                                                             
+21 mPop5andOverYears_2010_14    Num    8           Persons 5 years old and over, 2010-14                                   
+38 mPopAloneAIOM_2010_14        Num    8           All remaining groups other than Black, Non-Hispanic                     
+                                                   White, Hispanic, MOE, 2010-14                                           
+33 mPopAloneA_2010_14           Num    8           Asian alone and Native Hawaiian and Other                               
+                                                   Pacific Islander alone, MOE, 2010-14                                    
+30 mPopAloneB_2010_14           Num    8           Black alone population, MOE, 2010-14                                    
+32 mPopAloneH_2010_14           Num    8           Hispanic/Latino alone population, MOE, 2010-14                          
+37 mPopAloneIOM_2010_14         Num    8           American Indian/Alaska Native, other                                    
+                                                   race, two or more races, MOE, 2010-14                                   
+34 mPopAloneI_2010_14           Num    8           American Indian and Alaska Native alone, MOE, 2010-14                   
+36 mPopAloneM_2010_14           Num    8           Two or more races alone, MOE, 2010-14                                   
+35 mPopAloneO_2010_14           Num    8           Some other race alone, MOE, 2010-14                                     
+31 mPopAloneW_2010_14           Num    8           White alone population, MOE, 2010-14                                    
+26 mPopAsianPINonHisp           Num    8           Non-Hispanic Asian, Hawaiian and other                                  
+   Bridge_2010_14                                  Pacific Islander pop., MOE, 2010-14                                     
+24 mPopBlackNonHisp             Num    8           Non-Hispanic Black/African American population, MOE, 2010-14            
+   Bridge_2010_14                                                                                                          
+27 mPopHisp_2010_14             Num    8           Hispanic/Latino population, MOE, 2010-14                                
+28 mPopMultiracial              Num    8           Non-Hispanic multiracial population, MOE, 2010-14                       
+   NonHisp_2010_14                                                                                                         
+22 mPopNonEnglish_2010_14       Num    8           Speak a language other than English at home, MOE, 2010-14               
+29 mPopOtherRaceNon             Num    8           All remaining groups other than black, white,                           
+   HispBr_2010_14                                  Hispanic, and Asian/PI, MOE, 2010-14                                    
+25 mPopWhiteNonHisp             Num    8           Non-Hispanic White population, MOE, 2010-14                             
+   Bridge_2010_14                                                                                                          
+23 mPopWithRace_2010_14         Num    8           Total population for race/ethnicity, MOE, 2010-14                       
+51 nPctAloneAIOM_2010_14        Num    8           % All other than Black-White-Hispanic, 2010-14                          
+65 nPctAloneAIOM_m_2010_14      Num    8           MOE for % All other than Black-White-Hispanic, 2010-14                  
+45 nPctAloneA_2010_14           Num    8           % Asian/P.I. alone, 2010-14        

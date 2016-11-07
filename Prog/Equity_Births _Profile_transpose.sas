@@ -1,5 +1,5 @@
 /**************************************************************************
- Program:  Equity_ACS_profile_transpose.sas
+ Program:  Equity_Births_profile_transpose.sas
  Library:  Equity
  Project:  NeighborhoodInfo DC
  Author:   L. Hendey & S. Diby
@@ -20,9 +20,9 @@
 %let racename= NH-Black NH-AsianPI Hispanic NH-White NH-Other;
 
 data city_births;
-	set equity.equity_profile_births_city
-			equity.equity_profile_births_wd12
-			equity.equity_profile_births_cltr00;
+	set equity.profile_births_city
+			equity.profile_births_wd12
+			equity.profile_births_cltr00;
 
 			if city="1" then ward2012="0";
 			if city="1" then cluster_tr2000="00";
@@ -33,7 +33,7 @@ run;
 *Add gap calculation - separate out city level white rates; 
 
 data whiterates_births;
-	set equity.equity_profile_births_city 
+	set equity.profile_births_city 
 	(keep= Pct_births_white_2011 Pct_births_white_3yr_2011 Pct_births_low_wt_wht_2011 
 		   Pct_births_prenat_adeq_wht_2011 Pct_births_teen_wht_2011 _make_profile)
 		   ;
