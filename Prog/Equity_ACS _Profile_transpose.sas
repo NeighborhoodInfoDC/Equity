@@ -8,7 +8,7 @@
  Environment:  Windows
  
  Description:  Transposes calculated indicators for Equity profiles 
-			   and merges calculated statistics for ACS data at different geographies.
+			   and merges calculated statistics for ACS data at different geographies. 
 			   Outputs transposed data in percent and decimal formats. 
 **************************************************************************/
 %include "L:\SAS\Inc\StdLocal.sas";
@@ -20,6 +20,7 @@
 %let racelist=W B H AIOM;
 %let racename= NH-White Black-Alone Hispanic All-Other;
 
+
 data city_ward;
 	set equity.equity_profile_city
 			equity.equity_profile_wd12;
@@ -30,6 +31,7 @@ data city_ward;
 run; 
 
 *Add gap calculation - separate out city level white rates; 
+
 
 data whiterates;
 	set equity.equity_profile_city 
@@ -50,6 +52,7 @@ data whiterates;
 
 %rename(whiterates);
 run;
+
 
 data city_ward_WR (drop=_make_profile);
 	merge city_ward whiterates_new (rename=(c_make_profile=_make_profile));
@@ -82,40 +85,41 @@ data city_ward_WR (drop=_make_profile);
 	GapPoorPersonsAIOM_2010_14=cPctPoorPersonsW_2010_14/100*PersonsPovertyDefAIOM_2010_14-PopPoorPersonsAIOM_2010_14;
 	GapPoorPersonsFB_2010_14=cPctPoorPersonsW_2010_14/100*PersonsPovertyDefinedFB_2010_14-PopPoorPersonsFB_2010_14;
 
+
 	GapPoorChildrenB_2010_14=cPctPoorChildrenW_2010_14/100*ChildrenPovertyDefinedB_2010_14-PopPoorChildrenB_2010_14;
 	GapPoorChildrenW_2010_14=cPctPoorChildrenW_2010_14/100*ChildrenPovertyDefinedW_2010_14-PopPoorChildrenW_2010_14;
 	GapPoorChildrenH_2010_14=cPctPoorChildrenW_2010_14/100*ChildrenPovertyDefinedH_2010_14-PopPoorChildrenH_2010_14;
 	GapPoorChildrenAIOM_2010_14=cPctPoorChildrenW_2010_14/100*ChildrenPovertyDefAIOM_2010_14-PopPoorChildrenAIOM_2010_14;
+
 
 	GapFamilyLT75000B_2010_14=cPctFamilyLT75000W_2010_14/100*NumFamiliesB_2010_14-FamIncomeLT75kB_2010_14;
 	GapFamilyLT75000W_2010_14=cPctFamilyLT75000W_2010_14/100*NumFamiliesW_2010_14-FamIncomeLT75kW_2010_14;
 	GapFamilyLT75000H_2010_14=cPctFamilyLT75000W_2010_14/100*NumFamiliesH_2010_14-FamIncomeLT75kH_2010_14;
 	GapFamilyLT75000AIOM_2010_14=cPctFamilyLT75000W_2010_14/100*NumFamiliesAIOM_2010_14-FamIncomeLT75kAIOM_2010_14;
 
+
 	GapFamilyGT200000B_2010_14=cPctFamilyGT200000W_2010_14/100*NumFamiliesB_2010_14-FamIncomeGT200kB_2010_14;
 	GapFamilyGT200000W_2010_14=cPctFamilyGT200000W_2010_14/100*NumFamiliesW_2010_14-FamIncomeGT200kW_2010_14;
 	GapFamilyGT200000H_2010_14=cPctFamilyGT200000W_2010_14/100*NumFamiliesH_2010_14-FamIncomeGT200kH_2010_14;
 	GapFamilyGT200000AIOM_2010_14=cPctFamilyGT200000W_2010_14/100*NumFamiliesAIOM_2010_14-FamIncomeGT200kAIOM_2010_14;
+
 
 	GapAvgHshldIncAdjB_2010_14=cAvgHshldIncAdjW_2010_14/100*NumHshldsB_2010_14-AggHshldIncomeB_2010_14;
 	GapAvgHshldIncAdjW_2010_14=cAvgHshldIncAdjW_2010_14/100*NumHshldsW_2010_14-AggHshldIncomeW_2010_14;
 	GapAvgHshldIncAdjH_2010_14=cAvgHshldIncAdjW_2010_14/100*NumHshldsH_2010_14-AggHshldIncomeH_2010_14;
 	GapAvgHshldIncAdjAIOM_2010_14=cAvgHshldIncAdjW_2010_14/100*NumHshldsAIOM_2010_14-AggHshldIncomeAIOM_2010_14;
 
+
 	GapEmployed16to64B_2010_14=cPctEmployed16to64W_2010_14/100*Pop16_64yearsB_2010_14-Pop16_64EmployedB_2010_14;
 	GapEmployed16to64W_2010_14=cPctEmployed16to64W_2010_14/100*Pop16_64yearsW_2010_14-Pop16_64EmployedW_2010_14;
 	GapEmployed16to64H_2010_14=cPctEmployed16to64W_2010_14/100*Pop16_64yearsH_2010_14-Pop16_64EmployedH_2010_14;
 	GapEmployed16to64AIOM_2010_14=cPctEmployed16to64W_2010_14/100*Pop16_64yearsAIOM_2010_14-Pop16_64EmployedAIOM_2010_14;
 
-	Gap16andOverEmployB_2010_14=cPct16andOverEmployW_2010_14/100*Pop16andOverYearsB_2010_14-Pop16andOverEmployB_2010_14;
-	Gap16andOverEmployW_2010_14=cPct16andOverEmployW_2010_14/100*Pop16andOverYearsW_2010_14-Pop16andOverEmployW_2010_14;
-	Gap16andOverEmployH_2010_14=cPct16andOverEmployW_2010_14/100*Pop16andOverYearsH_2010_14-Pop16andOverEmployH_2010_14;
-	Gap16andOverEmployAIOM_2010_14=cPct16andOverEmployW_2010_14/100*Pop16andOverYearsAIOM_2010_14-Pop16andOverEmployAIOM_2010_14;
-
 	GapUnemployedB_2010_14=cPctUnemployedW_2010_14/100*PopInCivLaborForceB_2010_14-PopUnemployedB_2010_14;
 	GapUnemployedW_2010_14=cPctUnemployedW_2010_14/100*PopInCivLaborForceW_2010_14-PopUnemployedW_2010_14;
 	GapUnemployedH_2010_14=cPctUnemployedW_2010_14/100*PopInCivLaborForceH_2010_14-PopUnemployedH_2010_14;
 	GapUnemployedAIOM_2010_14=cPctUnemployedW_2010_14/100*PopInCivLaborForceAIOM_2010_14-PopUnemployedAIOM_2010_14;
+
 
 	Gap16andOverWagesB_2010_14=cPct16andOverWagesW_2010_14/100*Pop16andOverYearsB_2010_14-PopWorkEarnB_2010_14;
 	Gap16andOverWagesW_2010_14=cPct16andOverWagesW_2010_14/100*Pop16andOverYearsW_2010_14-PopWorkEarnW_2010_14;
@@ -168,6 +172,7 @@ data city_ward_WR (drop=_make_profile);
 	GapOwnerOccupiedHUAIOM_2010_14=cPctOwnerOccupiedHUW_2010_14/100*NumOccupiedHsgUnitsAIOM_2010_14-NumOwnerOccupiedHUAIOM_2010_14;
 
 run;
+
 
 data equity.profile_tabs_ACS_suppress;
 	set city_ward_WR;
@@ -339,6 +344,7 @@ var PctBlackNonHispBridge: PctWhiteNonHispBridge:
 	PctPop35_64YearsB_: PctPop35_64YearsH_:
 	PctPop35_64YearsAIOM_:
 
+
 	PctPop65andOverYears_: PctPop65andOverYrs_:
 	PctPop65andOverYearsW: PctPop65andOverYrsW:
 	PctPop65andOverYearsB: PctPop65andOverYrsB:
@@ -360,6 +366,7 @@ var PctBlackNonHispBridge: PctWhiteNonHispBridge:
 	Pct25andOverWHSAIOM: Gap25andOverWHSAIOM:  
 	Pct25andOverWHSFB: Gap25andOverWHSFB:  
 	Pct25andOverWHSNB: Gap25andOverWHSNB:  
+
 
 	Pct25andOverWSC_: 
 	Pct25andOverWSCW: Gap25andOverWSCW:
@@ -480,7 +487,7 @@ var PctBlackNonHispBridge: PctWhiteNonHispBridge:
 	PctOwnerOccupiedHUB: GapOwnerOccupiedHUB:
 	PctOwnerOccupiedHUH: GapOwnerOccupiedHUH:
 	PctOwnerOccupiedHUAIOM: GapOwnerOccupiedHUAIOM:
- 	;
+ ;
 id ward2012; 
 run; 
 
