@@ -24,7 +24,7 @@ data city_ward;
 	set equity.equity_profile_city
 			equity.equity_profile_wd12;
 
-			if city=1 then ward2012=0;
+			if city=1 then ward2012="0";
 			_make_profile=1;
 
 run; 
