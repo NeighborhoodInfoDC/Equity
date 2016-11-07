@@ -21,7 +21,7 @@
 %let racelist=blk asn wht hsp oth;
 %let racename= NH-Black NH-AsianPI Hispanic NH-White NH-Other; 
 
-proc transpose data=equity.city_births_gaps out=equity.profile_tabs_births_count_wd12; 
+proc transpose data=equity.births_gaps_allgeo out=profile_tabs_births_count_wd12; 
 var Births_total_2011
 	births_total_3yr_2011
 	births_w_race_2011 
@@ -83,7 +83,7 @@ var Births_total_2011
 id ward2012; 
 run; 
 
-proc transpose data=equity.city_births_gaps out=equity.profile_tabs_births_count_cltr00; 
+proc transpose data=equity.births_gaps_allgeo out=profile_tabs_births_count_cltr00; 
 var Births_total_2011
 	births_total_3yr_2011
 	births_w_race_2011 
@@ -146,21 +146,21 @@ id cluster_tr2000;
 run; 
 
 
-proc sort data=equity.profile_tabs_births_count_wd12 out=profile_tabs_births_wd12_count; 
+proc sort data=profile_tabs_births_count_wd12; 
 	by _name_;
 run;
 
-proc sort data=equity.profile_tabs_births_count_cltr00 out=profile_tabs_births_cltr00_count; 
+proc sort data=profile_tabs_births_count_cltr00; 
 	by _name_;
 run;
 
 
-proc export data=equity.profile_tabs_births_count_wd12
+proc export data=profile_tabs_births_count_wd12
 	outfile="D:\DCDATA\Libraries\Equity\Prog\Racial Equity Feature\profile_tabs_births_ward_count.csv"
 	dbms=csv replace;
 	run;
 
-proc export data=equity.profile_tabs_births_count_cltr00
+proc export data=profile_tabs_births_count_cltr00
 	outfile="D:\DCDATA\Libraries\Equity\Prog\Racial Equity Feature\profile_tabs_births_cluster_count.csv"
 	dbms=csv replace;
 	run;

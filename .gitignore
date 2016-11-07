@@ -7,6 +7,7 @@ Maps/
 Raw/
 Doc/
 Prog/Temp/
+Prog/Old/
 
 # SAS files
 *.sas7bdat
