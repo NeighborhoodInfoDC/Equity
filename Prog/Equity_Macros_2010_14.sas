@@ -18,6 +18,32 @@
 
 
 ***** Macros *****;
+%macro survey_freq (input=, where= , options=, weight=, tables=, type=, out=);
+
+proc surveyfreq data = &input (where=(&where)) &options;
+weight &weight;
+strata strata;
+cluster cluster;
+by subpopvar;
+tables &tables;
+ods output &type=&out;
+run;
+
+%mend survey_freq;
+
+%macro survey_means (input=, where=, option=, weight=, domain=, var=, out=);
+
+proc surveymeans data = &input (where=(&where)) &option;
+weight &weight;
+strata strata;
+cluster cluster;
+domain &domain;
+var &var;
+ods output Domain=&out;
+run;
+
+%mend survey_means;
+
 
 ** Count table macro **;
 
@@ -196,7 +222,7 @@
       all='Total' &row_var
       ,
       /** Columns (do not change) **/
-      total = "% &universe" * colpctsum=' ' * f=comma10.1 * ( puma=' ' all='District of Columbia' )
+      total = "% &universe" * (colpctsum=' ' * f=comma10.1)* ( puma=' ' all='District of Columbia' )
       / condense
     ;
     format puma puma. race_cat1 racecatA. &row_var &row_fmt;
