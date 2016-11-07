@@ -43,24 +43,24 @@ data whiterates_births;
 %rename(whiterates_births);
 run;
 
-data equity.city_births_gaps (drop=_make_profile b);
+data equity.births_gaps_allgeo (label="Birth Gaps for All Geographies, 2011" drop=_make_profile b);
 	merge city_births whiterates_births_new(rename=(c_make_profile=_make_profile));
 	by _make_profile;
 	
-	Gap_births_low_wt_blk_2011=cPct_births_low_wt_wht_2011/100*Births_black_2011-Births_low_wt_blk_2011;
-	Gap_births_low_wt_hsp_2011=cPct_births_low_wt_wht_2011/100*Births_hisp_2011-Births_low_wt_hsp_2011;
-	Gap_births_low_wt_asn_2011=cPct_births_low_wt_wht_2011/100*Births_asian_2011-Births_low_wt_asn_2011;
-	Gap_births_low_wt_oth_2011=cPct_births_low_wt_wht_2011/100*Births_oth_rac_2011-Births_low_wt_oth_2011;
+	Gap_births_low_wt_blk_2011=cPct_births_low_wt_wht_2011/100*Births_w_weight_blk_2011-Births_low_wt_blk_2011;
+	Gap_births_low_wt_hsp_2011=cPct_births_low_wt_wht_2011/100*Births_w_weight_hsp_2011-Births_low_wt_hsp_2011;
+	Gap_births_low_wt_asn_2011=cPct_births_low_wt_wht_2011/100*Births_w_weight_asn_2011-Births_low_wt_asn_2011;
+	Gap_births_low_wt_oth_2011=cPct_births_low_wt_wht_2011/100*Births_w_weight_oth_2011-Births_low_wt_oth_2011;
 
-	Gap_births_prenat_adeq_blk_2011=cPct_births_prenat_adeq_wht_2011/100*Births_black_2011-Births_prenat_adeq_blk_2011;
-	Gap_births_prenat_adeq_hsp_2011=cPct_births_prenat_adeq_wht_2011/100*Births_hisp_2011-Births_prenat_adeq_hsp_2011;
-	Gap_births_prenat_adeq_asn_2011=cPct_births_prenat_adeq_wht_2011/100*Births_asian_2011-Births_prenat_adeq_asn_2011;
-	Gap_births_prenat_adeq_oth_2011=cPct_births_prenat_adeq_wht_2011/100*Births_oth_rac_2011-Births_prenat_adeq_oth_2011;
+	Gap_births_prenat_adeq_blk_2011=cPct_births_prenat_adeq_wht_2011/100*Births_w_prenat_blk_2011-Births_prenat_adeq_blk_2011;
+	Gap_births_prenat_adeq_hsp_2011=cPct_births_prenat_adeq_wht_2011/100*Births_w_prenat_hsp_2011-Births_prenat_adeq_hsp_2011;
+	Gap_births_prenat_adeq_asn_2011=cPct_births_prenat_adeq_wht_2011/100*Births_w_prenat_asn_2011-Births_prenat_adeq_asn_2011;
+	Gap_births_prenat_adeq_oth_2011=cPct_births_prenat_adeq_wht_2011/100*Births_w_prenat_oth_2011-Births_prenat_adeq_oth_2011;
 
-	Gap_births_teen_blk_2011=cPct_births_teen_wht_2011/100*Births_black_2011-Births_teen_blk_2011;
-	Gap_births_teen_hsp_2011=cPct_births_teen_wht_2011/100*Births_hisp_2011-Births_teen_hsp_2011;
-	Gap_births_teen_asn_2011=cPct_births_teen_wht_2011/100*Births_asian_2011-Births_teen_asn_2011;
-	Gap_births_teen_oth_2011=cPct_births_teen_wht_2011/100*Births_oth_rac_2011-Births_teen_oth_2011;
+	Gap_births_teen_blk_2011=cPct_births_teen_wht_2011/100*Births_w_age_blk_2011-Births_teen_blk_2011;
+	Gap_births_teen_hsp_2011=cPct_births_teen_wht_2011/100*Births_w_age_hsp_2011-Births_teen_hsp_2011;
+	Gap_births_teen_asn_2011=cPct_births_teen_wht_2011/100*Births_w_age_asn_2011-Births_teen_asn_2011;
+	Gap_births_teen_oth_2011=cPct_births_teen_wht_2011/100*Births_w_age_oth_2011-Births_teen_oth_2011;
 
 	array birthpcts {12}
 		Pct_births_low_wt_blk_2011
@@ -118,7 +118,7 @@ data equity.city_births_gaps (drop=_make_profile b);
 		;
 run;
 
-proc transpose data=equity.city_births_gaps out=equity.profile_tabs_births_wd12; 
+proc transpose data=equity.births_gaps_allgeo out=equity.profile_tabs_births_wd12 (label="Birth Indicators Output for Equity Profile City & Ward, 2011"); 
 var Births_total_2011
 	Pct_births_w_race_2011 
 
@@ -158,7 +158,7 @@ var Births_total_2011
 id ward2012; 
 run; 
 
-proc transpose data=equity.city_births_gaps out=equity.profile_tabs_births_cltr00; 
+proc transpose data=equity.births_gaps_allgeo out=equity.profile_tabs_births_cltr00 (label="Birth Indicators Output for Equity Profile City & Neighborhood Cluster, 2011"); 
 var Births_total_2011
 	Pct_births_w_race_2011 
 
@@ -222,9 +222,9 @@ proc export data=equity.profile_tabs_births_cltr00
 
 %Dc_update_meta_file(
       ds_lib=Equity,
-      ds_name=profile_tabs_births_wd12,
+      ds_name=births_gaps_allgeo,
 	  creator=L Hendey and S Diby,
-      creator_process=profile_tabs_births_wd12.sas,
+      creator_process=Equity_Births_profile_transpose.sas,
       restrictions=None
       )
 
@@ -232,6 +232,14 @@ proc export data=equity.profile_tabs_births_cltr00
       ds_lib=Equity,
       ds_name=profile_tabs_births_wd12,
 	  creator=L Hendey and S Diby,
-      creator_process=profile_tabs_births_cltr00.sas,
+      creator_process=Equity_Births_profile_transpose.sas,
+      restrictions=None
+      )
+
+%Dc_update_meta_file(
+      ds_lib=Equity,
+      ds_name=profile_tabs_births_cltr00,
+	  creator=L Hendey and S Diby,
+      creator_process=Equity_Births_profile_transpose.sas,
       restrictions=None
       )

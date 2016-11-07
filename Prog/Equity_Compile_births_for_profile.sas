@@ -117,7 +117,7 @@
 
   run;
     
-  data equity.profile_births&geosuf.;
+  data equity.profile_births&geosuf. (label="Birth Data Compiled for Equity Profile for &geo., 2011");
 	set profile_births&geosuf._B; 
 
 		keep &geo _make_profile
@@ -160,7 +160,7 @@
  run;
 
 
- %File_info( data=Equity.profile_births&geosuf, printobs=0, contents=n )
+ %File_info( data=Equity.profile_births&geosuf, printobs=0, contents=y )
  
  %end;
 
@@ -170,7 +170,7 @@
       ds_lib=Equity,
       ds_name=Equity_profile_births&geosuf,
 	  creator=L Hendey and S Diby,
-      creator_process=Equity_profile_births&geosuf.sas,
+      creator_process=Equity_Compile_Births_for_profile.sas,
       restrictions=None
       )
 
