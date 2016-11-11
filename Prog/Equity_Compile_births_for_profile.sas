@@ -48,7 +48,7 @@
    
   run;
 
-  data profile_births&geosuf._B (compress=no); 
+  data profile_births&geosuf._B (compress=no label="DC Birth Indicators by Race/Ethnicity, &geo 2011"); 
   
     set profile_births&geosuf._C;
     

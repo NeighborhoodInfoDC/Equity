@@ -21,8 +21,8 @@
 
 
 data city_ward;
-	set equity.equity_profile_city
-			equity.equity_profile_wd12;
+	set equity.profile_city
+			equity.profile_wd12;
 
 			if city=1 then ward2012="0";
 			_make_profile=1;
@@ -33,7 +33,7 @@ run;
 
 
 data whiterates;
-	set equity.equity_profile_city 
+	set equity.profile_city 
 	(keep= _make_profile
 		   			Pct25andOverWoutHSW: Pct25andOverWHSW: Pct25andOverWSCW:
            PctPoorPersonsW: PctPoorChildrenW:
@@ -317,8 +317,9 @@ data equity.profile_tabs_ACS_suppress;
 
 	%suppress_gaps;
 	%suppress_gaps_fb;
+	%suppress_gaps_negative;
 
-	
+
 label
 		PctBlackNonHispBridge_m_2010_14 = "% black non-Hispanic, MOE, 2010-14 "
 		PctWhiteNonHispBridge_m_2010_14 = "% white non-Hispanic, MOE, 2010-14 "
@@ -612,11 +613,10 @@ label
 run;
 
 
-proc transpose data=equity.profile_tabs_ACS_suppress out=equity.profile_tabs_ACS; 
-	var PctBlackNonHispBridge: PctWhiteNonHispBridge:
-		PctHisp: PctAsnPINonHispBridge: PctOtherRace: PctOthRace:
-		PctAloneB: PctAloneW: PctAloneH: PctAloneA_:
-		PctAloneI_: PctAloneO: PctAloneM: PctAloneIOM: PctAloneAIOM:
+proc transpose data=equity.profile_tabs_ACS_suppress out=equity.profile_tabs_ACS (label="DC Equity Indicators and Gap Calculations for Equity Profile City & Ward, 2010-14"); 
+	var PctWhiteNonHispBridge: PctHisp:
+		PctAloneB: PctAloneW: PctAloneA_:
+		PctAloneI_: PctAloneO: PctAloneM: PctAloneAIOM:
 
 		PctForeignBorn_: PctNativeBorn: 
 
@@ -651,13 +651,11 @@ proc transpose data=equity.profile_tabs_ACS_suppress out=equity.profile_tabs_ACS
 		Pct25andOverWoutHSFB:
 		Pct25andOverWoutHSNB:
 
-		Gap25andOverWoutHSW:
 		Gap25andOverWoutHSB:
 		Gap25andOverWoutHSH:
 		Gap25andOverWoutHSAIOM:
 		Gap25andOverWoutHSFB:
 		Gap25andOverWoutHSNB:
-
 
 		Pct25andOverWHS_:
 		Pct25andOverWHSW:
@@ -667,7 +665,6 @@ proc transpose data=equity.profile_tabs_ACS_suppress out=equity.profile_tabs_ACS
 		Pct25andOverWHSFB:
 		Pct25andOverWHSNB:
 
-		Gap25andOverWHSW:
 		Gap25andOverWHSB:
 		Gap25andOverWHSH:
 		Gap25andOverWHSAIOM:
@@ -682,7 +679,6 @@ proc transpose data=equity.profile_tabs_ACS_suppress out=equity.profile_tabs_ACS
 		Pct25andOverWSCFB:
 		Pct25andOverWSCNB:
 
-		Gap25andOverWSCW:
 		Gap25andOverWSCB:
 		Gap25andOverWSCH:
 		Gap25andOverWSCAIOM:
@@ -693,12 +689,6 @@ proc transpose data=equity.profile_tabs_ACS_suppress out=equity.profile_tabs_ACS
 		AvgHshldIncAdjW:
 		AvgHshldIncAdjB:
 		AvgHshldIncAdjH:
-		AvgHshldIncAdjAIOM:
-
-		GapAvgHshldIncAdjW:
-		GapAvgHshldIncAdjB:
-		GapAvgHshldIncAdjH:
-		GapAvgHshldIncAdjAIOM:
 
 		PctFamilyGT200000_:
 		PctFamilyGT200000W:
@@ -706,18 +696,12 @@ proc transpose data=equity.profile_tabs_ACS_suppress out=equity.profile_tabs_ACS
 		PctFamilyGT200000H:
 		PctFamilyGT200000AIOM:
 
-		GapFamilyGT200000W:
-		GapFamilyGT200000B:
-		GapFamilyGT200000H:
-		GapFamilyGT200000AIOM:
-
 		PctFamilyLT75000_:
 		PctFamilyLT75000W:
 		PctFamilyLT75000B:
 		PctFamilyLT75000H:
 		PctFamilyLT75000AIOM:
 
-		GapFamilyLT75000W:
 		GapFamilyLT75000B:
 		GapFamilyLT75000H:
 		GapFamilyLT75000AIOM:
@@ -729,7 +713,6 @@ proc transpose data=equity.profile_tabs_ACS_suppress out=equity.profile_tabs_ACS
 		PctPoorPersonsAIOM:
 		PctPoorPersonsFB:
 
-		GapPoorPersonsW:
 		GapPoorPersonsB:
 		GapPoorPersonsH:
 		GapPoorPersonsAIOM:
@@ -747,7 +730,6 @@ proc transpose data=equity.profile_tabs_ACS_suppress out=equity.profile_tabs_ACS
 		Pct16andOverEmployH:
 		Pct16andOverEmployAIOM:
 
-		Gap16andOverEmployW:
 		Gap16andOverEmployB:
 		Gap16andOverEmployH:
 		Gap16andOverEmployAIOM:
@@ -758,7 +740,6 @@ proc transpose data=equity.profile_tabs_ACS_suppress out=equity.profile_tabs_ACS
 		PctEmployed16to64H:
 		PctEmployed16to64AIOM:
 
-		GapEmployed16to64W:
 		GapEmployed16to64B:
 		GapEmployed16to64H:
 		GapEmployed16to64AIOM:
@@ -769,7 +750,6 @@ proc transpose data=equity.profile_tabs_ACS_suppress out=equity.profile_tabs_ACS
 		PctUnemployedH:
 		PctUnemployedAIOM:
 
-		GapUnemployedW:
 		GapUnemployedB:
 		GapUnemployedH:
 		GapUnemployedAIOM:
@@ -780,7 +760,6 @@ proc transpose data=equity.profile_tabs_ACS_suppress out=equity.profile_tabs_ACS
 		Pct16andOverWagesH:
 		Pct16andOverWagesAIOM:
 
-		Gap16andOverWagesW:
 		Gap16andOverWagesB:
 		Gap16andOverWagesH:
 		Gap16andOverWagesAIOM:
@@ -791,7 +770,6 @@ proc transpose data=equity.profile_tabs_ACS_suppress out=equity.profile_tabs_ACS
 		Pct16andOverWorkFTH:
 		Pct16andOverWorkFTAIOM:
 
-		Gap16andOverWorkFTW:
 		Gap16andOverWorkFTB:
 		Gap16andOverWorkFTH:
 		Gap16andOverWorkFTAIOM:
@@ -802,7 +780,6 @@ proc transpose data=equity.profile_tabs_ACS_suppress out=equity.profile_tabs_ACS
 		PctWorkFTLT35kH:
 		PctWorkFTLT35kAIOM:
 
-		GapWorkFTLT35kW:
 		GapWorkFTLT35kB:
 		GapWorkFTLT35kH:
 		GapWorkFTLT35kAIOM:
@@ -813,7 +790,6 @@ proc transpose data=equity.profile_tabs_ACS_suppress out=equity.profile_tabs_ACS
 		PctWorkFTLT75kH:
 		PctWorkFTLT75kAIOM:
 
-		GapWorkFTLT75kW:
 		GapWorkFTLT75kB:
 		GapWorkFTLT75kH:
 		GapWorkFTLT75kAIOM:
@@ -824,21 +800,11 @@ proc transpose data=equity.profile_tabs_ACS_suppress out=equity.profile_tabs_ACS
 		PctEmployedMngmtH:
 		PctEmployedMngmtAIOM:
 
-		GapEmployedMngmtW:
-		GapEmployedMngmtB:
-		GapEmployedMngmtH:
-		GapEmployedMngmtAIOM:
-
 		PctEmployedServ_:
 		PctEmployedServW:
 		PctEmployedServB:
 		PctEmployedServH:
 		PctEmployedServAIOM:
-
-		GapEmployedServW:
-		GapEmployedServB:
-		GapEmployedServH:
-		GapEmployedServAIOM:
 
 		PctEmployedSales_:
 		PctEmployedSalesW:
@@ -846,21 +812,11 @@ proc transpose data=equity.profile_tabs_ACS_suppress out=equity.profile_tabs_ACS
 		PctEmployedSalesH:
 		PctEmployedSalesAIOM:
 
-		GapEmployedSalesW:
-		GapEmployedSalesB:
-		GapEmployedSalesH:
-		GapEmployedSalesAIOM:
-
 		PctEmployedNatRes_:
 		PctEmployedNatResW:
 		PctEmployedNatResB:
 		PctEmployedNatResH:
 		PctEmployedNatResAIOM:
-
-		GapEmployedNatResW:
-		GapEmployedNatResB:
-		GapEmployedNatResH:
-		GapEmployedNatResAIOM:
 
 		PctEmployedProd_:
 		PctEmployedProdW:
@@ -868,18 +824,12 @@ proc transpose data=equity.profile_tabs_ACS_suppress out=equity.profile_tabs_ACS
 		PctEmployedProdH:
 		PctEmployedProdAIOM:
 
-		GapEmployedProdW:
-		GapEmployedProdB:
-		GapEmployedProdH:
-		GapEmployedProdAIOM:
-
 		PctOwnerOccupiedHU_:
 		PctOwnerOccupiedHUW:
 		PctOwnerOccupiedHUB:
 		PctOwnerOccupiedHUH:
 		PctOwnerOccupiedHUAIOM:
 
-		GapOwnerOccupiedHUW:
 		GapOwnerOccupiedHUB:
 		GapOwnerOccupiedHUH:
 		GapOwnerOccupiedHUAIOM:
