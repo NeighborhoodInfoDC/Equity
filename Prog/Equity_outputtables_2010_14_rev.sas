@@ -3,8 +3,8 @@
  Program:  Equity_outputtables_2010_14_rev.sas
  Library:  Equity
  Project:  Racial Equity Profile
- Author:   G. MacDonald
- Created:  04/24/2013 
+ Author:   M. Woluchem
+ Created:  9/2/2016
  Version:  SAS 9.2
  Environment:  Windows
  
@@ -17,7 +17,7 @@
 	08/30/2013 EO altered tables for Demographics based on HUD affordability levels.
 	07/25/2016 MW Updated for ACS 2010-14, Equity, and SAS1 Server
 	08/20/2016 LH Revised to remove ODS export tables and create datasets from proc tabulate output. 
-	
+	09/02/2016 MW Added code to calculate MOEs.
 **************************************************************************/
 
 %include "L:\SAS\Inc\StdLocal.sas";
@@ -3341,6 +3341,18 @@ data aff_for3d_stdincl;
 		drop wgtfreq mean;
 		mergeflag=1; 
 
+	mPctRentCostB=(SEPctRentCostB*100)*1.645;
+	mPctRentSevCostB=(SEPctRentSevCostB*100)*1.645;
+	mPct25to64yearsEmp=(SEPct25to64yearsEmp*100)*1.645;
+	mPct25to64yearsUnEmp=(SEPct25to64yearsUnEmp*100)*1.645;
+	mPct25to64yearsOutLF=(SEPct25to64yearsOutLF*100)*1.645;
+	mPctOwnersOweMort=(SEPctOwnersOweMort*100)*1.645;
+	mPctOwnersNoMort=(SEPctOwnersNoMort*100)*1.645;
+	mPctRentUnitsELI=(SEPctRentUnitsELI*100)*1.645;
+	mPctRentUnitsVLI=(SEPctRentUnitsVLI*100)*1.645;
+	mPctRentUnitsLI=(SEPctRentUnitsLI*100)*1.645;
+	mPctRentUnitsMHI=(SEPctRentUnitsMHI*100)*1.645;
+
 		run; 
 
 data whiterates;
@@ -3349,25 +3361,15 @@ data whiterates;
 	run; 
 
 %rename(whiterates);
-run; 
 
 proc contents data=whiterates_new;
 run;
 
-data merged_data_WR (drop=cNum: cPct: cPop: cSD: cSE: mergeflag);
+data merged_data_WR (drop=cNum: cPct: cPop: cSD: cSE: cmPct: mergeflag);
 	merge merged_data whiterates_new (drop=cPUMA cCategory rename=(cmergeflag=mergeflag));
 	by mergeflag;
-	mPctRentCostB=(SEPctRentCostB*100)/1.645;
-	mPctRentSevCostB=(SEPctRentSevCostB*100)/1.645;
-	mPct25to64yearsEmp=(SEPct25to64yearsEmp*100)/1.645;
-	mPct25to64yearsUnEmp=(SEPct25to64yearsUnEmp*100)/1.645;
-	mPct25to64yearsOutLF=(SEPct25to64yearsOutLF*100)/1.645;
-	mPctOwnersOweMort=(SEPctOwnersOweMort*100)/1.645;
-	mPctOwnersNoMort=(SEPctOwnersNoMort*100)/1.645;
-	mPctRentUnitsELI=(SEPctRentUnitsELI*100)/1.645;
-	mPctRentUnitsVLI=(SEPctRentUnitsVLI*100)/1.645;
-	mPctRentUnitsLI=(SEPctRentUnitsLI*100)/1.645;
-	mPctRentUnitsMHI=(SEPctRentUnitsMHI*100)/1.645;
+
+	if category not in("Total", "Non-Hispanic White" "White Alone") then do; 
 	GapRentCostB=cPctRentCostB/100*NumRenters-NumRentCostB;
 	GapRentSevCostB=cPctRentSevCostB/100*NumRenters-NumRentSevCostB;
 	GapRentUnitsELI=cPctRentUnitsELI/100*NumRenters-NumRentUnitsELI;
@@ -3379,6 +3381,9 @@ data merged_data_WR (drop=cNum: cPct: cPop: cSD: cSE: mergeflag);
 	GapPop25to64yearsEmp=cPct25to64yearsEmp/100*Pop25to64Years-Pop25to64yearsEmp;
 	GapPop25to64yearsOutLF=cPct25to64yearsOutLF/100*Pop25to64Years-Pop25to64yearsOutLF;
 	GapPop25to64yearsUnEmp=cPct25to64yearsUnEmp/100*Pop25to64Years-Pop25to64yearsUnEmp;
+	end;
+	
+
 	run;
 
 proc print data=merged_data_wr;
@@ -3475,13 +3480,13 @@ if _name_="PctRentUnitsMHI" then order=58;
 if _name_="mPctRentUnitsMHI" then order=59;
 if _name_="GapRentUnitsMHI" then order=60;
 
-if _name_ in ("SEPct25to64yearsOutLF", "SE25to64yearsUnEmp", "SEPct25to64yearsEmp", "SEPctOwnersNoMort", "SEPctOwnersOweMort",
+if _name_ in ("SEPct25to64yearsOutLF","SEPct25to64yearsUnEmp", "SE25to64yearsUnEmp", "SEPct25to64yearsEmp", "SEPctOwnersNoMort", "SEPctOwnersOweMort",
 "SEPctRentCostB",
 "SEPctRentUnitsELI",
 "SEPctRentUnitsLI",
 "SEPctRentUnitsMHI",
 "SEPctRentUnitsVLI",
-"SEPctRentSevCostB") then delete;
+"SEPctRentSevCostB" ) then delete;
 
 label PUMA100 = "District of Columbia";
 
