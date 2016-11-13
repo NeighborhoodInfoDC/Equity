@@ -3369,7 +3369,7 @@ data merged_data_WR (drop=cNum: cPct: cPop: cSD: cSE: cmPct: mergeflag);
 	merge merged_data whiterates_new (drop=cPUMA cCategory rename=(cmergeflag=mergeflag));
 	by mergeflag;
 
-	if category not in("Total", "Non-Hispanic White" "White Alone") then do; 
+	if category in(3,4,5,6) then do; 
 	GapRentCostB=cPctRentCostB/100*NumRenters-NumRentCostB;
 	GapRentSevCostB=cPctRentSevCostB/100*NumRenters-NumRentSevCostB;
 	GapRentUnitsELI=cPctRentUnitsELI/100*NumRenters-NumRentUnitsELI;
