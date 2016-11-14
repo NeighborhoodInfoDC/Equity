@@ -3502,3 +3502,23 @@ proc export data=equity.profile_tabs_ipums
 	outfile="D:\DCDATA\Libraries\Equity\Prog\profile_tabs_ipums.csv"
 	dbms=csv replace;
 	run;
+
+
+	*for values in text of profile - percent of rental units affordable at VLI or below; 
+
+	
+data aff_index2;	
+set aff_index;
+
+if  aff_unit IN(1, 2) then aff_VLIE=1;
+else aff_VLIE=0;
+run;
+
+proc sort data = aff_index2;
+by strata cluster;
+run;
+
+*StdDev on Pct Affordability Level (VLI AND ELI by Puma Only)*;
+%survey_means (input=aff_index2, where=%str(subpopvar=1 ), weight=hhwt, 
+domain=subpopvar*puma, var=aff_VLIE, out=test2);run;
+
