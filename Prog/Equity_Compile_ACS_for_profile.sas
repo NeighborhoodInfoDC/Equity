@@ -40,7 +40,7 @@
   %let geosuf = %sysfunc( putc( %upcase( &geo ), $geosuf. ) );
   %let geoafmt = %sysfunc( putc( %upcase( &geo ), $geoafmt. ) );
 
-  data profile&geosuf._A (compress=no);  
+  data profile_acs&geosuf._A (compress=no);  
   	merge  
       equity.Acs_2010_14_dc_sum_tr&geosuf
         (keep=&geo TotPop: mTotPop: 
@@ -118,13 +118,13 @@
   proc summary data=Nbr_profile&geosuf._A;
     var _numeric_;
     class &geo;
-    output out=Nbr_profile&geosuf._B (compress=no) mean=;
+    output out=Nbr_profile_acs&geosuf._B (compress=no) mean=;
 
   run;*/
 
-  data equity.profile&geosuf (compress=no label="DC Equity Indicators by Race/Ethnicity, 2010-14, &geo."); 
+  data equity.profile_acs&geosuf (compress=no label="DC Equity Indicators by Race/Ethnicity, 2010-14, &geo."); 
   
-    set profile&geosuf._A;
+    set profile_acs&geosuf._A;
     
     ** Population **;
     
@@ -634,7 +634,7 @@
  
   run;
     
-  %File_info( data=Equity.profile&geosuf, printobs=0, contents=n )
+  %File_info( data=Equity.profile_acs&geosuf, printobs=0, contents=n )
   
 %end; 
   
@@ -642,9 +642,9 @@
 
 %Dc_update_meta_file(
       ds_lib=Equity,
-      ds_name=profile&geosuf,
+      ds_name=profile_acs&geosuf,
 	  creator=L Hendey and S Diby,
-      creator_process=Equity_profile&geosuf.sas,
+      creator_process=Equity_Compile_ACS_for_profile&geosuf.sas,
       restrictions=None
       )
 

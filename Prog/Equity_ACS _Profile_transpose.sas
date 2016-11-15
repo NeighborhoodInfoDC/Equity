@@ -10,6 +10,8 @@
  Description:  Transposes calculated indicators for Equity profiles 
 			   and merges calculated statistics for ACS data at different geographies. 
 **************************************************************************/
+options symbolgen;
+
 %include "L:\SAS\Inc\StdLocal.sas";
 
 ** Define libraries **;
@@ -21,8 +23,8 @@
 
 
 data city_ward;
-	set equity.profile_city
-			equity.profile_wd12;
+	set equity.profile_acs_city
+			equity.profile_acs_wd12;
 
 			if city=1 then ward2012="0";
 			_make_profile=1;
@@ -33,9 +35,9 @@ run;
 
 
 data whiterates;
-	set equity.profile_city 
+	set equity.profile_acs_city 
 	(keep= _make_profile
-		   			Pct25andOverWoutHSW: Pct25andOverWHSW: Pct25andOverWSCW:
+		   Pct25andOverWoutHSW: Pct25andOverWHSW: Pct25andOverWSCW:
            PctPoorPersonsW: PctPoorChildrenW:
            PctFamilyLT75000W: PctFamilyGT200000W:
            AvgHshldIncAdjW: PctUnemployedW: 
@@ -177,7 +179,7 @@ data city_ward_WR (drop=_make_profile);
 run;
 
 
-data equity.profile_tabs_ACS_suppress;
+data equity.profile_tabs_ACS_suppress (drop=cPct: cAvg:);
 	set city_ward_WR;
 
 	array t_est {21} 
@@ -352,10 +354,10 @@ data equity.profile_tabs_ACS_suppress;
 
 	  	do z=1 to 21; 
 
-			if e_gap&race.{x}=.s then f_gap&race.{z}= e_gap&race.{x};
-			else if p_gap&race.{p}=a. then f_gap&race.{z}=p_gap&race.{p};
-			else if n_gap&race.{n}=a. then f_gap&race.{z}=p_gap&race.{n};
-			else f_gap&race.{z} = e_gap&race.{x};
+			if e_gap&race.{z}=.s then f_gap&race.{z}= e_gap&race.{z};
+			else if p_gap&race.{z}=a. then f_gap&race.{z}=p_gap&race.{z};
+			else if n_gap&race.{z}=a. then f_gap&race.{z}=p_gap&race.{z};
+			else f_gap&race.{z} = e_gap&race.{z};
 		end;
 
 	%end;

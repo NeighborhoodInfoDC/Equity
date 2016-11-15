@@ -34,33 +34,33 @@
 		;
 
 	array y_cv {7} 
-		cvPct25andOverWoutHSW_2010_14
-		cvPct25andOverWoutHSW_2010_14
-		cvPct25andOverWHSW_2010_14
-		cvPct25andOverWHSW_2010_14
-		cvPct25andOverWSCW_2010_14
-		cvPct25andOverWSCW_2010_14
-		cvPctPoorPersonsW_2010_14
+		wfbcvPct25andOverWoutHSW_2010_14
+		wfbcvPct25andOverWoutHSW_2010_14
+		wfbcvPct25andOverWHSW_2010_14
+		wfbcvPct25andOverWHSW_2010_14
+		wfbcvPct25andOverWSCW_2010_14
+		wfbcvPct25andOverWSCW_2010_14
+		wfbcvPctPoorPersonsW_2010_14
 		;
 
 	array y_upper {7} 		
-		uPct25andOverWoutHSW_2010_14
-		uPct25andOverWoutHSW_2010_14
-		uPct25andOverWHSW_2010_14
-		uPct25andOverWHSW_2010_14
-		uPct25andOverWSCW_2010_14
-		uPct25andOverWSCW_2010_14
-		uPctPoorPersonsW_2010_14
+		wfbuPct25andOverWoutHSW_2010_14
+		wfbuPct25andOverWoutHSW_2010_14
+		wfbuPct25andOverWHSW_2010_14
+		wfbuPct25andOverWHSW_2010_14
+		wfbuPct25andOverWSCW_2010_14
+		wfbuPct25andOverWSCW_2010_14
+		wfbuPctPoorPersonsW_2010_14
 		;
 
 	array y_lower {7} 		
-		lPct25andOverWoutHSW_2010_14
-		lPct25andOverWoutHSW_2010_14
-		lPct25andOverWHSW_2010_14
-		lPct25andOverWHSW_2010_14
-		lPct25andOverWSCW_2010_14
-		lPct25andOverWSCW_2010_14
-		lPctPoorPersonsW_2010_14
+		wfblPct25andOverWoutHSW_2010_14
+		wfblPct25andOverWoutHSW_2010_14
+		wfblPct25andOverWHSW_2010_14
+		wfblPct25andOverWHSW_2010_14
+		wfblPct25andOverWSCW_2010_14
+		wfblPct25andOverWSCW_2010_14
+		wfblPctPoorPersonsW_2010_14
 		;
 
 	array n_gap {7} 		
