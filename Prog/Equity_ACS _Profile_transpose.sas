@@ -315,10 +315,52 @@ data equity.profile_tabs_ACS_suppress;
 	%suppress_vars;
 	%suppress_vars_fb;
 
+	%suppress_gaps_negative;
 	%suppress_gaps;
 	%suppress_gaps_fb;
-	%suppress_gaps_negative;
 
+	%macro suppression;
+
+	%do r=1 %to 4;
+
+	%let race=%scan(&racelist.,&r.," ");
+	%let name=%scan(&racename.,&r.," ");
+
+	array f_gap&race. {21} 
+		Gap25andOverWoutHS&race._2010_14
+		Gap25andOverWHS&race._2010_14
+		Gap25andOverWSC&race._2010_14
+		GapAvgHshldIncAdj&race._2010_14
+		GapFamilyGT200000&race._2010_14
+		GapFamilyLT75000&race._2010_14
+		GapPoorPersons&race._2010_14
+		GapPoorChildren&race._2010_14
+		Gap16andOverEmploy&race._2010_14
+		GapEmployed16to64&race._2010_14
+		GapUnemployed&race._2010_14
+		Gap16andOverWages&race._2010_14
+		Gap16andOverWorkFT&race._2010_14
+		GapWorkFTLT35k&race._2010_14
+		GapWorkFTLT75k&race._2010_14
+		GapEmployedMngmt&race._2010_14
+		GapEmployedServ&race._2010_14
+		GapEmployedSales&race._2010_14
+		GapEmployedNatRes&race._2010_14
+		GapEmployedProd&race._2010_14
+		GapOwnerOccupiedHU&race._2010_14
+		;
+
+	  	do z=1 to 21; 
+
+			if e_gap&race.{x}=.s then f_gap&race.{z}= e_gap&race.{x};
+			else if p_gap&race.{p}=a. then f_gap&race.{z}=p_gap&race.{p};
+			else if n_gap&race.{n}=a. then f_gap&race.{z}=p_gap&race.{n};
+			else f_gap&race.{z} = e_gap&race.{x};
+		end;
+
+	%end;
+
+	%mend; 
 
 label
 		PctBlackNonHispBridge_m_2010_14 = "% black non-Hispanic, MOE, 2010-14 "
