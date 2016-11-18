@@ -62,43 +62,29 @@ data equity.births_gaps_allgeo (label="Birth Gaps for All Geographies, 2011" dro
 	Gap_births_teen_asn_2011=cPct_births_teen_wht_2011/100*Births_w_age_asn_2011-Births_teen_asn_2011;
 	Gap_births_teen_oth_2011=cPct_births_teen_wht_2011/100*Births_w_age_oth_2011-Births_teen_oth_2011;
 
-	array birthpcts {12}
-		Pct_births_low_wt_blk_2011
-		Pct_births_low_wt_hsp_2011 
-		Pct_births_low_wt_asn_2011 
-		Pct_births_low_wt_oth_2011 
 
+/* 1) Suppressing gaps where estimates are suppressed: see Equity_Compile_births_for_profile.sas*/
+
+	array birthpcts_pos {4}
 		Pct_births_prenat_adeq_blk_2011 
 		Pct_births_prenat_adeq_hsp_2011 
 		Pct_births_prenat_adeq_asn_2011 
 		Pct_births_prenat_adeq_oth_2011 
-
-		Pct_births_teen_blk_2011
-		Pct_births_teen_hsp_2011 
-		Pct_births_teen_asn_2011 
-		Pct_births_teen_oth_2011
 		;
 
-	array birthgaps {12}
-		Gap_births_low_wt_blk_2011
-		Gap_births_low_wt_hsp_2011
-		Gap_births_low_wt_asn_2011
-		Gap_births_low_wt_oth_2011
-
+	array birthgaps_pos {4}
 		Gap_births_prenat_adeq_blk_2011
 		Gap_births_prenat_adeq_hsp_2011
 		Gap_births_prenat_adeq_asn_2011
 		Gap_births_prenat_adeq_oth_2011
-
-		Gap_births_teen_blk_2011
-		Gap_births_teen_hsp_2011
-		Gap_births_teen_asn_2011
-		Gap_births_teen_oth_2011
 		;
 
-	do b=1 to 12;
-		if birthpcts{b}=.s then birthgaps{b}=.s;
-	end;
+		do a=1 to 4;
+			if birthpcts_pos{a}=.s then birthgaps_pos{a}=.s;
+		end;
+
+/* 2) Suppressing gaps that meet or exceed the white citywide rate;
+	  specifically, suppressing negative gaps where they should be positive*/
 
 	array pos_gap {4} 
 		Gap_births_prenat_adeq_blk_2011
@@ -107,9 +93,63 @@ data equity.births_gaps_allgeo (label="Birth Gaps for All Geographies, 2011" dro
 		Gap_births_prenat_adeq_oth_2011
 		;
 
-	do p=1 to 4; 
-		if pos_gap{p} < 0 then pos_gap{p} = .a; 
-      	end;
+		do p=1 to 4; 
+			if pos_gap{p} < 0 then pos_gap{p} = .a; 
+	      	end;
+
+/* 3) Prioritizing suppression by estimate over negative/positive suppression*/
+
+	array g_gap_pos {4}
+		Gap_births_prenat_adeq_blk_2011
+		Gap_births_prenat_adeq_hsp_2011
+		Gap_births_prenat_adeq_asn_2011
+		Gap_births_prenat_adeq_oth_2011
+		;
+
+		do y=1 to 4; 
+			if birthgaps_pos{y}=.s then g_gap_pos{y}= birthgaps_pos{y}; 
+			else if pos_gap{y}=.a then g_gap_pos{y}=pos_gap{y};
+			else g_gap_pos{y} = birthgaps_pos{y};
+	      	end;
+
+
+
+/* Repeating 1-3 to suppress positive gaps where they should be negative*/
+
+
+/* 1) Suppressing gaps where estimates are suppressed: see Equity_Compile_births_for_profile.sas*/
+
+	array birthpcts_neg {8}
+		Pct_births_low_wt_blk_2011
+		Pct_births_low_wt_hsp_2011 
+		Pct_births_low_wt_asn_2011 
+		Pct_births_low_wt_oth_2011 
+
+		Pct_births_teen_blk_2011
+		Pct_births_teen_hsp_2011 
+		Pct_births_teen_asn_2011 
+		Pct_births_teen_oth_2011
+		;
+
+	array birthgaps_neg {8}
+		Gap_births_low_wt_blk_2011
+		Gap_births_low_wt_hsp_2011
+		Gap_births_low_wt_asn_2011
+		Gap_births_low_wt_oth_2011
+
+		Gap_births_teen_blk_2011
+		Gap_births_teen_hsp_2011
+		Gap_births_teen_asn_2011
+		Gap_births_teen_oth_2011
+		;
+
+		do b=1 to 8;
+			if birthpcts_neg{b}=.s then birthgaps_neg{b}=.s;
+		end;
+
+
+/* 2) Suppressing gaps that meet or exceed the white citywide rate;
+	  specifically, suppressing negative gaps where they should be positive*/
 
 	array neg_gap {8} 
 		Gap_births_low_wt_blk_2011
@@ -120,37 +160,30 @@ data equity.births_gaps_allgeo (label="Birth Gaps for All Geographies, 2011" dro
 		Gap_births_teen_hsp_2011
 		Gap_births_teen_asn_2011
 		Gap_births_teen_oth_2011
-      		;	
+      	;	
 		
-	do n=1 to 8; 
-		if neg_gap{n} > 0 then neg_gap{n} = .a; 
-	end;
+		do n=1 to 8; 
+			if neg_gap{n} > 0 then neg_gap{n} = .a; 
+		end;
 
+/* 3) Prioritizing suppression by estimate over negative/positive suppression*/
 
-	array g_gap {12} 
+	array g_gap_neg {8} 
 		Gap_births_low_wt_blk_2011
 		Gap_births_low_wt_hsp_2011
 		Gap_births_low_wt_asn_2011
-		Gap_births_low_wt_oth_2011
-
-		Gap_births_prenat_adeq_blk_2011
-		Gap_births_prenat_adeq_hsp_2011
-		Gap_births_prenat_adeq_asn_2011
-		Gap_births_prenat_adeq_oth_2011
-
+		Gap_births_low_wt_oth_2011				
 		Gap_births_teen_blk_2011
 		Gap_births_teen_hsp_2011
 		Gap_births_teen_asn_2011
 		Gap_births_teen_oth_2011
-		;
-
-	  	do y=1 to 12; 
-
-			if birthgaps{y}=.s then g_gap{y}= birthgaps{y};
-			else if pos_gap{y}=.a then g_gap{y}=pos_gap{y};
-			else if neg_gap{y}=.a then g_gap{y}=pos_gap{y};
-			else g_gap{y} = birthgaps{y};
-		end;
+      	;	
+		
+		do x=1 to 8; 
+			if birthgaps_neg{x}=.s then g_gap_neg{x}= birthgaps_neg{x}; 
+			else if neg_gap{x}=.a then g_gap_neg{x}=neg_gap{x};
+			else g_gap_neg{x} = birthgaps_neg{x};
+	    end;
 
 	
 	label
