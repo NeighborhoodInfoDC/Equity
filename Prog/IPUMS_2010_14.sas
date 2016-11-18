@@ -323,11 +323,11 @@ proc freq data=Equity.Acs_tables_ipums(where=(aff_unit=. and raceB=1 and city=72
 tables aff_unit*rent*count/list missing;
 run;
 
-proc freq data=equity.acs_tables;
+proc freq data=equity.Acs_tables_ipums;
 tables race*hispan*racew*raceh*racei*raceb*racea*raceo*racem*raceiom*raceaiom/list missing;
 run;
 
-proc freq data=equity.acs_tables;
+proc freq data=equity.Acs_tables_ipums ;
 tables citizen*foreign/list missing;
 tables mortgage*ownfreeclear*ownmortgage/list missing;
 tables age25to64*employed*emp25to64/list missing;
@@ -339,7 +339,7 @@ tables empstat*age25to64*employed*emp25to64/list missing;
 weight perwt;
 run;
 
-proc freq data=equity.acs_tables(where=(city=7230 and 25<= age<=64));
+proc freq data=equity.Acs_tables_ipums (where=(city=7230 and 25<= age<=64));
 tables empstat*employed/list missing;
 weight perwt;
 run;

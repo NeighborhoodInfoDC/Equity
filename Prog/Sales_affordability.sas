@@ -218,6 +218,16 @@ tractlabel="Census Tract Label"
 
 	
 	run;
+	
+	** Register metadata **;
+
+%Dc_update_meta_file(
+      ds_lib=Equity,
+      ds_name=sales_afford_all,
+	  creator=M. Woluchem,
+      creator_process=Sales_Affordability.sas,
+      restrictions=None
+      )
 
 data wardonly;
 	set equity.sales_afford_all (where=(ward2012~=" ") keep=ward2012 pct:); 
