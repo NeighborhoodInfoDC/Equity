@@ -100,6 +100,64 @@ data equity.births_gaps_allgeo (label="Birth Gaps for All Geographies, 2011" dro
 		if birthpcts{b}=.s then birthgaps{b}=.s;
 	end;
 
+	array pos_gap {4} 
+		Gap_births_prenat_adeq_blk_2011
+		Gap_births_prenat_adeq_hsp_2011
+		Gap_births_prenat_adeq_asn_2011
+		Gap_births_prenat_adeq_oth_2011
+		;
+
+	do p=1 to 4; 
+		if pos_gap{p} < 0 then pps_gap{p} = .a; 
+      	end;
+
+	array neg_gap {8} 
+		Gap_births_low_wt_blk_2011
+		Gap_births_low_wt_hsp_2011
+		Gap_births_low_wt_asn_2011
+		Gap_births_low_wt_oth_2011				
+		Gap_births_teen_blk_2011
+		Gap_births_teen_hsp_2011
+		Gap_births_teen_asn_2011
+		Gap_births_teen_oth_2011
+      		;	
+		
+	do n=1 to 8; 
+		if neg_gap{n} > 0 then neg_gap{n} = .a; 
+	end;
+
+	%macro suppression_births;
+
+	array g_gap {12} 
+		Gap_births_low_wt_blk_2011
+		Gap_births_low_wt_hsp_2011
+		Gap_births_low_wt_asn_2011
+		Gap_births_low_wt_oth_2011
+
+		Gap_births_prenat_adeq_blk_2011
+		Gap_births_prenat_adeq_hsp_2011
+		Gap_births_prenat_adeq_asn_2011
+		Gap_births_prenat_adeq_oth_2011
+
+		Gap_births_teen_blk_2011
+		Gap_births_teen_hsp_2011
+		Gap_births_teen_asn_2011
+		Gap_births_teen_oth_2011
+		;
+
+	  	do y=1 to 12; 
+
+			if birthgaps{y}=.s then g_gap{y}= birthgap{y};
+			else if pos_gap{y}=.a then g_gap{y}=pos_gap{y};
+			else if n_gap{y}=.a then g_gap{y}=pos_gap{y};
+			else f_gap{y} = e_gap{y};
+		end;
+
+	%end;
+
+	%mend; 
+	
+	
 	label
 		Gap_births_low_wt_blk_2011 = "Difference in # of NH-Black low weight births (under 5.5 lbs) with equity, 2011 "
 		Gap_births_low_wt_hsp_2011 = "Difference in # of Hispanic low weight births (under 5.5 lbs) with equity, 2011 "
