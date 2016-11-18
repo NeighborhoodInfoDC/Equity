@@ -48,6 +48,7 @@ array new {4}  	nPct_births_w_race_2011 nPct_births_low_wt_2011
 
 				   	new{q}=old{q}/100;
 					if old{q}=.s then new{q}=.s;
+					if old{q}=.a then new{q}=.a;
 
 				end; 
 run;
@@ -80,7 +81,7 @@ array new {4} 	nPct_births_w_race_2011
 
 				   	new{q}=old{q}/100;
 					if old{q}=.s then new{q}=.s;
-
+					if old{q}=.a then new{q}=.a;
 				end; 
 
 	rename 	Births_white_2011 = Births_w_race_2011 
@@ -129,7 +130,7 @@ array new {4} 	nPct_births_w_race_2011
 
 				   	new{q}=old{q}/100;
 					if old{q}=.s then new{q}=.s;
-
+					if old{q}=.a then new{q}=.a;
 				end; 
 
 	rename 	Births_black_2011 = Births_w_race_2011 
@@ -181,6 +182,7 @@ array new {4} 	nPct_births_w_race_2011
 				   	new{q}=old{q}/100;
 					if old{q}=.n then new{q}=.n;
 					if old{q}=.s then new{q}=.s;
+					if old{q}=.a then new{q}=.a;
 
 				end; 
 
