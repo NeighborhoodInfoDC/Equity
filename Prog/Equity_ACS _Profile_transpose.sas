@@ -364,7 +364,17 @@ data equity.profile_tabs_ACS_suppress (drop=cPct: cAvg:);
 
 	%mend; 
 
-label
+/*Child poverty rates for Hispanics in Ward 3 and Whites in Ward 5 are hard suppressed
+  due to high margins of error (14% and 23% respectively). The %suppress_vars macro
+  did not automatically suppress these variables because variable estimates = 0, 
+  preventing the CV from calculating because of division by 0*/
+
+	if ward2012=3 then PctPoorChildrenH_2010_14=.s;
+	else if ward 2012=3 then PctPoorChildrenH_m_2010_14=.s;
+	else if ward2012=5 then PctPoorChildrenW_2010_14=.s;
+	else if ward2012=5 then PctPoorChildrenW_m_2010_14=.s;
+
+	label
 		PctBlackNonHispBridge_m_2010_14 = "% black non-Hispanic, MOE, 2010-14 "
 		PctWhiteNonHispBridge_m_2010_14 = "% white non-Hispanic, MOE, 2010-14 "
 		PctHisp_m_2010_14 = "% Hispanic, MOE, 2010-14 " 
