@@ -370,7 +370,7 @@ data equity.profile_tabs_ACS_suppress (drop=cPct: cAvg:);
   preventing the CV from calculating because of division by 0*/
 
 	if ward2012=3 then PctPoorChildrenH_2010_14=.s;
-	else if ward 2012=3 then PctPoorChildrenH_m_2010_14=.s;
+	else if ward2012=3 then PctPoorChildrenH_m_2010_14=.s;
 	else if ward2012=5 then PctPoorChildrenW_2010_14=.s;
 	else if ward2012=5 then PctPoorChildrenW_m_2010_14=.s;
 
