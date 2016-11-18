@@ -118,6 +118,8 @@ data equity.births_gaps_allgeo (label="Birth Gaps for All Geographies, 2011" dro
 		;
 run;
 
+/*Rates for "Other" race category are excluded from output because of low sample size*/
+
 proc transpose data=equity.births_gaps_allgeo out=equity.profile_tabs_births_wd12 (label="Birth Indicators Output for Equity Profile City & Ward, 2011"); 
 var Births_total_2011
 	Pct_births_w_race_2011 
@@ -126,34 +128,29 @@ var Births_total_2011
 	Pct_births_asian_2011 
 	Pct_births_black_2011
 	Pct_births_hisp_2011
-	Pct_births_oth_rac_2011 
 
 	Pct_births_white_3yr_2011
 	Pct_births_asian_3yr_2011
 	Pct_births_black_3yr_2011 
 	Pct_births_hisp_3yr_2011 
-	Pct_births_oth_rac_3yr_2011
 
 	Pct_births_low_wt_2011 	
 	Pct_births_low_wt_wht_2011 	
 	Pct_births_low_wt_blk_2011	Gap_births_low_wt_blk_2011
 	Pct_births_low_wt_hsp_2011 	Gap_births_low_wt_hsp_2011
 	Pct_births_low_wt_asn_2011 	Gap_births_low_wt_asn_2011
-	Pct_births_low_wt_oth_2011 	Gap_births_low_wt_oth_2011
 		
 	Pct_births_prenat_adeq_2011 	
 	Pct_births_prenat_adeq_wht_2011 	
 	Pct_births_prenat_adeq_blk_2011 Gap_births_prenat_adeq_blk_2011
 	Pct_births_prenat_adeq_hsp_2011 Gap_births_prenat_adeq_hsp_2011
 	Pct_births_prenat_adeq_asn_2011 Gap_births_prenat_adeq_asn_2011
-	Pct_births_prenat_adeq_oth_2011 Gap_births_prenat_adeq_oth_2011
 		
 	Pct_births_teen_2011 	
 	Pct_births_teen_wht_2011 	
 	Pct_births_teen_blk_2011 Gap_births_teen_blk_2011
 	Pct_births_teen_hsp_2011 Gap_births_teen_hsp_2011
 	Pct_births_teen_asn_2011 Gap_births_teen_asn_2011
-	Pct_births_teen_oth_2011 Gap_births_teen_oth_2011
 	;
 id ward2012; 
 run; 
@@ -166,34 +163,29 @@ var Births_total_2011
 	Pct_births_asian_2011 
 	Pct_births_black_2011
 	Pct_births_hisp_2011
-	Pct_births_oth_rac_2011 
 
 	Pct_births_white_3yr_2011
 	Pct_births_asian_3yr_2011
 	Pct_births_black_3yr_2011 
 	Pct_births_hisp_3yr_2011 
-	Pct_births_oth_rac_3yr_2011
 
 	Pct_births_low_wt_2011 	
 	Pct_births_low_wt_wht_2011 	
 	Pct_births_low_wt_blk_2011	Gap_births_low_wt_blk_2011
 	Pct_births_low_wt_hsp_2011 	Gap_births_low_wt_hsp_2011
 	Pct_births_low_wt_asn_2011 	Gap_births_low_wt_asn_2011
-	Pct_births_low_wt_oth_2011 	Gap_births_low_wt_oth_2011
 		
 	Pct_births_prenat_adeq_2011 	
 	Pct_births_prenat_adeq_wht_2011 	
 	Pct_births_prenat_adeq_blk_2011 Gap_births_prenat_adeq_blk_2011
 	Pct_births_prenat_adeq_hsp_2011 Gap_births_prenat_adeq_hsp_2011
 	Pct_births_prenat_adeq_asn_2011 Gap_births_prenat_adeq_asn_2011
-	Pct_births_prenat_adeq_oth_2011 Gap_births_prenat_adeq_oth_2011
 		
 	Pct_births_teen_2011 	
 	Pct_births_teen_wht_2011 	
 	Pct_births_teen_blk_2011 Gap_births_teen_blk_2011
 	Pct_births_teen_hsp_2011 Gap_births_teen_hsp_2011
 	Pct_births_teen_asn_2011 Gap_births_teen_asn_2011
-	Pct_births_teen_oth_2011 Gap_births_teen_oth_2011
 	;
 id cluster_tr2000; 
 run; 
