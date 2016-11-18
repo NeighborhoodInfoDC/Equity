@@ -904,6 +904,6 @@ proc export data=equity.profile_tabs_ACS
       ds_lib=Equity,
       ds_name=profile_tabs_ACS,
 	  creator=L Hendey and S Diby,
-      creator_process=profile_tabs_ACS.sas,
+      creator_process=Equity_ACS_profile_transpose.sas,
       restrictions=None
       )

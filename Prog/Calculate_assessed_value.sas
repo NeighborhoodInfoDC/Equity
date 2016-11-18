@@ -12,6 +12,7 @@
 
  Modifications: 
  08/30/16 MW Added classifications for neighborhood by race.
+ 11/18/16 LH Added Metadata.
 
 **************************************************************************/
 
@@ -243,7 +244,7 @@ run;
   proc freq data=racecomp;
   tables tract_comp majwhite*tract_comp;
   run;
-data equity.assessedval_race (label="Assessed Value for Single Family Homes and Condos by Tract Racial Composition");
+data equity.assessedval_race (label="Assessed Value for Single Family Homes and Condos by Tract Racial Composition, 2010-16");
 	merge racecomp (keep=geo2010 mixedngh majblack majwhite tract_comp) tract_assessed_val_change ;
 	by geo2010;
 
@@ -275,8 +276,19 @@ class tract_comp;
 var numsfcondo assess_val16 assess_val10r;
 run;
 
+** Register metadata **;
+
+%Dc_update_meta_file(
+      ds_lib=Equity,
+      ds_name=assessedval_race;,
+	  creator=L Hendey,
+      creator_process=Calculate_assessed_value.sas,
+      restrictions=None
+      )
+
+
 *output for comms;
-data comms_out (Label="Tract Level Assessed Value by Race of Tract for COMM" drop=dollar_change dollar_changeR);
+data comms_out (Label="Tract Level Assessed Value by Race of Tract for COMM, 2010-16" drop=dollar_change dollar_changeR);
 	set equity.assessedval_race;
 
 percent_change_dec=percent_change/100; 
