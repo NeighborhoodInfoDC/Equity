@@ -494,7 +494,7 @@ proc sort data=all_race;
 by ward2012 race;
 
 proc export data=all_race 
-	outfile="D:\DCDATA\Libraries\Equity\Prog\Racial Equity Feature\profile_tabs_ACS_Comms.csv"
+	outfile="D:\DCDATA\Libraries\Equity\Prog\profile_tabs_ACS_Comms.csv"
 	dbms=csv replace;
 	run;
 
