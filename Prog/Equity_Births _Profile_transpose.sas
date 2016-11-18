@@ -149,7 +149,7 @@ data equity.births_gaps_allgeo (label="Birth Gaps for All Geographies, 2011" dro
 			if birthgaps{y}=.s then g_gap{y}= birthgaps{y};
 			else if pos_gap{y}=.a then g_gap{y}=pos_gap{y};
 			else if neg_gap{y}=.a then g_gap{y}=pos_gap{y};
-			else f_gap{y} = e_gap{y};
+			else g_gap{y} = birthgaps{y};
 		end;
 
 	
