@@ -108,7 +108,7 @@ data equity.births_gaps_allgeo (label="Birth Gaps for All Geographies, 2011" dro
 		;
 
 	do p=1 to 4; 
-		if pos_gap{p} < 0 then pps_gap{p} = .a; 
+		if pos_gap{p} < 0 then pos_gap{p} = .a; 
       	end;
 
 	array neg_gap {8} 
@@ -146,9 +146,9 @@ data equity.births_gaps_allgeo (label="Birth Gaps for All Geographies, 2011" dro
 
 	  	do y=1 to 12; 
 
-			if birthgaps{y}=.s then g_gap{y}= birthgap{y};
+			if birthgaps{y}=.s then g_gap{y}= birthgaps{y};
 			else if pos_gap{y}=.a then g_gap{y}=pos_gap{y};
-			else if n_gap{y}=.a then g_gap{y}=pos_gap{y};
+			else if neg_gap{y}=.a then g_gap{y}=pos_gap{y};
 			else f_gap{y} = e_gap{y};
 		end;
 
