@@ -214,11 +214,7 @@ var Births_total_2011
 	Pct_births_asian_2011 
 	Pct_births_black_2011
 	Pct_births_hisp_2011
-
-	Pct_births_white_3yr_2011
-	Pct_births_asian_3yr_2011
-	Pct_births_black_3yr_2011 
-	Pct_births_hisp_3yr_2011 
+	Pct_births_oth_rac_2011
 
 	Pct_births_low_wt_2011 	
 	Pct_births_low_wt_wht_2011 	
@@ -249,11 +245,6 @@ var Births_total_2011
 	Pct_births_asian_2011 
 	Pct_births_black_2011
 	Pct_births_hisp_2011
-
-	Pct_births_white_3yr_2011
-	Pct_births_asian_3yr_2011
-	Pct_births_black_3yr_2011 
-	Pct_births_hisp_3yr_2011 
 
 	Pct_births_low_wt_2011 	
 	Pct_births_low_wt_wht_2011 	
