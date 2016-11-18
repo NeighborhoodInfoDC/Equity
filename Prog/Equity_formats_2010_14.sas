@@ -459,14 +459,14 @@ proc format;
 	7= "White Alone"
 	8= "Foreign Born";
 
-	value puma_id;
+	value puma_id
 	100 = "District of Columbia"
 	101 = "101"
 	102 = "102"
 	103 = "103"
 	104 = "104"
 	105 = "105" 
-
+;
 run;
 
 
