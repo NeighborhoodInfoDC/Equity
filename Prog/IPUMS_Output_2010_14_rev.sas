@@ -1,6 +1,6 @@
 
 /**************************************************************************
- Program:  Equity_outputtables_2010_14_rev.sas
+ Program:  IPUMS_Output_2010_14_rev.sas
  Library:  Equity
  Project:  Racial Equity Profile
  Author:   M. Woluchem
@@ -3502,6 +3502,14 @@ proc export data=equity.profile_tabs_ipums
 	outfile="D:\DCDATA\Libraries\Equity\Prog\profile_tabs_ipums.csv"
 	dbms=csv replace;
 	run;
+
+%Dc_update_meta_file(
+      ds_lib=Equity,
+      ds_name=profile_tabs_ipums ,
+	  creator=M Woluchem,
+      creator_process=IPUMS_Output_2010_14_rev.sas,
+      restrictions=None
+      )
 
 
 	*for values in text of profile - percent of rental units affordable at VLI or below; 

@@ -1,17 +1,19 @@
 
 /**************************************************************************
- Program:  Equity_Data_2010_14.sas
+ Program:  IPUMS_2010_14.sas
  Library:  Equity
  Project:  NeighborhoodInfo DC
  Author:   G. MacDonald
  Created:  04/24/2013
- Version:  SAS 9.2
+ Version:  SAS 9.4
  Environment:  Windows
  
- Description:  Create data for from 2009-11 3-year ACS IPUMS data for 
- Housing Security 2013 report out to funders.
+ Description:  [Original purpose - Hnsgsec_data_2010-14.sas. 
+ Create data for from 2009-11 3-year ACS IPUMS data for 
+ Housing Security 2013 report out to funders.]
 
- Modifications: 07/25/13 LH Pulled Pieces from HsngSec_tables_2009_11 into different programs
+ Modifications: 
+ 07/25/13 LH Pulled Pieces from HsngSec_tables_2009_11 into different programs
  07/22/16 MW Updated for ACS 2010-14, SAS1 Server, and for the Equity library. 
 **************************************************************************/
 
@@ -298,7 +300,18 @@ data Equity.Acs_tables_ipums (Label="iPUMS 2010-14 ACS for Racial Equity Profile
 			format race_cat1 racecatA. race_cat2 racecatB. aff_unit aff_unit.;
   run; 
 
-%File_info( data= Equity.Acs_tables_ipums, contents=n );
+%File_info( data= Equity.Acs_tables_ipums, contents=Y );
+
+** Register metadata **;
+
+%Dc_update_meta_file(
+      ds_lib=Equity,
+      ds_name=Acs_tables_ipums,
+	  creator=M.Woluchem,
+      creator_process=IPUMS_2010_14.sas,
+      restrictions=None
+      )
+
 
 /*Quality Control*/
 
