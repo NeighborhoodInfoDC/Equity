@@ -126,7 +126,6 @@ data equity.births_gaps_allgeo (label="Birth Gaps for All Geographies, 2011" dro
 		if neg_gap{n} > 0 then neg_gap{n} = .a; 
 	end;
 
-	%macro suppression_births;
 
 	array g_gap {12} 
 		Gap_births_low_wt_blk_2011
@@ -153,10 +152,6 @@ data equity.births_gaps_allgeo (label="Birth Gaps for All Geographies, 2011" dro
 			else f_gap{y} = e_gap{y};
 		end;
 
-	%end;
-
-	%mend; 
-	
 	
 	label
 		Gap_births_low_wt_blk_2011 = "Difference in # of NH-Black low weight births (under 5.5 lbs) with equity, 2011 "
