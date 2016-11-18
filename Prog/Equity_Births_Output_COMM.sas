@@ -22,7 +22,7 @@
 
 /*Birth indicators by race*/
 data all (drop=q Pct:); 
-set equity.city_births_gaps
+set equity.births_gaps_allgeo
 	(keep= 	city ward2012 cluster_tr2000 
 			Births_total_2011
 			Pct_births_w_race_2011 births_w_race_2011 
@@ -48,11 +48,12 @@ array new {4}  	nPct_births_w_race_2011 nPct_births_low_wt_2011
 
 				   	new{q}=old{q}/100;
 					if old{q}=.s then new{q}=.s;
+					if old{q}=.a then new{q}=.a;
 
 				end; 
 run;
 data white (drop=q Pct:); 
-set equity.city_births_gaps
+set equity.births_gaps_allgeo
 	(keep= 	city ward2012 cluster_tr2000 
 			Pct_births_white_2011 Births_white_2011 
 			Pct_births_low_wt_wht_2011 Births_low_wt_wht_2011 Births_w_weight_wht_2011
@@ -80,7 +81,7 @@ array new {4} 	nPct_births_w_race_2011
 
 				   	new{q}=old{q}/100;
 					if old{q}=.s then new{q}=.s;
-
+					if old{q}=.a then new{q}=.a;
 				end; 
 
 	rename 	Births_white_2011 = Births_w_race_2011 
@@ -94,7 +95,7 @@ array new {4} 	nPct_births_w_race_2011
 run;
 
 data black (drop=q Pct:); 
-set equity.city_births_gaps
+set equity.births_gaps_allgeo
 	(keep= 	city ward2012 cluster_tr2000 
 
 			Pct_births_black_2011 Births_black_2011 
@@ -129,7 +130,7 @@ array new {4} 	nPct_births_w_race_2011
 
 				   	new{q}=old{q}/100;
 					if old{q}=.s then new{q}=.s;
-
+					if old{q}=.a then new{q}=.a;
 				end; 
 
 	rename 	Births_black_2011 = Births_w_race_2011 
@@ -147,7 +148,7 @@ array new {4} 	nPct_births_w_race_2011
 run;
 
 data hispanic (drop=q Pct:); 
-set equity.city_births_gaps
+set equity.births_gaps_allgeo
 	(keep= 	city ward2012 cluster_tr2000 
 			Pct_births_hisp_2011 Births_hisp_2011 
 			Pct_births_low_wt_hsp_2011 Gap_births_low_wt_hsp_2011
@@ -181,6 +182,7 @@ array new {4} 	nPct_births_w_race_2011
 				   	new{q}=old{q}/100;
 					if old{q}=.n then new{q}=.n;
 					if old{q}=.s then new{q}=.s;
+					if old{q}=.a then new{q}=.a;
 
 				end; 
 
@@ -233,10 +235,9 @@ proc sort data=all_race;
 by cluster_tr2000 Ward2012 city;
 
 proc export data=all_race
-	outfile="D:\DCDATA\Libraries\Equity\Prog\Births_Comm.csv"
+	outfile="D:\DCDATA\Libraries\Equity\Prog\profile_tabs_births_Comms.csv"
 	dbms=csv replace;
 	run;
 
-proc contents data=equity.births_comm;
+proc contents data=all_race;
 run;
-

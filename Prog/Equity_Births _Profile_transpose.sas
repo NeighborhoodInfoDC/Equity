@@ -9,7 +9,6 @@
  
  Description:  Transposes calculated indicators for Equity profiles 
 			   and merges calculated statistics for ACS data at different geographies.
-			   Outputs transposed data in percent and decimal formats. 
 **************************************************************************/
 %include "L:\SAS\Inc\StdLocal.sas";
 
@@ -44,35 +43,87 @@ data whiterates_births;
 %rename(whiterates_births);
 run;
 
-data equity.city_births_gaps (drop=_make_profile b);
+data equity.births_gaps_allgeo (label="Birth Gaps for All Geographies, 2011" drop=_make_profile b);
 	merge city_births whiterates_births_new(rename=(c_make_profile=_make_profile));
 	by _make_profile;
 	
-	Gap_births_low_wt_blk_2011=cPct_births_low_wt_wht_2011/100*Births_black_2011-Births_low_wt_blk_2011;
-	Gap_births_low_wt_hsp_2011=cPct_births_low_wt_wht_2011/100*Births_hisp_2011-Births_low_wt_hsp_2011;
-	Gap_births_low_wt_asn_2011=cPct_births_low_wt_wht_2011/100*Births_asian_2011-Births_low_wt_asn_2011;
-	Gap_births_low_wt_oth_2011=cPct_births_low_wt_wht_2011/100*Births_oth_rac_2011-Births_low_wt_oth_2011;
+	Gap_births_low_wt_blk_2011=cPct_births_low_wt_wht_2011/100*Births_w_weight_blk_2011-Births_low_wt_blk_2011;
+	Gap_births_low_wt_hsp_2011=cPct_births_low_wt_wht_2011/100*Births_w_weight_hsp_2011-Births_low_wt_hsp_2011;
+	Gap_births_low_wt_asn_2011=cPct_births_low_wt_wht_2011/100*Births_w_weight_asn_2011-Births_low_wt_asn_2011;
+	Gap_births_low_wt_oth_2011=cPct_births_low_wt_wht_2011/100*Births_w_weight_oth_2011-Births_low_wt_oth_2011;
 
-	Gap_births_prenat_adeq_blk_2011=cPct_births_prenat_adeq_wht_2011/100*Births_black_2011-Births_prenat_adeq_blk_2011;
-	Gap_births_prenat_adeq_hsp_2011=cPct_births_prenat_adeq_wht_2011/100*Births_hisp_2011-Births_prenat_adeq_hsp_2011;
-	Gap_births_prenat_adeq_asn_2011=cPct_births_prenat_adeq_wht_2011/100*Births_asian_2011-Births_prenat_adeq_asn_2011;
-	Gap_births_prenat_adeq_oth_2011=cPct_births_prenat_adeq_wht_2011/100*Births_oth_rac_2011-Births_prenat_adeq_oth_2011;
+	Gap_births_prenat_adeq_blk_2011=cPct_births_prenat_adeq_wht_2011/100*Births_w_prenat_blk_2011-Births_prenat_adeq_blk_2011;
+	Gap_births_prenat_adeq_hsp_2011=cPct_births_prenat_adeq_wht_2011/100*Births_w_prenat_hsp_2011-Births_prenat_adeq_hsp_2011;
+	Gap_births_prenat_adeq_asn_2011=cPct_births_prenat_adeq_wht_2011/100*Births_w_prenat_asn_2011-Births_prenat_adeq_asn_2011;
+	Gap_births_prenat_adeq_oth_2011=cPct_births_prenat_adeq_wht_2011/100*Births_w_prenat_oth_2011-Births_prenat_adeq_oth_2011;
 
-	Gap_births_teen_blk_2011=cPct_births_teen_wht_2011/100*Births_black_2011-Births_teen_blk_2011;
-	Gap_births_teen_hsp_2011=cPct_births_teen_wht_2011/100*Births_hisp_2011-Births_teen_hsp_2011;
-	Gap_births_teen_asn_2011=cPct_births_teen_wht_2011/100*Births_asian_2011-Births_teen_asn_2011;
-	Gap_births_teen_oth_2011=cPct_births_teen_wht_2011/100*Births_oth_rac_2011-Births_teen_oth_2011;
+	Gap_births_teen_blk_2011=cPct_births_teen_wht_2011/100*Births_w_age_blk_2011-Births_teen_blk_2011;
+	Gap_births_teen_hsp_2011=cPct_births_teen_wht_2011/100*Births_w_age_hsp_2011-Births_teen_hsp_2011;
+	Gap_births_teen_asn_2011=cPct_births_teen_wht_2011/100*Births_w_age_asn_2011-Births_teen_asn_2011;
+	Gap_births_teen_oth_2011=cPct_births_teen_wht_2011/100*Births_w_age_oth_2011-Births_teen_oth_2011;
 
-	array birthpcts {12}
-		Pct_births_low_wt_blk_2011
-		Pct_births_low_wt_hsp_2011 
-		Pct_births_low_wt_asn_2011 
-		Pct_births_low_wt_oth_2011 
 
+/* 1) Suppressing gaps where estimates are suppressed: see Equity_Compile_births_for_profile.sas*/
+
+	array birthpcts_pos {4}
 		Pct_births_prenat_adeq_blk_2011 
 		Pct_births_prenat_adeq_hsp_2011 
 		Pct_births_prenat_adeq_asn_2011 
 		Pct_births_prenat_adeq_oth_2011 
+		;
+
+	array birthgaps_pos {4}
+		Gap_births_prenat_adeq_blk_2011
+		Gap_births_prenat_adeq_hsp_2011
+		Gap_births_prenat_adeq_asn_2011
+		Gap_births_prenat_adeq_oth_2011
+		;
+
+		do a=1 to 4;
+			if birthpcts_pos{a}=.s then birthgaps_pos{a}=.s;
+		end;
+
+/* 2) Suppressing gaps that meet or exceed the white citywide rate;
+	  specifically, suppressing negative gaps where they should be positive*/
+
+	array pos_gap {4} 
+		Gap_births_prenat_adeq_blk_2011
+		Gap_births_prenat_adeq_hsp_2011
+		Gap_births_prenat_adeq_asn_2011
+		Gap_births_prenat_adeq_oth_2011
+		;
+
+		do p=1 to 4; 
+			if pos_gap{p} < 0 then pos_gap{p} = .a; 
+	      	end;
+
+/* 3) Prioritizing suppression by estimate over negative/positive suppression*/
+
+	array g_gap_pos {4}
+		Gap_births_prenat_adeq_blk_2011
+		Gap_births_prenat_adeq_hsp_2011
+		Gap_births_prenat_adeq_asn_2011
+		Gap_births_prenat_adeq_oth_2011
+		;
+
+		do y=1 to 4; 
+			if birthgaps_pos{y}=.s then g_gap_pos{y}= birthgaps_pos{y}; 
+			else if pos_gap{y}=.a then g_gap_pos{y}=pos_gap{y};
+			else g_gap_pos{y} = birthgaps_pos{y};
+	      	end;
+
+
+
+/* Repeating 1-3 to suppress positive gaps where they should be negative*/
+
+
+/* 1) Suppressing gaps where estimates are suppressed: see Equity_Compile_births_for_profile.sas*/
+
+	array birthpcts_neg {8}
+		Pct_births_low_wt_blk_2011
+		Pct_births_low_wt_hsp_2011 
+		Pct_births_low_wt_asn_2011 
+		Pct_births_low_wt_oth_2011 
 
 		Pct_births_teen_blk_2011
 		Pct_births_teen_hsp_2011 
@@ -80,16 +131,11 @@ data equity.city_births_gaps (drop=_make_profile b);
 		Pct_births_teen_oth_2011
 		;
 
-	array birthgaps {12}
+	array birthgaps_neg {8}
 		Gap_births_low_wt_blk_2011
 		Gap_births_low_wt_hsp_2011
 		Gap_births_low_wt_asn_2011
 		Gap_births_low_wt_oth_2011
-
-		Gap_births_prenat_adeq_blk_2011
-		Gap_births_prenat_adeq_hsp_2011
-		Gap_births_prenat_adeq_asn_2011
-		Gap_births_prenat_adeq_oth_2011
 
 		Gap_births_teen_blk_2011
 		Gap_births_teen_hsp_2011
@@ -97,13 +143,70 @@ data equity.city_births_gaps (drop=_make_profile b);
 		Gap_births_teen_oth_2011
 		;
 
-	do b=1 to 12;
-		if birthpcts{b}=.s then birthgaps{b}=.s;
-	end;
+		do b=1 to 8;
+			if birthpcts_neg{b}=.s then birthgaps_neg{b}=.s;
+		end;
 
+
+/* 2) Suppressing gaps that meet or exceed the white citywide rate;
+	  specifically, suppressing negative gaps where they should be positive*/
+
+	array neg_gap {8} 
+		Gap_births_low_wt_blk_2011
+		Gap_births_low_wt_hsp_2011
+		Gap_births_low_wt_asn_2011
+		Gap_births_low_wt_oth_2011				
+		Gap_births_teen_blk_2011
+		Gap_births_teen_hsp_2011
+		Gap_births_teen_asn_2011
+		Gap_births_teen_oth_2011
+      	;	
+		
+		do n=1 to 8; 
+			if neg_gap{n} > 0 then neg_gap{n} = .a; 
+		end;
+
+/* 3) Prioritizing suppression by estimate over negative/positive suppression*/
+
+	array g_gap_neg {8} 
+		Gap_births_low_wt_blk_2011
+		Gap_births_low_wt_hsp_2011
+		Gap_births_low_wt_asn_2011
+		Gap_births_low_wt_oth_2011				
+		Gap_births_teen_blk_2011
+		Gap_births_teen_hsp_2011
+		Gap_births_teen_asn_2011
+		Gap_births_teen_oth_2011
+      	;	
+		
+		do x=1 to 8; 
+			if birthgaps_neg{x}=.s then g_gap_neg{x}= birthgaps_neg{x}; 
+			else if neg_gap{x}=.a then g_gap_neg{x}=neg_gap{x};
+			else g_gap_neg{x} = birthgaps_neg{x};
+	    end;
+
+	
+	label
+		Gap_births_low_wt_blk_2011 = "Difference in # of NH-Black low weight births (under 5.5 lbs) with equity, 2011 "
+		Gap_births_low_wt_hsp_2011 = "Difference in # of Hispanic low weight births (under 5.5 lbs) with equity, 2011 "
+		Gap_births_low_wt_asn_2011 = "Difference in # of NH-AsianPI low weight births (under 5.5 lbs) with equity, 2011 "
+		Gap_births_low_wt_oth_2011 = "Difference in # of NH-Other low weight births (under 5.5 lbs) with equity, 2011 "
+
+		Gap_births_prenat_adeq_blk_2011 = "Difference in # of births to NH-Black mothers with adequate prenatal care with equity, 2011 "
+		Gap_births_prenat_adeq_hsp_2011 = "Difference in # of births to Hispanic mothers with adequate prenatal care with equity, 2011 "
+		Gap_births_prenat_adeq_asn_2011 = "Difference in # of births to NH-AsianPI mothers with adequate prenatal care with equity, 2011 "
+		Gap_births_prenat_adeq_oth_2011 = "Difference in # of births to NH-Other mothers with adequate prenatal care with equity, 2011 "
+
+		Gap_births_teen_blk_2011 = "Difference in # of births to NH-Black teen mothers with equity, 2011 "
+		Gap_births_teen_hsp_2011 = "Difference in # of births to Hispanic teen mothers with equity, 2011 "
+		Gap_births_teen_asn_2011 = "Difference in # of births to NH-AsianPI teen mothers with equity, 2011 "
+		Gap_births_teen_oth_2011 = "Difference in # of births to NH-Other teen mothers with equity, 2011 "
+		;
 run;
 
-proc transpose data=equity.city_births_gaps out=equity.profile_tabs_births_wd12; 
+/*Rates for "Other" race category are excluded from output because of low sample size*/
+
+proc transpose data=equity.births_gaps_allgeo out=equity.profile_tabs_births_wd12 (label="Birth Indicators Output for Equity Profile City & Ward, 2011"); 
 var Births_total_2011
 	Pct_births_w_race_2011 
 
@@ -111,39 +214,30 @@ var Births_total_2011
 	Pct_births_asian_2011 
 	Pct_births_black_2011
 	Pct_births_hisp_2011
-	Pct_births_oth_rac_2011 
-
-	Pct_births_white_3yr_2011
-	Pct_births_asian_3yr_2011
-	Pct_births_black_3yr_2011 
-	Pct_births_hisp_3yr_2011 
-	Pct_births_oth_rac_3yr_2011
+	Pct_births_oth_rac_2011
 
 	Pct_births_low_wt_2011 	
 	Pct_births_low_wt_wht_2011 	
 	Pct_births_low_wt_blk_2011	Gap_births_low_wt_blk_2011
 	Pct_births_low_wt_hsp_2011 	Gap_births_low_wt_hsp_2011
 	Pct_births_low_wt_asn_2011 	Gap_births_low_wt_asn_2011
-	Pct_births_low_wt_oth_2011 	Gap_births_low_wt_oth_2011
 		
 	Pct_births_prenat_adeq_2011 	
 	Pct_births_prenat_adeq_wht_2011 	
 	Pct_births_prenat_adeq_blk_2011 Gap_births_prenat_adeq_blk_2011
 	Pct_births_prenat_adeq_hsp_2011 Gap_births_prenat_adeq_hsp_2011
 	Pct_births_prenat_adeq_asn_2011 Gap_births_prenat_adeq_asn_2011
-	Pct_births_prenat_adeq_oth_2011 Gap_births_prenat_adeq_oth_2011
 		
 	Pct_births_teen_2011 	
 	Pct_births_teen_wht_2011 	
 	Pct_births_teen_blk_2011 Gap_births_teen_blk_2011
 	Pct_births_teen_hsp_2011 Gap_births_teen_hsp_2011
 	Pct_births_teen_asn_2011 Gap_births_teen_asn_2011
-	Pct_births_teen_oth_2011 Gap_births_teen_oth_2011
 	;
 id ward2012; 
 run; 
 
-proc transpose data=equity.city_births_gaps out=equity.profile_tabs_births_cltr00; 
+proc transpose data=equity.births_gaps_allgeo out=equity.profile_tabs_births_cltr00 (label="Birth Indicators Output for Equity Profile City & Neighborhood Cluster, 2011"); 
 var Births_total_2011
 	Pct_births_w_race_2011 
 
@@ -151,163 +245,28 @@ var Births_total_2011
 	Pct_births_asian_2011 
 	Pct_births_black_2011
 	Pct_births_hisp_2011
-	Pct_births_oth_rac_2011 
-
-	Pct_births_white_3yr_2011
-	Pct_births_asian_3yr_2011
-	Pct_births_black_3yr_2011 
-	Pct_births_hisp_3yr_2011 
-	Pct_births_oth_rac_3yr_2011
 
 	Pct_births_low_wt_2011 	
 	Pct_births_low_wt_wht_2011 	
 	Pct_births_low_wt_blk_2011	Gap_births_low_wt_blk_2011
 	Pct_births_low_wt_hsp_2011 	Gap_births_low_wt_hsp_2011
 	Pct_births_low_wt_asn_2011 	Gap_births_low_wt_asn_2011
-	Pct_births_low_wt_oth_2011 	Gap_births_low_wt_oth_2011
 		
 	Pct_births_prenat_adeq_2011 	
 	Pct_births_prenat_adeq_wht_2011 	
 	Pct_births_prenat_adeq_blk_2011 Gap_births_prenat_adeq_blk_2011
 	Pct_births_prenat_adeq_hsp_2011 Gap_births_prenat_adeq_hsp_2011
 	Pct_births_prenat_adeq_asn_2011 Gap_births_prenat_adeq_asn_2011
-	Pct_births_prenat_adeq_oth_2011 Gap_births_prenat_adeq_oth_2011
 		
 	Pct_births_teen_2011 	
 	Pct_births_teen_wht_2011 	
 	Pct_births_teen_blk_2011 Gap_births_teen_blk_2011
 	Pct_births_teen_hsp_2011 Gap_births_teen_hsp_2011
 	Pct_births_teen_asn_2011 Gap_births_teen_asn_2011
-	Pct_births_teen_oth_2011 Gap_births_teen_oth_2011
 	;
 id cluster_tr2000; 
 run; 
 
-* convert to decimal;
-data convert_births_wd12 
-		(drop=births_w_race: births_black: births_asian: births_hisp: births_white: births_oth_rac:
-			Births_w_age: births_teen: Births_low_wt: Births_w_weight:
-			births_prenat_adeq: births_w_prenat:);
-	set equity.city_births_gaps; 
-
-%decimal_convert_births;
-
-run; 
-
-data convert_births_cltr00
-	(drop=births_w_race: births_black: births_asian: births_hisp: births_white: births_oth_rac:
-			Births_w_age: births_teen: Births_low_wt: Births_w_weight:
-			births_prenat_adeq: births_w_prenat:);
-	set equity.city_births_gaps; 
-
-%decimal_convert_births;
-
-run; 
-proc transpose data=convert_births_wd12 out=profile_tabs_births_wd12_dec_1; 
-var nBirths_total_2011
-	nPct_births_w_race_2011 
-
-	nPct_births_white_2011 
-	nPct_births_asian_2011 
-	nPct_births_black_2011
-	nPct_births_hisp_2011
-	nPct_births_oth_rac_2011 
-
-	nPct_births_white_3yr_2011
-	nPct_births_asian_3yr_2011
-	nPct_births_black_3yr_2011 
-	nPct_births_hisp_3yr_2011 
-	nPct_births_oth_rac_3yr_2011
-
-	nPct_births_low_wt_2011 	
-	nPct_births_low_wt_wht_2011 	
-	nPct_births_low_wt_blk_2011	nGap_births_low_wt_blk_2011
-	nPct_births_low_wt_hsp_2011 nGap_births_low_wt_hsp_2011
-	nPct_births_low_wt_asn_2011 nGap_births_low_wt_asn_2011
-	nPct_births_low_wt_oth_2011 nGap_births_low_wt_oth_2011
-		
-	nPct_births_prenat_adeq_2011 	
-	nPct_births_prenat_adeq_wht_2011 	
-	nPct_births_prenat_adeq_blk_2011 nGap_births_prenat_adeq_blk_2011
-	nPct_births_prenat_adeq_hsp_2011 nGap_births_prenat_adeq_hsp_2011
-	nPct_births_prenat_adeq_asn_2011 nGap_births_prenat_adeq_asn_2011
-	nPct_births_prenat_adeq_oth_2011 nGap_births_prenat_adeq_oth_2011
-		
-	nPct_births_teen_2011 	
-	nPct_births_teen_wht_2011 	
-	nPct_births_teen_blk_2011 nGap_births_teen_blk_2011
-	nPct_births_teen_hsp_2011 nGap_births_teen_hsp_2011
-	nPct_births_teen_asn_2011 nGap_births_teen_asn_2011
-	nPct_births_teen_oth_2011 nGap_births_teen_oth_2011
-	;
-id ward2012; 
-run; 
-
-proc transpose data=convert_births_cltr00 out=profile_tabs_births_cltr00_dec_1; 
-var Births_total_2011
-	nPct_births_w_race_2011 
-
-	nPct_births_white_2011 
-	nPct_births_asian_2011 
-	nPct_births_black_2011
-	nPct_births_hisp_2011
-	nPct_births_oth_rac_2011 
-
-	nPct_births_white_3yr_2011
-	nPct_births_asian_3yr_2011
-	nPct_births_black_3yr_2011 
-	nPct_births_hisp_3yr_2011 
-	nPct_births_oth_rac_3yr_2011
-
-	nPct_births_low_wt_2011 	
-	nPct_births_low_wt_wht_2011 	
-	nPct_births_low_wt_blk_2011		nGap_births_low_wt_blk_2011
-	nPct_births_low_wt_hsp_2011 	nGap_births_low_wt_hsp_2011
-	nPct_births_low_wt_asn_2011 	nGap_births_low_wt_asn_2011
-	nPct_births_low_wt_oth_2011 	nGap_births_low_wt_oth_2011
-		
-	nPct_births_prenat_adeq_2011 	
-	nPct_births_prenat_adeq_wht_2011 	
-	nPct_births_prenat_adeq_blk_2011 nGap_births_prenat_adeq_blk_2011
-	nPct_births_prenat_adeq_hsp_2011 nGap_births_prenat_adeq_hsp_2011
-	nPct_births_prenat_adeq_asn_2011 nGap_births_prenat_adeq_asn_2011
-	nPct_births_prenat_adeq_oth_2011 nGap_births_prenat_adeq_oth_2011
-		
-	nPct_births_teen_2011 	
-	nPct_births_teen_wht_2011 	
-	nPct_births_teen_blk_2011 nGap_births_teen_blk_2011
-	nPct_births_teen_hsp_2011 nGap_births_teen_hsp_2011
-	nPct_births_teen_asn_2011 nGap_births_teen_asn_2011
-	nPct_births_teen_oth_2011 nGap_births_teen_oth_2011
-	;
-id cluster_tr2000; 
-run; 
-
-*import labels from profile_tabs_births_wd12 into decimal convert dataset;
-
-*first, drop the "n" from the var names in profile_tabs_births_wd12_dec_1;
-
-data profile_tabs_births_wd12_dec_2;
-	set profile_tabs_births_wd12_dec_1;
-	_name_=substr(_name_,2);
-	id=_n_;
-run;
-
-data profile_tabs_births_cltr00_dec_2;
-	set profile_tabs_births_cltr00_dec_1;
-	_name_=substr(_name_,2);
-	id=_n_;
-run;
-
-*then, sort data by _name_ field and merge;
-
-proc sort data=profile_tabs_births_wd12_dec_2;
-	by _name_;
-run;
-
-proc sort data=profile_tabs_births_cltr00_dec_2;
-	by _name_;
-run;
 
 proc sort data=equity.profile_tabs_births_wd12 out=profile_tabs_births_wd12_pct; 
 	by _name_;
@@ -317,28 +276,6 @@ proc sort data=equity.profile_tabs_births_cltr00 out=profile_tabs_births_cltr00_
 	by _name_;
 run;
 
-data tabs_births_wd12_dec_notsort;
-	merge profile_tabs_births_wd12_pct (keep=_name_ _label_)
-		  profile_tabs_births_wd12_dec_2;
-	by _name_;	
-run;
-
-
-data tabs_births_cltr00_dec_notsort;
-	merge profile_tabs_births_cltr00_pct (keep=_name_ _label_)
-		  profile_tabs_births_cltr00_dec_2;
-	by _name_;	
-run;
-
-proc sort data=tabs_births_wd12_dec_notsort 
-		  out=equity.profile_tabs_births_wd12_dec; 
-	by id;
-run;
-
-proc sort data=tabs_births_cltr00_dec_notsort 
-		  out=equity.profile_tabs_births_cltr00_dec; 
-	by id;
-run;
 
 proc export data=equity.profile_tabs_births_wd12
 	outfile="D:\DCDATA\Libraries\Equity\Prog\profile_tabs_births_ward.csv"
@@ -350,12 +287,28 @@ proc export data=equity.profile_tabs_births_cltr00
 	dbms=csv replace;
 	run;
 
-proc export data=equity.profile_tabs_births_wd12_dec
-	outfile="D:\DCDATA\Libraries\Equity\Prog\profile_tabs_births_ward_dec.csv"
-	dbms=csv replace;
-	run;
+** Register metadata **;
 
-proc export data=equity.profile_tabs_births_cltr00_dec
-	outfile="D:\DCDATA\Libraries\Equity\Prog\profile_tabs_births_cluster_dec.csv"
-	dbms=csv replace;
-	run;
+%Dc_update_meta_file(
+      ds_lib=Equity,
+      ds_name=births_gaps_allgeo,
+	  creator=L Hendey and S Diby,
+      creator_process=Equity_Births_profile_transpose.sas,
+      restrictions=None
+      )
+
+%Dc_update_meta_file(
+      ds_lib=Equity,
+      ds_name=profile_tabs_births_wd12,
+	  creator=L Hendey and S Diby,
+      creator_process=Equity_Births_profile_transpose.sas,
+      restrictions=None
+      )
+
+%Dc_update_meta_file(
+      ds_lib=Equity,
+      ds_name=profile_tabs_births_cltr00,
+	  creator=L Hendey and S Diby,
+      creator_process=Equity_Births_profile_transpose.sas,
+      restrictions=None
+      )

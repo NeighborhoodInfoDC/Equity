@@ -17,30 +17,26 @@
 
 
 *output population by race;
-data population (label="Population Race Variables for COMM" drop=Pct: q);  
+data population (drop=Pct: q);  
 set equity.profile_tabs_ACS_suppress (keep=  city ward2012 
 
-		   PopWithRace: mPopWithRace:
-		   PopBlackNonHispBridge: mPopBlackNonHispBridge:
-           PopWhiteNonHispBridge: mPopWhiteNonHispBridge:
-		   PopHisp: mPopHisp:
-		   PopAsianPINonHispBridge: mPopAsianPINonHispBridge:
-		   PopOtherRaceNonHispBridg: mPopOtherRaceNonHispBr:
-		   PopMultiracialNonHisp: mPopMultiracialNonHisp:
-		   PopAlone: mPopAlone:
+		PopWithRace: mPopWithRace:
+		PopBlackNonHispBridge: mPopBlackNonHispBridge:
+        PopWhiteNonHispBridge: mPopWhiteNonHispBridge:
+		PopHisp: mPopHisp:
+		PopAsianPINonHispBridge: mPopAsianPINonHispBridge:
+		PopOtherRaceNonHispBridg: mPopOtherRaceNonHispBr:
+		PopMultiracialNonHisp: mPopMultiracialNonHisp:
+		PopAlone: mPopAlone:
 	
-	
-	PctBlackNonHispBridge: PctWhiteNonHispBridge:
-	PctHisp: PctAsnPINonHispBridge: PctOtherRace: PctOthRace:
-	
-	PctAloneB: PctAloneW: PctAloneH: PctAloneA_:
-	PctAloneI_: PctAloneO: PctAloneM: PctAloneIOM: PctAloneAIOM:
-	
-	PopForeignBorn_2010_14
-	PctForeignBorn_: 
-
-	PctOthLang:
-	PopNonEnglish_2010_14  mPopNonEnglish_2010_14 Pop5andOverYears_2010_14 mPop5andOverYears_2010_14);
+		PctBlackNonHispBridge: PctWhiteNonHispBridge:
+		PctHisp: PctAsnPINonHispBridge: PctOtherRace: PctOthRace:
+		PctAloneB: PctAloneW: PctAloneH: PctAloneA_:
+		PctAloneI_: PctAloneO: PctAloneM: PctAloneIOM: PctAloneAIOM:
+		PopForeignBorn_2010_14
+		PctForeignBorn_: 
+		PctOthLang:
+		PopNonEnglish_2010_14  mPopNonEnglish_2010_14 Pop5andOverYears_2010_14 mPop5andOverYears_2010_14);
 
 
 			array oldvars_e {14}
@@ -97,45 +93,48 @@ set equity.profile_tabs_ACS_suppress (keep=  city ward2012
 				end;
 
 	label
-	nPctAloneA_2010_14="% Asian/P.I. alone, 2010-14"     
-nPctAloneA_m_2010_14="MOE for % Asian/P.I. alone, 2010-14"
-nPctAloneAIOM_2010_14="% All other than Black-White-Hispanic, 2010-14"    
-nPctAloneAIOM_m_2010_14="MOE for % All other than Black-White-Hispanic, 2010-14"     
-nPctAloneI_2010_14="% Indigenous alone, 2010-14"    
-nPctAloneI_m_2010_14="MOE for % Indigenous alone, 2010-14"    
-nPctAloneM_2010_14="% Multiracial, 2010-14"
-nPctAloneM_m_2010_14="MOE for% Multiracial, 2010-14"
-nPctAloneO_2010_14="% Other race alone, 2010-14"
-nPctAloneO_m_2010_14="MOE for % Other race alone, 2010-14"
-nPctAsnPINonHispBridge_2010_14="% Asian/P.I. non-Hispanic, 2010-14"     
-nPctAsnPINonHispBridge_m_2010_14="MOE for % Asian/P.I. non-Hispanic, 2010-14"
-nPctBlackNonHispBridge_2010_14="% black non-Hispanic, 2010-14"     
-nPctBlackNonHispBridge_m_2010_14="MOE for % black non-Hispanic, 2010-14"
-nPctForeignBorn_2010_14="% foreign born, 2010-14"     
-nPctForeignBorn_m_2010_14="MOE for % foreign born, 2010-14"   
-nPctHisp_2010_14="% Hispanic, 2010-14"    
-nPctHisp_m_2010_14="MOE for % Hispanic, 2010-14"
-nPctOthLang_2010_14="% pop. that speaks a language other than English at home, 2010-14"
-nPctOthLang_m_2010_14="MOE for % pop. that speaks a language other than English at home, 2010-14"  
-nPctOthRaceNonHisBridg_m_2010_14="MOE for % Non-Hispanic Black/African American population, 2010-14"
-nPctOthRaceNonHispBridg_2010_14="% Non-Hispanic Black/African American population, 2010-14"  
-nPctWhiteNonHispBridge_2010_14="% Non-Hispanic White population, 2010-14"     
-nPctWhiteNonHispBridge_m_2010_14="MOE for % Non-Hispanic White population, 2010-14"     
-nPctAloneB_2010_14="% black alone, 2010-14"
-nPctAloneW_2010_14="% white alone, 2010-14" 
-nPctAloneB_m_2010_14="MOE for % black alone, 2010-14"
-nPctAloneW_m_2010_14="MOE for % white alone, 2010-14"
-;
+		nPctAloneA_2010_14="% Asian/P.I. alone, 2010-14"     
+		nPctAloneA_m_2010_14="MOE for % Asian/P.I. alone, 2010-14"
+		nPctAloneAIOM_2010_14="% All other than Black-White-Hispanic, 2010-14"    
+		nPctAloneAIOM_m_2010_14="MOE for % All other than Black-White-Hispanic, 2010-14"     
+		nPctAloneI_2010_14="% Indigenous alone, 2010-14"    
+		nPctAloneI_m_2010_14="MOE for % Indigenous alone, 2010-14"    
+		nPctAloneM_2010_14="% Multiracial, 2010-14"
+		nPctAloneM_m_2010_14="MOE for% Multiracial, 2010-14"
+		nPctAloneO_2010_14="% Other race alone, 2010-14"
+		nPctAloneO_m_2010_14="MOE for % Other race alone, 2010-14"
+		nPctAsnPINonHispBridge_2010_14="% Asian/P.I. non-Hispanic, 2010-14"     
+		nPctAsnPINonHispBridge_m_2010_14="MOE for % Asian/P.I. non-Hispanic, 2010-14"
+		nPctBlackNonHispBridge_2010_14="% black non-Hispanic, 2010-14"     
+		nPctBlackNonHispBridge_m_2010_14="MOE for % black non-Hispanic, 2010-14"
+		nPctForeignBorn_2010_14="% foreign born, 2010-14"     
+		nPctForeignBorn_m_2010_14="MOE for % foreign born, 2010-14"   
+		nPctHisp_2010_14="% Hispanic, 2010-14"    
+		nPctHisp_m_2010_14="MOE for % Hispanic, 2010-14"
+		nPctOthLang_2010_14="% pop. that speaks a language other than English at home, 2010-14"
+		nPctOthLang_m_2010_14="MOE for % pop. that speaks a language other than English at home, 2010-14"  
+		nPctOthRaceNonHisBridg_m_2010_14="MOE for % Non-Hispanic Black/African American population, 2010-14"
+		nPctOthRaceNonHispBridg_2010_14="% Non-Hispanic Black/African American population, 2010-14"  
+		nPctWhiteNonHispBridge_2010_14="% Non-Hispanic White population, 2010-14"     
+		nPctWhiteNonHispBridge_m_2010_14="MOE for % Non-Hispanic White population, 2010-14"     
+		nPctAloneB_2010_14="% black alone, 2010-14"
+		nPctAloneW_2010_14="% white alone, 2010-14" 
+		nPctAloneB_m_2010_14="MOE for % black alone, 2010-14"
+		nPctAloneW_m_2010_14="MOE for % white alone, 2010-14"
+		;
 
 
-	run;
-	proc contents data=population;
-	run; 
-	proc export data=population 
-	outfile="D:\DCDATA\Libraries\Equity\Prog\ACS_ward_population_COMM.csv"
+run;
+
+proc contents data=population;
+run; 
+
+proc export data=population 
+	outfile="D:\DCDATA\Libraries\Equity\Prog\profile_tabs_ACS_wardpop_Comms.csv"
 	dbms=csv replace;
-	run;
-data all (label="ACS Vars Edu Pov EMP for COMM" drop= q Pct:); 
+run;
+
+data all (drop= q Pct:); 
 set equity.profile_tabs_ACS_suppress 
 	(keep=city ward2012 
 				Pct25andOverWHS_2010_14 Pct25andOverWHS_m_2010_14
@@ -175,10 +174,10 @@ array old {14} 	Pct25andOverWHS_2010_14 Pct25andOverWHS_m_2010_14
 				PctWorkFTLT35k_2010_14 PctWorkFTLT35k_m_2010_14
 				PctWorkFTLT75k_2010_14 PctWorkFTLT75k_m_2010_14;
 
-array new {14} nPct25andOverWHS_2010_14 nPct25andOverWHS_m_2010_14
-			   nPct25andOverWSC_2010_14 nPct25andOverWSC_m_2010_14
-			   nPctPoorPersons_2010_14 nPctPoorPersons_m_2010_14  
-			   nPctPoorChildren_2010_14 nPctPoorChildren_m_2010_14
+array new {14} 	nPct25andOverWHS_2010_14 nPct25andOverWHS_m_2010_14
+			   	nPct25andOverWSC_2010_14 nPct25andOverWSC_m_2010_14
+			   	nPctPoorPersons_2010_14 nPctPoorPersons_m_2010_14  
+			   	nPctPoorChildren_2010_14 nPctPoorChildren_m_2010_14
 				nPctUnemployed_2010_14 nPctUnemployed_m_2010_14 
 				nPctWorkFTLT35k_2010_14 nPctWorkFTLT35k_m_2010_14
 				nPctWorkFTLT75k_2010_14 nPctWorkFTLT75k_m_2010_14;
@@ -231,10 +230,10 @@ array old {14} 	Pct25andOverWHSW_2010_14 Pct25andOverWHSW_m_2010_14
 				PctWorkFTLT35kW_2010_14 PctWorkFTLT35kW_m_2010_14
 				PctWorkFTLT75kW_2010_14 PctWorkFTLT75kW_m_2010_14;
 
-array new {14} nPct25andOverWHS_2010_14 nPct25andOverWHS_m_2010_14
-			   nPct25andOverWSC_2010_14 nPct25andOverWSC_m_2010_14
-			   nPctPoorPersons_2010_14 nPctPoorPersons_m_2010_14  
-			   nPctPoorChildren_2010_14 nPctPoorChildren_m_2010_14
+array new {14} 	nPct25andOverWHS_2010_14 nPct25andOverWHS_m_2010_14
+			   	nPct25andOverWSC_2010_14 nPct25andOverWSC_m_2010_14
+			   	nPctPoorPersons_2010_14 nPctPoorPersons_m_2010_14  
+			   	nPctPoorChildren_2010_14 nPctPoorChildren_m_2010_14
 				nPctUnemployed_2010_14 nPctUnemployed_m_2010_14 
 				nPctWorkFTLT35k_2010_14 nPctWorkFTLT35k_m_2010_14
 				nPctWorkFTLT75k_2010_14 nPctWorkFTLT75k_m_2010_14;
@@ -255,22 +254,22 @@ array new {14} nPct25andOverWHS_2010_14 nPct25andOverWHS_m_2010_14
 			mPop25andOverWSCW_2010_14=mPop25andOverWSC_2010_14
 			PersonsPovertyDefinedW_2010_14=PersonsPovertyDefined_2010_14 
 			mPersonsPovertyDefinedW_2010_14=mPersonsPovertyDefined_2010_14
-				PopPoorPersonsW_2010_14=PopPoorPersons_2010_14
-				mPopPoorPersonsW_2010_14=mPopPoorPersons_2010_14
-				ChildrenPovertyDefinedW_2010_14=ChildrenPovertyDefined_2010_14
-				mChildrenPovertyDefinedW_2010_14=mChildrenPovertyDefined_2010_14 
-           		PopPoorChildrenW_2010_14=PopPoorChildren_2010_14
-				mPopPoorChildrenW_2010_14=mPopPoorChildren_2010_14
-				PopUnemployedW_2010_14=PopUnemployed_2010_14  
-				mPopUnemployedW_2010_14=mPopUnemployed_2010_14
-				PopInCivLaborForceW_2010_14=PopInCivLaborForce_2010_14 
-				mPopInCivLaborForceW_2010_14=mPopInCivLaborForce_2010_14 
-				PopWorkFTW_2010_14=PopWorkFT_2010_14  
-				mPopWorkFTW_2010_14=mPopWorkFT_2010_14
-				PopWorkFTLT35KW_2010_14=PopWorkFTLT35K_2010_14 
-				mPopWorkFTLT35KW_2010_14=mPopWorkFTLT35K_2010_14
-		   		PopWorkFTLT75KW_2010_14=PopWorkFTLT75K_2010_14 
-				mPopWorkFTLT75KW_2010_14=mPopWorkFTLT75K_2010_14;
+			PopPoorPersonsW_2010_14=PopPoorPersons_2010_14
+			mPopPoorPersonsW_2010_14=mPopPoorPersons_2010_14
+			ChildrenPovertyDefinedW_2010_14=ChildrenPovertyDefined_2010_14
+			mChildrenPovertyDefinedW_2010_14=mChildrenPovertyDefined_2010_14 
+           	PopPoorChildrenW_2010_14=PopPoorChildren_2010_14
+			mPopPoorChildrenW_2010_14=mPopPoorChildren_2010_14
+			PopUnemployedW_2010_14=PopUnemployed_2010_14  
+			mPopUnemployedW_2010_14=mPopUnemployed_2010_14
+			PopInCivLaborForceW_2010_14=PopInCivLaborForce_2010_14 
+			mPopInCivLaborForceW_2010_14=mPopInCivLaborForce_2010_14 
+			PopWorkFTW_2010_14=PopWorkFT_2010_14  
+			mPopWorkFTW_2010_14=mPopWorkFT_2010_14
+			PopWorkFTLT35KW_2010_14=PopWorkFTLT35K_2010_14 
+			mPopWorkFTLT35KW_2010_14=mPopWorkFTLT35K_2010_14
+		   	PopWorkFTLT75KW_2010_14=PopWorkFTLT75K_2010_14 
+			mPopWorkFTLT75KW_2010_14=mPopWorkFTLT75K_2010_14;
 
 run;
 
@@ -495,7 +494,7 @@ proc sort data=all_race;
 by ward2012 race;
 
 proc export data=all_race 
-	outfile="D:\DCDATA\Libraries\Equity\Prog\ACS_Ward_COMMOutput.csv"
+	outfile="D:\DCDATA\Libraries\Equity\Prog\profile_tabs_ACS_Comms.csv"
 	dbms=csv replace;
 	run;
 

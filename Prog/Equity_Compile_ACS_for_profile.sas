@@ -40,7 +40,7 @@
   %let geosuf = %sysfunc( putc( %upcase( &geo ), $geosuf. ) );
   %let geoafmt = %sysfunc( putc( %upcase( &geo ), $geoafmt. ) );
 
-  data Equity_profile&geosuf._A (compress=no);  
+  data profile_acs&geosuf._A (compress=no);  
   	merge  
       equity.Acs_2010_14_dc_sum_tr&geosuf
         (keep=&geo TotPop: mTotPop: 
@@ -118,13 +118,13 @@
   proc summary data=Nbr_profile&geosuf._A;
     var _numeric_;
     class &geo;
-    output out=Nbr_profile&geosuf._B (compress=no) mean=;
+    output out=Nbr_profile_acs&geosuf._B (compress=no) mean=;
 
   run;*/
 
-  data equity.Equity_profile&geosuf (compress=no); 
+  data equity.profile_acs&geosuf (compress=no label="DC Equity Indicators by Race/Ethnicity, 2010-14, &geo."); 
   
-    set Equity_profile&geosuf._A;
+    set profile_acs&geosuf._A;
     
     ** Population **;
     
@@ -585,10 +585,16 @@
 	%end;
 
 	label
-	  AvgHshldIncAdjB_2010_14 = "Average household income, Black/African American, 2010-14"
-	  AvgHshldIncAdjW_2010_14 = "Average household income, Non-Hispanic White, 2010-14"
-	  AvgHshldIncAdjH_2010_14 = "Average household income, Hispanic/Latino, 2010-14"
-	  AvgHshldIncAdjAIOM_2010_14 = "Average household income, All remaining groups other than Black, Non-Hispanic White, Hispanic, 2010-14"
+	  AvgHshldIncAdj_2010_14 = "Average household income (adjusted), 2010-14"
+	  AvgHshldIncAdjB_2010_14 = "Average household income (adjusted), Black/African American, 2010-14"
+	  AvgHshldIncAdjW_2010_14 = "Average household income (adjusted), Non-Hispanic White, 2010-14"
+	  AvgHshldIncAdjH_2010_14 = "Average household income (adjusted), Hispanic/Latino, 2010-14"
+	  AvgHshldIncAdjAIOM_2010_14 = "Average household income (adjusted), All remaining groups other than Black, Non-Hispanic White, Hispanic, 2010-14"
+	  AvgHshldIncome_m_2010_14 = "Average household income, MOE, 2010-14"
+	  AvgHshldIncome_m_2010_14 = "Average household income, Black/African American, MOE, 2010-14"
+	  AvgHshldIncome_m_2010_14 = "Average household income, Non-Hispanic White, MOE, 2010-14"
+	  AvgHshldIncome_m_2010_14 = "Average household income, Hispanic/Latino, MOE, 2010-14"
+	  AvgHshldIncome_m_2010_14 = "Average household income, All remaining groups other than Black, Non-Hispanic White, Hispanic, MOE, 2010-14"
       ;
 
         
@@ -628,33 +634,27 @@
  
   run;
     
-  %File_info( data=Equity.Equity_profile&geosuf, printobs=0, contents=n )
+  %File_info( data=Equity.profile_acs&geosuf, printobs=0, contents=n )
   
 %end; 
   
+** Register metadata **;
+
+%Dc_update_meta_file(
+      ds_lib=Equity,
+      ds_name=profile_acs&geosuf,
+	  creator=L Hendey and S Diby,
+      creator_process=Equity_Compile_ACS_for_profile&geosuf.sas,
+      restrictions=None
+      )
+
 %mend add_percents;
 
 /** End Macro Definition **/
 
 %add_percents; 
 
-/*proc print data=equity.equity_profile_city;
-var city AvgHshldIncomeB_2010_14 AvgHshldIncomeW_2010_14 AvgHshldIncomeH_2010_14 AvgHshldIncomeAIOM_2010_14
-AvgHshldIncomeB_m_2010_14 AvgHshldIncomeW_m_2010_14 AvgHshldIncomeH_m_2010_14 AvgHshldIncomeAIOM_m_2010_14
-;
 
-proc print data=equity.equity_profile_wd12;
-var ward2012 
-PctAloneB_2010_14 PctAloneB_m_2010_14 PctAloneW_2010_14 PctAloneW_m_2010_14 
-PctAloneH_2010_14 PctAloneH_m_2010_14  PctAloneA_2010_14 PctAloneA_m_2010_14 
-PctAloneI_2010_14 PctAloneI_m_2010_14 PctAloneO_2010_14 PctAloneO_m_2010_14 
-PctAloneM_2010_14 PctAloneM_m_2010_14  PctAloneIOM_2010_14 PctAloneIOM_m_2010_14 
-PctAloneAIOM_2010_14 PctAloneAIOM_m_2010_14
-PctPoorPersons_2010_14 PctPoorPersons_m_2010_14 PctPoorPersonsB_2010_14 PctPoorPersonsB_m_2010_14
-PctPoorPersonsW_2010_14 PctPoorPersonsW_m_2010_14 PctPoorPersonsH_2010_14 PctPoorPersonsH_m_2010_14
-PctPoorPersonsAIOM_2010_14 PctPoorPersonsAIOM_m_2010_14 PctPoorPersonsFB_2010_14 PctPoorPersonsFB_m_2010_14
-PctUnemployedB_2010_14 PctUnemployedB_m_2010_14
-PctUnemployedW_2010_14 PctUnemployedW_m_2010_14 PctUnemployedH_2010_14 PctUnemployedH_m_2010_14
-PctUnemployedAIOM_2010_14 PctUnemployedAIOM_m_2010_14*/
-;
-run; 
+    
+
+
