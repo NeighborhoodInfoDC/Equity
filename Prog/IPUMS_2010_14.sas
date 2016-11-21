@@ -309,8 +309,9 @@ data Equity.Acs_tables_ipums (Label="iPUMS 2010-14 ACS for Racial Equity Profile
       ds_name=Acs_tables_ipums,
 	  creator=M.Woluchem,
       creator_process=IPUMS_2010_14.sas,
+      revisions=New file.,
       restrictions=None
-      )
+            )
 
 
 /*Quality Control*/

@@ -3506,9 +3506,9 @@ proc export data=equity.profile_tabs_ipums
 %Dc_update_meta_file(
       ds_lib=Equity,
       ds_name=profile_tabs_ipums ,
-	  creator=M Woluchem,
-      creator_process=IPUMS_Output_2010_14_rev.sas,
-      restrictions=None
+	creator_process=IPUMS_Output_2010_14_rev.sas,
+      restrictions=None,
+      Revisions=New file.
       )
 
 

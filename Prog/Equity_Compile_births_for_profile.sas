@@ -161,18 +161,19 @@
 
 
  %File_info( data=Equity.profile_births&geosuf, printobs=0, contents=y )
- 
- %end;
 
-** Register metadata **;
+ ** Register metadata **;
 
 %Dc_update_meta_file(
       ds_lib=Equity,
-      ds_name=Equity_profile_births&geosuf,
-	  creator=L Hendey and S Diby,
+      ds_name=profile_births&geosuf,
       creator_process=Equity_Compile_Births_for_profile.sas,
-      restrictions=None
+      restrictions=None,
+	  revisions=New file.
       )
+
+ %end;
+
 
 %mend add_percents;
 

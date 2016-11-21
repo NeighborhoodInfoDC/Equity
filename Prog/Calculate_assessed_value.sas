@@ -281,9 +281,9 @@ run;
 %Dc_update_meta_file(
       ds_lib=Equity,
       ds_name=assessedval_race,
-	  creator=L Hendey,
       creator_process=Calculate_assessed_value.sas,
-      restrictions=None
+      restrictions=None,
+      revisions=New file.
       )
 
 

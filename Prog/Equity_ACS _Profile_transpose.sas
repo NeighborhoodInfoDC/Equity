@@ -903,7 +903,7 @@ proc export data=equity.profile_tabs_ACS
 %Dc_update_meta_file(
       ds_lib=Equity,
       ds_name=profile_tabs_ACS,
-	  creator=L Hendey and S Diby,
       creator_process=Equity_ACS_profile_transpose.sas,
-      restrictions=None
+      restrictions=None,
+      revisions=New file.
       )

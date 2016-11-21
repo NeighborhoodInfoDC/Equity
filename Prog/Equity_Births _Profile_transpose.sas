@@ -292,23 +292,23 @@ proc export data=equity.profile_tabs_births_cltr00
 %Dc_update_meta_file(
       ds_lib=Equity,
       ds_name=births_gaps_allgeo,
-	  creator=L Hendey and S Diby,
       creator_process=Equity_Births_profile_transpose.sas,
-      restrictions=None
+      restrictions=None,
+	  revisions=New file.
       )
 
 %Dc_update_meta_file(
       ds_lib=Equity,
       ds_name=profile_tabs_births_wd12,
-	  creator=L Hendey and S Diby,
       creator_process=Equity_Births_profile_transpose.sas,
-      restrictions=None
+      restrictions=None,
+	  Revisions=New file.
       )
 
 %Dc_update_meta_file(
       ds_lib=Equity,
       ds_name=profile_tabs_births_cltr00,
-	  creator=L Hendey and S Diby,
       creator_process=Equity_Births_profile_transpose.sas,
-      restrictions=None
+      restrictions=None,
+	  revisions=New file.
       )

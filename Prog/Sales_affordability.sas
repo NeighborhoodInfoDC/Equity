@@ -224,9 +224,9 @@ tractlabel="Census Tract Label"
 %Dc_update_meta_file(
       ds_lib=Equity,
       ds_name=sales_afford_all,
-	  creator=M. Woluchem,
       creator_process=Sales_Affordability.sas,
-      restrictions=None
+      restrictions=None,
+      revisions=New file.
       )
 
 data wardonly;
