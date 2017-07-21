@@ -16,130 +16,130 @@
 	
 		*CITY white estimates; 
 			array w_est{21} 
-				cPct25andOverWoutHSW_2010_14
-				cPct25andOverWHSW_2010_14
-				cPct25andOverWSCW_2010_14
-				cAvgHshldIncAdjW_2010_14
-				cPctFamilyGT200000W_2010_14 
-				cPctFamilyLT75000W_2010_14
-				cPctPoorPersonsW_2010_14 
-				cPctPoorChildrenW_2010_14
-				cPct16andOverEmployW_2010_14
-				cPctEmployed16to64W_2010_14
-				cPctUnemployedW_2010_14
-				cPct16andOverWagesW_2010_14
-				cPct16andOverWorkFTW_2010_14
-				cPctWorkFTLT35kW_2010_14
-				cPctWorkFTLT75kW_2010_14
-				cPctEmployedMngmtW_2010_14
-				cPctEmployedServW_2010_14
-				cPctEmployedSalesW_2010_14
-				cPctEmployedNatResW_2010_14
-				cPctEmployedProdW_2010_14
-				cPctOwnerOccupiedHUW_2010_14
+				cPct25andOverWoutHSW_&_years.
+				cPct25andOverWHSW_&_years.
+				cPct25andOverWSCW_&_years.
+				cAvgHshldIncAdjW_&_years.
+				cPctFamilyGT200000W_&_years. 
+				cPctFamilyLT75000W_&_years.
+				cPctPoorPersonsW_&_years. 
+				cPctPoorChildrenW_&_years.
+				cPct16andOverEmployW_&_years.
+				cPctEmployed16to64W_&_years.
+				cPctUnemployedW_&_years.
+				cPct16andOverWagesW_&_years.
+				cPct16andOverWorkFTW_&_years.
+				cPctWorkFTLT35kW_&_years.
+				cPctWorkFTLT75kW_&_years.
+				cPctEmployedMngmtW_&_years.
+				cPctEmployedServW_&_years.
+				cPctEmployedSalesW_&_years.
+				cPctEmployedNatResW_&_years.
+				cPctEmployedProdW_&_years.
+				cPctOwnerOccupiedHUW_&_years.
 				;
 
 			*CITY white MOE; 
 
 			array w_moe{21} 	
-				cPct25andOverWoutHSW_m_2010_14
-				cPct25andOverWHSW_m_2010_14
-				cPct25andOverWSCW_m_2010_14
-				cAvgHshldIncAdjW_m_2010_14
-				cPctFamilyGT200000W_m_2010_14
-				cPctFamilyLT75000W_m_2010_14
-				cPctPoorPersonsW_m_2010_14
-				cPctPoorChildrenW_m_2010_14
-				cPct16andOverEmployW_m_2010_14
-				cPctEmployed16to64W_m_2010_14
-				cPctUnemployedW_m_2010_14
-				cPct16andOverWagesW_m_2010_14
-				cPct16andOverWorkFTW_m_2010_14
-				cPctWorkFTLT35kW_m_2010_14
-				cPctWorkFTLT75kW_m_2010_14
-				cPctEmployedMngmtW_m_2010_14
-				cPctEmployedServW_m_2010_14
-				cPctEmployedSalesW_m_2010_14
-				cPctEmployedNatResW_m_2010_14
-				cPctEmployedProdW_m_2010_14
-				cPctOwnerOccupiedHUW_m_2010_14
+				cPct25andOverWoutHSW_m_&_years.
+				cPct25andOverWHSW_m_&_years.
+				cPct25andOverWSCW_m_&_years.
+				cAvgHshldIncAdjW_m_&_years.
+				cPctFamilyGT200000W_m_&_years.
+				cPctFamilyLT75000W_m_&_years.
+				cPctPoorPersonsW_m_&_years.
+				cPctPoorChildrenW_m_&_years.
+				cPct16andOverEmployW_m_&_years.
+				cPctEmployed16to64W_m_&_years.
+				cPctUnemployedW_m_&_years.
+				cPct16andOverWagesW_m_&_years.
+				cPct16andOverWorkFTW_m_&_years.
+				cPctWorkFTLT35kW_m_&_years.
+				cPctWorkFTLT75kW_m_&_years.
+				cPctEmployedMngmtW_m_&_years.
+				cPctEmployedServW_m_&_years.
+				cPctEmployedSalesW_m_&_years.
+				cPctEmployedNatResW_m_&_years.
+				cPctEmployedProdW_m_&_years.
+				cPctOwnerOccupiedHUW_m_&_years.
 				;
 
 				*cv white MOE; 
 
 			array w_cv{21} 
-				ctycvPct25andOverWoutHSW_2010_14
-				ctycvPct25andOverWHSW_2010_14
-				ctycvPct25andOverWSCW_2010_14
-				ctycvAvgHshldIncAdjW_2010_14
-				ctycvPctFamilyGT200000W_2010_14
-				ctycvPctFamilyLT75000W_2010_14
-				ctycvPctPoorPersonsW_2010_14
-				ctycvPctPoorChildrenW_2010_14
-				ctycvPct16andOverEmployW_2010_14
-				ctycvPctEmployed16to64W_2010_14
-				ctycvPctUnemployedW_2010_14
-				ctycvPct16andOverWagesW_2010_14
-				ctycvPct16andOverWorkFTW_2010_14
-				ctycvPctWorkFTLT35kW_2010_14
-				ctycvPctWorkFTLT75kW_2010_14
-				ctycvPctEmployedMngmtW_2010_14
-				ctycvPctEmployedServW_2010_14
-				ctycvPctEmployedSalesW_2010_14
-				ctycvPctEmployedNatResW_2010_14
-				ctycvPctEmployedProdW_2010_14
-				ctycvPctOwnerOccupiedHUW_2010_14
+				ctycvPct25andOverWoutHSW_&_years.
+				ctycvPct25andOverWHSW_&_years.
+				ctycvPct25andOverWSCW_&_years.
+				ctycvAvgHshldIncAdjW_&_years.
+				ctycvPctFamilyGT200000W_&_years.
+				ctycvPctFamilyLT75000W_&_years.
+				ctycvPctPoorPersonsW_&_years.
+				ctycvPctPoorChildrenW_&_years.
+				ctycvPct16andOverEmployW_&_years.
+				ctycvPctEmployed16to64W_&_years.
+				ctycvPctUnemployedW_&_years.
+				ctycvPct16andOverWagesW_&_years.
+				ctycvPct16andOverWorkFTW_&_years.
+				ctycvPctWorkFTLT35kW_&_years.
+				ctycvPctWorkFTLT75kW_&_years.
+				ctycvPctEmployedMngmtW_&_years.
+				ctycvPctEmployedServW_&_years.
+				ctycvPctEmployedSalesW_&_years.
+				ctycvPctEmployedNatResW_&_years.
+				ctycvPctEmployedProdW_&_years.
+				ctycvPctOwnerOccupiedHUW_&_years.
 				;
 
 				*white upper bound;
 			array w_upper{21} 		
-				ctyuPct25andOverWoutHSW_2010_14
-				ctyuPct25andOverWHSW_2010_14
-				ctyuPct25andOverWSCW_2010_14
-				ctyuAvgHshldIncAdjW_2010_14
-				ctyuPctFamilyGT200000W_2010_14
-				ctyuPctFamilyLT75000W_2010_14
-				ctyuPctPoorPersonsW_2010_14
-				ctyuPctPoorChildrenW_2010_14
-				ctyuPct16andOverEmployW_2010_14
-				ctyuPctEmployed16to64W_2010_14
-				ctyuPctUnemployedW_2010_14
-				ctyuPct16andOverWagesW_2010_14
-				ctyuPct16andOverWorkFTW_2010_14
-				ctyuPctWorkFTLT35kW_2010_14
-				ctyuPctWorkFTLT75kW_2010_14
-				ctyuPctEmployedMngmtW_2010_14
-				ctyuPctEmployedServW_2010_14
-				ctyuPctEmployedSalesW_2010_14
-				ctyuPctEmployedNatResW_2010_14
-				ctyuPctEmployedProdW_2010_14
-				ctyuPctOwnerOccupiedHUW_2010_14
+				ctyuPct25andOverWoutHSW_&_years.
+				ctyuPct25andOverWHSW_&_years.
+				ctyuPct25andOverWSCW_&_years.
+				ctyuAvgHshldIncAdjW_&_years.
+				ctyuPctFamilyGT200000W_&_years.
+				ctyuPctFamilyLT75000W_&_years.
+				ctyuPctPoorPersonsW_&_years.
+				ctyuPctPoorChildrenW_&_years.
+				ctyuPct16andOverEmployW_&_years.
+				ctyuPctEmployed16to64W_&_years.
+				ctyuPctUnemployedW_&_years.
+				ctyuPct16andOverWagesW_&_years.
+				ctyuPct16andOverWorkFTW_&_years.
+				ctyuPctWorkFTLT35kW_&_years.
+				ctyuPctWorkFTLT75kW_&_years.
+				ctyuPctEmployedMngmtW_&_years.
+				ctyuPctEmployedServW_&_years.
+				ctyuPctEmployedSalesW_&_years.
+				ctyuPctEmployedNatResW_&_years.
+				ctyuPctEmployedProdW_&_years.
+				ctyuPctOwnerOccupiedHUW_&_years.
 				;
 
 				*white lower bound; 
 
 			array w_lower{21} 		
-				ctylPct25andOverWoutHSW_2010_14
-				ctylPct25andOverWHSW_2010_14
-				ctylPct25andOverWSCW_2010_14
-				ctylAvgHshldIncAdjW_2010_14
-				ctylPctFamilyGT200000W_2010_14
-				ctylPctFamilyLT75000W_2010_14
-				ctylPctPoorPersonsW_2010_14
-				ctylPctPoorChildrenW_2010_14
-				ctylPct16andOverEmployW_2010_14
-				ctylPctEmployed16to64W_2010_14
-				ctylPctUnemployedW_2010_14
-				ctylPct16andOverWagesW_2010_14
-				ctylPct16andOverWorkFTW_2010_14
-				ctylPctWorkFTLT35kW_2010_14
-				ctylPctWorkFTLT75kW_2010_14
-				ctylPctEmployedMngmtW_2010_14
-				ctylPctEmployedServW_2010_14
-				ctylPctEmployedSalesW_2010_14
-				ctylPctEmployedNatResW_2010_14
-				ctylPctEmployedProdW_2010_14
-				ctylPctOwnerOccupiedHUW_2010_14
+				ctylPct25andOverWoutHSW_&_years.
+				ctylPct25andOverWHSW_&_years.
+				ctylPct25andOverWSCW_&_years.
+				ctylAvgHshldIncAdjW_&_years.
+				ctylPctFamilyGT200000W_&_years.
+				ctylPctFamilyLT75000W_&_years.
+				ctylPctPoorPersonsW_&_years.
+				ctylPctPoorChildrenW_&_years.
+				ctylPct16andOverEmployW_&_years.
+				ctylPctEmployed16to64W_&_years.
+				ctylPctUnemployedW_&_years.
+				ctylPct16andOverWagesW_&_years.
+				ctylPct16andOverWorkFTW_&_years.
+				ctylPctWorkFTLT35kW_&_years.
+				ctylPctWorkFTLT75kW_&_years.
+				ctylPctEmployedMngmtW_&_years.
+				ctylPctEmployedServW_&_years.
+				ctylPctEmployedSalesW_&_years.
+				ctylPctEmployedNatResW_&_years.
+				ctylPctEmployedProdW_&_years.
+				ctylPctOwnerOccupiedHUW_&_years.
 				;
 
 				  	do m=1 to 21; 
@@ -154,34 +154,34 @@
 
 					end;
 
-		%do r=1 %to 4;
+		%do r=1 %to 5;
 
 		%let race=%scan(&racelist.,&r.," ");
 		%let name=%scan(&racename.,&r.," ");
 
 				*gap race; 
 			array e_gap&race. {21} 
-				Gap25andOverWoutHS&race._2010_14
-				Gap25andOverWHS&race._2010_14
-				Gap25andOverWSC&race._2010_14
-				GapAvgHshldIncAdj&race._2010_14
-				GapFamilyGT200000&race._2010_14
-				GapFamilyLT75000&race._2010_14
-				GapPoorPersons&race._2010_14
-				GapPoorChildren&race._2010_14
-				Gap16andOverEmploy&race._2010_14
-				GapEmployed16to64&race._2010_14
-				GapUnemployed&race._2010_14
-				Gap16andOverWages&race._2010_14
-				Gap16andOverWorkFT&race._2010_14
-				GapWorkFTLT35k&race._2010_14
-				GapWorkFTLT75k&race._2010_14
-				GapEmployedMngmt&race._2010_14
-				GapEmployedServ&race._2010_14
-				GapEmployedSales&race._2010_14
-				GapEmployedNatRes&race._2010_14
-				GapEmployedProd&race._2010_14
-				GapOwnerOccupiedHU&race._2010_14
+				Gap25andOverWoutHS&race._&_years.
+				Gap25andOverWHS&race._&_years.
+				Gap25andOverWSC&race._&_years.
+				GapAvgHshldIncAdj&race._&_years.
+				GapFamilyGT200000&race._&_years.
+				GapFamilyLT75000&race._&_years.
+				GapPoorPersons&race._&_years.
+				GapPoorChildren&race._&_years.
+				Gap16andOverEmploy&race._&_years.
+				GapEmployed16to64&race._&_years.
+				GapUnemployed&race._&_years.
+				Gap16andOverWages&race._&_years.
+				Gap16andOverWorkFT&race._&_years.
+				GapWorkFTLT35k&race._&_years.
+				GapWorkFTLT75k&race._&_years.
+				GapEmployedMngmt&race._&_years.
+				GapEmployedServ&race._&_years.
+				GapEmployedSales&race._&_years.
+				GapEmployedNatRes&race._&_years.
+				GapEmployedProd&race._&_years.
+				GapOwnerOccupiedHU&race._&_years.
 				;
 
 		 	do X=1 to 21; 

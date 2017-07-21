@@ -10,7 +10,7 @@
  Description:  Renames all variables in a dataset to begin with letter C.  
 **************************************************************************/
 
-%macro rename(data);
+%macro rename(data=,out=);
 /** First, create a data set with the list of variables in your input data set **/
 
 proc contents data=&data out=_contents noprint;
@@ -41,7 +41,7 @@ quit;
 
 /** Finally, you apply the rename statement to your data set. **/
 
-data &data._new;
+data &out.;
   set &data;
   rename &rename ;
 run;

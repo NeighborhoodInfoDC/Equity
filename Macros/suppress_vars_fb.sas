@@ -14,38 +14,38 @@
 %macro suppress_vars_fb;
 
 	array n_est {7} 		
-	  	Pct25andOverWoutHSFB_2010_14 Pct25andOverWoutHSNB_2010_14
-		Pct25andOverWHSFB_2010_14 Pct25andOverWHSNB_2010_14 
-		Pct25andOverWSCFB_2010_14 Pct25andOverWSCNB_2010_14
-		PctPoorPersonsFB_2010_14
+	  	Pct25andOverWoutHSFB_&_years. Pct25andOverWoutHSNB_&_years.
+		Pct25andOverWHSFB_&_years. Pct25andOverWHSNB_&_years. 
+		Pct25andOverWSCFB_&_years. Pct25andOverWSCNB_&_years.
+		PctPoorPersonsFB_&_years.
 		;
 
 	array n_moe {7} 		
-	  	Pct25andOverWoutHSFB_m_2010_14 Pct25andOverWoutHSNB_m_2010_14
-		Pct25andOverWHSFB_m_2010_14 Pct25andOverWHSNB_m_2010_14 
-		Pct25andOverWSCFB_m_2010_14 Pct25andOverWSCNB_m_2010_14
-		PctPoorPersonsFB_m_2010_14
+	  	Pct25andOverWoutHSFB_m_&_years. Pct25andOverWoutHSNB_m_&_years.
+		Pct25andOverWHSFB_m_&_years. Pct25andOverWHSNB_m_&_years. 
+		Pct25andOverWSCFB_m_&_years. Pct25andOverWSCNB_m_&_years.
+		PctPoorPersonsFB_m_&_years.
 		;
 
 	array n_cv {7} 		
-	  	cvPct25andOverWoutHSFB_2010_14 cvPct25andOverWoutHSNB_2010_14
-		cvPct25andOverWHSFB_2010_14 cvPct25andOverWHSNB_2010_14 
-		cvPct25andOverWSCFB_2010_14 cvPct25andOverWSCNB_2010_14
-		cvPctPoorPersonsFB_2010_14
+	  	cvPct25andOverWoutHSFB_&_years. cvPct25andOverWoutHSNB_&_years.
+		cvPct25andOverWHSFB_&_years. cvPct25andOverWHSNB_&_years. 
+		cvPct25andOverWSCFB_&_years. cvPct25andOverWSCNB_&_years.
+		cvPctPoorPersonsFB_&_years.
 		;
 
 	array n_upper {7} 		
-	  	uPct25andOverWoutHSFB_2010_14 uPct25andOverWoutHSNB_2010_14
-		uPct25andOverWHSFB_2010_14 uPct25andOverWHSNB_2010_14 
-		uPct25andOverWSCFB_2010_14 uPct25andOverWSCNB_2010_14
-		uPctPoorPersonsFB_2010_14
+	  	uPct25andOverWoutHSFB_&_years. uPct25andOverWoutHSNB_&_years.
+		uPct25andOverWHSFB_&_years. uPct25andOverWHSNB_&_years. 
+		uPct25andOverWSCFB_&_years. uPct25andOverWSCNB_&_years.
+		uPctPoorPersonsFB_&_years.
 		;
 
 	array n_lower {7} 		
-	  	lPct25andOverWoutHSFB_2010_14 lPct25andOverWoutHSNB_2010_14
-		lPct25andOverWHSFB_2010_14 lPct25andOverWHSNB_2010_14 
-		lPct25andOverWSCFB_2010_14 lPct25andOverWSCNB_2010_14
-		lPctPoorPersonsFB_2010_14
+	  	lPct25andOverWoutHSFB_&_years. lPct25andOverWoutHSNB_&_years.
+		lPct25andOverWHSFB_&_years. lPct25andOverWHSNB_&_years. 
+		lPct25andOverWSCFB_&_years. lPct25andOverWSCNB_&_years.
+		lPctPoorPersonsFB_&_years.
 		;
 
   	do f=1 to 7; 
