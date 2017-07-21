@@ -13,6 +13,8 @@
 
  Note: MOEs for AIOM average household income and average adjusted are blank because they are suppressed by the Census.
  **************************************************************************/
+
+
 %include "L:\SAS\Inc\StdLocal.sas";
 
 ** Define libraries **;
@@ -20,29 +22,36 @@
 %DCData_lib( Equity )
 
 %let inc_dollar_yr=2015;
-%let racelist=W B H AIOM A;
-%let racename= NH-White Black-Alone Hispanic All-Other Asian;
+%let racelist=W B H A AIOM ;
+%let racename= NH-White Black-Alone Hispanic Asian All-Other ;
 
 
-%let geography=city /*Ward2012 cluster_tr2000*/;
 %let _years=2011_15;
 
 /** Macro Add_Percents- Start Definition **/
 
-%macro add_percents;
+%macro add_percents (state,geo,geo2);
 
-%do i = 1 %to 3; 
-  %let geo=%scan(&geography., &i., " "); 
+  %let st = %upcase( &state );
+  %let geodo = %upcase( &geo2 );
 
+  %if &geodo = REGCNT %then %do;
+  	%let t = regcnt;
+  %end;
+  %else %do;
+  	%let t = tr;
+  %end;
 
-    %local geosuf geoafmt j; 
+  %local geosuf geoafmt j; 
 
   %let geosuf = %sysfunc( putc( %upcase( &geo ), $geosuf. ) );
   %let geoafmt = %sysfunc( putc( %upcase( &geo ), $geoafmt. ) );
 
-  data profile_acs&geosuf._A (compress=no);  
+  %let y_lbl = %sysfunc( translate( &_years., '-', '_' ) );
+
+  data profile_acs_&state._&geosuf._A (compress=no);  
   	merge  
-      acs.Acs_&_years._dc_sum_tr&geosuf
+      acs.Acs_&_years._&state._sum_&t.&geosuf.
         (keep=&geo TotPop: mTotPop: 
 		   PopUnder5Years: mPopUnder5Years:
 		   Pop5andOverYears: mPop5andOverYears:
@@ -122,9 +131,9 @@
 
   run;*/
 
-  data equity.profile_acs&geosuf (compress=no label="DC Equity Indicators by Race/Ethnicity, &_year., &geo."); 
+  data profile_acs_&state.&geosuf (compress=no label="DC Equity Indicators by Race/Ethnicity, &_year., &geo."); 
   
-    set profile_acs&geosuf._A;
+    set profile_acs_&state._&geosuf._A;
     
     ** Population **;
     
@@ -133,57 +142,57 @@
 	%Pct_calc( var=PctForeignBorn, label=% foreign born, num=PopForeignBorn, den=PopWithRace, years=&_years. )
 
     %Moe_prop_a( var=PctForeignBorn_m_&_years., mult=100, num=PopForeignBorn_&_years., den=PopWithRace_&_years., 
-                       num_moe=mPopForeignBorn_&_years., den_moe=mPopWithRace_&_years. );
+                       num_moe=mPopForeignBorn_&_years., den_moe=mPopWithRace_&_years., label_moe = % foreign born MOE &y_lbl. );
 
 	%Pct_calc( var=PctNativeBorn, label=% native born, num=PopNativeBorn, den=PopWithRace, years=&_years. )
 
     %Moe_prop_a( var=PctNativeBorn_m_&_years., mult=100, num=PopNativeBorn_&_years., den=PopWithRace_&_years., 
-                       num_moe=mPopNativeBorn_&_years., den_moe=mPopWithRace_&_years. );
+                       num_moe=mPopNativeBorn_&_years., den_moe=mPopWithRace_&_years., label_moe = % native born MOE &y_lbl.);
 
     %Pct_calc( var=PctPopUnder18Years, label=% children, num=PopUnder18Years, den=PopWithRace, years= &_years. )
     
     %Moe_prop_a( var=PctPopUnder18Years_m_&_years., mult=100, num=PopUnder18Years_&_years., den=PopWithRace_&_years., 
-                       num_moe=mPopUnder18Years_&_years., den_moe=mPopWithRace_&_years. );
+                       num_moe=mPopUnder18Years_&_years., den_moe=mPopWithRace_&_years., label_moe = % children MOE &y_lbl.);
 
 	%Pct_calc( var=PctPop18_34Years, label=% persons 18-34 years old, num=Pop18_34Years, den=PopWithRace, years= &_years. )
 	
 	%Moe_prop_a( var=PctPop18_34Years_m_&_years., mult=100, num=Pop18_34Years_&_years., den=PopWithRace_&_years., 
-	                       num_moe=mPop18_34Years_&_years., den_moe=mPopWithRace_&_years. );
+	                       num_moe=mPop18_34Years_&_years., den_moe=mPopWithRace_&_years., label_moe = % persons 18-34 years old MOE &y_lbl.);
 
 	%Pct_calc( var=PctPop35_64Years, label=% persons 35-64 years old, num=Pop35_64Years, den=PopWithRace, years= &_years. )
 	
 	%Moe_prop_a( var=PctPop35_64Years_m_&_years., mult=100, num=Pop35_64Years_&_years., den=PopWithRace_&_years., 
-	                       num_moe=mPop35_64Years_&_years., den_moe=mPopWithRace_&_years. );
+	                       num_moe=mPop35_64Years_&_years., den_moe=mPopWithRace_&_years., label_moe = % persons 35-64 years old MOE &y_lbl.);
 
 	%Pct_calc( var=PctPop65andOverYears, label=% seniors, num=Pop65andOverYears, den=PopWithRace, years= &_years. )
 
     %Moe_prop_a( var=PctPop65andOverYrs_m_&_years., mult=100, num=Pop65andOverYears_&_years., den=PopWithRace_&_years., 
-                       num_moe=mPop65andOverYears_&_years., den_moe=mPopWithRace_&_years. );
+                       num_moe=mPop65andOverYears_&_years., den_moe=mPopWithRace_&_years., label_moe = % seniors MOE &y_lbl.);
 
     %Pct_calc( var=PctPopUnder18YearsW, label=% children NH-White, num=PopUnder18YearsW, den=PopWhiteNonHispBridge, years= &_years. )
     
     %Moe_prop_a( var=PctPopUnder18YearsW_m_&_years., mult=100, num=PopUnder18YearsW_&_years., den=PopWhiteNonHispBridge_&_years., 
-                       num_moe=mPopUnder18YearsW_&_years., den_moe=mPopWhiteNonHispBridge_&_years. );
+                       num_moe=mPopUnder18YearsW_&_years., den_moe=mPopWhiteNonHispBridge_&_years., label_moe = % children NH-White MOE &y_lbl.);
 
 	%Pct_calc( var=PctPop18_34YearsW, label=% persons 18-34 years old NH-White, num=Pop18_34YearsW, den=PopWhiteNonHispBridge, years= &_years. )
 	
 	%Moe_prop_a( var=PctPop18_34YearsW_m_&_years., mult=100, num=Pop18_34YearsW_&_years., den=PopWhiteNonHispBridge_&_years., 
-	                       num_moe=mPop18_34YearsW_&_years., den_moe=mPopWhiteNonHispBridge_&_years. );
+	                       num_moe=mPop18_34YearsW_&_years., den_moe=mPopWhiteNonHispBridge_&_years., label_moe = % persons 18-34 years old NH-White MOE &y_lbl.);
 
 	%Pct_calc( var=PctPop35_64YearsW, label=% persons 35-64 years old NH-White, num=Pop35_64YearsW, den=PopWhiteNonHispBridge, years= &_years. )
 	
 	%Moe_prop_a( var=PctPop35_64YearsW_m_&_years., mult=100, num=Pop35_64YearsW_&_years., den=PopWhiteNonHispBridge_&_years., 
-	                       num_moe=mPop35_64YearsW_&_years., den_moe=mPopWhiteNonHispBridge_&_years. );
+	                       num_moe=mPop35_64YearsW_&_years., den_moe=mPopWhiteNonHispBridge_&_years., label_moe = % persons 35-64 years old NH-White MOE &y_lbl.);
 
 	%Pct_calc( var=PctPop65andOverYearsW, label=% seniors NH-White, num=Pop65andOverYearsW, den=PopWhiteNonHispBridge, years= &_years. )
 
     %Moe_prop_a( var=PctPop65andOverYrsW_m_&_years., mult=100, num=Pop65andOverYearsW_&_years., den=PopWhiteNonHispBridge_&_years., 
-                       num_moe=mPop65andOverYearsW_&_years., den_moe=mPopWhiteNonHispBridge_&_years. );
+                       num_moe=mPop65andOverYearsW_&_years., den_moe=mPopWhiteNonHispBridge_&_years., label_moe = % seniors NH-White MOE &y_lbl.);
 
 	%Pct_calc( var=PctForeignBornW, label=% foreign born NH-White, num=PopForeignBornW, den=PopWhiteNonHispBridge, years=&_years. )
 
     %Moe_prop_a( var=PctForeignBornW_m_&_years., mult=100, num=PopForeignBornW_&_years., den=PopWhiteNonHispBridge_&_years., 
-                       num_moe=mPopForeignBornW_&_years., den_moe=mPopWhiteNonHispBridge_&_years. );
+                       num_moe=mPopForeignBornW_&_years., den_moe=mPopWhiteNonHispBridge_&_years., label_moe = % foreign born NH-White MOE &y_lbl.);
 
 	%do r=1 %to 5;
 
@@ -193,27 +202,27 @@
     %Pct_calc( var=PctPopUnder18Years&race., label=% children &name., num=PopUnder18Years&race., den=PopAlone&race., years= &_years. )
     
     %Moe_prop_a( var=PctPopUnder18Years&race._m_&_years., mult=100, num=PopUnder18Years&race._&_years., den=PopAlone&race._&_years., 
-                       num_moe=mPopUnder18Years&race._&_years., den_moe=mPopAlone&race._&_years. );
+                       num_moe=mPopUnder18Years&race._&_years., den_moe=mPopAlone&race._&_years., label_moe = % children &name. MOE &y_lbl.);
 
 	%Pct_calc( var=PctPop18_34Years&race., label=% persons 18-34 years old &name., num=Pop18_34Years&race., den=PopAlone&race., years= &_years. )
 	
 	%Moe_prop_a( var=PctPop18_34Years&race._m_&_years., mult=100, num=Pop18_34Years&race._&_years., den=PopAlone&race._&_years., 
-	                       num_moe=mPop18_34Years&race._&_years., den_moe=mPopAlone&race._&_years. );
+	                       num_moe=mPop18_34Years&race._&_years., den_moe=mPopAlone&race._&_years., label_moe = % persons 18-34 years old &name. MOE &y_lbl.);
 
 	%Pct_calc( var=PctPop35_64Years&race., label=% persons 35-64 years old &name., num=Pop35_64Years&race., den=PopAlone&race., years= &_years. )
 	
 	%Moe_prop_a( var=PctPop35_64Years&race._m_&_years., mult=100, num=Pop35_64Years&race._&_years., den=PopAlone&race._&_years., 
-	                       num_moe=mPop35_64Years&race._&_years., den_moe=mPopAlone&race._&_years. );
+	                       num_moe=mPop35_64Years&race._&_years., den_moe=mPopAlone&race._&_years., label_moe = % persons 35-64 years old &name. MOE &y_lbl.);
 
 	%Pct_calc( var=PctPop65andOverYears&race., label=% seniors &name., num=Pop65andOverYears&race., den=PopAlone&race., years= &_years. )
 
     %Moe_prop_a( var=PctPop65andOverYrs&race._m_&_years., mult=100, num=Pop65andOverYears&race._&_years., den=PopAlone&race._&_years., 
-                       num_moe=mPop65andOverYears&race._&_years., den_moe=mPopAlone&race._&_years. );
+                       num_moe=mPop65andOverYears&race._&_years., den_moe=mPopAlone&race._&_years., label_moe = % seniors &name. MOE &y_lbl.);
 
 	%Pct_calc( var=PctForeignBorn&race., label=% foreign born &name., num=PopForeignBorn&race., den=PopAlone&race., years=&_years. )
 
     %Moe_prop_a( var=PctForeignBorn&race._m_&_years., mult=100, num=PopForeignBorn&race._&_years., den=PopAlone&race._&_years., 
-                       num_moe=mPopForeignBorn&race._&_years., den_moe=mPopAlone&race._&_years. );
+                       num_moe=mPopForeignBorn&race._&_years., den_moe=mPopAlone&race._&_years., label_moe = % foreign born &name. MOE &y_lbl.);
 
 	%end;
 
@@ -229,19 +238,19 @@
     %Pct_calc( var=PctOtherRaceNonHispBridg, label=% All other than Black White Asian P.I. Hispanic, num=PopOtherRaceNonHispBridg, den=PopWithRace, years=&_years. )
 
     %Moe_prop_a( var=PctBlackNonHispBridge_m_&_years., mult=100, num=PopBlackNonHispBridge_&_years., den=PopWithRace_&_years., 
-                       num_moe=mPopBlackNonHispBridge_&_years., den_moe=mPopWithRace_&_years. );
+                       num_moe=mPopBlackNonHispBridge_&_years., den_moe=mPopWithRace_&_years., label_moe =% black non-Hispanic MOE &y_lbl.);
 
     %Moe_prop_a( var=PctWhiteNonHispBridge_m_&_years., mult=100, num=PopWhiteNonHispBridge_&_years., den=PopWithRace_&_years., 
-                       num_moe=mPopWhiteNonHispBridge_&_years., den_moe=mPopWithRace_&_years. );
+                       num_moe=mPopWhiteNonHispBridge_&_years., den_moe=mPopWithRace_&_years., label_moe =% white non-Hispanic MOE &y_lbl.);
 
     %Moe_prop_a( var=PctHisp_m_&_years., mult=100, num=PopHisp_&_years., den=PopWithRace_&_years., 
-                       num_moe=mPopHisp_&_years., den_moe=mPopWithRace_&_years. );
+                       num_moe=mPopHisp_&_years., den_moe=mPopWithRace_&_years., label_moe =% Hispanic MOE &y_lbl.);
 
 	%Moe_prop_a( var=PctAsnPINonHispBridge_m_&_years., mult=100, num=PopAsianPINonHispBridge_&_years., den=PopWithRace_&_years., 
-                       num_moe=mPopAsianPINonHispBridge_&_years., den_moe=mPopWithRace_&_years. );
+                       num_moe=mPopAsianPINonHispBridge_&_years., den_moe=mPopWithRace_&_years., label_moe =% Asian/P.I. non-Hispanic MOE &y_lbl.);
 
     %Moe_prop_a( var=PctOthRaceNonHispBridg_m_&_years., mult=100, num=PopOtherRaceNonHispBridg_&_years., den=PopWithRace_&_years., 
-                       num_moe=mPopOtherRaceNonHispBr_&_years., den_moe=mPopWithRace_&_years. );
+                       num_moe=mPopOtherRaceNonHispBr_&_years., den_moe=mPopWithRace_&_years., label_moe =% All other than Black White Asian P.I. Hispanic MOE &y_lbl.);
 
 	** Population by race/ethnicity alone**; 
 
@@ -256,31 +265,31 @@
 	%Pct_calc( var=PctAloneAIOM, label=% All other than Black-White-Hispanic, num=PopAloneAIOM, den=PopWithRace, years=&_years. )
 
 	%Moe_prop_a( var=PctAloneB_m_&_years., mult=100, num=PopAloneB_&_years., den=PopWithRace_&_years., 
-                       num_moe=mPopAloneB_&_years., den_moe=mPopWithRace_&_years. );
+                       num_moe=mPopAloneB_&_years., den_moe=mPopWithRace_&_years., label_moe =% black alone MOE &y_lbl.);
 
 	%Moe_prop_a( var=PctAloneW_m_&_years., mult=100, num=PopAloneW_&_years., den=PopWithRace_&_years., 
-                       num_moe=mPopAloneW_&_years., den_moe=mPopWithRace_&_years. );
+                       num_moe=mPopAloneW_&_years., den_moe=mPopWithRace_&_years., label_moe =% white alone MOE &y_lbl.);
 
 	%Moe_prop_a( var=PctAloneH_m_&_years., mult=100, num=PopAloneH_&_years., den=PopWithRace_&_years., 
-                       num_moe=mPopAloneH_&_years., den_moe=mPopWithRace_&_years. );
+                       num_moe=mPopAloneH_&_years., den_moe=mPopWithRace_&_years., label_moe =% Hispanic alone MOE &y_lbl.);
 
 	%Moe_prop_a( var=PctAloneA_m_&_years., mult=100, num=PopAloneA_&_years., den=PopWithRace_&_years., 
-                       num_moe=mPopAloneA_&_years., den_moe=mPopWithRace_&_years. );
+                       num_moe=mPopAloneA_&_years., den_moe=mPopWithRace_&_years., label_moe =% Asian/P.I. alone MOE &y_lbl.);
 					   
 	%Moe_prop_a( var=PctAloneI_m_&_years., mult=100, num=PopAloneI_&_years., den=PopWithRace_&_years., 
-                       num_moe=mPopAloneI_&_years., den_moe=mPopWithRace_&_years.);
+                       num_moe=mPopAloneI_&_years., den_moe=mPopWithRace_&_years., label_moe =% Indigenous alone MOE &y_lbl.);
 
 	%Moe_prop_a( var=PctAloneO_m_&_years., mult=100, num=PopAloneO_&_years., den=PopWithRace_&_years., 
-                       num_moe=mPopAloneO_&_years., den_moe=mPopWithRace_&_years. );
+                       num_moe=mPopAloneO_&_years., den_moe=mPopWithRace_&_years., label_moe =% Other race alone MOE &y_lbl.);
 
 	%Moe_prop_a( var=PctAloneM_m_&_years., mult=100, num=PopAloneM_&_years., den=PopWithRace_&_years., 
-                       num_moe=mPopAloneM_&_years., den_moe=mPopWithRace_&_years.);
+                       num_moe=mPopAloneM_&_years., den_moe=mPopWithRace_&_years., label_moe =% Multiracial alone MOE &y_lbl.);
 
 	%Moe_prop_a( var=PctAloneIOM_m_&_years., mult=100, num=PopAloneIOM_&_years., den=PopWithRace_&_years., 
-                       num_moe=mPopAloneIOM_&_years., den_moe=mPopWithRace_&_years. );
+                       num_moe=mPopAloneIOM_&_years., den_moe=mPopWithRace_&_years., label_moe =% Indigienous-other-multi-alone MOE &y_lbl.);
 
 	%Moe_prop_a( var=PctAloneAIOM_m_&_years., mult=100, num=PopAloneAIOM_&_years., den=PopWithRace_&_years., 
-                       num_moe=mPopAloneAIOM_&_years., den_moe=mPopWithRace_&_years. );
+                       num_moe=mPopAloneAIOM_&_years., den_moe=mPopWithRace_&_years., label_moe =% All other than Black-White-Hispanic MOE &y_lbl.);
 
 
 	** Family Risk Factors **;
@@ -288,7 +297,7 @@
 	%Pct_calc( var=PctOthLang, label=% pop. that speaks a language other than English at home, num=PopNonEnglish, den=Pop5andOverYears, years=&_years. )
 
 	%Moe_prop_a( var=PctOthLang_m_&_years., mult=100, num=PopNonEnglish_&_years., den=Pop5andOverYears_&_years., 
-	                       num_moe=mPopNonEnglish_&_years., den_moe=mPop5andOverYears_&_years. );
+	                       num_moe=mPopNonEnglish_&_years., den_moe=mPop5andOverYears_&_years., label_moe = );
 
 	%Pct_calc( var=PctPoorPersons, label=Poverty rate (%), num=PopPoorPersons, den=PersonsPovertyDefined, years=&_years. )
 	%Pct_calc( var=PctPoorPersonsB, label=Poverty rate Black-Alone (%), num=PopPoorPersonsB, den=PersonsPovertyDefinedB, years=&_years. )
@@ -299,85 +308,85 @@
 	%Pct_calc( var=PctPoorPersonsFB, label=Poverty rate foreign born (%), num=PopPoorPersonsFB, den=PersonsPovertyDefinedFB, years=&_years. )
     
 	%Moe_prop_a( var=PctPoorPersons_m_&_years., mult=100, num=PopPoorPersons_&_years., den=PersonsPovertyDefined_&_years., 
-                       num_moe=mPopPoorPersons_&_years., den_moe=mPersonsPovertyDefined_&_years. );
+                       num_moe=mPopPoorPersons_&_years., den_moe=mPersonsPovertyDefined_&_years., label_moe =Poverty rate (%) MOE &y_lbl.);
 
     %Moe_prop_a( var=PctPoorPersonsB_m_&_years., mult=100, num=PopPoorPersonsB_&_years., den=PersonsPovertyDefinedB_&_years., 
-                       num_moe=mPopPoorPersonsB_&_years., den_moe=mPersonsPovertyDefinedB_&_years. );
+                       num_moe=mPopPoorPersonsB_&_years., den_moe=mPersonsPovertyDefinedB_&_years., label_moe =Poverty rate Black-Alone (%) MOE &y_lbl.);
 
     %Moe_prop_a( var=PctPoorPersonsW_m_&_years., mult=100, num=PopPoorPersonsW_&_years., den=PersonsPovertyDefinedW_&_years., 
-                       num_moe=mPopPoorPersonsW_&_years., den_moe=mPersonsPovertyDefinedW_&_years. );
+                       num_moe=mPopPoorPersonsW_&_years., den_moe=mPersonsPovertyDefinedW_&_years., label_moe =Poverty rate NH-White (%) MOE &y_lbl.);
 
     %Moe_prop_a( var=PctPoorPersonsH_m_&_years., mult=100, num=PopPoorPersonsH_&_years., den=PersonsPovertyDefinedH_&_years., 
-                       num_moe=mPopPoorPersonsH_&_years., den_moe=mPersonsPovertyDefinedH_&_years. );
+                       num_moe=mPopPoorPersonsH_&_years., den_moe=mPersonsPovertyDefinedH_&_years., label_moe =Poverty rate Hispanic(%) MOE &y_lbl.);
 
     %Moe_prop_a( var=PctPoorPersonsA_m_&_years., mult=100, num=PopPoorPersonsA_&_years., den=PersonsPovertyDefinedA_&_years., 
-                       num_moe=mPopPoorPersonsA_&_years., den_moe=mPersonsPovertyDefinedA_&_years. );
+                       num_moe=mPopPoorPersonsA_&_years., den_moe=mPersonsPovertyDefinedA_&_years., label_moe =Poverty rate Asian(%) MOE &y_lbl.);
 
 	%Moe_prop_a( var=PctPoorPersonsAIOM_m_&_years., mult=100, num=PopPoorPersonsAIOM_&_years., den=PersonsPovertyDefAIOM_&_years., 
-                       num_moe=mPopPoorPersonsAIOM_&_years., den_moe=mPersonsPovertyDefAIOM_&_years. );
+                       num_moe=mPopPoorPersonsAIOM_&_years., den_moe=mPersonsPovertyDefAIOM_&_years., label_moe =Poverty rate All-Other(%) MOE &y_lbl.);
 
 	%Moe_prop_a( var=PctPoorPersonsFB_m_&_years., mult=100, num=PopPoorPersonsFB_&_years., den=PersonsPovertyDefinedFB_&_years., 
-                       num_moe=mPopPoorPersonsFB_&_years., den_moe=mPersonsPovertyDefinedFB_&_years. );
+                       num_moe=mPopPoorPersonsFB_&_years., den_moe=mPersonsPovertyDefinedFB_&_years., label_moe =Poverty rate foreign born (%) MOE &y_lbl.);
 
 	%Pct_calc( var=PctUnemployed, label=Unemployment rate (%), num=PopUnemployed, den=PopInCivLaborForce, years=&_years. )
 
 	%Moe_prop_a( var=PctUnemployed_m_&_years., mult=100, num=PopUnemployed_&_years., den=PopInCivLaborForce_&_years., 
-	                       num_moe=mPopUnemployed_&_years., den_moe=mPopInCivLaborForce_&_years. );
+	                       num_moe=mPopUnemployed_&_years., den_moe=mPopInCivLaborForce_&_years., label_moe =Unemployment rate (%) MOE &y_lbl.);
 
 	%Pct_calc( var=PctEmployed16to64, label=% persons employed between 16 and 64 years old, num=Pop16_64Employed, den=Pop16_64years, years=&_years. )
 
 	%Moe_prop_a( var=PctEmployed16to64_m_&_years., mult=100, num=Pop16_64Employed_&_years., den=Pop16_64years_&_years., 
-                       num_moe=mPop16_64Employed_&_years., den_moe=mPop16_64years_&_years. );
+                       num_moe=mPop16_64Employed_&_years., den_moe=mPop16_64years_&_years., label_moe =% persons employed between 16 and 64 years old MOE &y_lbl.);
 
 	%Pct_calc( var=Pct16andOverEmploy, label=% pop. 16+ yrs. employed, num=Pop16andOverEmploy, den=Pop16andOverYears, years=&_years. )
 
     %Moe_prop_a( var=Pct16andOverEmploy_m_&_years., mult=100, num=Pop16andOverEmploy_&_years., den=Pop16andOverYears_&_years., 
-                       num_moe=mPop16andOverEmploy_&_years., den_moe=mPop16andOverYears_&_years. );
+                       num_moe=mPop16andOverEmploy_&_years., den_moe=mPop16andOverYears_&_years., label_moe =% pop. 16+ yrs. employed MOE &y_lbl.);
 
 	%Pct_calc( var=Pct16andOverWages, label=% persons employed with earnings, num=PopWorkEarn, den=Pop16andOverYears, years=&_years. )
 
 	%Moe_prop_a( var=Pct16andOverWages_m_&_years., mult=100, num=PopWorkEarn_&_years., den=Pop16andOverYears_&_years., 
-                       num_moe=mPopWorkEarn_&_years., den_moe=mPop16andOverYears_&_years. );
+                       num_moe=mPopWorkEarn_&_years., den_moe=mPop16andOverYears_&_years., label_moe =% persons employed with earnings MOE &y_lbl.);
 
 	%Pct_calc( var=Pct16andOverWorkFT, label=% persons employed full time, num=PopWorkFT, den=Pop16andOverYears, years=&_years. )
 
     %Moe_prop_a( var=Pct16andOverWorkFT_m_&_years., mult=100, num=PopWorkFT_&_years., den=Pop16andOverYears_&_years., 
-                       num_moe=mPopWorkFT_&_years., den_moe=mPop16andOverYears_&_years. );
+                       num_moe=mPopWorkFT_&_years., den_moe=mPop16andOverYears_&_years., label_moe =% persons employed full time MOE &y_lbl.);
 
 	%Pct_calc( var=PctWorkFTLT35k, label=% persons employed full time with earnings less than 35000, num=PopWorkFTLT35K, den=PopWorkFT, years=&_years. )
 
 	%Moe_prop_a( var=PctWorkFTLT35k_m_&_years., mult=100, num=PopWorkFTLT35k_&_years., den=PopWorkFT_&_years., 
-                       num_moe=mPopWorkFTLT35k_&_years., den_moe=mPopWorkFT_&_years. );
+                       num_moe=mPopWorkFTLT35k_&_years., den_moe=mPopWorkFT_&_years., label_moe =% persons employed full time with earnings less than 35000 MOE &y_lbl.);
 
 	%Pct_calc( var=PctWorkFTLT75k, label=% persons employed full time with earnings less than 75000, num=PopWorkFTLT75k, den=PopWorkFT, years=&_years. )
 
 	%Moe_prop_a( var=PctWorkFTLT75k_m_&_years., mult=100, num=PopWorkFTLT75k_&_years., den=PopWorkFT_&_years., 
-                       num_moe=mPopWorkFTLT75k_&_years., den_moe=mPopWorkFT_&_years. );
+                       num_moe=mPopWorkFTLT75k_&_years., den_moe=mPopWorkFT_&_years., label_moe =% persons employed full time with earnings less than 75000 MOE &y_lbl.);
 
 	%Pct_calc( var=PctEmployedMngmt, label=% persons 16+ years old employed in management business science and arts occupations, num=PopEmployedMngmt, den=PopEmployedByOcc, years=&_years. )
 
 	%Moe_prop_a( var=PctEmployedMngmt_m_&_years., mult=100, num=PopEmployedMngmt_&_years., den=PopEmployedByOcc_&_years., 
-                       num_moe=mPopEmployedMngmt_&_years., den_moe=mPopEmployedByOcc_&_years. );
+                       num_moe=mPopEmployedMngmt_&_years., den_moe=mPopEmployedByOcc_&_years., label_moe =% persons 16+ years old employed in management business science and arts occupations MOE &y_lbl.);
 
 	%Pct_calc( var=PctEmployedServ, label=% persons 16+ years old employed in service occupations, num=PopEmployedServ, den=PopEmployedByOcc, years=&_years. )
 
 	%Moe_prop_a( var=PctEmployedServ_m_&_years., mult=100, num=PopEmployedServ_&_years., den=PopEmployedByOcc_&_years., 
-                       num_moe=mPopEmployedServ_&_years., den_moe=mPopEmployedByOcc_&_years. );
+                       num_moe=mPopEmployedServ_&_years., den_moe=mPopEmployedByOcc_&_years., label_moe =% persons 16+ years old employed in service occupations MOE &y_lbl.);
 
 	%Pct_calc( var=PctEmployedSales, label=% persons 16+ years old employed in sales and office occupations, num=PopEmployedSales, den=PopEmployedByOcc, years=&_years. )
 
 	%Moe_prop_a( var=PctEmployedSales_m_&_years., mult=100, num=PopEmployedSales_&_years., den=PopEmployedByOcc_&_years., 
-                       num_moe=mPopEmployedSales_&_years., den_moe=mPopEmployedByOcc_&_years. );
+                       num_moe=mPopEmployedSales_&_years., den_moe=mPopEmployedByOcc_&_years., label_moe =% persons 16+ years old employed in sales and office occupations MOE &y_lbl.);
 
 	%Pct_calc( var=PctEmployedNatRes, label=% persons 16+ years old employed in natural resources construction and maintenance occupations, num=PopEmployedNatRes, den=PopEmployedByOcc, years=&_years. )
 
 	%Moe_prop_a( var=PctEmployedNatRes_m_&_years., mult=100, num=PopEmployedNatRes_&_years., den=PopEmployedByOcc_&_years., 
-                       num_moe=mPopEmployedNatRes_&_years., den_moe=mPopEmployedByOcc_&_years. );
+                       num_moe=mPopEmployedNatRes_&_years., den_moe=mPopEmployedByOcc_&_years., label_moe =% persons 16+ years old employed in natural resources construction and maintenance occupations MOE &y_lbl.);
 
 	%Pct_calc( var=PctEmployedProd, label=% persons employed in production transportation and material moving occupations, num=PopEmployedProd, den=PopEmployedByOcc, years=&_years. )
 
 	%Moe_prop_a( var=PctEmployedProd_m_&_years., mult=100, num=PopEmployedProd_&_years., den=PopEmployedByOcc_&_years., 
-                       num_moe=mPopEmployedProd_&_years., den_moe=mPopEmployedByOcc_&_years. );
+                       num_moe=mPopEmployedProd_&_years., den_moe=mPopEmployedByOcc_&_years., label_moe =% persons employed in production transportation and material moving occupations MOE &y_lbl.);
 
 	%do r=1 %to 5;
 
@@ -387,62 +396,62 @@
 	%Pct_calc( var=PctUnemployed&race., label=&name. Unemployment rate (%), num=PopUnemployed&race., den=PopInCivLaborForce&race., years=&_years. )
 
 	%Moe_prop_a( var=PctUnemployed&race._m_&_years., mult=100, num=PopUnemployed&race._&_years., den=PopInCivLaborForce&race._&_years., 
-	                       num_moe=mPopUnemployed&race._&_years., den_moe=mPopInCivLaborForce&race._&_years. );
+	                       num_moe=mPopUnemployed&race._&_years., den_moe=mPopInCivLaborForce&race._&_years., label_moe =&name. Unemployment rate (%) MOE &y_lbl.);
 
 	%Pct_calc( var=PctEmployed16to64&race., label=% persons &name. employed between 16 and 64 years old, num=Pop16_64Employed&race., den=Pop16_64years&race., years=&_years. )
 
 	%Moe_prop_a( var=PctEmployed16to64&race._m_&_years., mult=100, num=Pop16_64Employed&race._&_years., den=Pop16_64years&race._&_years., 
-                       num_moe=mPop16_64Employed&race._&_years., den_moe=mPop16_64years&race._&_years. );
+                       num_moe=mPop16_64Employed&race._&_years., den_moe=mPop16_64years&race._&_years., label_moe =% persons &name. employed between 16 and 64 years old MOE &y_lbl.);
 
 	%Pct_calc( var=Pct16andOverEmploy&race., label=% pop. 16+ yrs. employed &name., num=Pop16andOverEmploy&race., den=Pop16andOverYears&race., years=&_years. )
 
     %Moe_prop_a( var=Pct16andOverEmploy&race._m_&_years., mult=100, num=Pop16andOverEmploy&race._&_years., den=Pop16andOverYears&race._&_years., 
-                       num_moe=mPop16andOverEmploy&race._&_years., den_moe=mPop16andOverYears&race._&_years. );
+                       num_moe=mPop16andOverEmploy&race._&_years., den_moe=mPop16andOverYears&race._&_years., label_moe =% pop. 16+ yrs. employed &name. MOE &y_lbl.);
 
 	%Pct_calc( var=Pct16andOverWages&race., label=% persons &name. employed with earnings, num=PopWorkEarn&race., den=Pop16andOverYears&race., years=&_years. )
 
 	%Moe_prop_a( var=Pct16andOverWages&race._m_&_years., mult=100, num=PopWorkEarn&race._&_years., den=Pop16andOverYears&race._&_years., 
-                       num_moe=mPopWorkEarn&race._&_years., den_moe=mPop16andOverYears&race._&_years. );
+                       num_moe=mPopWorkEarn&race._&_years., den_moe=mPop16andOverYears&race._&_years., label_moe =% persons &name. employed with earnings MOE &y_lbl.);
 
 	%Pct_calc( var=Pct16andOverWorkFT&race., label=% persons &name. employed full time, num=PopWorkFT&race., den=Pop16andOverYears&race., years=&_years. )
 
     %Moe_prop_a( var=Pct16andOverWorkFT&race._m_&_years., mult=100, num=PopWorkFT&race._&_years., den=Pop16andOverYears&race._&_years., 
-                       num_moe=mPopWorkFT&race._&_years., den_moe=mPop16andOverYears&race._&_years. );
+                       num_moe=mPopWorkFT&race._&_years., den_moe=mPop16andOverYears&race._&_years., label_moe =% persons &name. employed full time MOE &y_lbl.);
 
 	%Pct_calc( var=PctWorkFTLT35k&race., label=% persons &name. employed full time with earnings less than 35000, num=PopWorkFTLT35K&race., den=PopWorkFT&race., years=&_years. )
 
 	%Moe_prop_a( var=PctWorkFTLT35k&race._m_&_years., mult=100, num=PopWorkFTLT35k&race._&_years., den=PopWorkFT&race._&_years., 
-                       num_moe=mPopWorkFTLT35k&race._&_years., den_moe=mPopWorkFT&race._&_years. );
+                       num_moe=mPopWorkFTLT35k&race._&_years., den_moe=mPopWorkFT&race._&_years., label_moe =% persons &name. employed full time with earnings less than 35000 MOE &y_lbl.);
 
 	%Pct_calc( var=PctWorkFTLT75k&race., label=% persons &name. employed full time with earnings less than 75000, num=PopWorkFTLT75k&race., den=PopWorkFT&race., years=&_years. )
 
 	%Moe_prop_a( var=PctWorkFTLT75k&race._m_&_years., mult=100, num=PopWorkFTLT75k&race._&_years., den=PopWorkFT&race._&_years., 
-                       num_moe=mPopWorkFTLT75k&race._&_years., den_moe=mPopWorkFT&race._&_years. );
+                       num_moe=mPopWorkFTLT75k&race._&_years., den_moe=mPopWorkFT&race._&_years., label_moe =% persons &name. employed full time with earnings less than 75000 MOE &y_lbl.);
 
 	%Pct_calc( var=PctEmployedMngmt&race., label=% persons &name. 16+ years old employed in management business science and arts occupations, num=PopEmployedMngmt&race., den=PopEmployedByOcc&race., years=&_years. )
 
 	%Moe_prop_a( var=PctEmployedMngmt&race._m_&_years., mult=100, num=PopEmployedMngmt&race._&_years., den=PopEmployedByOcc&race._&_years., 
-                       num_moe=mPopEmployedMngmt&race._&_years., den_moe=mPopEmployedByOcc&race._&_years. );
+                       num_moe=mPopEmployedMngmt&race._&_years., den_moe=mPopEmployedByOcc&race._&_years., label_moe =% persons &name. 16+ years old employed in management business science and arts occupations MOE &y_lbl.);
 
 	%Pct_calc( var=PctEmployedServ&race., label=% persons &name. 16+ years old employed in service occupations, num=PopEmployedServ&race., den=PopEmployedByOcc&race., years=&_years. )
 
 	%Moe_prop_a( var=PctEmployedServ&race._m_&_years., mult=100, num=PopEmployedServ&race._&_years., den=PopEmployedByOcc&race._&_years., 
-                       num_moe=mPopEmployedServ&race._&_years., den_moe=mPopEmployedByOcc&race._&_years. );
+                       num_moe=mPopEmployedServ&race._&_years., den_moe=mPopEmployedByOcc&race._&_years., label_moe =% persons &name. 16+ years old employed in service occupations MOE &y_lbl.);
 
 	%Pct_calc( var=PctEmployedSales&race., label=% persons &name. 16+ years old employed in sales and office occupations, num=PopEmployedSales&race., den=PopEmployedByOcc&race., years=&_years. )
 
 	%Moe_prop_a( var=PctEmployedSales&race._m_&_years., mult=100, num=PopEmployedSales&race._&_years., den=PopEmployedByOcc&race._&_years., 
-                       num_moe=mPopEmployedSales&race._&_years., den_moe=mPopEmployedByOcc&race._&_years. );
+                       num_moe=mPopEmployedSales&race._&_years., den_moe=mPopEmployedByOcc&race._&_years., label_moe =% persons &name. 16+ years old employed in sales and office occupations MOE &y_lbl.);
 
 	%Pct_calc( var=PctEmployedNatRes&race., label=% persons &name. 16+ years old employed in natural resources construction and maintenance occupations, num=PopEmployedNatRes&race., den=PopEmployedByOcc&race., years=&_years. )
 
 	%Moe_prop_a( var=PctEmployedNatRes&race._m_&_years., mult=100, num=PopEmployedNatRes&race._&_years., den=PopEmployedByOcc&race._&_years., 
-                       num_moe=mPopEmployedNatRes&race._&_years., den_moe=mPopEmployedByOcc&race._&_years. );
+                       num_moe=mPopEmployedNatRes&race._&_years., den_moe=mPopEmployedByOcc&race._&_years., label_moe =% persons &name. 16+ years old employed in natural resources construction and maintenance occupations MOE &y_lbl.);
 
 	%Pct_calc( var=PctEmployedProd&race., label=% persons &name. employed in production transportation and material moving occupations, num=PopEmployedProd&race., den=PopEmployedByOcc&race., years=&_years. )
 
 	%Moe_prop_a( var=PctEmployedProd&race._m_&_years., mult=100, num=PopEmployedProd&race._&_years., den=PopEmployedByOcc&race._&_years., 
-                       num_moe=mPopEmployedProd&race._&_years., den_moe=mPopEmployedByOcc&race._&_years. );
+                       num_moe=mPopEmployedProd&race._&_years., den_moe=mPopEmployedByOcc&race._&_years., label_moe =% persons &name. employed in production transportation and material moving occupations MOE &y_lbl.);
 
 	%end;
 
@@ -455,64 +464,64 @@
     %Pct_calc( var=Pct25andOverWoutHS&race., label=% persons &name. without HS diploma, num=Pop25andOverWoutHS&race., den=Pop25andOverYears&race., years=&_years. )
 
     %Moe_prop_a( var=Pct25andOverWoutHS&race._m_&_years., mult=100, num=Pop25andOverWoutHS&race._&_years., den=Pop25andOverYears&race._&_years., 
-                       num_moe=mPop25andOverWoutHS&race._&_years., den_moe=mPop25andOverYears&race._&_years. );
+                       num_moe=mPop25andOverWoutHS&race._&_years., den_moe=mPop25andOverYears&race._&_years., label_moe =% persons &name. without HS diploma MOE &y_lbl.);
 
 	%Pct_calc( var=Pct25andOverWHS&race., label=% persons &name. with HS diploma, num=Pop25andOverWHS&race., den=Pop25andOverYears&race., years=&_years. )
 
     %Moe_prop_a( var=Pct25andOverWHS&race._m_&_years., mult=100, num=Pop25andOverWHS&race._&_years., den=Pop25andOverYears&race._&_years., 
-                       num_moe=mPop25andOverWHS&race._&_years., den_moe=mPop25andOverYears&race._&_years. );
+                       num_moe=mPop25andOverWHS&race._&_years., den_moe=mPop25andOverYears&race._&_years., label_moe =% persons &name. with HS diploma MOE &y_lbl.);
 
 	%Pct_calc( var=Pct25andOverWSC&race., label=% persons &name. with some college, num=Pop25andOverWSC&race., den=Pop25andOverYears&race., years=&_years. )
 
 	%Moe_prop_a( var=Pct25andOverWSC&race._m_&_years., mult=100, num=Pop25andOverWSC&race._&_years., den=Pop25andOverYears&race._&_years., 
-                       num_moe=mPop25andOverWSC&race._&_years., den_moe=mPop25andOverYears&race._&_years. );
+                       num_moe=mPop25andOverWSC&race._&_years., den_moe=mPop25andOverYears&race._&_years., label_moe =% persons &name. with some college MOE &y_lbl.);
 
 	%end;
 
 	%Pct_calc( var=Pct25andOverWoutHS, label=% persons without HS diploma, num=Pop25andOverWoutHS, den=Pop25andOverYears, years=&_years. )
 
 	%Moe_prop_a( var=Pct25andOverWoutHS_m_&_years., mult=100, num=Pop25andOverWoutHS_&_years., den=Pop25andOverYears_&_years., 
-                       num_moe=mPop25andOverWoutHS_&_years., den_moe=mPop25andOverYears_&_years. );
+                       num_moe=mPop25andOverWoutHS_&_years., den_moe=mPop25andOverYears_&_years., label_moe =% persons without HS diploma MOE &y_lbl.);
 
 	%Pct_calc( var=Pct25andOverWoutHSFB, label=% foreign born persons without HS diploma, num=Pop25andOverWoutHSFB, den=Pop25andOverYearsFB, years=&_years. )
 
 	%Moe_prop_a( var=Pct25andOverWoutHSFB_m_&_years., mult=100, num=Pop25andOverWoutHSFB_&_years., den=Pop25andOverYearsFB_&_years., 
-                       num_moe=mPop25andOverWoutHSFB_&_years., den_moe=mPop25andOverYearsFB_&_years. );
+                       num_moe=mPop25andOverWoutHSFB_&_years., den_moe=mPop25andOverYearsFB_&_years., label_moe =% foreign born persons without HS diploma MOE &y_lbl.);
 
 	%Pct_calc( var=Pct25andOverWoutHSNB, label=% native born persons without HS diploma, num=Pop25andOverWoutHSNB, den=Pop25andOverYearsNB, years=&_years. )
 
 	%Moe_prop_a( var=Pct25andOverWoutHSNB_m_&_years., mult=100, num=Pop25andOverWoutHSNB_&_years., den=Pop25andOverYearsNB_&_years., 
-                       num_moe=mPop25andOverWoutHSNB_&_years., den_moe=mPop25andOverYearsNB_&_years. );
+                       num_moe=mPop25andOverWoutHSNB_&_years., den_moe=mPop25andOverYearsNB_&_years., label_moe =% native born persons without HS diploma MOE &y_lbl.);
 
 	%Pct_calc( var=Pct25andOverWHS, label=% persons with HS diploma, num=Pop25andOverWHS, den=Pop25andOverYears, years=&_years. )
 
 	%Moe_prop_a( var=Pct25andOverWHS_m_&_years., mult=100, num=Pop25andOverWHS_&_years., den=Pop25andOverYears_&_years., 
-                       num_moe=mPop25andOverWHS_&_years., den_moe=mPop25andOverYears_&_years. );
+                       num_moe=mPop25andOverWHS_&_years., den_moe=mPop25andOverYears_&_years., label_moe =% persons with HS diploma MOE &y_lbl.);
 
 	%Pct_calc( var=Pct25andOverWHSFB, label=% foreign born persons with HS diploma, num=Pop25andOverWHSFB, den=Pop25andOverYearsFB, years=&_years. )
 
 	%Moe_prop_a( var=Pct25andOverWHSFB_m_&_years., mult=100, num=Pop25andOverWHSFB_&_years., den=Pop25andOverYearsFB_&_years., 
-                       num_moe=mPop25andOverWHSFB_&_years., den_moe=mPop25andOverYearsFB_&_years. );
+                       num_moe=mPop25andOverWHSFB_&_years., den_moe=mPop25andOverYearsFB_&_years., label_moe =% foreign born persons with HS diploma MOE &y_lbl.);
 
 	%Pct_calc( var=Pct25andOverWHSNB, label=% native born persons with HS diploma, num=Pop25andOverWHSNB, den=Pop25andOverYearsNB, years=&_years. )
 
 	%Moe_prop_a( var=Pct25andOverWHSNB_m_&_years., mult=100, num=Pop25andOverWHSNB_&_years., den=Pop25andOverYearsNB_&_years., 
-                       num_moe=mPop25andOverWHSNB_&_years., den_moe=mPop25andOverYearsNB_&_years. );
+                       num_moe=mPop25andOverWHSNB_&_years., den_moe=mPop25andOverYearsNB_&_years., label_moe =% native born persons with HS diploma MOE &y_lbl.);
 
 	%Pct_calc( var=Pct25andOverWSC, label=% persons with some college, num=Pop25andOverWSC, den=Pop25andOverYears, years=&_years. )
 
 	%Moe_prop_a( var=Pct25andOverWSC_m_&_years., mult=100, num=Pop25andOverWSC_&_years., den=Pop25andOverYears_&_years., 
-                       num_moe=mPop25andOverWSC_&_years., den_moe=mPop25andOverYears_&_years. );
+                       num_moe=mPop25andOverWSC_&_years., den_moe=mPop25andOverYears_&_years., label_moe =% persons with some college MOE &y_lbl.);
 
 	%Pct_calc( var=Pct25andOverWSCFB, label=% foreign born persons with some college, num=Pop25andOverWSCFB, den=Pop25andOverYearsFB, years=&_years. )
 
 	%Moe_prop_a( var=Pct25andOverWSCFB_m_&_years., mult=100, num=Pop25andOverWSCFB_&_years., den=Pop25andOverYearsFB_&_years., 
-                       num_moe=mPop25andOverWSCFB_&_years., den_moe=mPop25andOverYearsFB_&_years. );
+                       num_moe=mPop25andOverWSCFB_&_years., den_moe=mPop25andOverYearsFB_&_years., label_moe =% foreign born persons with some college MOE &y_lbl.);
 
 	%Pct_calc( var=Pct25andOverWSCNB, label=% native born persons with some college, num=Pop25andOverWSCNB, den=Pop25andOverYearsNB, years=&_years. )
 
 	%Moe_prop_a( var=Pct25andOverWSCNB_m_&_years., mult=100, num=Pop25andOverWSCNB_&_years., den=Pop25andOverYearsNB_&_years., 
-                       num_moe=mPop25andOverWSCNB_&_years., den_moe=mPop25andOverYearsNB_&_years. );
+                       num_moe=mPop25andOverWSCNB_&_years., den_moe=mPop25andOverYearsNB_&_years., label_moe =% native born persons with some college MOE &y_lbl.);
 
     
    ** Child Well-Being Indicators **;
@@ -521,25 +530,26 @@
 		%Pct_calc( var=PctPoorChildrenB, label=% children Black-Alone in poverty, num=PopPoorChildrenB, den=ChildrenPovertyDefinedB, years=&_years. )
 		%Pct_calc( var=PctPoorChildrenW, label=% children NH-White in poverty, num=PopPoorChildrenW, den=ChildrenPovertyDefinedW, years=&_years. )
 		%Pct_calc( var=PctPoorChildrenA, label=% children Asian in poverty, num=PopPoorChildrenA, den=ChildrenPovertyDefinedA, years=&_years. )
-		%Pct_calc( var=PctPoorChildrenH, label=% children Hispanic in poverty, num=PopPoorChildrenH, den=ChildrenPovertyDefinedH, years=&_years. )		%Pct_calc( var=PctPoorChildrenAIOM, label=% children All-Other in poverty, num=PopPoorChildrenAIOM, den=ChildrenPovertyDefAIOM, years=&_years. )
+		%Pct_calc( var=PctPoorChildrenH, label=% children Hispanic in poverty, num=PopPoorChildrenH, den=ChildrenPovertyDefinedH, years=&_years. )		
+	    %Pct_calc( var=PctPoorChildrenAIOM, label=% children All-Other in poverty, num=PopPoorChildrenAIOM, den=ChildrenPovertyDefAIOM, years=&_years. )
 
     %Moe_prop_a( var=PctPoorChildren_m_&_years., mult=100, num=PopPoorChildren_&_years., den=ChildrenPovertyDefined_&_years., 
-                       num_moe=mPopPoorChildren_&_years., den_moe=mChildrenPovertyDefined_&_years. );
+                       num_moe=mPopPoorChildren_&_years., den_moe=mChildrenPovertyDefined_&_years., label_moe =% children in poverty MOE &y_lbl.);
        
 	    %Moe_prop_a( var=PctPoorChildrenB_m_&_years., mult=100, num=PopPoorChildrenB_&_years., den=ChildrenPovertyDefinedB_&_years., 
-	                       num_moe=mPopPoorChildrenB_&_years., den_moe=mChildrenPovertyDefinedB_&_years. );
+	                       num_moe=mPopPoorChildrenB_&_years., den_moe=mChildrenPovertyDefinedB_&_years., label_moe =% children Black-Alone in poverty MOE &y_lbl.);
 
 	    %Moe_prop_a( var=PctPoorChildrenW_m_&_years., mult=100, num=PopPoorChildrenW_&_years., den=ChildrenPovertyDefinedW_&_years., 
-	                       num_moe=mPopPoorChildrenW_&_years., den_moe=mChildrenPovertyDefinedW_&_years. );
+	                       num_moe=mPopPoorChildrenW_&_years., den_moe=mChildrenPovertyDefinedW_&_years., label_moe =% children NH-White in poverty MOE &y_lbl.);
 
 	    %Moe_prop_a( var=PctPoorChildrenH_m_&_years., mult=100, num=PopPoorChildrenH_&_years., den=ChildrenPovertyDefinedH_&_years., 
-	                       num_moe=mPopPoorChildrenH_&_years., den_moe=mChildrenPovertyDefinedH_&_years. );
+	                       num_moe=mPopPoorChildrenH_&_years., den_moe=mChildrenPovertyDefinedH_&_years., label_moe =% children Asian in poverty MOE &y_lbl.);
 
 	    %Moe_prop_a( var=PctPoorChildrenA_m_&_years., mult=100, num=PopPoorChildrenA_&_years., den=ChildrenPovertyDefinedA_&_years., 
-	                       num_moe=mPopPoorChildrenA_&_years., den_moe=mChildrenPovertyDefinedA_&_years. );
+	                       num_moe=mPopPoorChildrenA_&_years., den_moe=mChildrenPovertyDefinedA_&_years., label_moe =% children Hispanic in poverty MOE &y_lbl.);
 
 		%Moe_prop_a( var=PctPoorChildrenAIOM_m_&_years., mult=100, num=PopPoorChildrenAIOM_&_years., den=ChildrenPovertyDefAIOM_&_years., 
-	                       num_moe=mPopPoorChildrenAIOM_&_years., den_moe=mChildrenPovertyDefAIOM_&_years. );
+	                       num_moe=mPopPoorChildrenAIOM_&_years., den_moe=mChildrenPovertyDefAIOM_&_years., label_moe =% children All-Other in poverty MOE &y_lbl.);
 
         
     ** Income Conditions **;
@@ -547,24 +557,24 @@
 	%Pct_calc( var=PctFamilyLT75000, label=% families with income less than 75000, num=FamIncomeLT75k, den=NumFamilies, years=&_years. )
 
     %Moe_prop_a( var=PctFamilyLT75000_m_&_years., mult=100, num=FamIncomeLT75k_&_years., den=NumFamilies_&_years., 
-                       num_moe=mFamIncomeLT75k_&_years., den_moe=mNumFamilies_&_years. );
+                       num_moe=mFamIncomeLT75k_&_years., den_moe=mNumFamilies_&_years., label_moe =% families with income less than 75000 MOE &y_lbl.);
 
 	%Pct_calc( var=PctFamilyGT200000, label=% families with income greater than 200000, num=FamIncomeGT200k, den=NumFamilies, years=&_years. )
 
     %Moe_prop_a( var=PctFamilyGT200000_m_&_years., mult=100, num=FamIncomeGT200k_&_years., den=NumFamilies_&_years., 
-                       num_moe=mFamIncomeGT200k_&_years., den_moe=mNumFamilies_&_years. );
+                       num_moe=mFamIncomeGT200k_&_years., den_moe=mNumFamilies_&_years., label_moe =% families with income greater than 200000 MOE &y_lbl.);
 
 	%Pct_calc( var=AvgHshldIncome, label=Average household income last year ($), num=AggHshldIncome, den=NumHshlds, mult=1, years=&_years. )
 
-	%dollar_convert( AvgHshldIncome_&_years., AvgHshldIncAdj_&_years., 2014, &inc_dollar_yr )
+	%dollar_convert( AvgHshldIncome_&_years., AvgHshldIncAdj_&_years., 2015, &inc_dollar_yr )
 
     AvgHshldIncome_m_&_years. = 
       %Moe_ratio( num=AggHshldIncome_&_years., den=NumHshlds_&_years., 
-                  num_moe=mAggHshldIncome_&_years., den_moe=mNumHshlds_&_years. );
+                  num_moe=mAggHshldIncome_&_years., den_moe=mNumHshlds_&_years.);
                         
-    %dollar_convert( AvgHshldIncome_m_&_years., AvgHshldIncAdj_m_&_years., 2014, &inc_dollar_yr )
+    %dollar_convert( AvgHshldIncome_m_&_years., AvgHshldIncAdj_m_&_years., 2015, &inc_dollar_yr )
 
-	%do r=1 %to 4;
+	%do r=1 %to 5;
 
 		%let race=%scan(&racelist.,&r.," ");
 		%let name=%scan(&racename.,&r.," ");
@@ -572,37 +582,44 @@
     %Pct_calc( var=PctFamilyLT75000&race., label=% families &name. with income less than 75000, num=FamIncomeLT75k&race., den=NumFamilies&race., years=&_years. )
 
     %Moe_prop_a( var=PctFamilyLT75000&race._m_&_years., mult=100, num=FamIncomeLT75k&race._&_years., den=NumFamilies&race._&_years., 
-                       num_moe=mFamIncomeLT75k&race._&_years., den_moe=mNumFamilies&race._&_years. );
+                       num_moe=mFamIncomeLT75k&race._&_years., den_moe=mNumFamilies&race._&_years., label_moe =% families &name. with income less than 75000 MOE &y_lbl.);
 
 	%Pct_calc( var=PctFamilyGT200000&race., label=% families &name. with income greater than 200000, num=FamIncomeGT200k&race., den=NumFamilies&race., years=&_years. )
 
     %Moe_prop_a( var=PctFamilyGT200000&race._m_&_years., mult=100, num=FamIncomeGT200k&race._&_years., den=NumFamilies&race._&_years., 
-                       num_moe=mFamIncomeGT200k&race._&_years., den_moe=mNumFamilies&race._&_years. );
+                       num_moe=mFamIncomeGT200k&race._&_years., den_moe=mNumFamilies&race._&_years., label_moe =% families &name. with income greater than 200000 MOE &y_lbl.);
 
 	%Pct_calc( var=AvgHshldIncome&race., label=Average household income last year &name. ($), num=AggHshldIncome&race., den=NumHshlds&race., mult=1, years=&_years. )
 
-	%dollar_convert( AvgHshldIncome&race._&_years., AvgHshldIncAdj&race._&_years., 2014, &inc_dollar_yr )
+	%dollar_convert( AvgHshldIncome&race._&_years., AvgHshldIncAdj&race._&_years., 2015, &inc_dollar_yr )
 
     AvgHshldIncome&race._m_&_years. = 
       %Moe_ratio( num=AggHshldIncome&race._&_years., den=NumHshlds&race._&_years., 
-                  num_moe=mAggHshldIncome&race._&_years., den_moe=mNumHshlds&race._&_years. );
+                  num_moe=mAggHshldIncome&race._&_years., den_moe=mNumHshlds&race._&_years.);
                         
-    %dollar_convert( AvgHshldIncome&race._m_&_years., AvgHshldIncAdj&race._m_&_years., 2014, &inc_dollar_yr )
+    %dollar_convert( AvgHshldIncome&race._m_&_years., AvgHshldIncAdj&race._m_&_years., 2015, &inc_dollar_yr )
 
 	%end;
 
 	label
-	  AvgHshldIncAdj_&_years. = "Average household income (adjusted), &_years."
-	  AvgHshldIncAdjB_&_years. = "Average household income (adjusted), Black/African American, &_years."
-	  AvgHshldIncAdjW_&_years. = "Average household income (adjusted), Non-Hispanic White, &_years."
-	  AvgHshldIncAdjH_&_years. = "Average household income (adjusted), Hispanic/Latino, &_years."
-	  AvgHshldIncAdjH_&_years. = "Average household income (adjusted), Asian, &_years."
-	  AvgHshldIncAdjAIOM_&_years. = "Average household income (adjusted), All remaining groups other than Black, Non-Hispanic White, Asian, Hispanic, &_years."
-	  AvgHshldIncome_m_&_years. = "Average household income, MOE, &_years."
-	  AvgHshldIncome_m_&_years. = "Average household income, Black/African American, MOE, &_years."
-	  AvgHshldIncome_m_&_years. = "Average household income, Non-Hispanic White, MOE, &_years."
-	  AvgHshldIncome_m_&_years. = "Average household income, Hispanic/Latino, MOE, &_years."
-	  AvgHshldIncome_m_&_years. = "Average household income, All remaining groups other than Black, Non-Hispanic White, Hispanic, MOE, &_years."
+	  AvgHshldIncAdj_&_years. = "Average household income (adjusted), &y_lbl."
+	  AvgHshldIncAdj_m_&_years. = "Average household income (adjusted) MOE, &y_lbl."
+	  AvgHshldIncAdjB_&_years. = "Average household income (adjusted), Black/African American, &y_lbl."
+	  AvgHshldIncAdjB_m_&_years. = "Average household income (adjusted), Black/African American MOE, &y_lbl."
+	  AvgHshldIncAdjW_&_years. = "Average household income (adjusted), Non-Hispanic White, &y_lbl."
+	  AvgHshldIncAdjW_m_&_years. = "Average household income (adjusted), Non-Hispanic White MOE, &y_lbl."
+	  AvgHshldIncAdjH_&_years. = "Average household income (adjusted), Hispanic/Latino, &y_lbl."
+	  AvgHshldIncAdjH_m_&_years. = "Average household income (adjusted), Hispanic/Latino MOE, &y_lbl."
+	  AvgHshldIncAdjA_&_years. = "Average household income (adjusted), Asian, &y_lbl."
+	  AvgHshldIncAdjA_m_&_years. = "Average household income (adjusted), Asian MOE, &y_lbl."
+	  AvgHshldIncAdjAIOM_&_years. = "Average household income (adjusted), All remaining groups other than Black, Non-Hispanic White, Asian, Hispanic, &y_lbl."
+	  AvgHshldIncAdjAIOM_m_&_years. = "Average household income (adjusted), All remaining groups other than Black, Non-Hispanic White, Asian MOE, Hispanic, &y_lbl."
+	  AvgHshldIncome_m_&_years. = "Average household income, MOE, &y_lbl."
+	  AvgHshldIncomeB_m_&_years. = "Average household income, Black/African American, MOE, &y_lbl."
+	  AvgHshldIncomeW_m_&_years. = "Average household income, Non-Hispanic White, MOE, &y_lbl."
+	  AvgHshldIncomeH_m_&_years. = "Average household income, Hispanic/Latino, MOE, &y_lbl."
+	  AvgHshldIncomeA_m_&_years. = "Average household income, Asian, MOE, &y_lbl."
+	  AvgHshldIncomeAIOM_m_&_years. = "Average household income, All remaining groups other than Black, Non-Hispanic White, Hispanic, MOE, &y_lbl."
       ;
 
         
@@ -614,14 +631,14 @@
     %Pct_calc( var=PctVacantHsgUnitsForRent, label=Rental vacancy rate (%), num=NumVacantHsgUnitsForRent, den=NumRenterHsgUnits, years=&_years. )
 
 	%Moe_prop_a( var=PctVacantHUForRent_m_&_years., mult=100, num=NumVacantHsgUnitsForRent_&_years., den=NumRenterHsgUnits_&_years., 
-                       num_moe=mNumVacantHUForRent_&_years., den_moe=mNumRenterHsgUnits_&_years. );
+                       num_moe=mNumVacantHUForRent_&_years., den_moe=mNumRenterHsgUnits_&_years., label_moe =Rental vacancy rate (%) MOE &y_lbl.);
 
     %Pct_calc( var=PctOwnerOccupiedHU, label=Homeownership rate (%), num=NumOwnerOccupiedHU, den=NumOccupiedHsgUnits, years=&_years. )
 
     %Moe_prop_a( var=PctOwnerOccupiedHU_m_&_years., mult=100, num=NumOwnerOccupiedHU_&_years., den=NumOccupiedHsgUnits_&_years., 
-                       num_moe=mNumOwnerOccupiedHU_&_years., den_moe=mNumOccupiedHsgUnits_&_years. );
+                       num_moe=mNumOwnerOccupiedHU_&_years., den_moe=mNumOccupiedHsgUnits_&_years., label_moe =Homeownership rate (%) MOE &y_lbl.);
 
-	%do r=1 %to 4;
+	%do r=1 %to 5;
 
 		%let race=%scan(&racelist.,&r.," ");
 		%let name=%scan(&racename.,&r.," ");
@@ -630,7 +647,7 @@
 
     
     %Moe_prop_a( var=PctOwnerOccupiedHU&race._m_&_years., mult=100, num=NumOwnerOccupiedHU&race._&_years., den=NumOccupiedHsgUnits&race._&_years., 
-                       num_moe=mNumOwnerOccupiedHU&race._&_years., den_moe=mNumOccupiedHsgUnits&race._&_years. );
+                       num_moe=mNumOwnerOccupiedHU&race._&_years., den_moe=mNumOccupiedHsgUnits&race._&_years., label_moe =Homeownership rate &name.(%) MOE &y_lbl.);
     
    	%end;
 
@@ -641,29 +658,48 @@
     
  
   run;
-    
-  %File_info( data=Equity.profile_acs&geosuf, printobs=0, contents=n )
-  
-  ** Register metadata **;
 
-%Dc_update_meta_file(
-      ds_lib=Equity,
-      ds_name=profile_acs&geosuf.,
-      creator_process=Equity_Compile_ACS_for_profile.sas,
-	  revisions=New file.,
-      restrictions=None
-      )
+  %if &st = DC and &geodo = WD12 %then %do;
+  data profile_acs_dc_regcd;
+  	set Profile_acs_dc_wd12;
+	rename Ward2012 = councildist;
+  run;
+  %end;
 
-%end; 
   
+  ** Finalize data **;
+
+%Finalize_data_set( 
+	data=profile_acs_&state.regcd,
+	out=profile_acs_&state.regcd,
+	outlib=Equity,
+	label="DC Metro Area Equity Indicators by Race/Ethnicity, &_years., Council District",
+	sortby=councildist,
+	restrictions=None,
+	revisions=New file
+	)
+
+%Finalize_data_set( 
+	data=profile_acs_&state.regcnt,
+	out=profile_acs_&state.regcnt,
+	outlib=Equity,
+	label="DC Metro Area Equity Indicators by Race/Ethnicity, &_years., County",
+	sortby=county,
+	restrictions=None,
+	revisions=New file
+	)
 
 %mend add_percents;
 
 /** End Macro Definition **/
 
-%add_percents; 
+%add_percents(md,county,regcnt); 
+%add_percents(md,councildist,regcd); 
 
+%add_percents(va,county,regcnt); 
+%add_percents(va,councildist,regcd); 
 
-    
+%add_percents(dc,county,regcnt); 
+%add_percents(dc,ward2012,wd12);     
 
 
