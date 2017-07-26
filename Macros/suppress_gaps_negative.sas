@@ -34,18 +34,17 @@
 
        		end;
 
-			array n_gap&race. {8} 
+			array n_gap&race. {7} 
 				Gap25andOverWoutHS&race._&_years.
 				GapFamilyLT75000&race._&_years.
 				GapPoorPersons&race._&_years.
 				GapPoorChildren&race._&_years.
 				GapUnemployed&race._&_years.
-				Gap16andOverWorkFT&race._&_years.
 				GapWorkFTLT35k&race._&_years.
 				GapWorkFTLT75k&race._&_years.
 				;
 
-		 	do n=1 to 8; 
+		 	do n=1 to 7; 
 						if n_gap&race.{n} > 0 then n_gap&race.{n} = .a; 
 
 			end;

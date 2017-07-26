@@ -25,7 +25,6 @@
 %let racelist=W B H A AIOM ;
 %let racename= NH-White Black-Alone Hispanic Asian All-Other ;
 
-
 %let _years=2011_15;
 
 /** Macro Add_Percents- Start Definition **/
@@ -194,7 +193,7 @@
     %Moe_prop_a( var=PctForeignBornW_m_&_years., mult=100, num=PopForeignBornW_&_years., den=PopWhiteNonHispBridge_&_years., 
                        num_moe=mPopForeignBornW_&_years., den_moe=mPopWhiteNonHispBridge_&_years., label_moe = % foreign born NH-White MOE &y_lbl.);
 
-	%do r=1 %to 5;
+	%do r=2 %to 5;
 
 		%let race=%scan(&racelist.,&r.," ");
 		%let name=%scan(&racename.,&r.," ");
@@ -297,7 +296,7 @@
 	%Pct_calc( var=PctOthLang, label=% pop. that speaks a language other than English at home, num=PopNonEnglish, den=Pop5andOverYears, years=&_years. )
 
 	%Moe_prop_a( var=PctOthLang_m_&_years., mult=100, num=PopNonEnglish_&_years., den=Pop5andOverYears_&_years., 
-	                       num_moe=mPopNonEnglish_&_years., den_moe=mPop5andOverYears_&_years., label_moe = );
+	                       num_moe=mPopNonEnglish_&_years., den_moe=mPop5andOverYears_&_years., label_moe = % pop. that speaks a language other than English at home MOE &y_lbl.);
 
 	%Pct_calc( var=PctPoorPersons, label=Poverty rate (%), num=PopPoorPersons, den=PersonsPovertyDefined, years=&_years. )
 	%Pct_calc( var=PctPoorPersonsB, label=Poverty rate Black-Alone (%), num=PopPoorPersonsB, den=PersonsPovertyDefinedB, years=&_years. )

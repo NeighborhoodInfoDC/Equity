@@ -1,0 +1,86 @@
+/**************************************************************************
+ Program:  Round_output.sas
+ Library:  Equity
+ Project:  NeighborhoodInfo DC
+ Author:   Rob Pitingolo
+ Created:  07/25/17
+ Version:  SAS 9.4
+ Environment:  Local Windows session (desktop)
+ 
+ Description:  Rounds variables in the output to the nearest 0.1, 1, 10 or 100. 
+**************************************************************************/
+
+%macro round_output(in=,out=);
+
+proc contents data = &in. out = cont noprint;
+run;
+
+data contents;
+	set cont;
+	if name in("councildist", "county") then delete;
+	keep name;
+run;
+
+proc sql noprint;
+select name
+into :varlist separated by " "
+from contents;
+quit;
+	
+%put &varlist.;
+
+
+data &out.;
+	set profile_tabs_ACS_suppress_dc;
+
+	%macro round();
+			%let i = 1;
+				%do %until (%scan(&varlist,&i,' ')=);
+					%let var=%scan(&varlist,&i,' ');
+
+		/* Don't touch missing values or codes */
+		if &var. in (.,.s,.n,.a) then do;
+			&var. = &var.;
+		end;
+
+		/* Round positive values */
+		else if 0 < &var. < 10 then do;
+			&var. = round(&var.,.1);
+		end;
+		else if 10 <= &var. < 100 then do;
+			&var. = round(&var.,1);
+		end;
+		else if 100 <= &var. < 1000 then do;
+			&var. = round(&var.,10);
+		end;
+		else if &var. >= 1000 then do;
+			&var. = round(&var.,100);
+		end;
+
+		/* Round negative values */
+		else if 0 > &var. > -10 then do;
+			&var. = round(&var.,.1);
+		end;
+		else if -10 >= &var. > -100 then do;
+			&var. = round(&var.,1);
+		end;
+		else if -100 >= &var. > -1000 then do;
+			&var. = round(&var.,10);
+		end;
+		else if &var. <= -1000 then do;
+			&var. = round(&var.,100);
+		end;
+
+		%let i=%eval(&i + 1);
+				%end;
+			%let i = 1;
+				%do %until (%scan(&varlist,&i,' ')=);
+					%let var=%scan(&varlist,&i,' ');
+		%let i=%eval(&i + 1);
+				%end;
+	%mend round;
+	%round;
+
+run;
+
+%mend round_output;

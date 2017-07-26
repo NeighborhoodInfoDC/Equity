@@ -10,7 +10,7 @@
  Description:  Transposes calculated indicators for Equity profiles 
 			   and merges calculated statistics for ACS data at different geographies. 
 **************************************************************************/
-options symbolgen;
+/*options symbolgen;*/
 
 %include "L:\SAS\Inc\StdLocal.sas";
 
@@ -40,12 +40,6 @@ options symbolgen;
 	%let fips = 51059;
 	%let cdcodes = "FF01","FF02","FF03","FF04","FF05","FF06","FF07","FF08","FF09" ;
 %end;
-%else %if &cnty = FAIRFAX %then %do;
-	%let st = VA;
-	%let ct = FF;
-	%let fips = 51059;
-	%let cdcodes = "FF01","FF02","FF03","FF04","FF05","FF06","FF07","FF08","FF09" ;
-%end;
 %else %if &cnty = MONTGOMERY %then %do;
 	%let st = MD;
 	%let ct = MT;
@@ -59,7 +53,7 @@ options symbolgen;
 	%let cdcodes = "PG01","PG02","PG03","PG04","PG05","PG06","PG07","PG08","PG09";
 %end;
 
-data county_councildist;
+data county_councildist_&ct.;
 	set Profile_acs_&st._regcnt (where=(county="&fips."))
 		Profile_acs_&st._regcd;
 
@@ -73,7 +67,7 @@ run;
 *Add gap calculation - separate out city level white rates; 
 
 
-data whiterates;
+data whiterates_&ct.;
 	set Profile_acs_dc_regcnt
 	(keep= _make_profile
 		   Pct25andOverWoutHSW: Pct25andOverWHSW: Pct25andOverWSCW:
@@ -90,12 +84,12 @@ data whiterates;
 	_make_profile=1;
 	run;
 
-%rename(data=whiterates,out=whiterates_new);
+%rename(data=whiterates_&ct.,out=whiterates_new_&ct.);
 run;
 
 
-data county_councildist_wr (drop=_make_profile);
-	merge county_councildist whiterates_new (rename=(c_make_profile=_make_profile));
+data county_councildist_wr_&ct. (drop=_make_profile);
+	merge county_councildist_&ct. whiterates_new_&ct. (rename=(c_make_profile=_make_profile));
 	by _make_profile;
 	
 	Gap25andOverWoutHSB_&_years.=cPct25andOverWoutHSW_&_years./100*Pop25andOverYearsB_&_years.-Pop25andOverWoutHSB_&_years.;
@@ -239,8 +233,8 @@ data county_councildist_wr (drop=_make_profile);
 run;
 
 
-data profile_tabs_ACS_suppress (drop=cPct: cAvg:);
-	set county_councildist_wr;
+data profile_tabs_ACS_suppress_&ct. (drop=cPct: cAvg:);
+	set county_councildist_wr_&ct.;
 
 	array t_est {21} 
 		Pct25andOverWoutHS_&_years.
@@ -429,10 +423,12 @@ data profile_tabs_ACS_suppress (drop=cPct: cAvg:);
   did not automatically suppress these variables because variable estimates = 0, 
   preventing the CV from calculating because of division by 0*/
 
-	/*if ward2012=3 then PctPoorChildrenH_2010_14=.s;
-	else if ward2012=3 then PctPoorChildrenH_m_2010_14=.s;
-	else if ward2012=5 then PctPoorChildrenW_2010_14=.s;
-	else if ward2012=5 then PctPoorChildrenW_m_2010_14=.s;*/
+	%if &cnty = DC %then %do;
+	if councildist="3" then PctPoorChildrenH_&_years.=.s;
+	else if councildist="3" then PctPoorChildrenH_m_&_years.=.s;
+	else if councildist="5" then PctPoorChildrenW_&_years.=.s;
+	else if councildist="5" then PctPoorChildrenW_m_&_years.=.s;
+	%end;
 
 	%let y_lbl = %sysfunc( translate( &_years., '-', '_' ) );
 
@@ -567,18 +563,21 @@ data profile_tabs_ACS_suppress (drop=cPct: cAvg:);
 	
 run;
 
+%round_output (in=profile_tabs_ACS_suppress_&ct.,out=profile_tabs_ACS_rounded_&ct.);
 
-proc transpose data=profile_tabs_ACS_suppress out=profile_tabs_&ct._ACS ;/*(label="DC Equity Indicators and Gap Calculations for Equity Profile City & Ward, &y_lbl."); */
-	var PctWhiteNonHispBridge: PctHisp:
-		PctAloneB: PctAloneW: PctAloneA_:
-		PctAloneI_: PctAloneO: PctAloneM: PctAloneAIOM:
+proc transpose data=profile_tabs_ACS_rounded_&ct. out=profile_tabs_&ct._ACS ;/*(label="DC Equity Indicators and Gap Calculations for Equity Profile City & Ward, &y_lbl."); */
+	var TotPop_tr:
 
-		PctForeignBorn_: PctNativeBorn: 
+		PctWhiteNonHispBridge_: PctHisp_:
+		PctAloneB_: PctAloneW_: PctAloneA_:
+		PctAloneI_: PctAloneO_: PctAloneM_: PctAloneAIOM_:
 
-		PctForeignBornB: PctForeignBornW:
-		PctForeignBornH: PctForeignBornA: PctForeignBornAIOM:
+		PctForeignBorn_: PctNativeBorn_: 
 
-		PctOthLang:
+		PctForeignBornB_: PctForeignBornW_:
+		PctForeignBornH_: PctForeignBornA_: PctForeignBornAIOM_:
+
+		PctOthLang_:
 
 		PctPopUnder18Years_: PctPopUnder18YearsW_: 
 		PctPopUnder18YearsB_: PctPopUnder18YearsH_:
@@ -593,235 +592,235 @@ proc transpose data=profile_tabs_ACS_suppress out=profile_tabs_&ct._ACS ;/*(labe
 		PctPop35_64YearsA_: PctPop35_64YearsAIOM_:
 
 		PctPop65andOverYears_: PctPop65andOverYrs_:
-		PctPop65andOverYearsW: PctPop65andOverYrsW:
-		PctPop65andOverYearsB: PctPop65andOverYrsB:
-		PctPop65andOverYearsH: PctPop65andOverYrsH:
-		PctPop65andOverYearsA: PctPop65andOverYrsA:
-		PctPop65andOverYearsAIOM: PctPop65andOverYrsAIOM:
+		PctPop65andOverYearsW_: PctPop65andOverYrsW_:
+		PctPop65andOverYearsB_: PctPop65andOverYrsB_:
+		PctPop65andOverYearsH_: PctPop65andOverYrsH_:
+		PctPop65andOverYearsA_: PctPop65andOverYrsA_:
+		PctPop65andOverYearsAIOM_: PctPop65andOverYrsAIOM_:
 
 		Pct25andOverWoutHS_:
-		Pct25andOverWoutHSW:
-		Pct25andOverWoutHSB:
-		Pct25andOverWoutHSH:
-		Pct25andOverWoutHSA:
-		Pct25andOverWoutHSAIOM:
-		Pct25andOverWoutHSFB:
-		Pct25andOverWoutHSNB:
+		Pct25andOverWoutHSW_:
+		Pct25andOverWoutHSB_:
+		Pct25andOverWoutHSH_:
+		Pct25andOverWoutHSA_:
+		Pct25andOverWoutHSAIOM_:
+		Pct25andOverWoutHSFB_:
+		Pct25andOverWoutHSNB_:
 
-		Gap25andOverWoutHSB:
-		Gap25andOverWoutHSH:
-		Gap25andOverWoutHSA:
-		Gap25andOverWoutHSAIOM:
-		Gap25andOverWoutHSFB:
-		Gap25andOverWoutHSNB:
+		Gap25andOverWoutHSB_:
+		Gap25andOverWoutHSH_:
+		Gap25andOverWoutHSA_:
+		Gap25andOverWoutHSAIOM_:
+		Gap25andOverWoutHSFB_:
+		Gap25andOverWoutHSNB_:
 
 		Pct25andOverWHS_:
-		Pct25andOverWHSW:
-		Pct25andOverWHSB:
-		Pct25andOverWHSH:
-		Pct25andOverWHSA:
-		Pct25andOverWHSAIOM:
-		Pct25andOverWHSFB:
-		Pct25andOverWHSNB:
+		Pct25andOverWHSW_:
+		Pct25andOverWHSB_:
+		Pct25andOverWHSH_:
+		Pct25andOverWHSA_:
+		Pct25andOverWHSAIOM_:
+		Pct25andOverWHSFB_:
+		Pct25andOverWHSNB_:
 
-		Gap25andOverWHSB:
-		Gap25andOverWHSH:
-		Gap25andOverWHSA:
-		Gap25andOverWHSAIOM:
-		Gap25andOverWHSFB:
-		Gap25andOverWHSNB:
+		Gap25andOverWHSB_:
+		Gap25andOverWHSH_:
+		Gap25andOverWHSA_:
+		Gap25andOverWHSAIOM_:
+		Gap25andOverWHSFB_:
+		Gap25andOverWHSNB_:
 
 		Pct25andOverWSC_:
-		Pct25andOverWSCW:
-		Pct25andOverWSCB:
-		Pct25andOverWSCH:
-		Pct25andOverWSCA:
-		Pct25andOverWSCAIOM:
-		Pct25andOverWSCFB:
-		Pct25andOverWSCNB:
+		Pct25andOverWSCW_:
+		Pct25andOverWSCB_:
+		Pct25andOverWSCH_:
+		Pct25andOverWSCA_:
+		Pct25andOverWSCAIOM_:
+		Pct25andOverWSCFB_:
+		Pct25andOverWSCNB_:
 
-		Gap25andOverWSCB:
-		Gap25andOverWSCH:
-		Gap25andOverWSCA:
-		Gap25andOverWSCAIOM:
-		Gap25andOverWSCFB:
-		Gap25andOverWSCNB:
+		Gap25andOverWSCB_:
+		Gap25andOverWSCH_:
+		Gap25andOverWSCA_:
+		Gap25andOverWSCAIOM_:
+		Gap25andOverWSCFB_:
+		Gap25andOverWSCNB_:
 
 		AvgHshldIncAdj_:
-		AvgHshldIncAdjW:
-		AvgHshldIncAdjB:
-		AvgHshldIncAdjH:
-		AvgHshldIncAdjA:
+		AvgHshldIncAdjW_:
+		AvgHshldIncAdjB_:
+		AvgHshldIncAdjH_:
+		AvgHshldIncAdjA_:
 
 		PctFamilyGT200000_:
-		PctFamilyGT200000W:
-		PctFamilyGT200000B:
-		PctFamilyGT200000H:
-		PctFamilyGT200000A:
-		PctFamilyGT200000AIOM:
+		PctFamilyGT200000W_:
+		PctFamilyGT200000B_:
+		PctFamilyGT200000H_:
+		PctFamilyGT200000A_:
+		PctFamilyGT200000AIOM_:
 
 		PctFamilyLT75000_:
-		PctFamilyLT75000W:
-		PctFamilyLT75000B:
-		PctFamilyLT75000H:
-		PctFamilyLT75000A:
-		PctFamilyLT75000AIOM:
+		PctFamilyLT75000W_:
+		PctFamilyLT75000B_:
+		PctFamilyLT75000H_:
+		PctFamilyLT75000A_:
+		PctFamilyLT75000AIOM_:
 
-		GapFamilyLT75000B:
-		GapFamilyLT75000H:
-		GapFamilyLT75000A:
-		GapFamilyLT75000AIOM:
+		GapFamilyLT75000B_:
+		GapFamilyLT75000H_:
+		GapFamilyLT75000A_:
+		GapFamilyLT75000AIOM_:
 
 		PctPoorPersons_:
-		PctPoorPersonsW:
-		PctPoorPersonsB:
-		PctPoorPersonsH:
-		PctPoorPersonsA:
-		PctPoorPersonsAIOM:
-		PctPoorPersonsFB:
+		PctPoorPersonsW_:
+		PctPoorPersonsB_:
+		PctPoorPersonsH_:
+		PctPoorPersonsA_:
+		PctPoorPersonsAIOM_:
+		PctPoorPersonsFB_:
 
-		GapPoorPersonsB:
-		GapPoorPersonsH:
-		GapPoorPersonsA:
-		GapPoorPersonsAIOM:
-		GapPoorPersonsFB:
+		GapPoorPersonsB_:
+		GapPoorPersonsH_:
+		GapPoorPersonsA_:
+		GapPoorPersonsAIOM_:
+		GapPoorPersonsFB_:
 
 		PctPoorChildren_:
-		PctPoorChildrenW:
-		PctPoorChildrenB:
-		PctPoorChildrenH:
-		PctPoorChildrenA:
-		PctPoorChildrenAIOM:
+		PctPoorChildrenW_:
+		PctPoorChildrenB_:
+		PctPoorChildrenH_:
+		PctPoorChildrenA_:
+		PctPoorChildrenAIOM_:
 
 		Pct16andOverEmploy_:
-		Pct16andOverEmployW:
-		Pct16andOverEmployB:
-		Pct16andOverEmployH:
-		Pct16andOverEmployA:
-		Pct16andOverEmployAIOM:
+		Pct16andOverEmployW_:
+		Pct16andOverEmployB_:
+		Pct16andOverEmployH_:
+		Pct16andOverEmployA_:
+		Pct16andOverEmployAIOM_:
 
-		Gap16andOverEmployB:
-		Gap16andOverEmployH:
-		Gap16andOverEmployA:
-		Gap16andOverEmployAIOM:
+		Gap16andOverEmployB_:
+		Gap16andOverEmployH_:
+		Gap16andOverEmployA_:
+		Gap16andOverEmployAIOM_:
 
 		PctEmployed16to64_:
-		PctEmployed16to64W:
-		PctEmployed16to64B:
-		PctEmployed16to64H:
-		PctEmployed16to64A:
-		PctEmployed16to64AIOM:
+		PctEmployed16to64W_:
+		PctEmployed16to64B_:
+		PctEmployed16to64H_:
+		PctEmployed16to64A_:
+		PctEmployed16to64AIOM_:
 
-		GapEmployed16to64B:
-		GapEmployed16to64H:
-		GapEmployed16to64A:
-		GapEmployed16to64AIOM:
+		GapEmployed16to64B_:
+		GapEmployed16to64H_:
+		GapEmployed16to64A_:
+		GapEmployed16to64AIOM_:
 
 		PctUnemployed_:
-		PctUnemployedW:
-		PctUnemployedB:
-		PctUnemployedH:
-		PctUnemployedA:
-		PctUnemployedAIOM:
+		PctUnemployedW_:
+		PctUnemployedB_:
+		PctUnemployedH_:
+		PctUnemployedA_:
+		PctUnemployedAIOM_:
 
-		GapUnemployedB:
-		GapUnemployedH:
-		GapUnemployedA:
-		GapUnemployedAIOM:
+		GapUnemployedB_:
+		GapUnemployedH_:
+		GapUnemployedA_:
+		GapUnemployedAIOM_:
 
 		Pct16andOverWages_:
-		Pct16andOverWagesW:
-		Pct16andOverWagesB:
-		Pct16andOverWagesH:
-		Pct16andOverWagesA:
-		Pct16andOverWagesAIOM:
+		Pct16andOverWagesW_:
+		Pct16andOverWagesB_:
+		Pct16andOverWagesH_:
+		Pct16andOverWagesA_:
+		Pct16andOverWagesAIOM_:
 
 		Gap16andOverWagesB:
 		Gap16andOverWagesH:
-		Gap16andOverWagesA:
+		Gap16andOverWagesA_:
 		Gap16andOverWagesAIOM:
 
 		Pct16andOverWorkFT_:
 		Pct16andOverWorkFTW:
 		Pct16andOverWorkFTB:
 		Pct16andOverWorkFTH:
-		Pct16andOverWorkFTA:
+		Pct16andOverWorkFTA_:
 		Pct16andOverWorkFTAIOM:
 
 		Gap16andOverWorkFTB:
 		Gap16andOverWorkFTH:
-		Gap16andOverWorkFTA:
+		Gap16andOverWorkFTA_:
 		Gap16andOverWorkFTAIOM:
 
 		PctWorkFTLT35k_:
 		PctWorkFTLT35kW:
 		PctWorkFTLT35kB:
 		PctWorkFTLT35kH:
-		PctWorkFTLT35kA:
+		PctWorkFTLT35kA_:
 		PctWorkFTLT35kAIOM:
 
 		GapWorkFTLT35kB:
 		GapWorkFTLT35kH:
-		GapWorkFTLT35kA:
+		GapWorkFTLT35kA_:
 		GapWorkFTLT35kAIOM:
 
 		PctWorkFTLT75k_:
 		PctWorkFTLT75kW:
 		PctWorkFTLT75kB:
 		PctWorkFTLT75kH:
-		PctWorkFTLT75kA:
+		PctWorkFTLT75kA_:
 		PctWorkFTLT75kAIOM:
 
 		GapWorkFTLT75kB:
 		GapWorkFTLT75kH:
-		GapWorkFTLT75kA:
+		GapWorkFTLT75kA_:
 		GapWorkFTLT75kAIOM:
 
 		PctEmployedMngmt_:
 		PctEmployedMngmtW:
 		PctEmployedMngmtB:
 		PctEmployedMngmtH:
-		PctEmployedMngmtA:
+		PctEmployedMngmtA_:
 		PctEmployedMngmtAIOM:
 
 		PctEmployedServ_:
 		PctEmployedServW:
 		PctEmployedServB:
 		PctEmployedServH:
-		PctEmployedServA:
+		PctEmployedServA_:
 		PctEmployedServAIOM:
 
 		PctEmployedSales_:
 		PctEmployedSalesW:
 		PctEmployedSalesB:
 		PctEmployedSalesH:
-		PctEmployedSalesA:
+		PctEmployedSalesA_:
 		PctEmployedSalesAIOM:
 
 		PctEmployedNatRes_:
 		PctEmployedNatResW:
 		PctEmployedNatResB:
 		PctEmployedNatResH:
-		PctEmployedNatResA:
+		PctEmployedNatResA_:
 		PctEmployedNatResAIOM:
 
 		PctEmployedProd_:
 		PctEmployedProdW:
 		PctEmployedProdB:
 		PctEmployedProdH:
-		PctEmployedProdA:
+		PctEmployedProdA_:
 		PctEmployedProdAIOM:
 
 		PctOwnerOccupiedHU_:
 		PctOwnerOccupiedHUW:
 		PctOwnerOccupiedHUB:
 		PctOwnerOccupiedHUH:
-		PctOwnerOccupiedHUA:
+		PctOwnerOccupiedHUA_:
 		PctOwnerOccupiedHUAIOM:
 
 		GapOwnerOccupiedHUB:
 		GapOwnerOccupiedHUH:
-		GapOwnerOccupiedHUA:
+		GapOwnerOccupiedHUA_:
 		GapOwnerOccupiedHUAIOM:
 	 	;
 
@@ -829,7 +828,7 @@ proc transpose data=profile_tabs_ACS_suppress out=profile_tabs_&ct._ACS ;/*(labe
 run; 
 
 
-proc export data=equity.profile_tabs_ACS
+proc export data=profile_tabs_&ct._ACS
 	outfile="D:\DCDATA\Libraries\Equity\Prog\profile_tabs_&ct._ACS.csv"
 	dbms=csv replace;
 	run;
