@@ -55,7 +55,7 @@
 
 data county_councildist_&ct.;
 	set Profile_acs_&st._regcnt (where=(county="&fips."))
-		Profile_acs_&st._regcd;
+		Profile_acs_&st._regcd; 
 
 	if county ^= " " then councildist="0";
 	_make_profile=1;
@@ -68,8 +68,8 @@ run;
 
 
 data whiterates_&ct.;
-	set Profile_acs_dc_regcnt
-	(keep= _make_profile
+	set Profile_acs_&st._regcnt (where=(county="&fips."));
+	keep _make_profile
 		   Pct25andOverWoutHSW: Pct25andOverWHSW: Pct25andOverWSCW:
            PctPoorPersonsW: PctPoorChildrenW:
            PctFamilyLT75000W: PctFamilyGT200000W:
@@ -79,7 +79,7 @@ data whiterates_&ct.;
            PctWorkFTLT35kW:  PctWorkFTLT75kW:
            PctEmployedMngmtW: PctEmployedServW:
            PctEmployedSalesW: PctEmployedNatResW: 
-           PctEmployedProdW: PctOwnerOccupiedHUW: )
+           PctEmployedProdW: PctOwnerOccupiedHUW: ;
 		   			;
 	_make_profile=1;
 	run;

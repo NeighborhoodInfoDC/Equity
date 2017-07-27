@@ -699,8 +699,8 @@
   ** Finalize data **;
 
 %Finalize_data_set( 
-	data=profile_acs_&state.regcd,
-	out=profile_acs_&state.regcd,
+	data=profile_acs_&state._regcd,
+	out=profile_acs_&state._regcd,
 	outlib=Equity,
 	label="DC Metro Area Equity Indicators by Race/Ethnicity, &_years., Council District",
 	sortby=councildist,
@@ -709,8 +709,8 @@
 	)
 
 %Finalize_data_set( 
-	data=profile_acs_&state.regcnt,
-	out=profile_acs_&state.regcnt,
+	data=profile_acs_&state._regcnt,
+	out=profile_acs_&state._regcnt,
 	outlib=Equity,
 	label="DC Metro Area Equity Indicators by Race/Ethnicity, &_years., County",
 	sortby=county,

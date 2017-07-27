@@ -40,7 +40,7 @@ quit;
 
 
 data &out.;
-	set profile_tabs_ACS_suppress_dc;
+	set profile_tabs_ACS_suppress_&ct.;
 
 	%macro round();
 			%let i = 1;
