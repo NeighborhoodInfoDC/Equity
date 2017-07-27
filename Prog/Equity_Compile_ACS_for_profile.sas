@@ -131,7 +131,7 @@
 
   run;*/
 
-  data profile_acs_&state.&geosuf (compress=no label="DC Equity Indicators by Race/Ethnicity, &_year., &geo."); 
+  data profile_acs_&state.&geosuf (compress=no label="DC Equity Indicators by Race/Ethnicity, &_years., &geo."); 
   
     set profile_acs_&state._&geosuf._A;
     
