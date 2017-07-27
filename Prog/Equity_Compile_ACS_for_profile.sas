@@ -115,7 +115,8 @@
            ChildrenPovertyDef: mChildrenPovertyDef: 
            PopPoorChildren: mPopPoorChildren: 
 		   PopPoorElderly: mPopPoorElderly:
-		   ElderlyPovertyDefined: mElderlyPovertyDefined:
+		   ElderlyPovertyDefined: mElderlyPovertyDefined: 
+		   PopMoved: mPopMoved:
 		   rename=(TotPop_&_years.=TotPop_tr_&_years. mTotPop_&_years.=mTotPop_tr_&_years.))
          ;
     	 by &geo;
@@ -649,6 +650,35 @@
                        num_moe=mNumOwnerOccupiedHU&race._&_years., den_moe=mNumOccupiedHsgUnits&race._&_years., label_moe =Homeownership rate &name.(%) MOE &y_lbl.);
     
    	%end;
+
+
+	** Mobility **;
+	%Pct_calc( var=PctMovedLastYear, label=% persons who moved in the last year, num=PopMovedLastYear, den=PopWithRace, years=&_years. )
+
+	%Moe_prop_a( var=PctMovedLastYear_m_&_years., mult=100, num=PopMovedLastYear_&_years., den=PopWithRace_&_years., 
+                       num_moe=mPopMovedLastYear_&_years., den_moe=mPopWithRace_&_years., label_moe =% persons who moved in the last year MOE &y_lbl.);
+
+	%Pct_calc( var=PctMovedDiffCnty, label=% persons who moved from a different county in the last year, num=PopMovedDiffCnty, den=PopWithRace, years=&_years. )
+
+	%Moe_prop_a( var=PctMovedDiffCnty_m_&_years., mult=100, num=PopMovedDiffCnty_&_years., den=PopWithRace_&_years., 
+                       num_moe=mPopMovedDiffCnty_&_years., den_moe=mPopWithRace_&_years., label_moe =% persons who moved from a different couny in the last year MOE &y_lbl.);
+
+	%do r=1 %to 5;
+
+		%let race=%scan(&racelist.,&r.," ");
+		%let name=%scan(&racename.,&r.," ");
+
+	%Pct_calc( var=PctMovedLastYear&race., label=% persons who moved in the last year &name., num=PopMovedLastYear&race., den=PopAlone&race., years=&_years. )
+
+	%Moe_prop_a( var=PctMovedLastYear&race._m_&_years., mult=100, num=PopMovedLastYear&race._&_years., den=PopAlone&race._&_years., 
+                       num_moe=mPopMovedLastYear&race._&_years., den_moe=mPopAlone&race._&_years., label_moe =% persons who moved in the last year &name. MOE &y_lbl.);
+
+	%Pct_calc( var=PctMovedDiffCnty&race., label=% persons who moved from a different county in the last year &name., num=PopMovedDiffCnty&race., den=PopAlone&race., years=&_years. )
+
+	%Moe_prop_a( var=PctMovedDiffCnty&race._m_&_years., mult=100, num=PopMovedDiffCnty&race._&_years., den=PopAlone&race._&_years., 
+                       num_moe=mPopMovedDiffCnty&race._&_years., den_moe=mPopAlone&race._&_years., label_moe =% persons who moved from a different county in the last year &name. MOE &y_lbl.);
+
+	%end;
 
     ** Create flag for generating profile **;
     

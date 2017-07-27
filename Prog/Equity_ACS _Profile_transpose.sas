@@ -372,7 +372,8 @@ data profile_tabs_ACS_suppress_&ct. (drop=cPct: cAvg:);
 	%suppress_vars_fb;
 
 	%suppress_gaps_negative;
-	%suppress_gaps;
+	/*%suppress_gaps;*/
+	%suppress_gaps_z;
 	%suppress_gaps_fb;
 
 	%macro suppression;
@@ -735,93 +736,107 @@ proc transpose data=profile_tabs_ACS_rounded_&ct. out=profile_tabs_&ct._ACS ;/*(
 		Pct16andOverWagesA_:
 		Pct16andOverWagesAIOM_:
 
-		Gap16andOverWagesB:
-		Gap16andOverWagesH:
-		Gap16andOverWagesA_:
+		Gap16andOverWagesB_:
+		Gap16andOverWagesH_:
+		Gap16andOverWagesA__:
 		Gap16andOverWagesAIOM:
 
 		Pct16andOverWorkFT_:
-		Pct16andOverWorkFTW:
-		Pct16andOverWorkFTB:
-		Pct16andOverWorkFTH:
+		Pct16andOverWorkFTW_:
+		Pct16andOverWorkFTB_:
+		Pct16andOverWorkFTH_:
 		Pct16andOverWorkFTA_:
-		Pct16andOverWorkFTAIOM:
+		Pct16andOverWorkFTAIOM_:
 
-		Gap16andOverWorkFTB:
-		Gap16andOverWorkFTH:
+		Gap16andOverWorkFTB_:
+		Gap16andOverWorkFTH_:
 		Gap16andOverWorkFTA_:
-		Gap16andOverWorkFTAIOM:
+		Gap16andOverWorkFTAIOM_:
 
 		PctWorkFTLT35k_:
-		PctWorkFTLT35kW:
-		PctWorkFTLT35kB:
-		PctWorkFTLT35kH:
+		PctWorkFTLT35kW_:
+		PctWorkFTLT35kB_:
+		PctWorkFTLT35kH_:
 		PctWorkFTLT35kA_:
-		PctWorkFTLT35kAIOM:
+		PctWorkFTLT35kAIOM_:
 
-		GapWorkFTLT35kB:
-		GapWorkFTLT35kH:
+		GapWorkFTLT35kB_:
+		GapWorkFTLT35kH_:
 		GapWorkFTLT35kA_:
-		GapWorkFTLT35kAIOM:
+		GapWorkFTLT35kAIOM_:
 
 		PctWorkFTLT75k_:
-		PctWorkFTLT75kW:
-		PctWorkFTLT75kB:
-		PctWorkFTLT75kH:
+		PctWorkFTLT75kW_:
+		PctWorkFTLT75kB_:
+		PctWorkFTLT75kH_:
 		PctWorkFTLT75kA_:
-		PctWorkFTLT75kAIOM:
+		PctWorkFTLT75kAIOM_:
 
-		GapWorkFTLT75kB:
-		GapWorkFTLT75kH:
+		GapWorkFTLT75kB_:
+		GapWorkFTLT75kH_:
 		GapWorkFTLT75kA_:
-		GapWorkFTLT75kAIOM:
+		GapWorkFTLT75kAIOM_:
 
 		PctEmployedMngmt_:
-		PctEmployedMngmtW:
-		PctEmployedMngmtB:
-		PctEmployedMngmtH:
-		PctEmployedMngmtA_:
-		PctEmployedMngmtAIOM:
+		PctEmployedMngmtW_:
+		PctEmployedMngmtB_:
+		PctEmployedMngmtH_:
+		PctEmployedMngmtA__:
+		PctEmployedMngmtAIOM_:
 
 		PctEmployedServ_:
-		PctEmployedServW:
-		PctEmployedServB:
-		PctEmployedServH:
+		PctEmployedServW_:
+		PctEmployedServB_:
+		PctEmployedServH_:
 		PctEmployedServA_:
-		PctEmployedServAIOM:
+		PctEmployedServAIOM_:
 
 		PctEmployedSales_:
-		PctEmployedSalesW:
-		PctEmployedSalesB:
-		PctEmployedSalesH:
+		PctEmployedSalesW_:
+		PctEmployedSalesB_:
+		PctEmployedSalesH_:
 		PctEmployedSalesA_:
-		PctEmployedSalesAIOM:
+		PctEmployedSalesAIOM_:
 
 		PctEmployedNatRes_:
-		PctEmployedNatResW:
-		PctEmployedNatResB:
-		PctEmployedNatResH:
+		PctEmployedNatResW_:
+		PctEmployedNatResB_:
+		PctEmployedNatResH_:
 		PctEmployedNatResA_:
-		PctEmployedNatResAIOM:
+		PctEmployedNatResAIOM_:
 
 		PctEmployedProd_:
-		PctEmployedProdW:
-		PctEmployedProdB:
-		PctEmployedProdH:
+		PctEmployedProdW_:
+		PctEmployedProdB_:
+		PctEmployedProdH_:
 		PctEmployedProdA_:
-		PctEmployedProdAIOM:
+		PctEmployedProdAIOM_:
 
 		PctOwnerOccupiedHU_:
-		PctOwnerOccupiedHUW:
-		PctOwnerOccupiedHUB:
-		PctOwnerOccupiedHUH:
+		PctOwnerOccupiedHUW_:
+		PctOwnerOccupiedHUB_:
+		PctOwnerOccupiedHUH_:
 		PctOwnerOccupiedHUA_:
-		PctOwnerOccupiedHUAIOM:
+		PctOwnerOccupiedHUAIOM_:
 
-		GapOwnerOccupiedHUB:
-		GapOwnerOccupiedHUH:
+		GapOwnerOccupiedHUB_:
+		GapOwnerOccupiedHUH_:
 		GapOwnerOccupiedHUA_:
-		GapOwnerOccupiedHUAIOM:
+		GapOwnerOccupiedHUAIOM_:
+
+		PctMovedLastYear_:
+		PctMovedLastYearW_:
+		PctMovedLastYearB_:
+		PctMovedLastYearH_:
+		PctMovedLastYearA_:
+		PctMovedLastYearAIOM_:
+
+		PctMovedDiffCnty_:
+		PctMovedDiffCntyW_:
+		PctMovedDiffCntyB_:
+		PctMovedDiffCntyH_:
+		PctMovedDiffCntyA_:
+		PctMovedDiffCntyAIOM_:
 	 	;
 
 	id councildist; 

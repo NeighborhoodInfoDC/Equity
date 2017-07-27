@@ -19,7 +19,7 @@
 	%let race=%scan(&racelist.,&r.," ");
 	%let name=%scan(&racename.,&r.," ");
 
-		array e_est&race. {21} 
+		array e_est&race. {23} 
 			Pct25andOverWoutHS&race._&_years.
 			Pct25andOverWHS&race._&_years.
 			Pct25andOverWSC&race._&_years.
@@ -41,9 +41,11 @@
 			PctEmployedNatRes&race._&_years.
 			PctEmployedProd&race._&_years.
 			PctOwnerOccupiedHU&race._&_years.
+			PctMovedLastYear&race._&_years.
+			PctMovedDiffCnty&race._&_years.
 			;
 
-		array e_moe&race. {21} 	
+		array e_moe&race. {23} 	
 			Pct25andOverWoutHS&race._m_&_years.
 			Pct25andOverWHS&race._m_&_years.
 			Pct25andOverWSC&race._m_&_years.
@@ -65,9 +67,11 @@
 			PctEmployedNatRes&race._m_&_years.
 			PctEmployedProd&race._m_&_years.
 			PctOwnerOccupiedHU&race._m_&_years.
+			PctMovedLastYear&race._m_&_years.
+			PctMovedDiffCnty&race._m_&_years.
 			;
 
-		array e_cv&race. {21} 
+		array e_cv&race. {23} 
 			cvPct25andOverWoutHS&race._&_years.
 			cvPct25andOverWHS&race._&_years.
 			cvPct25andOverWSC&race._&_years.
@@ -89,9 +93,11 @@
 			cvPctEmployedNatRes&race._&_years.
 			cvPctEmployedProd&race._&_years.
 			cvPctOwnerOccupiedHU&race._&_years.
+			cvPctMovedLastYear&race._&_years.
+			cvPctMovedDiffCnty&race._&_years.
 			;
 
-		array e_upper&race. {21} 		
+		array e_upper&race. {23} 		
 			uPct25andOverWoutHS&race._&_years.
 			uPct25andOverWHS&race._&_years.
 			uPct25andOverWSC&race._&_years.
@@ -113,9 +119,11 @@
 			uPctEmployedNatRes&race._&_years.
 			uPctEmployedProd&race._&_years.
 			uPctOwnerOccupiedHU&race._&_years.
+			uPctMovedLastYear&race._&_years.
+			uPctMovedDiffCnty&race._&_years.
 			;
 
-		array e_lower&race. {21} 		
+		array e_lower&race. {23} 		
 			lPct25andOverWoutHS&race._&_years.
 			lPct25andOverWHS&race._&_years.
 			lPct25andOverWSC&race._&_years.
@@ -137,9 +145,11 @@
 			lPctEmployedNatRes&race._&_years.
 			lPctEmployedProd&race._&_years.
 			lPctOwnerOccupiedHU&race._&_years.
+			lPctMovedLastYear&race._&_years.
+			lPctMovedDiffCnty&race._&_years.
 			;
 
-	  	do k=1 to 21; 
+	  	do k=1 to 23; 
 	   
 	                e_cv&race.{k}=e_moe&race.{k}/1.645/e_est&race.{k}*100;
 	                e_lower&race.{k}=e_est&race.{k}- e_moe&race.{k};
@@ -154,3 +164,5 @@
 
 %end;
 %mend suppress_vars;
+
+
