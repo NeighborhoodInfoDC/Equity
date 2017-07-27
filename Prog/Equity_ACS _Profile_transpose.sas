@@ -573,13 +573,6 @@ proc transpose data=profile_tabs_ACS_rounded_&ct. out=profile_tabs_&ct._ACS ;/*(
 		PctAloneB_: PctAloneW_: PctAloneA_:
 		PctAloneI_: PctAloneO_: PctAloneM_: PctAloneAIOM_:
 
-		PctForeignBorn_: PctNativeBorn_: 
-
-		PctForeignBornB_: PctForeignBornW_:
-		PctForeignBornH_: PctForeignBornA_: PctForeignBornAIOM_:
-
-		PctOthLang_:
-
 		PctPopUnder18Years_: PctPopUnder18YearsW_: 
 		PctPopUnder18YearsB_: PctPopUnder18YearsH_:
 		PctPopUnder18YearsA_: PctPopUnder18YearsAIOM_:
@@ -598,6 +591,13 @@ proc transpose data=profile_tabs_ACS_rounded_&ct. out=profile_tabs_&ct._ACS ;/*(
 		PctPop65andOverYearsH_: PctPop65andOverYrsH_:
 		PctPop65andOverYearsA_: PctPop65andOverYrsA_:
 		PctPop65andOverYearsAIOM_: PctPop65andOverYrsAIOM_:
+
+		PctForeignBorn_: PctNativeBorn_: 
+
+		PctForeignBornB_: PctForeignBornW_:
+		PctForeignBornH_: PctForeignBornA_: PctForeignBornAIOM_:
+
+		PctOthLang_:
 
 		Pct25andOverWoutHS_:
 		Pct25andOverWoutHSW_:
@@ -647,31 +647,6 @@ proc transpose data=profile_tabs_ACS_rounded_&ct. out=profile_tabs_&ct._ACS ;/*(
 		Gap25andOverWSCFB_:
 		Gap25andOverWSCNB_:
 
-		AvgHshldIncAdj_:
-		AvgHshldIncAdjW_:
-		AvgHshldIncAdjB_:
-		AvgHshldIncAdjH_:
-		AvgHshldIncAdjA_:
-
-		PctFamilyGT200000_:
-		PctFamilyGT200000W_:
-		PctFamilyGT200000B_:
-		PctFamilyGT200000H_:
-		PctFamilyGT200000A_:
-		PctFamilyGT200000AIOM_:
-
-		PctFamilyLT75000_:
-		PctFamilyLT75000W_:
-		PctFamilyLT75000B_:
-		PctFamilyLT75000H_:
-		PctFamilyLT75000A_:
-		PctFamilyLT75000AIOM_:
-
-		GapFamilyLT75000B_:
-		GapFamilyLT75000H_:
-		GapFamilyLT75000A_:
-		GapFamilyLT75000AIOM_:
-
 		PctPoorPersons_:
 		PctPoorPersonsW_:
 		PctPoorPersonsB_:
@@ -693,6 +668,31 @@ proc transpose data=profile_tabs_ACS_rounded_&ct. out=profile_tabs_&ct._ACS ;/*(
 		PctPoorChildrenA_:
 		PctPoorChildrenAIOM_:
 
+		PctFamilyLT75000_:
+		PctFamilyLT75000W_:
+		PctFamilyLT75000B_:
+		PctFamilyLT75000H_:
+		PctFamilyLT75000A_:
+		PctFamilyLT75000AIOM_:
+
+		GapFamilyLT75000B_:
+		GapFamilyLT75000H_:
+		GapFamilyLT75000A_:
+		GapFamilyLT75000AIOM_:
+
+		PctFamilyGT200000_:
+		PctFamilyGT200000W_:
+		PctFamilyGT200000B_:
+		PctFamilyGT200000H_:
+		PctFamilyGT200000A_:
+		PctFamilyGT200000AIOM_:
+
+		AvgHshldIncAdj_:
+		AvgHshldIncAdjW_:
+		AvgHshldIncAdjB_:
+		AvgHshldIncAdjH_:
+		AvgHshldIncAdjA_:
+		
 		Pct16andOverEmploy_:
 		Pct16andOverEmployW_:
 		Pct16andOverEmployB_:
