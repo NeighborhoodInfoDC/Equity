@@ -702,25 +702,40 @@
   
   ** Finalize data **;
 
-%Finalize_data_set( 
-	data=profile_acs_&state._&geo2.,
-	out=profile_acs_&state._&geo2.,
+  %if &st = DC and &geodo = WD12 %then %do;
+	%Finalize_data_set( 
+	data=profile_acs_dc_regcd,
+	out=profile_acs_dc_regcd,
 	outlib=Equity,
-	label="DC Metro Area Equity Indicators by Race/Ethnicity, &_years., &name.",
-	sortby=&geo.,
+	label="DC Metro Area Equity Indicators by Race/Ethnicity, &_years.,DC &name.",
+	sortby=councildist,
 	restrictions=None,
 	revisions=New file
 	)
+  %end;
+
+  %else %do; 
+	%Finalize_data_set( 
+		data=profile_acs_&state._&geo2.,
+		out=profile_acs_&state._&geo2.,
+		outlib=Equity,
+		label="DC Metro Area Equity Indicators by Race/Ethnicity, &_years., &st. &name.",
+		sortby=&geo.,
+		restrictions=None,
+		revisions=New file
+		)
+	%end; 
+
 
 %mend add_percents;
 
 /** End Macro Definition **/
 
-%add_percents(md,county,regcnt); 
-%add_percents(md,councildist,regcd); 
+%add_percents(MD,county,regcnt); 
+%add_percents(MD,councildist,regcd); 
 
-%add_percents(va,county,regcnt); 
-%add_percents(va,councildist,regcd); 
+%add_percents(VA,county,regcnt); 
+%add_percents(VA,councildist,regcd); 
 
 %add_percents(dc,county,regcnt); 
 %add_percents(dc,ward2012,wd12);     

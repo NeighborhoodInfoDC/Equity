@@ -57,8 +57,8 @@
 %end;
 
 data county_councildist_&ct.;
-	set Profile_acs_&st._regcnt (where=(county="&fips."))
-		Profile_acs_&st._regcd; 
+	set equity_r.Profile_acs_&st._regcnt (where=(county="&fips."))
+		equity_r.Profile_acs_&st._regcd; 
 
 	if county ^= " " then councildist="0";
 	_make_profile=1;
@@ -71,7 +71,7 @@ run;
 
 
 data whiterates_&ct.;
-	set Profile_acs_&st._regcnt (where=(county="&fips."));
+	set equity_r.Profile_acs_&st._regcnt (where=(county="&fips."));
 	keep _make_profile
 		   Pct25andOverWoutHSW: Pct25andOverWHSW: Pct25andOverWSCW:
            PctPoorPersonsW: PctPoorChildrenW:
@@ -813,7 +813,7 @@ run;
 
 
 proc export data=profile_tabs_&ct._ACS
-	outfile="D:\DCDATA\Libraries\Equity\Prog\profile_tabs_&ct._ACS.csv"
+	outfile="D:\DCDATA\Libraries\Equity\Prog\profile_tabs_&ct._ACS_&_years..csv"
 	dbms=csv replace;
 	run;
 
