@@ -425,10 +425,14 @@ data profile_tabs_ACS_suppress_&ct. (drop=cPct: cAvg:);
   preventing the CV from calculating because of division by 0*/
 
 	%if &cnty = DC %then %do;
-	if councildist="3" then PctPoorChildrenH_&_years.=.s;
-	else if councildist="3" then PctPoorChildrenH_m_&_years.=.s;
-	else if councildist="5" then PctPoorChildrenW_&_years.=.s;
-	else if councildist="5" then PctPoorChildrenW_m_&_years.=.s;
+	if councildist="3" then do;
+		PctPoorChildrenH_&_years.=.s;
+		PctPoorChildrenH_m_&_years.=.s;
+	end;
+	else if councildist="5" then do; 
+		PctPoorChildrenW_&_years.=.s;
+		then PctPoorChildrenW_m_&_years.=.s;
+	end;
 	%end;
 
 	%let y_lbl = %sysfunc( translate( &_years., '-', '_' ) );

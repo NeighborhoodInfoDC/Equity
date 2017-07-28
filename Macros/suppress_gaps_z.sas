@@ -154,6 +154,9 @@
 			 *suppress gaps where estimates are suppresed;
 						if e_est&race.{X}=.s then e_gap&race.{X}=.s;
 			*/
+			
+			** Suppression calculation based on guidance in this Census doc:
+			   https://www2.census.gov/programs-surveys/acs/tech_docs/statistical_testing/2014StatisticalTesting5.pdf ;
 
 			*Calculate standard error from MOE;
 			a_se = a_moe{X} / 1.645;
@@ -164,7 +167,7 @@
 			den&race. = sqrt(a_se**2 + b_se&race.**2);
 			z&race. = num&race. / den&race.;
 
-			*If Z < -1.645 or Z > 1.645, then the difference between A and B is significant at the 90 percent
+			*From census doc: If Z < -1.645 or Z > 1.645, then the difference between A and B is significant at the 90 percent
 			confidence level. Otherwise, the difference is not significant. ;
 			if -1.645 <= z&race. <= 1.645 then e_gap&race.{X}=.n;
 
