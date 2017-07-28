@@ -51,7 +51,7 @@ data allcounty;
 	set equity.Profile_acs_dc_regcnt 
 		equity.Profile_acs_md_regcnt 
 		equity.Profile_acs_va_regcnt;
-	if county in ("11001","24031","24033","51510","51013","51610","51059","51600","51107","51153","51153","51683","51685");
+	if county in ("11001","24031","24033","51510","51013","51610","51059","51600","51107","51153","51683","51685");
 	format county county.;
 
 	** Calculate and label gaps **;
