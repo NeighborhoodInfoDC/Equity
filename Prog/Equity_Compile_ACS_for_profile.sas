@@ -10,6 +10,8 @@
  Description:  Creates calculated statistics for ACS by geography to feed into Equity Profiles. 
 
  Modifications: 8/8/16 - SD wrote formulas for Equity indicators
+ 				7/29/17 - RP Updated for 2017 equity study to include indicators for Asian and mobility
+						  indicators. Also macro'd to run for council district and county in DC, MD and VA.
 
  Note: MOEs for AIOM average household income and average adjusted are blank because they are suppressed by the Census.
  **************************************************************************/

@@ -9,6 +9,9 @@
  
  Description:  Transposes calculated indicators for Equity profiles 
 			   and merges calculated statistics for ACS data at different geographies. 
+ Modifications: RP July-2017: Updated to run for DC, Fairfax, Prince George's and
+			    Montgomery counties for 2017 equity study update. Removed AIOM variables
+			    from final transpose.  
 **************************************************************************/
 /*options symbolgen;*/
 
