@@ -575,31 +575,31 @@ proc transpose data=profile_tabs_ACS_rounded_&ct. out=profile_tabs_&ct._ACS ;/*(
 
 		PctWhiteNonHispBridge_: PctHisp_:
 		PctAloneB_: PctAloneW_: PctAloneA_:
-		PctAloneI_: PctAloneO_: PctAloneM_: PctAloneAIOM_:
+		PctAloneI_: PctAloneO_: PctAloneM_: 
 
 		PctPopUnder18Years_: PctPopUnder18YearsW_: 
 		PctPopUnder18YearsB_: PctPopUnder18YearsH_:
-		PctPopUnder18YearsA_: PctPopUnder18YearsAIOM_:
+		PctPopUnder18YearsA_: 
 
 		PctPop18_34Years_: PctPop18_34YearsW_: 
 		PctPop18_34YearsB_: PctPop18_34YearsH_:
-		PctPop18_34YearsA_: PctPop18_34YearsAIOM_:
+		PctPop18_34YearsA_: 
 
 		PctPop35_64Years_: PctPop35_64YearsW_: 
 		PctPop35_64YearsB_: PctPop35_64YearsH_:
-		PctPop35_64YearsA_: PctPop35_64YearsAIOM_:
+		PctPop35_64YearsA_: 
 
 		PctPop65andOverYears_: PctPop65andOverYrs_:
 		PctPop65andOverYearsW_: PctPop65andOverYrsW_:
 		PctPop65andOverYearsB_: PctPop65andOverYrsB_:
 		PctPop65andOverYearsH_: PctPop65andOverYrsH_:
 		PctPop65andOverYearsA_: PctPop65andOverYrsA_:
-		PctPop65andOverYearsAIOM_: PctPop65andOverYrsAIOM_:
+
 
 		PctForeignBorn_: PctNativeBorn_: 
 
 		PctForeignBornB_: PctForeignBornW_:
-		PctForeignBornH_: PctForeignBornA_: PctForeignBornAIOM_:
+		PctForeignBornH_: PctForeignBornA_: 
 
 		PctOthLang_:
 
@@ -608,61 +608,50 @@ proc transpose data=profile_tabs_ACS_rounded_&ct. out=profile_tabs_&ct._ACS ;/*(
 		Pct25andOverWoutHSB_:
 		Pct25andOverWoutHSH_:
 		Pct25andOverWoutHSA_:
-		Pct25andOverWoutHSAIOM_:
 		Pct25andOverWoutHSFB_:
 		Pct25andOverWoutHSNB_:
 
 		Gap25andOverWoutHSB_:
 		Gap25andOverWoutHSH_:
 		Gap25andOverWoutHSA_:
-		Gap25andOverWoutHSAIOM_:
 		Gap25andOverWoutHSFB_:
-		Gap25andOverWoutHSNB_:
 
 		Pct25andOverWHS_:
 		Pct25andOverWHSW_:
 		Pct25andOverWHSB_:
 		Pct25andOverWHSH_:
 		Pct25andOverWHSA_:
-		Pct25andOverWHSAIOM_:
 		Pct25andOverWHSFB_:
 		Pct25andOverWHSNB_:
 
 		Gap25andOverWHSB_:
 		Gap25andOverWHSH_:
 		Gap25andOverWHSA_:
-		Gap25andOverWHSAIOM_:
 		Gap25andOverWHSFB_:
-		Gap25andOverWHSNB_:
-
+		
 		Pct25andOverWSC_:
 		Pct25andOverWSCW_:
 		Pct25andOverWSCB_:
 		Pct25andOverWSCH_:
 		Pct25andOverWSCA_:
-		Pct25andOverWSCAIOM_:
 		Pct25andOverWSCFB_:
 		Pct25andOverWSCNB_:
 
 		Gap25andOverWSCB_:
 		Gap25andOverWSCH_:
 		Gap25andOverWSCA_:
-		Gap25andOverWSCAIOM_:
 		Gap25andOverWSCFB_:
-		Gap25andOverWSCNB_:
-
+		
 		PctPoorPersons_:
 		PctPoorPersonsW_:
 		PctPoorPersonsB_:
 		PctPoorPersonsH_:
 		PctPoorPersonsA_:
-		PctPoorPersonsAIOM_:
 		PctPoorPersonsFB_:
 
 		GapPoorPersonsB_:
 		GapPoorPersonsH_:
 		GapPoorPersonsA_:
-		GapPoorPersonsAIOM_:
 		GapPoorPersonsFB_:
 
 		PctPoorChildren_:
@@ -670,26 +659,22 @@ proc transpose data=profile_tabs_ACS_rounded_&ct. out=profile_tabs_&ct._ACS ;/*(
 		PctPoorChildrenB_:
 		PctPoorChildrenH_:
 		PctPoorChildrenA_:
-		PctPoorChildrenAIOM_:
 
 		PctFamilyLT75000_:
 		PctFamilyLT75000W_:
 		PctFamilyLT75000B_:
 		PctFamilyLT75000H_:
 		PctFamilyLT75000A_:
-		PctFamilyLT75000AIOM_:
 
 		GapFamilyLT75000B_:
 		GapFamilyLT75000H_:
 		GapFamilyLT75000A_:
-		GapFamilyLT75000AIOM_:
 
 		PctFamilyGT200000_:
 		PctFamilyGT200000W_:
 		PctFamilyGT200000B_:
 		PctFamilyGT200000H_:
 		PctFamilyGT200000A_:
-		PctFamilyGT200000AIOM_:
 
 		AvgHshldIncAdj_:
 		AvgHshldIncAdjW_:
@@ -702,145 +687,122 @@ proc transpose data=profile_tabs_ACS_rounded_&ct. out=profile_tabs_&ct._ACS ;/*(
 		Pct16andOverEmployB_:
 		Pct16andOverEmployH_:
 		Pct16andOverEmployA_:
-		Pct16andOverEmployAIOM_:
 
 		Gap16andOverEmployB_:
 		Gap16andOverEmployH_:
 		Gap16andOverEmployA_:
-		Gap16andOverEmployAIOM_:
 
 		PctEmployed16to64_:
 		PctEmployed16to64W_:
 		PctEmployed16to64B_:
 		PctEmployed16to64H_:
 		PctEmployed16to64A_:
-		PctEmployed16to64AIOM_:
 
 		GapEmployed16to64B_:
 		GapEmployed16to64H_:
 		GapEmployed16to64A_:
-		GapEmployed16to64AIOM_:
 
 		PctUnemployed_:
 		PctUnemployedW_:
 		PctUnemployedB_:
 		PctUnemployedH_:
 		PctUnemployedA_:
-		PctUnemployedAIOM_:
 
 		GapUnemployedB_:
 		GapUnemployedH_:
 		GapUnemployedA_:
-		GapUnemployedAIOM_:
 
 		Pct16andOverWages_:
 		Pct16andOverWagesW_:
 		Pct16andOverWagesB_:
 		Pct16andOverWagesH_:
 		Pct16andOverWagesA_:
-		Pct16andOverWagesAIOM_:
 
 		Gap16andOverWagesB_:
 		Gap16andOverWagesH_:
 		Gap16andOverWagesA__:
-		Gap16andOverWagesAIOM:
 
 		Pct16andOverWorkFT_:
 		Pct16andOverWorkFTW_:
 		Pct16andOverWorkFTB_:
 		Pct16andOverWorkFTH_:
 		Pct16andOverWorkFTA_:
-		Pct16andOverWorkFTAIOM_:
 
 		Gap16andOverWorkFTB_:
 		Gap16andOverWorkFTH_:
 		Gap16andOverWorkFTA_:
-		Gap16andOverWorkFTAIOM_:
 
 		PctWorkFTLT35k_:
 		PctWorkFTLT35kW_:
 		PctWorkFTLT35kB_:
 		PctWorkFTLT35kH_:
 		PctWorkFTLT35kA_:
-		PctWorkFTLT35kAIOM_:
 
 		GapWorkFTLT35kB_:
 		GapWorkFTLT35kH_:
 		GapWorkFTLT35kA_:
-		GapWorkFTLT35kAIOM_:
 
 		PctWorkFTLT75k_:
 		PctWorkFTLT75kW_:
 		PctWorkFTLT75kB_:
 		PctWorkFTLT75kH_:
 		PctWorkFTLT75kA_:
-		PctWorkFTLT75kAIOM_:
 
 		GapWorkFTLT75kB_:
 		GapWorkFTLT75kH_:
 		GapWorkFTLT75kA_:
-		GapWorkFTLT75kAIOM_:
 
 		PctEmployedMngmt_:
 		PctEmployedMngmtW_:
 		PctEmployedMngmtB_:
 		PctEmployedMngmtH_:
 		PctEmployedMngmtA__:
-		PctEmployedMngmtAIOM_:
 
 		PctEmployedServ_:
 		PctEmployedServW_:
 		PctEmployedServB_:
 		PctEmployedServH_:
 		PctEmployedServA_:
-		PctEmployedServAIOM_:
 
 		PctEmployedSales_:
 		PctEmployedSalesW_:
 		PctEmployedSalesB_:
 		PctEmployedSalesH_:
 		PctEmployedSalesA_:
-		PctEmployedSalesAIOM_:
 
 		PctEmployedNatRes_:
 		PctEmployedNatResW_:
 		PctEmployedNatResB_:
 		PctEmployedNatResH_:
 		PctEmployedNatResA_:
-		PctEmployedNatResAIOM_:
 
 		PctEmployedProd_:
 		PctEmployedProdW_:
 		PctEmployedProdB_:
 		PctEmployedProdH_:
 		PctEmployedProdA_:
-		PctEmployedProdAIOM_:
 
 		PctOwnerOccupiedHU_:
 		PctOwnerOccupiedHUW_:
 		PctOwnerOccupiedHUB_:
 		PctOwnerOccupiedHUH_:
 		PctOwnerOccupiedHUA_:
-		PctOwnerOccupiedHUAIOM_:
 
 		GapOwnerOccupiedHUB_:
 		GapOwnerOccupiedHUH_:
 		GapOwnerOccupiedHUA_:
-		GapOwnerOccupiedHUAIOM_:
 
 		PctMovedLastYear_:
 		PctMovedLastYearW_:
 		PctMovedLastYearB_:
 		PctMovedLastYearH_:
 		PctMovedLastYearA_:
-		PctMovedLastYearAIOM_:
 
 		PctMovedDiffCnty_:
 		PctMovedDiffCntyW_:
 		PctMovedDiffCntyB_:
 		PctMovedDiffCntyH_:
 		PctMovedDiffCntyA_:
-		PctMovedDiffCntyAIOM_:
 	 	;
 
 	id councildist; 
