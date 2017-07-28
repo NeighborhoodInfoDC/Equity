@@ -1150,7 +1150,7 @@ proc transpose data=Profile_acs_region_rounded out=profile_tabs_region ;/*(label
 
 		Gap16andOverWagesB_:
 		Gap16andOverWagesH_:
-		Gap16andOverWagesA__:
+		Gap16andOverWagesA_:
 
 		Pct16andOverWorkFT_:
 		Pct16andOverWorkFTW_:
