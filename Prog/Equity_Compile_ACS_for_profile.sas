@@ -38,9 +38,11 @@
 
   %if &geodo = REGCNT %then %do;
   	%let t = regcnt;
+	%let name = County;
   %end;
   %else %do;
   	%let t = tr;
+	%let name = Council District;
   %end;
 
   %local geosuf geoafmt j; 
@@ -701,21 +703,11 @@
   ** Finalize data **;
 
 %Finalize_data_set( 
-	data=profile_acs_&state._regcd,
-	out=profile_acs_&state._regcd,
+	data=profile_acs_&state._&geo2.,
+	out=profile_acs_&state._&geo2.,
 	outlib=Equity,
-	label="DC Metro Area Equity Indicators by Race/Ethnicity, &_years., Council District",
-	sortby=councildist,
-	restrictions=None,
-	revisions=New file
-	)
-
-%Finalize_data_set( 
-	data=profile_acs_&state._regcnt,
-	out=profile_acs_&state._regcnt,
-	outlib=Equity,
-	label="DC Metro Area Equity Indicators by Race/Ethnicity, &_years., County",
-	sortby=county,
+	label="DC Metro Area Equity Indicators by Race/Ethnicity, &_years., &name.",
+	sortby=&geo.,
 	restrictions=None,
 	revisions=New file
 	)

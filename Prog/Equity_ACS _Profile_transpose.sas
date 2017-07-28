@@ -434,7 +434,7 @@ data profile_tabs_ACS_suppress_&ct. (drop=cPct: cAvg:);
 	end;
 	else if councildist="5" then do; 
 		PctPoorChildrenW_&_years.=.s;
-		then PctPoorChildrenW_m_&_years.=.s;
+	    PctPoorChildrenW_m_&_years.=.s;
 	end;
 	%end;
 
