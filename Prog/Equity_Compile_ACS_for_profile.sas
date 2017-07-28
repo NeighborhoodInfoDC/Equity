@@ -201,32 +201,32 @@
 	%do r=2 %to 5;
 
 		%let race=%scan(&racelist.,&r.," ");
-		%let name=%scan(&racename.,&r.," ");
+		%let rname=%scan(&racename.,&r.," ");
 	 
-    %Pct_calc( var=PctPopUnder18Years&race., label=% children &name., num=PopUnder18Years&race., den=PopAlone&race., years= &_years. )
+    %Pct_calc( var=PctPopUnder18Years&race., label=% children &rname., num=PopUnder18Years&race., den=PopAlone&race., years= &_years. )
     
     %Moe_prop_a( var=PctPopUnder18Years&race._m_&_years., mult=100, num=PopUnder18Years&race._&_years., den=PopAlone&race._&_years., 
-                       num_moe=mPopUnder18Years&race._&_years., den_moe=mPopAlone&race._&_years., label_moe = % children &name. MOE &y_lbl.);
+                       num_moe=mPopUnder18Years&race._&_years., den_moe=mPopAlone&race._&_years., label_moe = % children &rname. MOE &y_lbl.);
 
-	%Pct_calc( var=PctPop18_34Years&race., label=% persons 18-34 years old &name., num=Pop18_34Years&race., den=PopAlone&race., years= &_years. )
+	%Pct_calc( var=PctPop18_34Years&race., label=% persons 18-34 years old &rname., num=Pop18_34Years&race., den=PopAlone&race., years= &_years. )
 	
 	%Moe_prop_a( var=PctPop18_34Years&race._m_&_years., mult=100, num=Pop18_34Years&race._&_years., den=PopAlone&race._&_years., 
-	                       num_moe=mPop18_34Years&race._&_years., den_moe=mPopAlone&race._&_years., label_moe = % persons 18-34 years old &name. MOE &y_lbl.);
+	                       num_moe=mPop18_34Years&race._&_years., den_moe=mPopAlone&race._&_years., label_moe = % persons 18-34 years old &rname. MOE &y_lbl.);
 
-	%Pct_calc( var=PctPop35_64Years&race., label=% persons 35-64 years old &name., num=Pop35_64Years&race., den=PopAlone&race., years= &_years. )
+	%Pct_calc( var=PctPop35_64Years&race., label=% persons 35-64 years old &rname., num=Pop35_64Years&race., den=PopAlone&race., years= &_years. )
 	
 	%Moe_prop_a( var=PctPop35_64Years&race._m_&_years., mult=100, num=Pop35_64Years&race._&_years., den=PopAlone&race._&_years., 
-	                       num_moe=mPop35_64Years&race._&_years., den_moe=mPopAlone&race._&_years., label_moe = % persons 35-64 years old &name. MOE &y_lbl.);
+	                       num_moe=mPop35_64Years&race._&_years., den_moe=mPopAlone&race._&_years., label_moe = % persons 35-64 years old &rname. MOE &y_lbl.);
 
-	%Pct_calc( var=PctPop65andOverYears&race., label=% seniors &name., num=Pop65andOverYears&race., den=PopAlone&race., years= &_years. )
+	%Pct_calc( var=PctPop65andOverYears&race., label=% seniors &rname., num=Pop65andOverYears&race., den=PopAlone&race., years= &_years. )
 
     %Moe_prop_a( var=PctPop65andOverYrs&race._m_&_years., mult=100, num=Pop65andOverYears&race._&_years., den=PopAlone&race._&_years., 
-                       num_moe=mPop65andOverYears&race._&_years., den_moe=mPopAlone&race._&_years., label_moe = % seniors &name. MOE &y_lbl.);
+                       num_moe=mPop65andOverYears&race._&_years., den_moe=mPopAlone&race._&_years., label_moe = % seniors &rname. MOE &y_lbl.);
 
-	%Pct_calc( var=PctForeignBorn&race., label=% foreign born &name., num=PopForeignBorn&race., den=PopAlone&race., years=&_years. )
+	%Pct_calc( var=PctForeignBorn&race., label=% foreign born &rname., num=PopForeignBorn&race., den=PopAlone&race., years=&_years. )
 
     %Moe_prop_a( var=PctForeignBorn&race._m_&_years., mult=100, num=PopForeignBorn&race._&_years., den=PopAlone&race._&_years., 
-                       num_moe=mPopForeignBorn&race._&_years., den_moe=mPopAlone&race._&_years., label_moe = % foreign born &name. MOE &y_lbl.);
+                       num_moe=mPopForeignBorn&race._&_years., den_moe=mPopAlone&race._&_years., label_moe = % foreign born &rname. MOE &y_lbl.);
 
 	%end;
 
@@ -395,67 +395,67 @@
 	%do r=1 %to 5;
 
 		%let race=%scan(&racelist.,&r.," ");
-		%let name=%scan(&racename.,&r.," ");
+		%let rname=%scan(&racename.,&r.," ");
 		 
-	%Pct_calc( var=PctUnemployed&race., label=&name. Unemployment rate (%), num=PopUnemployed&race., den=PopInCivLaborForce&race., years=&_years. )
+	%Pct_calc( var=PctUnemployed&race., label=&rname. Unemployment rate (%), num=PopUnemployed&race., den=PopInCivLaborForce&race., years=&_years. )
 
 	%Moe_prop_a( var=PctUnemployed&race._m_&_years., mult=100, num=PopUnemployed&race._&_years., den=PopInCivLaborForce&race._&_years., 
-	                       num_moe=mPopUnemployed&race._&_years., den_moe=mPopInCivLaborForce&race._&_years., label_moe =&name. Unemployment rate (%) MOE &y_lbl.);
+	                       num_moe=mPopUnemployed&race._&_years., den_moe=mPopInCivLaborForce&race._&_years., label_moe =&rname. Unemployment rate (%) MOE &y_lbl.);
 
-	%Pct_calc( var=PctEmployed16to64&race., label=% persons &name. employed between 16 and 64 years old, num=Pop16_64Employed&race., den=Pop16_64years&race., years=&_years. )
+	%Pct_calc( var=PctEmployed16to64&race., label=% persons &rname. employed between 16 and 64 years old, num=Pop16_64Employed&race., den=Pop16_64years&race., years=&_years. )
 
 	%Moe_prop_a( var=PctEmployed16to64&race._m_&_years., mult=100, num=Pop16_64Employed&race._&_years., den=Pop16_64years&race._&_years., 
-                       num_moe=mPop16_64Employed&race._&_years., den_moe=mPop16_64years&race._&_years., label_moe =% persons &name. employed between 16 and 64 years old MOE &y_lbl.);
+                       num_moe=mPop16_64Employed&race._&_years., den_moe=mPop16_64years&race._&_years., label_moe =% persons &rname. employed between 16 and 64 years old MOE &y_lbl.);
 
-	%Pct_calc( var=Pct16andOverEmploy&race., label=% pop. 16+ yrs. employed &name., num=Pop16andOverEmploy&race., den=Pop16andOverYears&race., years=&_years. )
+	%Pct_calc( var=Pct16andOverEmploy&race., label=% pop. 16+ yrs. employed &rname., num=Pop16andOverEmploy&race., den=Pop16andOverYears&race., years=&_years. )
 
     %Moe_prop_a( var=Pct16andOverEmploy&race._m_&_years., mult=100, num=Pop16andOverEmploy&race._&_years., den=Pop16andOverYears&race._&_years., 
-                       num_moe=mPop16andOverEmploy&race._&_years., den_moe=mPop16andOverYears&race._&_years., label_moe =% pop. 16+ yrs. employed &name. MOE &y_lbl.);
+                       num_moe=mPop16andOverEmploy&race._&_years., den_moe=mPop16andOverYears&race._&_years., label_moe =% pop. 16+ yrs. employed &rname. MOE &y_lbl.);
 
-	%Pct_calc( var=Pct16andOverWages&race., label=% persons &name. employed with earnings, num=PopWorkEarn&race., den=Pop16andOverYears&race., years=&_years. )
+	%Pct_calc( var=Pct16andOverWages&race., label=% persons &rname. employed with earnings, num=PopWorkEarn&race., den=Pop16andOverYears&race., years=&_years. )
 
 	%Moe_prop_a( var=Pct16andOverWages&race._m_&_years., mult=100, num=PopWorkEarn&race._&_years., den=Pop16andOverYears&race._&_years., 
-                       num_moe=mPopWorkEarn&race._&_years., den_moe=mPop16andOverYears&race._&_years., label_moe =% persons &name. employed with earnings MOE &y_lbl.);
+                       num_moe=mPopWorkEarn&race._&_years., den_moe=mPop16andOverYears&race._&_years., label_moe =% persons &rname. employed with earnings MOE &y_lbl.);
 
-	%Pct_calc( var=Pct16andOverWorkFT&race., label=% persons &name. employed full time, num=PopWorkFT&race., den=Pop16andOverYears&race., years=&_years. )
+	%Pct_calc( var=Pct16andOverWorkFT&race., label=% persons &rname. employed full time, num=PopWorkFT&race., den=Pop16andOverYears&race., years=&_years. )
 
     %Moe_prop_a( var=Pct16andOverWorkFT&race._m_&_years., mult=100, num=PopWorkFT&race._&_years., den=Pop16andOverYears&race._&_years., 
-                       num_moe=mPopWorkFT&race._&_years., den_moe=mPop16andOverYears&race._&_years., label_moe =% persons &name. employed full time MOE &y_lbl.);
+                       num_moe=mPopWorkFT&race._&_years., den_moe=mPop16andOverYears&race._&_years., label_moe =% persons &rname. employed full time MOE &y_lbl.);
 
-	%Pct_calc( var=PctWorkFTLT35k&race., label=% persons &name. employed full time with earnings less than 35000, num=PopWorkFTLT35K&race., den=PopWorkFT&race., years=&_years. )
+	%Pct_calc( var=PctWorkFTLT35k&race., label=% persons &rname. employed full time with earnings less than 35000, num=PopWorkFTLT35K&race., den=PopWorkFT&race., years=&_years. )
 
 	%Moe_prop_a( var=PctWorkFTLT35k&race._m_&_years., mult=100, num=PopWorkFTLT35k&race._&_years., den=PopWorkFT&race._&_years., 
-                       num_moe=mPopWorkFTLT35k&race._&_years., den_moe=mPopWorkFT&race._&_years., label_moe =% persons &name. employed full time with earnings less than 35000 MOE &y_lbl.);
+                       num_moe=mPopWorkFTLT35k&race._&_years., den_moe=mPopWorkFT&race._&_years., label_moe =% persons &rname. employed full time with earnings less than 35000 MOE &y_lbl.);
 
-	%Pct_calc( var=PctWorkFTLT75k&race., label=% persons &name. employed full time with earnings less than 75000, num=PopWorkFTLT75k&race., den=PopWorkFT&race., years=&_years. )
+	%Pct_calc( var=PctWorkFTLT75k&race., label=% persons &rname. employed full time with earnings less than 75000, num=PopWorkFTLT75k&race., den=PopWorkFT&race., years=&_years. )
 
 	%Moe_prop_a( var=PctWorkFTLT75k&race._m_&_years., mult=100, num=PopWorkFTLT75k&race._&_years., den=PopWorkFT&race._&_years., 
-                       num_moe=mPopWorkFTLT75k&race._&_years., den_moe=mPopWorkFT&race._&_years., label_moe =% persons &name. employed full time with earnings less than 75000 MOE &y_lbl.);
+                       num_moe=mPopWorkFTLT75k&race._&_years., den_moe=mPopWorkFT&race._&_years., label_moe =% persons &rname. employed full time with earnings less than 75000 MOE &y_lbl.);
 
-	%Pct_calc( var=PctEmployedMngmt&race., label=% persons &name. 16+ years old employed in management business science and arts occupations, num=PopEmployedMngmt&race., den=PopEmployedByOcc&race., years=&_years. )
+	%Pct_calc( var=PctEmployedMngmt&race., label=% persons &rname. 16+ years old employed in management business science and arts occupations, num=PopEmployedMngmt&race., den=PopEmployedByOcc&race., years=&_years. )
 
 	%Moe_prop_a( var=PctEmployedMngmt&race._m_&_years., mult=100, num=PopEmployedMngmt&race._&_years., den=PopEmployedByOcc&race._&_years., 
-                       num_moe=mPopEmployedMngmt&race._&_years., den_moe=mPopEmployedByOcc&race._&_years., label_moe =% persons &name. 16+ years old employed in management business science and arts occupations MOE &y_lbl.);
+                       num_moe=mPopEmployedMngmt&race._&_years., den_moe=mPopEmployedByOcc&race._&_years., label_moe =% persons &rname. 16+ years old employed in management business science and arts occupations MOE &y_lbl.);
 
-	%Pct_calc( var=PctEmployedServ&race., label=% persons &name. 16+ years old employed in service occupations, num=PopEmployedServ&race., den=PopEmployedByOcc&race., years=&_years. )
+	%Pct_calc( var=PctEmployedServ&race., label=% persons &rname. 16+ years old employed in service occupations, num=PopEmployedServ&race., den=PopEmployedByOcc&race., years=&_years. )
 
 	%Moe_prop_a( var=PctEmployedServ&race._m_&_years., mult=100, num=PopEmployedServ&race._&_years., den=PopEmployedByOcc&race._&_years., 
-                       num_moe=mPopEmployedServ&race._&_years., den_moe=mPopEmployedByOcc&race._&_years., label_moe =% persons &name. 16+ years old employed in service occupations MOE &y_lbl.);
+                       num_moe=mPopEmployedServ&race._&_years., den_moe=mPopEmployedByOcc&race._&_years., label_moe =% persons &rname. 16+ years old employed in service occupations MOE &y_lbl.);
 
-	%Pct_calc( var=PctEmployedSales&race., label=% persons &name. 16+ years old employed in sales and office occupations, num=PopEmployedSales&race., den=PopEmployedByOcc&race., years=&_years. )
+	%Pct_calc( var=PctEmployedSales&race., label=% persons &rname. 16+ years old employed in sales and office occupations, num=PopEmployedSales&race., den=PopEmployedByOcc&race., years=&_years. )
 
 	%Moe_prop_a( var=PctEmployedSales&race._m_&_years., mult=100, num=PopEmployedSales&race._&_years., den=PopEmployedByOcc&race._&_years., 
-                       num_moe=mPopEmployedSales&race._&_years., den_moe=mPopEmployedByOcc&race._&_years., label_moe =% persons &name. 16+ years old employed in sales and office occupations MOE &y_lbl.);
+                       num_moe=mPopEmployedSales&race._&_years., den_moe=mPopEmployedByOcc&race._&_years., label_moe =% persons &rname. 16+ years old employed in sales and office occupations MOE &y_lbl.);
 
-	%Pct_calc( var=PctEmployedNatRes&race., label=% persons &name. 16+ years old employed in natural resources construction and maintenance occupations, num=PopEmployedNatRes&race., den=PopEmployedByOcc&race., years=&_years. )
+	%Pct_calc( var=PctEmployedNatRes&race., label=% persons &rname. 16+ years old employed in natural resources construction and maintenance occupations, num=PopEmployedNatRes&race., den=PopEmployedByOcc&race., years=&_years. )
 
 	%Moe_prop_a( var=PctEmployedNatRes&race._m_&_years., mult=100, num=PopEmployedNatRes&race._&_years., den=PopEmployedByOcc&race._&_years., 
-                       num_moe=mPopEmployedNatRes&race._&_years., den_moe=mPopEmployedByOcc&race._&_years., label_moe =% persons &name. 16+ years old employed in natural resources construction and maintenance occupations MOE &y_lbl.);
+                       num_moe=mPopEmployedNatRes&race._&_years., den_moe=mPopEmployedByOcc&race._&_years., label_moe =% persons &rname. 16+ years old employed in natural resources construction and maintenance occupations MOE &y_lbl.);
 
-	%Pct_calc( var=PctEmployedProd&race., label=% persons &name. employed in production transportation and material moving occupations, num=PopEmployedProd&race., den=PopEmployedByOcc&race., years=&_years. )
+	%Pct_calc( var=PctEmployedProd&race., label=% persons &rname. employed in production transportation and material moving occupations, num=PopEmployedProd&race., den=PopEmployedByOcc&race., years=&_years. )
 
 	%Moe_prop_a( var=PctEmployedProd&race._m_&_years., mult=100, num=PopEmployedProd&race._&_years., den=PopEmployedByOcc&race._&_years., 
-                       num_moe=mPopEmployedProd&race._&_years., den_moe=mPopEmployedByOcc&race._&_years., label_moe =% persons &name. employed in production transportation and material moving occupations MOE &y_lbl.);
+                       num_moe=mPopEmployedProd&race._&_years., den_moe=mPopEmployedByOcc&race._&_years., label_moe =% persons &rname. employed in production transportation and material moving occupations MOE &y_lbl.);
 
 	%end;
 
@@ -463,22 +463,22 @@
 	%do r=1 %to 5;
 
 		%let race=%scan(&racelist.,&r.," ");
-		%let name=%scan(&racename.,&r.," ");
+		%let rname=%scan(&racename.,&r.," ");
 
-    %Pct_calc( var=Pct25andOverWoutHS&race., label=% persons &name. without HS diploma, num=Pop25andOverWoutHS&race., den=Pop25andOverYears&race., years=&_years. )
+    %Pct_calc( var=Pct25andOverWoutHS&race., label=% persons &rname. without HS diploma, num=Pop25andOverWoutHS&race., den=Pop25andOverYears&race., years=&_years. )
 
     %Moe_prop_a( var=Pct25andOverWoutHS&race._m_&_years., mult=100, num=Pop25andOverWoutHS&race._&_years., den=Pop25andOverYears&race._&_years., 
-                       num_moe=mPop25andOverWoutHS&race._&_years., den_moe=mPop25andOverYears&race._&_years., label_moe =% persons &name. without HS diploma MOE &y_lbl.);
+                       num_moe=mPop25andOverWoutHS&race._&_years., den_moe=mPop25andOverYears&race._&_years., label_moe =% persons &rname. without HS diploma MOE &y_lbl.);
 
-	%Pct_calc( var=Pct25andOverWHS&race., label=% persons &name. with HS diploma, num=Pop25andOverWHS&race., den=Pop25andOverYears&race., years=&_years. )
+	%Pct_calc( var=Pct25andOverWHS&race., label=% persons &rname. with HS diploma, num=Pop25andOverWHS&race., den=Pop25andOverYears&race., years=&_years. )
 
     %Moe_prop_a( var=Pct25andOverWHS&race._m_&_years., mult=100, num=Pop25andOverWHS&race._&_years., den=Pop25andOverYears&race._&_years., 
-                       num_moe=mPop25andOverWHS&race._&_years., den_moe=mPop25andOverYears&race._&_years., label_moe =% persons &name. with HS diploma MOE &y_lbl.);
+                       num_moe=mPop25andOverWHS&race._&_years., den_moe=mPop25andOverYears&race._&_years., label_moe =% persons &rname. with HS diploma MOE &y_lbl.);
 
-	%Pct_calc( var=Pct25andOverWSC&race., label=% persons &name. with some college, num=Pop25andOverWSC&race., den=Pop25andOverYears&race., years=&_years. )
+	%Pct_calc( var=Pct25andOverWSC&race., label=% persons &rname. with some college, num=Pop25andOverWSC&race., den=Pop25andOverYears&race., years=&_years. )
 
 	%Moe_prop_a( var=Pct25andOverWSC&race._m_&_years., mult=100, num=Pop25andOverWSC&race._&_years., den=Pop25andOverYears&race._&_years., 
-                       num_moe=mPop25andOverWSC&race._&_years., den_moe=mPop25andOverYears&race._&_years., label_moe =% persons &name. with some college MOE &y_lbl.);
+                       num_moe=mPop25andOverWSC&race._&_years., den_moe=mPop25andOverYears&race._&_years., label_moe =% persons &rname. with some college MOE &y_lbl.);
 
 	%end;
 
@@ -581,19 +581,19 @@
 	%do r=1 %to 5;
 
 		%let race=%scan(&racelist.,&r.," ");
-		%let name=%scan(&racename.,&r.," ");
+		%let rname=%scan(&racename.,&r.," ");
 
-    %Pct_calc( var=PctFamilyLT75000&race., label=% families &name. with income less than 75000, num=FamIncomeLT75k&race., den=NumFamilies&race., years=&_years. )
+    %Pct_calc( var=PctFamilyLT75000&race., label=% families &rname. with income less than 75000, num=FamIncomeLT75k&race., den=NumFamilies&race., years=&_years. )
 
     %Moe_prop_a( var=PctFamilyLT75000&race._m_&_years., mult=100, num=FamIncomeLT75k&race._&_years., den=NumFamilies&race._&_years., 
-                       num_moe=mFamIncomeLT75k&race._&_years., den_moe=mNumFamilies&race._&_years., label_moe =% families &name. with income less than 75000 MOE &y_lbl.);
+                       num_moe=mFamIncomeLT75k&race._&_years., den_moe=mNumFamilies&race._&_years., label_moe =% families &rname. with income less than 75000 MOE &y_lbl.);
 
-	%Pct_calc( var=PctFamilyGT200000&race., label=% families &name. with income greater than 200000, num=FamIncomeGT200k&race., den=NumFamilies&race., years=&_years. )
+	%Pct_calc( var=PctFamilyGT200000&race., label=% families &rname. with income greater than 200000, num=FamIncomeGT200k&race., den=NumFamilies&race., years=&_years. )
 
     %Moe_prop_a( var=PctFamilyGT200000&race._m_&_years., mult=100, num=FamIncomeGT200k&race._&_years., den=NumFamilies&race._&_years., 
-                       num_moe=mFamIncomeGT200k&race._&_years., den_moe=mNumFamilies&race._&_years., label_moe =% families &name. with income greater than 200000 MOE &y_lbl.);
+                       num_moe=mFamIncomeGT200k&race._&_years., den_moe=mNumFamilies&race._&_years., label_moe =% families &rname. with income greater than 200000 MOE &y_lbl.);
 
-	%Pct_calc( var=AvgHshldIncome&race., label=Average household income last year &name. ($), num=AggHshldIncome&race., den=NumHshlds&race., mult=1, years=&_years. )
+	%Pct_calc( var=AvgHshldIncome&race., label=Average household income last year &rname. ($), num=AggHshldIncome&race., den=NumHshlds&race., mult=1, years=&_years. )
 
 	%dollar_convert( AvgHshldIncome&race._&_years., AvgHshldIncAdj&race._&_years., 2015, &inc_dollar_yr )
 
@@ -645,13 +645,13 @@
 	%do r=1 %to 5;
 
 		%let race=%scan(&racelist.,&r.," ");
-		%let name=%scan(&racename.,&r.," ");
+		%let rname=%scan(&racename.,&r.," ");
 
-    %Pct_calc( var=PctOwnerOccupiedHU&race., label=Homeownership rate &name.(%), num=NumOwnerOccupiedHU&race., den=NumOccupiedHsgUnits&race., years=&_years. )
+    %Pct_calc( var=PctOwnerOccupiedHU&race., label=Homeownership rate &rname.(%), num=NumOwnerOccupiedHU&race., den=NumOccupiedHsgUnits&race., years=&_years. )
 
     
     %Moe_prop_a( var=PctOwnerOccupiedHU&race._m_&_years., mult=100, num=NumOwnerOccupiedHU&race._&_years., den=NumOccupiedHsgUnits&race._&_years., 
-                       num_moe=mNumOwnerOccupiedHU&race._&_years., den_moe=mNumOccupiedHsgUnits&race._&_years., label_moe =Homeownership rate &name.(%) MOE &y_lbl.);
+                       num_moe=mNumOwnerOccupiedHU&race._&_years., den_moe=mNumOccupiedHsgUnits&race._&_years., label_moe =Homeownership rate &rname.(%) MOE &y_lbl.);
     
    	%end;
 
@@ -670,17 +670,17 @@
 	%do r=1 %to 5;
 
 		%let race=%scan(&racelist.,&r.," ");
-		%let name=%scan(&racename.,&r.," ");
+		%let rname=%scan(&racename.,&r.," ");
 
-	%Pct_calc( var=PctMovedLastYear&race., label=% persons who moved in the last year &name., num=PopMovedLastYear&race., den=PopAlone&race., years=&_years. )
+	%Pct_calc( var=PctMovedLastYear&race., label=% persons who moved in the last year &rname., num=PopMovedLastYear&race., den=PopAlone&race., years=&_years. )
 
 	%Moe_prop_a( var=PctMovedLastYear&race._m_&_years., mult=100, num=PopMovedLastYear&race._&_years., den=PopAlone&race._&_years., 
-                       num_moe=mPopMovedLastYear&race._&_years., den_moe=mPopAlone&race._&_years., label_moe =% persons who moved in the last year &name. MOE &y_lbl.);
+                       num_moe=mPopMovedLastYear&race._&_years., den_moe=mPopAlone&race._&_years., label_moe =% persons who moved in the last year &rname. MOE &y_lbl.);
 
-	%Pct_calc( var=PctMovedDiffCnty&race., label=% persons who moved from a different county in the last year &name., num=PopMovedDiffCnty&race., den=PopAlone&race., years=&_years. )
+	%Pct_calc( var=PctMovedDiffCnty&race., label=% persons who moved from a different county in the last year &rname., num=PopMovedDiffCnty&race., den=PopAlone&race., years=&_years. )
 
 	%Moe_prop_a( var=PctMovedDiffCnty&race._m_&_years., mult=100, num=PopMovedDiffCnty&race._&_years., den=PopAlone&race._&_years., 
-                       num_moe=mPopMovedDiffCnty&race._&_years., den_moe=mPopAlone&race._&_years., label_moe =% persons who moved from a different county in the last year &name. MOE &y_lbl.);
+                       num_moe=mPopMovedDiffCnty&race._&_years., den_moe=mPopAlone&race._&_years., label_moe =% persons who moved from a different county in the last year &rname. MOE &y_lbl.);
 
 	%end;
 
