@@ -14,132 +14,142 @@
 
 %macro suppress_vars;
 
-%do r=1 %to 4;
+%do r=1 %to 5;
 
 	%let race=%scan(&racelist.,&r.," ");
 	%let name=%scan(&racename.,&r.," ");
 
-		array e_est&race. {21} 
-			Pct25andOverWoutHS&race._2010_14
-			Pct25andOverWHS&race._2010_14
-			Pct25andOverWSC&race._2010_14
-			AvgHshldIncAdj&race._2010_14
-			PctFamilyGT200000&race._2010_14
-			PctFamilyLT75000&race._2010_14
-			PctPoorPersons&race._2010_14
-			PctPoorChildren&race._2010_14
-			Pct16andOverEmploy&race._2010_14
-			PctEmployed16to64&race._2010_14
-			PctUnemployed&race._2010_14
-			Pct16andOverWages&race._2010_14
-			Pct16andOverWorkFT&race._2010_14
-			PctWorkFTLT35k&race._2010_14
-			PctWorkFTLT75k&race._2010_14
-			PctEmployedMngmt&race._2010_14
-			PctEmployedServ&race._2010_14
-			PctEmployedSales&race._2010_14
-			PctEmployedNatRes&race._2010_14
-			PctEmployedProd&race._2010_14
-			PctOwnerOccupiedHU&race._2010_14
+		array e_est&race. {23} 
+			Pct25andOverWoutHS&race._&_years.
+			Pct25andOverWHS&race._&_years.
+			Pct25andOverWSC&race._&_years.
+			AvgHshldIncAdj&race._&_years.
+			PctFamilyGT200000&race._&_years.
+			PctFamilyLT75000&race._&_years.
+			PctPoorPersons&race._&_years.
+			PctPoorChildren&race._&_years.
+			Pct16andOverEmploy&race._&_years.
+			PctEmployed16to64&race._&_years.
+			PctUnemployed&race._&_years.
+			Pct16andOverWages&race._&_years.
+			Pct16andOverWorkFT&race._&_years.
+			PctWorkFTLT35k&race._&_years.
+			PctWorkFTLT75k&race._&_years.
+			PctEmployedMngmt&race._&_years.
+			PctEmployedServ&race._&_years.
+			PctEmployedSales&race._&_years.
+			PctEmployedNatRes&race._&_years.
+			PctEmployedProd&race._&_years.
+			PctOwnerOccupiedHU&race._&_years.
+			PctMovedLastYear&race._&_years.
+			PctMovedDiffCnty&race._&_years.
 			;
 
-		array e_moe&race. {21} 	
-			Pct25andOverWoutHS&race._m_2010_14
-			Pct25andOverWHS&race._m_2010_14
-			Pct25andOverWSC&race._m_2010_14
-			AvgHshldIncAdj&race._m_2010_14
-			PctFamilyGT200000&race._m_2010_14
-			PctFamilyLT75000&race._m_2010_14
-			PctPoorPersons&race._m_2010_14
-			PctPoorChildren&race._m_2010_14
-			Pct16andOverEmploy&race._m_2010_14
-			PctEmployed16to64&race._m_2010_14
-			PctUnemployed&race._m_2010_14
-			Pct16andOverWages&race._m_2010_14
-			Pct16andOverWorkFT&race._m_2010_14
-			PctWorkFTLT35k&race._m_2010_14
-			PctWorkFTLT75k&race._m_2010_14
-			PctEmployedMngmt&race._m_2010_14
-			PctEmployedServ&race._m_2010_14
-			PctEmployedSales&race._m_2010_14
-			PctEmployedNatRes&race._m_2010_14
-			PctEmployedProd&race._m_2010_14
-			PctOwnerOccupiedHU&race._m_2010_14
+		array e_moe&race. {23} 	
+			Pct25andOverWoutHS&race._m_&_years.
+			Pct25andOverWHS&race._m_&_years.
+			Pct25andOverWSC&race._m_&_years.
+			AvgHshldIncAdj&race._m_&_years.
+			PctFamilyGT200000&race._m_&_years.
+			PctFamilyLT75000&race._m_&_years.
+			PctPoorPersons&race._m_&_years.
+			PctPoorChildren&race._m_&_years.
+			Pct16andOverEmploy&race._m_&_years.
+			PctEmployed16to64&race._m_&_years.
+			PctUnemployed&race._m_&_years.
+			Pct16andOverWages&race._m_&_years.
+			Pct16andOverWorkFT&race._m_&_years.
+			PctWorkFTLT35k&race._m_&_years.
+			PctWorkFTLT75k&race._m_&_years.
+			PctEmployedMngmt&race._m_&_years.
+			PctEmployedServ&race._m_&_years.
+			PctEmployedSales&race._m_&_years.
+			PctEmployedNatRes&race._m_&_years.
+			PctEmployedProd&race._m_&_years.
+			PctOwnerOccupiedHU&race._m_&_years.
+			PctMovedLastYear&race._m_&_years.
+			PctMovedDiffCnty&race._m_&_years.
 			;
 
-		array e_cv&race. {21} 
-			cvPct25andOverWoutHS&race._2010_14
-			cvPct25andOverWHS&race._2010_14
-			cvPct25andOverWSC&race._2010_14
-			cvAvgHshldIncAdj&race._2010_14
-			cvPctFamilyGT200000&race._2010_14
-			cvPctFamilyLT75000&race._2010_14
-			cvPctPoorPersons&race._2010_14
-			cvPctPoorChildren&race._2010_14
-			cvPct16andOverEmploy&race._2010_14
-			cvPctEmployed16to64&race._2010_14
-			cvPctUnemployed&race._2010_14
-			cvPct16andOverWages&race._2010_14
-			cvPct16andOverWorkFT&race._2010_14
-			cvPctWorkFTLT35k&race._2010_14
-			cvPctWorkFTLT75k&race._2010_14
-			cvPctEmployedMngmt&race._2010_14
-			cvPctEmployedServ&race._2010_14
-			cvPctEmployedSales&race._2010_14
-			cvPctEmployedNatRes&race._2010_14
-			cvPctEmployedProd&race._2010_14
-			cvPctOwnerOccupiedHU&race._2010_14
+		array e_cv&race. {23} 
+			cvPct25andOverWoutHS&race._&_years.
+			cvPct25andOverWHS&race._&_years.
+			cvPct25andOverWSC&race._&_years.
+			cvAvgHshldIncAdj&race._&_years.
+			cvPctFamilyGT200000&race._&_years.
+			cvPctFamilyLT75000&race._&_years.
+			cvPctPoorPersons&race._&_years.
+			cvPctPoorChildren&race._&_years.
+			cvPct16andOverEmploy&race._&_years.
+			cvPctEmployed16to64&race._&_years.
+			cvPctUnemployed&race._&_years.
+			cvPct16andOverWages&race._&_years.
+			cvPct16andOverWorkFT&race._&_years.
+			cvPctWorkFTLT35k&race._&_years.
+			cvPctWorkFTLT75k&race._&_years.
+			cvPctEmployedMngmt&race._&_years.
+			cvPctEmployedServ&race._&_years.
+			cvPctEmployedSales&race._&_years.
+			cvPctEmployedNatRes&race._&_years.
+			cvPctEmployedProd&race._&_years.
+			cvPctOwnerOccupiedHU&race._&_years.
+			cvPctMovedLastYear&race._&_years.
+			cvPctMovedDiffCnty&race._&_years.
 			;
 
-		array e_upper&race. {21} 		
-			uPct25andOverWoutHS&race._2010_14
-			uPct25andOverWHS&race._2010_14
-			uPct25andOverWSC&race._2010_14
-			uAvgHshldIncAdj&race._2010_14
-			uPctFamilyGT200000&race._2010_14
-			uPctFamilyLT75000&race._2010_14
-			uPctPoorPersons&race._2010_14
-			uPctPoorChildren&race._2010_14
-			uPct16andOverEmploy&race._2010_14
-			uPctEmployed16to64&race._2010_14
-			uPctUnemployed&race._2010_14
-			uPct16andOverWages&race._2010_14
-			uPct16andOverWorkFT&race._2010_14
-			uPctWorkFTLT35k&race._2010_14
-			uPctWorkFTLT75k&race._2010_14
-			uPctEmployedMngmt&race._2010_14
-			uPctEmployedServ&race._2010_14
-			uPctEmployedSales&race._2010_14
-			uPctEmployedNatRes&race._2010_14
-			uPctEmployedProd&race._2010_14
-			uPctOwnerOccupiedHU&race._2010_14
+		array e_upper&race. {23} 		
+			uPct25andOverWoutHS&race._&_years.
+			uPct25andOverWHS&race._&_years.
+			uPct25andOverWSC&race._&_years.
+			uAvgHshldIncAdj&race._&_years.
+			uPctFamilyGT200000&race._&_years.
+			uPctFamilyLT75000&race._&_years.
+			uPctPoorPersons&race._&_years.
+			uPctPoorChildren&race._&_years.
+			uPct16andOverEmploy&race._&_years.
+			uPctEmployed16to64&race._&_years.
+			uPctUnemployed&race._&_years.
+			uPct16andOverWages&race._&_years.
+			uPct16andOverWorkFT&race._&_years.
+			uPctWorkFTLT35k&race._&_years.
+			uPctWorkFTLT75k&race._&_years.
+			uPctEmployedMngmt&race._&_years.
+			uPctEmployedServ&race._&_years.
+			uPctEmployedSales&race._&_years.
+			uPctEmployedNatRes&race._&_years.
+			uPctEmployedProd&race._&_years.
+			uPctOwnerOccupiedHU&race._&_years.
+			uPctMovedLastYear&race._&_years.
+			uPctMovedDiffCnty&race._&_years.
 			;
 
-		array e_lower&race. {21} 		
-			lPct25andOverWoutHS&race._2010_14
-			lPct25andOverWHS&race._2010_14
-			lPct25andOverWSC&race._2010_14
-			lAvgHshldIncAdj&race._2010_14
-			lPctFamilyGT200000&race._2010_14
-			lPctFamilyLT75000&race._2010_14
-			lPctPoorPersons&race._2010_14
-			lPctPoorChildren&race._2010_14
-			lPct16andOverEmploy&race._2010_14
-			lPctEmployed16to64&race._2010_14
-			lPctUnemployed&race._2010_14
-			lPct16andOverWages&race._2010_14
-			lPct16andOverWorkFT&race._2010_14
-			lPctWorkFTLT35k&race._2010_14
-			lPctWorkFTLT75k&race._2010_14
-			lPctEmployedMngmt&race._2010_14
-			lPctEmployedServ&race._2010_14
-			lPctEmployedSales&race._2010_14
-			lPctEmployedNatRes&race._2010_14
-			lPctEmployedProd&race._2010_14
-			lPctOwnerOccupiedHU&race._2010_14
+		array e_lower&race. {23} 		
+			lPct25andOverWoutHS&race._&_years.
+			lPct25andOverWHS&race._&_years.
+			lPct25andOverWSC&race._&_years.
+			lAvgHshldIncAdj&race._&_years.
+			lPctFamilyGT200000&race._&_years.
+			lPctFamilyLT75000&race._&_years.
+			lPctPoorPersons&race._&_years.
+			lPctPoorChildren&race._&_years.
+			lPct16andOverEmploy&race._&_years.
+			lPctEmployed16to64&race._&_years.
+			lPctUnemployed&race._&_years.
+			lPct16andOverWages&race._&_years.
+			lPct16andOverWorkFT&race._&_years.
+			lPctWorkFTLT35k&race._&_years.
+			lPctWorkFTLT75k&race._&_years.
+			lPctEmployedMngmt&race._&_years.
+			lPctEmployedServ&race._&_years.
+			lPctEmployedSales&race._&_years.
+			lPctEmployedNatRes&race._&_years.
+			lPctEmployedProd&race._&_years.
+			lPctOwnerOccupiedHU&race._&_years.
+			lPctMovedLastYear&race._&_years.
+			lPctMovedDiffCnty&race._&_years.
 			;
 
-	  	do k=1 to 21; 
+	  	do k=1 to 23; 
 	   
 	                e_cv&race.{k}=e_moe&race.{k}/1.645/e_est&race.{k}*100;
 	                e_lower&race.{k}=e_est&race.{k}- e_moe&race.{k};
@@ -154,3 +164,5 @@
 
 %end;
 %mend suppress_vars;
+
+

@@ -14,19 +14,19 @@
 
 %macro suppress_gaps_negative;
 
-		%do r=1 %to 4;
+		%do r=1 %to 5;
 
 		%let race=%scan(&racelist.,&r.," ");
 		%let name=%scan(&racename.,&r.," ");
 
 			array p_gap&race. {7} 
-				Gap25andOverWHS&race._2010_14
-				Gap25andOverWSC&race._2010_14
-				Gap16andOverEmploy&race._2010_14
-				GapEmployed16to64&race._2010_14
-				Gap16andOverWages&race._2010_14
-				Gap16andOverWorkFT&race._2010_14
-				GapOwnerOccupiedHU&race._2010_14
+				Gap25andOverWHS&race._&_years.
+				Gap25andOverWSC&race._&_years.
+				Gap16andOverEmploy&race._&_years.
+				GapEmployed16to64&race._&_years.
+				Gap16andOverWages&race._&_years.
+				Gap16andOverWorkFT&race._&_years.
+				GapOwnerOccupiedHU&race._&_years.
 				;
 
 		 	do p=1 to 7; 
@@ -34,18 +34,17 @@
 
        		end;
 
-			array n_gap&race. {8} 
-				Gap25andOverWoutHS&race._2010_14
-				GapFamilyLT75000&race._2010_14
-				GapPoorPersons&race._2010_14
-				GapPoorChildren&race._2010_14
-				GapUnemployed&race._2010_14
-				Gap16andOverWorkFT&race._2010_14
-				GapWorkFTLT35k&race._2010_14
-				GapWorkFTLT75k&race._2010_14
+			array n_gap&race. {7} 
+				Gap25andOverWoutHS&race._&_years.
+				GapFamilyLT75000&race._&_years.
+				GapPoorPersons&race._&_years.
+				GapPoorChildren&race._&_years.
+				GapUnemployed&race._&_years.
+				GapWorkFTLT35k&race._&_years.
+				GapWorkFTLT75k&race._&_years.
 				;
 
-		 	do n=1 to 8; 
+		 	do n=1 to 7; 
 						if n_gap&race.{n} > 0 then n_gap&race.{n} = .a; 
 
 			end;

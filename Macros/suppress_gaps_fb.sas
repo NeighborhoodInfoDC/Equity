@@ -14,63 +14,63 @@
 %macro suppress_gaps_fb;
 
 	array y_est {7} 
-		CPct25andOverWoutHSW_2010_14
-		CPct25andOverWoutHSW_2010_14
-		CPct25andOverWHSW_2010_14
-		CPct25andOverWHSW_2010_14
-		CPct25andOverWSCW_2010_14
-		CPct25andOverWSCW_2010_14
-		CPctPoorPersonsW_2010_14
+		CPct25andOverWoutHSW_&_years.
+		CPct25andOverWoutHSW_&_years.
+		CPct25andOverWHSW_&_years.
+		CPct25andOverWHSW_&_years.
+		CPct25andOverWSCW_&_years.
+		CPct25andOverWSCW_&_years.
+		CPctPoorPersonsW_&_years.
 		;
 
 	array y_moe {7} 	
-		CPct25andOverWoutHSW_m_2010_14
-		CPct25andOverWoutHSW_m_2010_14
-		CPct25andOverWHSW_m_2010_14
-		CPct25andOverWHSW_m_2010_14
-		CPct25andOverWSCW_m_2010_14
-		CPct25andOverWSCW_m_2010_14
-		CPctPoorPersonsW_m_2010_14
+		CPct25andOverWoutHSW_m_&_years.
+		CPct25andOverWoutHSW_m_&_years.
+		CPct25andOverWHSW_m_&_years.
+		CPct25andOverWHSW_m_&_years.
+		CPct25andOverWSCW_m_&_years.
+		CPct25andOverWSCW_m_&_years.
+		CPctPoorPersonsW_m_&_years.
 		;
 
 	array y_cv {7} 
-		wfbcvPct25andOverWoutHSW_2010_14
-		wfbcvPct25andOverWoutHSW_2010_14
-		wfbcvPct25andOverWHSW_2010_14
-		wfbcvPct25andOverWHSW_2010_14
-		wfbcvPct25andOverWSCW_2010_14
-		wfbcvPct25andOverWSCW_2010_14
-		wfbcvPctPoorPersonsW_2010_14
+		wfbcvPct25andOverWoutHSW_&_years.
+		wfbcvPct25andOverWoutHSW_&_years.
+		wfbcvPct25andOverWHSW_&_years.
+		wfbcvPct25andOverWHSW_&_years.
+		wfbcvPct25andOverWSCW_&_years.
+		wfbcvPct25andOverWSCW_&_years.
+		wfbcvPctPoorPersonsW_&_years.
 		;
 
 	array y_upper {7} 		
-		wfbuPct25andOverWoutHSW_2010_14
-		wfbuPct25andOverWoutHSW_2010_14
-		wfbuPct25andOverWHSW_2010_14
-		wfbuPct25andOverWHSW_2010_14
-		wfbuPct25andOverWSCW_2010_14
-		wfbuPct25andOverWSCW_2010_14
-		wfbuPctPoorPersonsW_2010_14
+		wfbuPct25andOverWoutHSW_&_years.
+		wfbuPct25andOverWoutHSW_&_years.
+		wfbuPct25andOverWHSW_&_years.
+		wfbuPct25andOverWHSW_&_years.
+		wfbuPct25andOverWSCW_&_years.
+		wfbuPct25andOverWSCW_&_years.
+		wfbuPctPoorPersonsW_&_years.
 		;
 
 	array y_lower {7} 		
-		wfblPct25andOverWoutHSW_2010_14
-		wfblPct25andOverWoutHSW_2010_14
-		wfblPct25andOverWHSW_2010_14
-		wfblPct25andOverWHSW_2010_14
-		wfblPct25andOverWSCW_2010_14
-		wfblPct25andOverWSCW_2010_14
-		wfblPctPoorPersonsW_2010_14
+		wfblPct25andOverWoutHSW_&_years.
+		wfblPct25andOverWoutHSW_&_years.
+		wfblPct25andOverWHSW_&_years.
+		wfblPct25andOverWHSW_&_years.
+		wfblPct25andOverWSCW_&_years.
+		wfblPct25andOverWSCW_&_years.
+		wfblPctPoorPersonsW_&_years.
 		;
 
 	array n_gap {7} 		
-	  	Gap25andOverWoutHSFB_2010_14 
-		Gap25andOverWoutHSNB_2010_14
-		Gap25andOverWHSFB_2010_14 
-		Gap25andOverWHSNB_2010_14 
-		Gap25andOverWSCFB_2010_14 
-		Gap25andOverWSCNB_2010_14
-		GapPoorPersonsFB_2010_14
+	  	Gap25andOverWoutHSFB_&_years. 
+		Gap25andOverWoutHSNB_&_years.
+		Gap25andOverWHSFB_&_years. 
+		Gap25andOverWHSNB_&_years. 
+		Gap25andOverWSCFB_&_years. 
+		Gap25andOverWSCNB_&_years.
+		GapPoorPersonsFB_&_years.
 		;
 
   	do j=1 to 7; 
