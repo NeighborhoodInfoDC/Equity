@@ -973,10 +973,26 @@ data Profile_acs_region;
 	%suppress_gaps_negative;
 	%suppress_gaps_z;
 	%suppress_gaps_fb;
+	
+	order=.;
+	if county=" " then order=1;
+	if county="11001" then order=2;
+	if county="24031" then order=3;
+	if county="24033" then order=4;
+	if county="51510" then order=5;
+	if county="51013" then order=6;
+	if county="51610" then order=8;
+	if county="51059" then order=7;
+	if county="51600" then order=9;
+	if county="51107" then order=10;
+	if county="51153" then order=11;
+	if county="51683" then order=12; 
+	if county="51685" then order=13; 
+	
 
 run;
 
-proc sort data = Profile_acs_region; by county; run;
+proc sort data = Profile_acs_region; by order; run;
 
 
 ** Round numbers **;
