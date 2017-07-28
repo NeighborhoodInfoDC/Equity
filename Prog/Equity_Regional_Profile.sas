@@ -1223,7 +1223,7 @@ run;
 
 ** Export final file **;
 proc export data=profile_tabs_region
-	outfile="D:\DCDATA\Libraries\Equity\Prog\profile_tabs_region.csv"
+	outfile="D:\DCDATA\Libraries\Equity\Prog\profile_tabs_region_acs_2011_15.csv"
 	dbms=csv replace;
 	run;
 
