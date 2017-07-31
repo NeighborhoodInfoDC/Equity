@@ -436,10 +436,6 @@ data profile_tabs_ACS_suppress_&ct. (drop=cPct: cAvg:);
 		PctPoorChildrenW_&_years.=.s;
 	    PctPoorChildrenW_m_&_years.=.s;
 	end;
-	if PctEmployedMngmtA_&_years.=0 then do;
-		PctEmployedMngmtA_&_years.=.s;
-		PctEmployedMngmtA_m_&_years.=.s;
-	end;
 	%end;
 
 	%let y_lbl = %sysfunc( translate( &_years., '-', '_' ) );
