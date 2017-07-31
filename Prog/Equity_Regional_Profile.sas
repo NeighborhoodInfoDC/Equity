@@ -54,6 +54,10 @@ data allcounty;
 	if county in ("11001","24031","24033","51510","51013","51610","51059","51600","51107","51153","51683","51685");
 	format county county.;
 
+	
+	%suppress_vars;
+	%suppress_vars_fb;
+
 	** Calculate and label gaps **;
 	Gap25andOverWoutHSB_&_years.=Pct25andOverWoutHSW_&_years./100*Pop25andOverYearsB_&_years.-Pop25andOverWoutHSB_&_years.;
 	Gap25andOverWoutHSW_&_years.=Pct25andOverWoutHSW_&_years./100*Pop25andOverYearsW_&_years.-Pop25andOverWoutHSW_&_years.;
@@ -321,6 +325,11 @@ data allcounty;
 	GapOwnerOccupiedHUA_&_years. = "Difference in # of Asian homeowners with equity, &y_lbl. "
 	GapOwnerOccupiedHUAIOM_&_years. = "Difference in # of All-Other homeowners with equity, &y_lbl. "
 		;
+
+	%suppress_gaps_negative;
+	%suppress_gaps_z;
+	%suppress_gaps_fb;
+
 run;
 
 
@@ -966,13 +975,6 @@ data region_agg ;
 ** Stack county and region data **;
 data Profile_acs_region;
 	set allcounty region_agg (drop = _type_ _freq_);
-
-	%suppress_vars;
-	%suppress_vars_fb;
-	
-	%suppress_gaps_negative;
-	%suppress_gaps_z;
-	%suppress_gaps_fb;
 	
 	order=.;
 	if county=" " then order=1;
