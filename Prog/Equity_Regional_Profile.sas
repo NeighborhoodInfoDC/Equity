@@ -1188,7 +1188,7 @@ proc transpose data=Profile_acs_region_rounded out=profile_tabs_region ;/*(label
 		PctEmployedMngmtW_:
 		PctEmployedMngmtB_:
 		PctEmployedMngmtH_:
-		PctEmployedMngmtA__:
+		PctEmployedMngmtA_:
 
 		PctEmployedServ_:
 		PctEmployedServW_:
@@ -1235,7 +1235,8 @@ proc transpose data=Profile_acs_region_rounded out=profile_tabs_region ;/*(label
 		PctMovedDiffCntyB_:
 		PctMovedDiffCntyH_:
 		PctMovedDiffCntyA_:
-		;
+	 	;
+
 	id county; 
 run; 
 

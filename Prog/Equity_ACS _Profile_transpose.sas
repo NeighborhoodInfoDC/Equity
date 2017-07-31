@@ -436,6 +436,10 @@ data profile_tabs_ACS_suppress_&ct. (drop=cPct: cAvg:);
 		PctPoorChildrenW_&_years.=.s;
 	    PctPoorChildrenW_m_&_years.=.s;
 	end;
+	if PctEmployedMngmtA_&_years.=0 then do;
+		PctEmployedMngmtA_&_years.=.s;
+		PctEmployedMngmtA_m_&_years.=.s;
+	end;
 	%end;
 
 	%let y_lbl = %sysfunc( translate( &_years., '-', '_' ) );
@@ -723,7 +727,7 @@ proc transpose data=profile_tabs_ACS_rounded_&ct. out=profile_tabs_&ct._ACS ;/*(
 
 		Gap16andOverWagesB_:
 		Gap16andOverWagesH_:
-		Gap16andOverWagesA__:
+		Gap16andOverWagesA_:
 
 		Pct16andOverWorkFT_:
 		Pct16andOverWorkFTW_:
@@ -759,7 +763,7 @@ proc transpose data=profile_tabs_ACS_rounded_&ct. out=profile_tabs_&ct._ACS ;/*(
 		PctEmployedMngmtW_:
 		PctEmployedMngmtB_:
 		PctEmployedMngmtH_:
-		PctEmployedMngmtA__:
+		PctEmployedMngmtA_:
 
 		PctEmployedServ_:
 		PctEmployedServW_:
