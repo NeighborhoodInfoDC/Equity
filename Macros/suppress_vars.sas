@@ -150,6 +150,13 @@
 			;
 
 	  	do k=1 to 23; 
+
+			if e_est&race.{k}=0 then do;
+				e_est&race.{k}=.s;
+				e_moe&race.{k}=.s;
+			end;
+
+			else do;
 	   
 	                e_cv&race.{k}=e_moe&race.{k}/1.645/e_est&race.{k}*100;
 	                e_lower&race.{k}=e_est&race.{k}- e_moe&race.{k};
@@ -159,6 +166,8 @@
 	                *code to suppress if cv > 30;
 	                if e_cv&race.{k} > 30 then do; e_est&race.{k}=.s; e_moe&race.{k}=.s;
 	                end;
+
+			end;
 
 		end;
 

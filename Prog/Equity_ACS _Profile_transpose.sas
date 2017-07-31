@@ -723,7 +723,7 @@ proc transpose data=profile_tabs_ACS_rounded_&ct. out=profile_tabs_&ct._ACS ;/*(
 
 		Gap16andOverWagesB_:
 		Gap16andOverWagesH_:
-		Gap16andOverWagesA__:
+		Gap16andOverWagesA_:
 
 		Pct16andOverWorkFT_:
 		Pct16andOverWorkFTW_:
@@ -759,7 +759,7 @@ proc transpose data=profile_tabs_ACS_rounded_&ct. out=profile_tabs_&ct._ACS ;/*(
 		PctEmployedMngmtW_:
 		PctEmployedMngmtB_:
 		PctEmployedMngmtH_:
-		PctEmployedMngmtA__:
+		PctEmployedMngmtA_:
 
 		PctEmployedServ_:
 		PctEmployedServW_:
