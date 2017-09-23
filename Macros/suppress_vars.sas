@@ -2,7 +2,7 @@
  Program:  suppress_vars.sas
  Library:  Equity
  Project:  NeighborhoodInfo DC
- Author:   P. Tatian
+ Author:   S. Diby
  Created:  09/12/16
  Version:  SAS 9.2
  Environment:  Local Windows session (desktop)

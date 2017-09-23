@@ -9,7 +9,8 @@
  
  Description:  Creates calculated statistics for ACS by geography to feed into regional Equity profile. 
 
- Modifications: 
+ Modifications: 9/23/17 LH Fixed macros that were referring to variables used in the district level analysis
+						   and created new regional ones.
  **************************************************************************/
 
 %include "L:\SAS\Inc\StdLocal.sas";
@@ -327,8 +328,8 @@ data allcounty;
 		;
 
 	%suppress_gaps_negative;
-	%suppress_gaps_z;
-	%suppress_gaps_fb;
+	%suppress_gaps_region_z;
+	%suppress_gaps_region_fb;
 
 run;
 
@@ -983,9 +984,9 @@ data Profile_acs_region;
 	if county="24033" then order=4;
 	if county="51510" then order=5;
 	if county="51013" then order=6;
-	if county="51610" then order=8;
+	if county="51610" then order=9;
 	if county="51059" then order=7;
-	if county="51600" then order=9;
+	if county="51600" then order=8;
 	if county="51107" then order=10;
 	if county="51153" then order=11;
 	if county="51683" then order=12; 

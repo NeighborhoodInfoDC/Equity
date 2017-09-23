@@ -2,8 +2,8 @@
  Program:  suppress_gaps_fb.sas
  Library:  Equity
  Project:  NeighborhoodInfo DC
- Author:   P. Tatian
- Created:  09/12/16
+ Author:   S. Diby
+ Created:  9/16/16
  Version:  SAS 9.2
  Environment:  Local Windows session (desktop)
  
