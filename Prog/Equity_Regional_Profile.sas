@@ -1009,9 +1009,44 @@ proc sort data = Profile_acs_region; by order; run;
 ** Round numbers **;
 %round_output (in=Profile_acs_region,out=Profile_acs_region_rounded);
 
+*temporary fix;
+data donotroundunemp;
+	set Profile_acs_region_rounded (drop=PctUnemployed:);
+
+	%Pct_calc( var=PctUnemployed, label=Unemployment rate (%), num=PopUnemployed, den=PopInCivLaborForce, years=2011_15 )
+
+		%Moe_prop_a( var=PctUnemployed_m_2011_15, mult=100, num=PopUnemployed_2011_15, den=PopInCivLaborForce_2011_15, 
+	                       num_moe=mPopUnemployed_2011_15, den_moe=mPopInCivLaborForce_2011_15, label_moe =Unemployment rate (%) MOE 2011-15);
+
+
+	%Pct_calc( var=PctUnemployedW, label=NH-White Unemployment rate (%), num=PopUnemployedW, den=PopInCivLaborForceW, years=2011_15 )
+
+		%Moe_prop_a( var=PctUnemployedW_m_2011_15, mult=100, num=PopUnemployedW_2011_15, den=PopInCivLaborForceW_2011_15, 
+	                       num_moe=mPopUnemployedW_2011_15, den_moe=mPopInCivLaborForceW_2011_15, label_moe =NH-White Unemployment rate (%) MOE 2011-15);
+
+	%Pct_calc( var=PctUnemployedB, label=Black-Alone Unemployment rate (%), num=PopUnemployedB, den=PopInCivLaborForceB, years=2011_15 )
+
+		%Moe_prop_a( var=PctUnemployedB_m_2011_15, mult=100, num=PopUnemployedB_2011_15, den=PopInCivLaborForceB_2011_15, 
+	                       num_moe=mPopUnemployedB_2011_15, den_moe=mPopInCivLaborForceB_2011_15, label_moe =Black-Alone Unemployment rate (%) MOE 2011-15);
+
+	%Pct_calc( var=PctUnemployedH, label=Hispanic Unemployment rate (%), num=PopUnemployedH, den=PopInCivLaborForceH, years=2011_15 )
+
+		%Moe_prop_a( var=PctUnemployedH_m_2011_15, mult=100, num=PopUnemployedH_2011_15, den=PopInCivLaborForceH_2011_15, 
+	                       num_moe=mPopUnemployedH_2011_15, den_moe=mPopInCivLaborForceH_2011_15, label_moe =Hispanic Unemployment rate (%) MOE 2011-15);
+
+	%Pct_calc( var=PctUnemployedA, label=Asian Unemployment rate (%), num=PopUnemployedA, den=PopInCivLaborForceA, years=2011_15 )
+
+		%Moe_prop_a( var=PctUnemployedA_m_2011_15, mult=100, num=PopUnemployedA_2011_15, den=PopInCivLaborForceA_2011_15, 
+	                       num_moe=mPopUnemployedA_2011_15, den_moe=mPopInCivLaborForceA_2011_15, label_moe =Asian Unemployment rate (%) MOE 2011-15);
+
+	%Pct_calc( var=PctUnemployedAIOM, label=All-Other Unemployment rate (%), num=PopUnemployedAIOM, den=PopInCivLaborForceAIOM, years=2011_15 )
+
+		%Moe_prop_a( var=PctUnemployedAIOM_m_2011_15, mult=100, num=PopUnemployedAIOM_2011_15, den=PopInCivLaborForceAIOM_2011_15, 
+	                       num_moe=mPopUnemployedAIOM_2011_15, den_moe=mPopInCivLaborForceAIOM_2011_15, label_moe =All-Other Unemployment rate (%) MOE 2011-15);
+run;
 
 ** Transpose for final output **;
-proc transpose data=Profile_acs_region_rounded out=profile_tabs_region ;/*(label="DC Equity Indicators and Gap Calculations for Equity Profile City & Ward, &y_lbl."); */
+proc transpose data=donotroundunemp out=profile_tabs_region ;/*(label="DC Equity Indicators and Gap Calculations for Equity Profile City & Ward, &y_lbl."); */
 	var TotPop_tr:
 
 		PctWhiteNonHispBridge_: PctHisp_:
@@ -1248,6 +1283,7 @@ proc transpose data=Profile_acs_region_rounded out=profile_tabs_region ;/*(label
 
 	id county; 
 run; 
+
 
 ** Export final file **;
 proc export data=profile_tabs_region
