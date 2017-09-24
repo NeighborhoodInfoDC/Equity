@@ -248,6 +248,13 @@ data allcounty;
 	GapPoorPersonsAIOM_&_years. = "Difference in # of All-Other people living below poverty line with equity, &y_lbl. "
 	GapPoorPersonsFB_&_years. = "Difference in # of foreign born people living below poverty line with equity, &y_lbl. "
 
+	GapPoorChildrenAIOM_&_years. = "Difference in # of All-Other children living below poverty line with equity, &y_lbl. "    
+	GapPoorChildrenA_&_years. = "Difference in # of Asian children living below poverty line with equity, &y_lbl. "
+	GapPoorChildrenB_&_years. = "Difference in # of Black-Alone children living below poverty line with equity, &y_lbl. "    
+	GapPoorChildrenH_&_years. = "Difference in # of Hispanic children living below poverty line with equity, &y_lbl. "
+	GapPoorChildrenW_&_years. = "Difference in # of NH-White children living below poverty line with equity, &y_lbl. "
+
+
 	Gap16andOverEmployW_&_years. = "Difference in # of people 16+ yrs. employed NH-White with equity, &y_lbl. "
 	Gap16andOverEmployB_&_years. = "Difference in # of people 16+ yrs. employed Black-Alone with equity, &y_lbl. "
 	Gap16andOverEmployH_&_years. = "Difference in # of people 16+ yrs. employed Hispanic with equity, &y_lbl. "
@@ -993,6 +1000,7 @@ data Profile_acs_region;
 	if county="51685" then order=13; 
 	
 
+	drop cv: p n x a_se b_se: uPct: uAvg: z c_se d_se den denA denAIOM denB denH denW f k lAvg: lPct: num numA numAIOM numB numH numW zA zAIOM zB zH zW ;
 run;
 
 proc sort data = Profile_acs_region; by order; run;
