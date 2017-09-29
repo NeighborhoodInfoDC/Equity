@@ -7,7 +7,7 @@
  Version:  SAS 9.4
  Environment:  Windows
  
- Description:  Use for equity maps. Creates file for race by track. 
+ Description:  Use for equity maps. Creates file for race by tract. 
 
  Modifications: 
 
@@ -17,26 +17,31 @@
 %include "L:\SAS\Inc\StdLocal.sas";
 
 ** Define libraries **;
-%DCData_lib (RealProp);
 %DCDATA_lib (Equity);
 %DCDATA_lib (Census);
 %DCDATA_lib (NCDB);
 %DCDATA_lib (ACS);
 
 *data by tract prog from L:\Libraries\Equity\Prog\Calculate_assessed_value.sas (%macro acs_precents);
-libname tracts "D:\Equity map";
 
-data acs_race;
+data acs_race (where=(ucounty in('11001' '24031' '24033' '51059')));
   
-set tracts.Acs_2011_15_dc_sum_tr_tr10 tracts.Acs_2011_15_md_sum_tr_tr10 tracts.Acs_2011_15_va_sum_tr_tr10 (keep= geo2010 popwhitenonhispbridge_2011_15 popblacknonhispbridge_2011_15 popasianpinonhispbridge_2011_15
-	PopMultiracialNonHisp_2011_15 popnativeamnonhispbridge_2011_15 popothernonhispbridge_2011_15 pophisp_2011_15 popwithrace_2011_15
-	mpopwhitenonhispbridge_2011_15 mpopblacknonhispbridge_2011_15 mpopasianpinonhispbridge_2011_15
-	mPopMultiracialNonHisp_2011_15 mpopnativeamnonhispbr_2011_15 mpopothernonhispbridge_2011_15 mpophisp_2011_15 mpopwithrace_2011_15);
+set acs.Acs_2011_15_dc_sum_tr_tr10 (keep= geo2010 popwhitenonhispbridge_2011_15 popblacknonhispbridge_2011_15 popasianpinonhispbridge_2011_15
+										 PopMultiracialNonHisp_2011_15 popnativeamnonhispbridge_2011_15 popothernonhispbridge_2011_15 pophisp_2011_15 popwithrace_2011_15
+										 mpopwhitenonhispbridge_2011_15 mpopblacknonhispbridge_2011_15 mpopasianpinonhispbridge_2011_15
+										mPopMultiracialNonHisp_2011_15 mpopnativeamnonhispbr_2011_15 mpopothernonhispbridge_2011_15 mpophisp_2011_15 mpopwithrace_2011_15)
+	acs.Acs_2011_15_md_sum_tr_tr10 (keep= geo2010 popwhitenonhispbridge_2011_15 popblacknonhispbridge_2011_15 popasianpinonhispbridge_2011_15
+									PopMultiracialNonHisp_2011_15 popnativeamnonhispbridge_2011_15 popothernonhispbridge_2011_15 pophisp_2011_15 popwithrace_2011_15
+									mpopwhitenonhispbridge_2011_15 mpopblacknonhispbridge_2011_15 mpopasianpinonhispbridge_2011_15
+									mPopMultiracialNonHisp_2011_15 mpopnativeamnonhispbr_2011_15 mpopothernonhispbridge_2011_15 mpophisp_2011_15 mpopwithrace_2011_15)
+	acs.Acs_2011_15_va_sum_tr_tr10 (keep= geo2010 popwhitenonhispbridge_2011_15 popblacknonhispbridge_2011_15 popasianpinonhispbridge_2011_15
+									PopMultiracialNonHisp_2011_15 popnativeamnonhispbridge_2011_15 popothernonhispbridge_2011_15 pophisp_2011_15 popwithrace_2011_15
+										mpopwhitenonhispbridge_2011_15 mpopblacknonhispbridge_2011_15 mpopasianpinonhispbridge_2011_15
+									mPopMultiracialNonHisp_2011_15 mpopnativeamnonhispbr_2011_15 mpopothernonhispbridge_2011_15 mpophisp_2011_15 mpopwithrace_2011_15);
 
-geo = substr(Geo2010,1,1);
-if geo=2 then place = "MD";
-else if geo=5 then place = "VA";
-else place = "DC";
+length ucounty $5.;
+ucounty = substr(Geo2010,1,5);
+
 
 	%Pct_calc( var=blackrate, label=% black non-Hispanic, num=PopBlackNonHispBridge, den=PopWithRace, years=2011_15 )
     %Pct_calc( var=whiterate, label=% white non-Hispanic, num=PopWhiteNonHispBridge, den=PopWithRace, years=2011_15 )
@@ -73,63 +78,50 @@ else place = "DC";
 	else if 50<= whiterate_2011_15 < 75 then whiteratecomp = 2;
 	else if whiterate_2011_15 < 50 then whiteratecomp = 3;
 
+	if blackrate_2011_15  => 75 then blackratecomp = 1;
+	else if 50<= blackrate_2011_15 < 75 then blackratecomp = 2;
+	else if blackrate_2011_15 < 50 then blackratecomp = 3;
+
   run;
 
   proc freq data=acs_race;
-  tables tract_comp majwhite_15*tract_comp place*tract_comp;
+  tables tract_comp majwhite_15*tract_comp ucounty*tract_comp;
   run;
+
+
     /*use this 9/27/17*/
-  Data tracts.VA_byrace_v2 (keep=geo2010 whiteratecomp COUNTYFP);
+  Data VA_byrace_v2 (keep=geo2010 whiteratecomp tract_comp ucounty);
   set acs_race;
-  CountyFP=substr(geo2010,3,3);
-  where place = "VA";
-  if CountyFP ne "059" then delete;
+  
+  where ucounty='51059';
   run;
-  Data tracts.MO_byrace_v2 (keep=geo2010 whiteratecomp COUNTYFP);
+  Data MO_byrace_v2 (keep=geo2010 whiteratecomp tract_comp ucounty);
   set acs_race;
-  CountyFP=substr(geo2010,3,3);
-  if CountyFP ne "031" then delete;
+ where ucounty='24031';
   run;
-  Data tracts.PG_byrace_v2 (keep=geo2010 whiteratecomp COUNTYFP);
+  Data PG_byrace_v2 (keep=geo2010 whiteratecomp blackratecomp tract_comp whiterate_2011_15 blackrate_2011_15 hisprate_2011_15 ucounty);
   set acs_race;
-  CountyFP=substr(geo2010,3,3);
-  if CountyFP ne "033" then delete;
+	 where ucounty='24033';
   run;
 
-  Data tracts.VA_byrace(keep=geo2010 tract_comp COUNTYFP);
+  Data DC_byrace (keep=geo2010 tract_comp whiteratecomp blackratecomp ucounty);
   set acs_race;
-  CountyFP=substr(geo2010,3,3);
-  where place = "VA";
-  if CountyFP ne "059" then delete;
+ 	 where ucounty='11001';
   run;
-  Data tracts.DC_byrace (keep=geo2010 tract_comp);
-  set acs_race;
-  where place = "DC";
-  run;
- Data tracts.PG_byrace (keep=geo2010 tract_comp COUNTYFP);
-  set acs_race;
-  CountyFP=substr(geo2010,3,3);
-  where place = "MD";
-  if CountyFP ne "033" then delete;
-  run;
- Data tracts.MO_byrace (keep=geo2010 tract_comp COUNTYFP);
-  set acs_race;
-  CountyFP=substr(geo2010,3,3);
-  where place = "MD";
-  if CountyFP ne "031" then delete;
-  run;
-
+proc export data=PG_byrace_v2
+	outfile="D:\DCDATA\Libraries\Equity\Prog\PG_byrace_v2.csv"
+	dbms=csv replace;
+	run;
   *data by council district;
-Libname district "D:\Equity map";
 
-Data district.ACS_race_districts_v1;
+Data ACS_race_districts_v1;
 set district.acs_2011_15_va_sum_tr_regcd
 district.acs_2011_15_md_sum_tr_regcd
 district.acs_2011_15_dc_sum_tr_wd12;
 run;
 
-Data district.ACS_race_districts (keep = Ward2012 councildist blackrate_2011_15 whiterate_2011_15 hisprate_2011_15 asianpirate_2011_15 regcd) ;
-set district.ACS_race_districts_v1
+Data ACS_race_districts (keep = Ward2012 councildist blackrate_2011_15 whiterate_2011_15 hisprate_2011_15 asianpirate_2011_15 regcd) ;
+set ACS_race_districts_v1
 (keep= Ward2012 councildist popwhitenonhispbridge_2011_15 popblacknonhispbridge_2011_15 popasianpinonhispbridge_2011_15
 	PopMultiracialNonHisp_2011_15 popnativeamnonhispbridge_2011_15 popothernonhispbridge_2011_15 pophisp_2011_15 popwithrace_2011_15
 	mpopwhitenonhispbridge_2011_15 mpopblacknonhispbridge_2011_15 mpopasianpinonhispbridge_2011_15
