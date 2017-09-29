@@ -1,5 +1,5 @@
 /**************************************************************************
- Program:  Calculate_assessed_value.sas
+ Program:  Create maps equity.sas
  Library:  Equity
  Project:  Racial Equity Profile
  Author:   L. Posey
@@ -99,7 +99,7 @@ ucounty = substr(Geo2010,1,5);
   set acs_race;
  where ucounty='24031';
   run;
-  Data PG_byrace_v2 (keep=geo2010 whiteratecomp blackratecomp tract_comp whiterate_2011_15 blackrate_2011_15 hisprate_2011_15 ucounty);
+  Data equity.PG_byrace_v2 (keep=geo2010 whiteratecomp blackratecomp tract_comp whiterate_2011_15 blackrate_2011_15 hisprate_2011_15 ucounty);
   set acs_race;
 	 where ucounty='24033';
   run;
