@@ -24,7 +24,7 @@
 
 *data by tract prog from L:\Libraries\Equity\Prog\Calculate_assessed_value.sas (%macro acs_precents);
 
-data acs_race (where=(ucounty in('11001' '24031' '24033' '51059')));
+data acs_race (where=(county in("11001","24031","24033","51510","51013","51610","51059","51600","51107","51153","51683","51685")));
   
 set acs.Acs_2011_15_dc_sum_tr_tr10 (keep= geo2010 popwhitenonhispbridge_2011_15 popblacknonhispbridge_2011_15 popasianpinonhispbridge_2011_15
 										 PopMultiracialNonHisp_2011_15 popnativeamnonhispbridge_2011_15 popothernonhispbridge_2011_15 pophisp_2011_15 popwithrace_2011_15
@@ -39,8 +39,8 @@ set acs.Acs_2011_15_dc_sum_tr_tr10 (keep= geo2010 popwhitenonhispbridge_2011_15 
 										mpopwhitenonhispbridge_2011_15 mpopblacknonhispbridge_2011_15 mpopasianpinonhispbridge_2011_15
 									mPopMultiracialNonHisp_2011_15 mpopnativeamnonhispbr_2011_15 mpopothernonhispbridge_2011_15 mpophisp_2011_15 mpopwithrace_2011_15);
 
-length ucounty $5.;
-ucounty = substr(Geo2010,1,5);
+length county $5.;
+county = substr(Geo2010,1,5);
 
 
 	%Pct_calc( var=blackrate, label=% black non-Hispanic, num=PopBlackNonHispBridge, den=PopWithRace, years=2011_15 )
@@ -85,28 +85,28 @@ ucounty = substr(Geo2010,1,5);
   run;
 
   proc freq data=acs_race;
-  tables tract_comp majwhite_15*tract_comp ucounty*tract_comp;
+  tables county*blackratecomp tract_comp majwhite_15*tract_comp county*tract_comp;
   run;
 
 
     /*use this 9/27/17*/
-  Data VA_byrace_v2 (keep=geo2010 whiteratecomp tract_comp ucounty);
+  Data VA_byrace_v2 (keep=geo2010 whiteratecomp tract_comp county);
   set acs_race;
   
-  where ucounty='51059';
+  where county='51059';
   run;
-  Data MO_byrace_v2 (keep=geo2010 whiteratecomp tract_comp ucounty);
+  Data MO_byrace_v2 (keep=geo2010 whiteratecomp tract_comp county);
   set acs_race;
- where ucounty='24031';
+ where county='24031';
   run;
-  Data equity.PG_byrace_v2 (keep=geo2010 whiteratecomp blackratecomp tract_comp whiterate_2011_15 blackrate_2011_15 hisprate_2011_15 ucounty);
+  Data equity.PG_byrace_v2 (keep=geo2010 whiteratecomp blackratecomp tract_comp whiterate_2011_15 blackrate_2011_15 hisprate_2011_15 county);
   set acs_race;
-	 where ucounty='24033';
+	 where county='24033';
   run;
 
-  Data DC_byrace (keep=geo2010 tract_comp whiteratecomp blackratecomp ucounty);
+  Data DC_byrace (keep=geo2010 tract_comp whiteratecomp blackratecomp county);
   set acs_race;
- 	 where ucounty='11001';
+ 	 where county='11001';
   run;
 proc export data=PG_byrace_v2
 	outfile="D:\DCDATA\Libraries\Equity\Prog\PG_byrace_v2.csv"
@@ -147,5 +147,34 @@ set ACS_race_districts_v1
 
   run;
 
+  *data by county for regional profile.; 
+
+Data equity.ACS_race_county (where=(county in("11001","24031","24033","51510","51013","51610","51059","51600","51107","51153","51683","51685")));
+set acs.acs_2011_15_va_sum_regcnt_regcnt
+	acs.acs_2011_15_md_sum_regcnt_regcnt
+	acs.acs_2011_15_dc_sum_regcnt_regcnt;
+
+	keep county blackrate: whiterate: hisprate: asianpirate: popwhitenonhispbridge_2011_15 popblacknonhispbridge_2011_15 popasianpinonhispbridge_2011_15
+	PopMultiracialNonHisp_2011_15 popnativeamnonhispbridge_2011_15 popothernonhispbridge_2011_15 pophisp_2011_15 popwithrace_2011_15
+	mpopwhitenonhispbridge_2011_15 mpopblacknonhispbridge_2011_15 mpopasianpinonhispbridge_2011_15
+	mPopMultiracialNonHisp_2011_15 mpopnativeamnonhispbr_2011_15 mpopothernonhispbridge_2011_15 mpophisp_2011_15 mpopwithrace_2011_15;
+
+	%Pct_calc( var=blackrate, label=% black non-Hispanic, num=PopBlackNonHispBridge, den=PopWithRace, years=2011_15 )
+    %Pct_calc( var=whiterate, label=% white non-Hispanic, num=PopWhiteNonHispBridge, den=PopWithRace, years=2011_15 )
+    %Pct_calc( var=hisprate, label=% Hispanic, num=PopHisp, den=PopWithRace, years=2011_15 )
+	%Pct_calc( var=asianpirate, label=% asianpi non-Hispanic, num=PopasianpiNonHispBridge, den=PopWithRace, years=2011_15 )
+ 
+    %Moe_prop_a( var=blackrate_m_15, mult=100, num=PopBlackNonHispBridge_2011_15, den=PopWithRace_2011_15, 
+                       num_moe=mPopBlackNonHispBridge_2011_15, den_moe=mPopWithRace_2011_15 );
+
+    %Moe_prop_a( var=whiterate_m_15, mult=100, num=PopWhiteNonHispBridge_2011_15, den=PopWithRace_2011_15, 
+                       num_moe=mPopWhiteNonHispBridge_2011_15, den_moe=mPopWithRace_2011_15 );
+
+    %Moe_prop_a( var=asianpirate_m_15, mult=100, num=PopasianpiNonHispBridge_2011_15, den=PopWithRace_2011_15, 
+                       num_moe=mPopasianpiNonHispBridge_2011_15, den_moe=mPopWithRace_2011_15 );
+
+    %Moe_prop_a( var=hisprate_m_15, mult=100, num=PopHisp_2011_15, den=PopWithRace_2011_15, 
+                       num_moe=mPopHisp_2011_15, den_moe=mPopWithRace_2011_15 );
 
 
+run;
