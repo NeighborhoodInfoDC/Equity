@@ -710,7 +710,7 @@
 	label="DC Metro Area Equity Indicators by Race/Ethnicity, &_years.,DC &name.",
 	sortby=councildist,
 	restrictions=None,
-	revisions=New file
+	revisions=Updated for revised tr10_regcd weights.
 	)
   %end;
 
@@ -722,7 +722,7 @@
 		label="DC Metro Area Equity Indicators by Race/Ethnicity, &_years., &st. &name.",
 		sortby=&geo.,
 		restrictions=None,
-		revisions=New file
+		revisions=Updated for revised tr10_regcd weights.
 		)
 	%end; 
 
@@ -739,5 +739,4 @@
 
 %add_percents(dc,county,regcnt); 
 %add_percents(dc,ward2012,wd12);     
-
 
