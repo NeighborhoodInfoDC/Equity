@@ -99,7 +99,7 @@ county = substr(Geo2010,1,5);
   set acs_race;
  where county='24031';
   run;
-  Data equity.PG_byrace_v2 (keep=geo2010 whiteratecomp blackratecomp tract_comp whiterate_2011_15 blackrate_2011_15 hisprate_2011_15 county);
+  Data PG_byrace_v2 (keep=geo2010 whiteratecomp blackratecomp tract_comp whiterate_2011_15 blackrate_2011_15 hisprate_2011_15 county);
   set acs_race;
 	 where county='24033';
   run;
@@ -115,12 +115,12 @@ proc export data=PG_byrace_v2
   *data by council district;
 
 Data ACS_race_districts_v1;
-set district.acs_2011_15_va_sum_tr_regcd
-district.acs_2011_15_md_sum_tr_regcd
-district.acs_2011_15_dc_sum_tr_wd12;
+set acs.acs_2011_15_va_sum_tr_regcd
+acs.acs_2011_15_md_sum_tr_regcd
+acs.acs_2011_15_dc_sum_tr_wd12;
 run;
 
-Data ACS_race_districts (keep = Ward2012 councildist blackrate_2011_15 whiterate_2011_15 hisprate_2011_15 asianpirate_2011_15 regcd) ;
+Data ACS_race_districts (keep = Ward2012 councildist blackrate_2011_15 whiterate_2011_15 hisprate_2011_15 asianpirate_2011_15 councildist) ;
 set ACS_race_districts_v1
 (keep= Ward2012 councildist popwhitenonhispbridge_2011_15 popblacknonhispbridge_2011_15 popasianpinonhispbridge_2011_15
 	PopMultiracialNonHisp_2011_15 popnativeamnonhispbridge_2011_15 popothernonhispbridge_2011_15 pophisp_2011_15 popwithrace_2011_15
@@ -144,9 +144,13 @@ set ACS_race_districts_v1
     %Moe_prop_a( var=hisprate_m_15, mult=100, num=PopHisp_2011_15, den=PopWithRace_2011_15, 
                        num_moe=mPopHisp_2011_15, den_moe=mPopWithRace_2011_15 );
 
+					   format councildist ward2012;
 
   run;
-
+proc export data=ACS_race_districts 
+	outfile="D:\DCDATA\Libraries\Equity\Prog\ACS_race_districts.csv"
+	dbms=csv replace;
+	run;
   *data by county for regional profile.; 
 
 Data equity.ACS_race_county (where=(county in("11001","24031","24033","51510","51013","51610","51059","51600","51107","51153","51683","51685")));
