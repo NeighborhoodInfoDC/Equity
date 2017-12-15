@@ -108,6 +108,14 @@ county = substr(Geo2010,1,5);
   set acs_race;
  	 where county='11001';
   run;
+proc export data=VA_byrace_v2
+	outfile="D:\DCDATA\Libraries\Equity\Prog\FF_byrace_v2.csv"
+	dbms=csv replace;
+	run;
+proc export data=MO_byrace_v2
+	outfile="D:\DCDATA\Libraries\Equity\Prog\MO_byrace_v2.csv"
+	dbms=csv replace;
+	run;
 proc export data=PG_byrace_v2
 	outfile="D:\DCDATA\Libraries\Equity\Prog\PG_byrace_v2.csv"
 	dbms=csv replace;
