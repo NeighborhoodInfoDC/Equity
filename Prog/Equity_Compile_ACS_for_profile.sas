@@ -23,11 +23,11 @@
 %DCData_lib( ACS )
 %DCData_lib( Equity )
 
-%let inc_dollar_yr=2015;
+%let inc_dollar_yr=2016;
 %let racelist=W B H A AIOM ;
 %let racename= NH-White Black-Alone Hispanic Asian All-Other ;
 
-%let _years=2011_15;
+%let _years=2012_16;
 
 /** Macro Add_Percents- Start Definition **/
 
@@ -52,7 +52,7 @@
 
   %let y_lbl = %sysfunc( translate( &_years., '-', '_' ) );
 
-  data profile_acs_&state._&geosuf._A (compress=no);  
+  data profile_acs_&_years._&state._&geosuf._A (compress=no);  
   	merge  
       acs.Acs_&_years._&state._sum_&t.&geosuf.
         (keep=&geo TotPop: mTotPop: 
@@ -135,9 +135,9 @@
 
   run;*/
 
-  data profile_acs_&state.&geosuf (compress=no label="DC Equity Indicators by Race/Ethnicity, &_years., &geo."); 
+  data profile_acs_&_years._&state.&geosuf (compress=no label="DC Equity Indicators by Race/Ethnicity, &_years., &geo."); 
   
-    set profile_acs_&state._&geosuf._A;
+    set profile_acs_&_years._&state._&geosuf._A;
     
     ** Population **;
     
@@ -693,8 +693,8 @@
   run;
 
   %if &st = DC and &geodo = WD12 %then %do;
-  data profile_acs_dc_regcd;
-  	set Profile_acs_dc_wd12;
+  data profile_acs_&_years._dc_regcd;
+  	set Profile_acs_&_years._dc_wd12;
 	rename Ward2012 = councildist;
   run;
   %end;
@@ -704,25 +704,25 @@
 
   %if &st = DC and &geodo = WD12 %then %do;
 	%Finalize_data_set( 
-	data=profile_acs_dc_regcd,
-	out=profile_acs_dc_regcd,
+	data=profile_acs_&_years._dc_regcd,
+	out=profile_acs_&_years._dc_regcd,
 	outlib=Equity,
 	label="DC Metro Area Equity Indicators by Race/Ethnicity, &_years.,DC &name.",
 	sortby=councildist,
 	restrictions=None,
-	revisions=New file
+	revisions=Updated for revised tr10_regcd weights.
 	)
   %end;
 
   %else %do; 
 	%Finalize_data_set( 
-		data=profile_acs_&state._&geo2.,
-		out=profile_acs_&state._&geo2.,
+		data=profile_acs_&_years._&state._&geo2.,
+		out=profile_acs_&_years._&state._&geo2.,
 		outlib=Equity,
 		label="DC Metro Area Equity Indicators by Race/Ethnicity, &_years., &st. &name.",
 		sortby=&geo.,
 		restrictions=None,
-		revisions=New file
+		revisions=Updated for revised tr10_regcd weights.
 		)
 	%end; 
 
@@ -739,5 +739,4 @@
 
 %add_percents(dc,county,regcnt); 
 %add_percents(dc,ward2012,wd12);     
-
 

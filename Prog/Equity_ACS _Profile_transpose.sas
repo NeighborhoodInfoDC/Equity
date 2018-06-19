@@ -24,7 +24,7 @@
 %let racelist=W B H A AIOM ;
 %let racename= NH-White Black-Alone Hispanic Asian All-Other ;
 
-%let _years=2011_15;
+%let _years=2012_16;
 
 
 %macro acs_profiles_county (county);
@@ -57,8 +57,8 @@
 %end;
 
 data county_councildist_&ct.;
-	set equity_r.Profile_acs_&st._regcnt (where=(county="&fips."))
-		equity_r.Profile_acs_&st._regcd; 
+	set equity_r.Profile_acs_&_years._&st._regcnt (where=(county="&fips."))
+		equity_r.Profile_acs_&_years._&st._regcd; 
 
 	if county ^= " " then councildist="0";
 	_make_profile=1;
@@ -71,7 +71,7 @@ run;
 
 
 data whiterates_&ct.;
-	set equity_r.Profile_acs_&st._regcnt (where=(county="&fips."));
+	set equity_r.Profile_acs_&_years._&st._regcnt (where=(county="&fips."));
 	keep _make_profile
 		   Pct25andOverWoutHSW: Pct25andOverWHSW: Pct25andOverWSCW:
            PctPoorPersonsW: PctPoorChildrenW:
@@ -573,7 +573,7 @@ run;
 
 %round_output (in=profile_tabs_ACS_suppress_&ct.,out=profile_tabs_ACS_rounded_&ct.);
 
-proc transpose data=profile_tabs_ACS_rounded_&ct. out=profile_tabs_&ct._ACS ;/*(label="DC Equity Indicators and Gap Calculations for Equity Profile City & Ward, &y_lbl."); */
+proc transpose data=profile_tabs_ACS_rounded_&ct. out=profile_tabs_&_years._&ct._ACS ;/*(label="DC Equity Indicators and Gap Calculations for Equity Profile City & Ward, &y_lbl."); */
 	var TotPop_tr:
 
 		PctWhiteNonHispBridge_: PctHisp_:
@@ -812,7 +812,7 @@ proc transpose data=profile_tabs_ACS_rounded_&ct. out=profile_tabs_&ct._ACS ;/*(
 run; 
 
 
-proc export data=profile_tabs_&ct._ACS
+proc export data=profile_tabs_&_years._&ct._ACS
 	outfile="D:\DCDATA\Libraries\Equity\Prog\profile_tabs_&ct._ACS_&_years..csv"
 	dbms=csv replace;
 	run;
