@@ -21,7 +21,7 @@
 
 %let _years=2012_2016;
 
-
+/*
 data ACSindicator;
 set ACS.Acs_2012_16_dc_sum_tr_tr10;
 keep popunder25years_2012_16  numrentercostburden_&_years. rentcostburdendenom_&_years. numownercostburden_&_years.
@@ -36,6 +36,24 @@ keep popunder25years_2012_16  numrentercostburden_&_years. rentcostburdendenom_&
 	 unemploymentrate = popunemployed_&_years./popincivlaborforce_&_years.
 
 run;
+*/
+
+data unemployment;
+set ACS.Acs_2012_16_dc_sum_tr_wd12;
+keep indicator year wd12  popunemployed_&_years. popincivlaborforce_&_years. unemploymentrate;
+indicator = "unemployment";
+year = "2012-2016";
+unemploymentrate = popunemployed_&_years./popincivlaborforce_&_years.;
+run;
+
+data postsecondary;
+set ACS.Acs_2012_16_dc_sum_tr_wd12;
+keep indicator year wd12 popunder25years_2012_16 
+indicator = "postsecondary";
+year = "2012-2016";
+run;
+
+
 
 data homesaleprices;
 set realprop.Sales_res_clean;
