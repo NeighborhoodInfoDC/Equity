@@ -101,13 +101,6 @@ set vital.Births_2017;
 keep births_prenat_adeq_2016 births_w_prenat_2016 wd12 cl17 city;
 run;
 
-data yearslost;
-set vital.Deaths_2016;
-keep geo2010 age_calc;
-yearlost=
+data indicators;
+set  ACSindicator wardafford clusterafford cityafford violentcrime prenatal;
 run;
-
-proc summary data=yearslost;
-class geo2010;
-var age_calc;
-out=
