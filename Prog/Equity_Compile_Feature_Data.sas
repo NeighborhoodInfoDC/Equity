@@ -35,7 +35,7 @@ run;
 
 data postsecondary;
 set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
-keep indicator year &geo pop25andoverwcollege_&_years. popunder25years_&_years. PctCol;
+keep indicator year &geo pop25andoverwcollege_&_years. pop25andoveryears_&_years. PctCol;
 indicator = "postsecondary";
 year = "2012-2016";
 PctCol = pop25andoverwcollege_&_years. / pop25andoveryears_&_years.;
@@ -61,7 +61,7 @@ run;
 
 data abovepoverty;
 set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
-keep indicator year &geo famincomemt75k familyhhtot_&_years. pctmt75K;
+keep indicator year &geo personspovertydefined_&_years. poppoorpersons_&_years. pctabovepov;
 indicator = "Persons above federal poverty rate";
 year = "2012-2016";
 popabovepov= personspovertydefined_&_years. - poppoorpersons_&_years.;
@@ -83,14 +83,14 @@ indicator = "Children above federal poverty level";
 year = "2012-2016";
 pctchildabovepov = poppoorchildrenunder5_&_years./childpovertyunder5def_&_years.;
 run;
-
+/*
 data create_flags;
-  set realpr_r.sales_res_clean (where=(saleyear = 2017));
+  set realpr_r.sales_res_clean (where=(saleyear = 2017));*/
   
   /*pull in effective interest rates - for example: 
   http://www.fhfa.gov/DataTools/Downloads/Documents/Historical-Summary-Tables/Table15_2015_by_State_and_Year.xls*/
   
-    eff_int_rate_2017= 3.69; *2017 not available, using 2016;
+/*    eff_int_rate_2017= 3.69; *2017 not available, using 2016;
 
 
 	month_int_rate= (eff_int_rate_2017/12/100);
@@ -143,6 +143,7 @@ run;
  var AMI_first_afford total_sales;
  output out=cityafford sum=;
  run;
+*/
 
 data violentcrime;
 set police.crimes_sum_&geosuf;
@@ -161,8 +162,7 @@ adeqprenatal = births_prenat_adeq_2016/births_w_prenat_2016;
 run;
 
 data indicators;
-set  unemployment postsecondary homeownership income75k abovepoverty earning75k violentcrime prenatal wardafford;
-id &geo; 
+set  unemployment postsecondary homeownership income75k abovepoverty earning75k violentcrime prenatal;
 run; 
 
 proc export data=stanc_tabs_&geosuf
