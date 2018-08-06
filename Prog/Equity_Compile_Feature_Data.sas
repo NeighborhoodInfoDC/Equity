@@ -21,42 +21,58 @@
 
 %let _years=2012_2016;
 
-/*
-data ACSindicator;
-set ACS.Acs_2012_16_dc_sum_tr_tr10;
-keep popunder25years_2012_16  numrentercostburden_&_years. rentcostburdendenom_&_years. numownercostburden_&_years.
-     ownercostburdendenom_&_years. numowneroccupiedhsgunits_&_years. numrenteroccupiedhu_&_years. medfamincm_&_years.
-	 familyhhtot_&_years.  famincomelt75k_&_years. personspovertydefined_&_years.  poppoorpersons_&_years.
-     popunemployed_&_years. popincivlaborforce_&_years. popemployedworkers_&_years. earningover75k_&_years.
-	 popunder25years_&_years. totpop_&_years. famincomemt75k popabovepov ownership unemploymentrate wd12 cl17 city;
 
-     famincomemt75k= familyhhtot_&_years.-famincomelt75k_&_years.;
-     popabovepov= personspovertydefined_&_years. - poppoorpersons_&_years.;
-	 ownership= numowneroccupiedhsgunits_&_years./(numowneroccupiedhsgunits_&_years.+ numrenteroccupiedhu_&_years.)
-	 unemploymentrate = popunemployed_&_years./popincivlaborforce_&_years.
-
-run;
-*/
+%macro Compile_equity_data (geo, geosuf);
 
 data unemployment;
-set ACS.Acs_2012_16_dc_sum_tr_wd12;
-keep indicator year wd12  popunemployed_&_years. popincivlaborforce_&_years. unemploymentrate;
+set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
+keep indicator year &geo  popunemployed_&_years. popincivlaborforce_&_years. unemploymentrate;
 indicator = "unemployment";
 year = "2012-2016";
 unemploymentrate = popunemployed_&_years./popincivlaborforce_&_years.;
 run;
 
 data postsecondary;
-set ACS.Acs_2012_16_dc_sum_tr_wd12;
-keep indicator year wd12 popunder25years_2012_16 
+set ACS.Acs_2012_16_dc_sum_tr__&geosuf;
+keep indicator year &geo pop25andoverwcollege_&_years. popunder25years_&_years. PctCol;
 indicator = "postsecondary";
 year = "2012-2016";
+PctCol = pop25andoverwcollege_&_years. / pop25andoveryears_&_years.;
 run;
 
+data homeownership;
+set ACS.Acs_2012_16_dc_sum_tr__&geosuf;
+keep indicator year &geo numowneroccupiedhsgunits_&_years. Tothousing ownership;
+indicator = "homeownership";
+year = "2012-2016";
+Tothousing= numowneroccupiedhsgunits_&_years.+ numrenteroccupiedhu_&_years.
+ownership= numowneroccupiedhsgunits_&_years./ Tothousing
+run;
 
+data income75k;
+set ACS.Acs_2012_16_dc_sum_tr__&geosuf;
+keep indicator year &geo famincomemt75k familyhhtot_&_years. pctmt75K;
+indicator = "Family Income over $75,000";
+year = "2012-2016";
+famincomemt75k= familyhhtot_&_years.- famincomelt75k_&_years.;
+pctmt75K= famincomemt75k/familyhhtot_&_years.
+run;
 
-data homesaleprices;
-set realprop.Sales_res_clean;
+data abovepoverty;
+set ACS.Acs_2012_16_dc_sum_tr__&geosuf;
+keep indicator year &geo famincomemt75k familyhhtot_&_years. pctmt75K;
+indicator = "Persons above federal poverty rate";
+year = "2012-2016";
+popabovepov= personspovertydefined_&_years. - poppoorpersons_&_years.;
+pctabovepov= popabovepov/personspovertydefined_&_years.
+run;
+
+data earning75k;
+set ACS.Acs_2012_16_dc_sum_tr__&geosuf;
+keep indicator year &geo earningover75k_&_years. popemployedworkers_&_years. pctearningover75K;
+indicator = "Persons workers with annual earnings over $75,000";
+year = "2012-2016";
+pctearningover75K=earningover75k_&_years./popemployedworkers_&_years.
 run;
 
 data create_flags;
@@ -111,14 +127,35 @@ proc summary data=create_flags;
 
 data violentcrime;
 set police.Crimes_2017;
-keep crimes_pt1_violent_2017 crime_rate_pop_2017 wd12 cl17 city;
+keep indicator year &geo crimes_pt1_violent_2017 crime_rate_pop_2017 violentcrimerate;
+indicator = "Violent Crime Rate per 1000 people";
+year = "2017";
+violentcrimerate = crimes_pt1_violent_2017/crime_rate_pop_2017;
 run;
 
 data prenatal;
-set vital.Births_2017;
-keep births_prenat_adeq_2016 births_w_prenat_2016 wd12 cl17 city;
+set vital.Births_2016;
+keep indicator year &geo births_prenat_adeq_2016 births_w_prenat_2016 adeqprenatal;
+indicator = "Births with adequate prenatal care";
+year = "2016";
+adeqprenatal = births_prenat_adeq_2016/births_w_prenat_2016;
 run;
 
 data indicators;
-set  ACSindicator wardafford clusterafford cityafford violentcrime prenatal;
-run;
+set  unemployment postsecondary homeownership income75k abovepoverty earning75k violentcrime prenatal;
+id &geo; 
+run; 
+
+proc export data=stanc_tabs_&geosuf
+	outfile="L:\Libraries\Equity\Doc\Equityfeaturetabs_&geosuf..csv"
+	dbms=csv replace;
+	run;
+
+
+%mend Compile_equity_data;
+
+
+%Compile_stanc_data (cluster2017, cl17);
+%Compile_stanc_data (ward2012, wd12);
+%Compile_stanc_data (city, city);
+
