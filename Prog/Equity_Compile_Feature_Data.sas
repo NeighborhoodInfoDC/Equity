@@ -76,8 +76,16 @@ year = "2012-2016";
 pctearningover75K=earningover75k_&_years./popemployedworkers_&_years.;
 run;
 
+data childrenabovepoverty;
+set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
+keep indicator year &geo earningover75k_&_years. popemployedworkers_&_years. pctearningover75K;
+indicator = "Children above federal poverty level";
+year = "2012-2016";
+pctearningover75K=earningover75k_&_years./popemployedworkers_&_years.;
+run;
+
 data create_flags;
-  set homesaleprices (where=(saleyear = 2017));
+  set realpr_r.sales_res_clean (where=(saleyear = 2017));
   
   /*pull in effective interest rates - for example: 
   http://www.fhfa.gov/DataTools/Downloads/Documents/Historical-Summary-Tables/Table15_2015_by_State_and_Year.xls*/
@@ -115,6 +123,16 @@ proc summary data=create_flags;
  var AMI_first_afford total_sales;
  output out=wardafford sum=;
  run;
+
+data wardafford;
+set wardafford;
+keep indicator year geo AMI_first_afford total_sales adeqprenatal;
+indicator = "Percent homes sold at prices affordable at median income";
+year = "2017";
+pctafford = AMI_first_afford/total_sales;
+geo= &geo
+run;
+
  proc summary data=create_flags;
  by cl17;
  var AMI_first_afford total_sales;
@@ -143,7 +161,7 @@ adeqprenatal = births_prenat_adeq_2016/births_w_prenat_2016;
 run;
 
 data indicators;
-set  unemployment postsecondary homeownership income75k abovepoverty earning75k violentcrime prenatal;
+set  unemployment postsecondary homeownership income75k abovepoverty earning75k violentcrime prenatal wardafford;
 id &geo; 
 run; 
 
