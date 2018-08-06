@@ -10,6 +10,7 @@
  Description:  
 			   
 **************************************************************************/
+
 %include "L:\SAS\Inc\StdLocal.sas";
 
 ** Define libraries **;
@@ -19,7 +20,7 @@
 %DCData_lib( Realprop )
 %DCData_lib( Vital )
 
-%let _years=2012_2016;
+%let _years=2012_16;
 
 
 %macro Compile_equity_data (geo, geosuf);
@@ -33,7 +34,7 @@ unemploymentrate = popunemployed_&_years./popincivlaborforce_&_years.;
 run;
 
 data postsecondary;
-set ACS.Acs_2012_16_dc_sum_tr__&geosuf;
+set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
 keep indicator year &geo pop25andoverwcollege_&_years. popunder25years_&_years. PctCol;
 indicator = "postsecondary";
 year = "2012-2016";
@@ -41,38 +42,38 @@ PctCol = pop25andoverwcollege_&_years. / pop25andoveryears_&_years.;
 run;
 
 data homeownership;
-set ACS.Acs_2012_16_dc_sum_tr__&geosuf;
+set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
 keep indicator year &geo numowneroccupiedhsgunits_&_years. Tothousing ownership;
 indicator = "homeownership";
 year = "2012-2016";
-Tothousing= numowneroccupiedhsgunits_&_years.+ numrenteroccupiedhu_&_years.
-ownership= numowneroccupiedhsgunits_&_years./ Tothousing
+Tothousing= numowneroccupiedhsgunits_&_years.+ numrenteroccupiedhu_&_years.;
+ownership= numowneroccupiedhsgunits_&_years./ Tothousing;
 run;
 
 data income75k;
-set ACS.Acs_2012_16_dc_sum_tr__&geosuf;
+set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
 keep indicator year &geo famincomemt75k familyhhtot_&_years. pctmt75K;
 indicator = "Family Income over $75,000";
 year = "2012-2016";
 famincomemt75k= familyhhtot_&_years.- famincomelt75k_&_years.;
-pctmt75K= famincomemt75k/familyhhtot_&_years.
+pctmt75K= famincomemt75k/familyhhtot_&_years.;
 run;
 
 data abovepoverty;
-set ACS.Acs_2012_16_dc_sum_tr__&geosuf;
+set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
 keep indicator year &geo famincomemt75k familyhhtot_&_years. pctmt75K;
 indicator = "Persons above federal poverty rate";
 year = "2012-2016";
 popabovepov= personspovertydefined_&_years. - poppoorpersons_&_years.;
-pctabovepov= popabovepov/personspovertydefined_&_years.
+pctabovepov= popabovepov/personspovertydefined_&_years.;
 run;
 
 data earning75k;
-set ACS.Acs_2012_16_dc_sum_tr__&geosuf;
+set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
 keep indicator year &geo earningover75k_&_years. popemployedworkers_&_years. pctearningover75K;
 indicator = "Persons workers with annual earnings over $75,000";
 year = "2012-2016";
-pctearningover75K=earningover75k_&_years./popemployedworkers_&_years.
+pctearningover75K=earningover75k_&_years./popemployedworkers_&_years.;
 run;
 
 data create_flags;
@@ -126,7 +127,7 @@ proc summary data=create_flags;
  run;
 
 data violentcrime;
-set police.Crimes_2017;
+set police.crimes_sum_&geosuf;
 keep indicator year &geo crimes_pt1_violent_2017 crime_rate_pop_2017 violentcrimerate;
 indicator = "Violent Crime Rate per 1000 people";
 year = "2017";
@@ -134,7 +135,7 @@ violentcrimerate = crimes_pt1_violent_2017/crime_rate_pop_2017;
 run;
 
 data prenatal;
-set vital.Births_2016;
+set vital.births_sum_&geosuf;
 keep indicator year &geo births_prenat_adeq_2016 births_w_prenat_2016 adeqprenatal;
 indicator = "Births with adequate prenatal care";
 year = "2016";
@@ -154,8 +155,9 @@ proc export data=stanc_tabs_&geosuf
 
 %mend Compile_equity_data;
 
+%Compile_equity_data (ward2012, wd12);
 
-%Compile_stanc_data (cluster2017, cl17);
-%Compile_stanc_data (ward2012, wd12);
-%Compile_stanc_data (city, city);
+%Compile_equity_data (cluster2017, cl17);
+
+%Compile_equity_data (city, city);
 
