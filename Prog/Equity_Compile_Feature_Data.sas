@@ -78,10 +78,10 @@ run;
 
 data childrenabovepoverty;
 set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
-keep indicator year &geo earningover75k_&_years. popemployedworkers_&_years. pctearningover75K;
+keep indicator year &geo poppoorchildrenunder5_&_years. childpovertyunder5def_&_years. pctchildabovepov;
 indicator = "Children above federal poverty level";
 year = "2012-2016";
-pctearningover75K=earningover75k_&_years./popemployedworkers_&_years.;
+pctchildabovepov = poppoorchildrenunder5_&_years./childpovertyunder5def_&_years.;
 run;
 
 data create_flags;
