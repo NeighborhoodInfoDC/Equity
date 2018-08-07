@@ -26,62 +26,90 @@
 %macro Compile_equity_data (geo, geosuf);
 
 data unemployment;
+length indicator $30;
 set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
-keep indicator year &geo  popunemployed_&_years. popincivlaborforce_&_years. unemploymentrate;
+keep indicator year &geo numerator denom equityvariable;
 indicator = "unemployment";
 year = "2012-2016";
 unemploymentrate = popunemployed_&_years./popincivlaborforce_&_years.;
+equityvariable = unemploymentrate;
+denom = popincivlaborforce_&_years.;
+numerator = popunemployed_&_years.;
 run;
 
 data postsecondary;
+length indicator $30;
 set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
-keep indicator year &geo pop25andoverwcollege_&_years. pop25andoveryears_&_years. PctCol;
+keep indicator year &geo numerator denom equityvariable;
 indicator = "postsecondary";
 year = "2012-2016";
 PctCol = pop25andoverwcollege_&_years. / pop25andoveryears_&_years.;
+equityvariable = PctCol;
+denom = pop25andoverwcollege_&_years.;
+numerator = pop25andoveryears_&_years.;
 run;
 
 data homeownership;
+length indicator $30;
 set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
-keep indicator year &geo numowneroccupiedhsgunits_&_years. Tothousing ownership;
+keep indicator year &geo numerator denom equityvariable;
 indicator = "homeownership";
 year = "2012-2016";
 Tothousing= numowneroccupiedhsgunits_&_years.+ numrenteroccupiedhu_&_years.;
-ownership= numowneroccupiedhsgunits_&_years./ Tothousing;
+ownership= numowneroccupiedhsgunits_&_years./ (numowneroccupiedhsgunits_&_years.+ numrenteroccupiedhu_&_years.);
+equityvariable = ownership;
+denom = Tothousing;
+numerator = numowneroccupiedhsgunits_&_years.;
 run;
 
 data income75k;
 set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
-keep indicator year &geo famincomemt75k familyhhtot_&_years. pctmt75K;
+length indicator $30;
+keep indicator year &geo numerator denom equityvariable;
 indicator = "Family Income over $75,000";
 year = "2012-2016";
 famincomemt75k= familyhhtot_&_years.- famincomelt75k_&_years.;
 pctmt75K= famincomemt75k/familyhhtot_&_years.;
+equityvariable = pctmt75K;
+denom = familyhhtot_&_years.;
+numerator = famincomemt75k;
 run;
 
 data abovepoverty;
+length indicator $30;
 set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
-keep indicator year &geo personspovertydefined_&_years. poppoorpersons_&_years. pctabovepov;
+keep indicator year &geo numerator denom equityvariable;
 indicator = "Persons above federal poverty rate";
 year = "2012-2016";
 popabovepov= personspovertydefined_&_years. - poppoorpersons_&_years.;
 pctabovepov= popabovepov/personspovertydefined_&_years.;
+equityvariable = pctabovepov;
+denom = poppoorpersons_&_years.;
+numerator = personspovertydefined_&_years.;
 run;
 
 data earning75k;
+length indicator $30;
 set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
-keep indicator year &geo earningover75k_&_years. popemployedworkers_&_years. pctearningover75K;
+keep indicator year &geo numerator denom equityvariable;
 indicator = "Persons workers with annual earnings over $75,000";
 year = "2012-2016";
 pctearningover75K=earningover75k_&_years./popemployedworkers_&_years.;
+equityvariable = pctearningover75K;
+denom = popemployedworkers_&_years.;
+numerator = earningover75k_&_years.;
 run;
 
 data childrenabovepoverty;
+length indicator $30;
 set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
-keep indicator year &geo poppoorchildrenunder5_&_years. childpovertyunder5def_&_years. pctchildabovepov;
+keep indicator year &geo numerator denom equityvariable;
 indicator = "Children above federal poverty level";
 year = "2012-2016";
 pctchildabovepov = poppoorchildrenunder5_&_years./childpovertyunder5def_&_years.;
+equityvariable = pctchildabovepov;
+denom = childpovertyunder5def_&_years.;
+numerator = poppoorchildrenunder5_&_years.;
 run;
 /*
 data create_flags;
@@ -146,26 +174,34 @@ run;
 */
 
 data violentcrime;
+length indicator $30;
 set police.crimes_sum_&geosuf;
-keep indicator year &geo crimes_pt1_violent_2017 crime_rate_pop_2017 violentcrimerate;
+keep indicator year &geo numerator denom equityvariable;
 indicator = "Violent Crime Rate per 1000 people";
 year = "2017";
 violentcrimerate = crimes_pt1_violent_2017/crime_rate_pop_2017;
+equityvariable = violentcrimerate;
+denom = crime_rate_pop_2017;
+numerator = crimes_pt1_violent_2017;
 run;
 
 data prenatal;
+length indicator $30;
 set vital.births_sum_&geosuf;
-keep indicator year &geo births_prenat_adeq_2016 births_w_prenat_2016 adeqprenatal;
+keep indicator year &geo numerator denom equityvariable;
 indicator = "Births with adequate prenatal care";
 year = "2016";
 adeqprenatal = births_prenat_adeq_2016/births_w_prenat_2016;
+equityvariable = adeqprenatal;
+denom = births_w_prenat_2016;
+numerator = births_prenat_adeq_2016;
 run;
 
-data indicators;
+data equity_tabs_&geosuf;
 set  unemployment postsecondary homeownership income75k abovepoverty earning75k violentcrime prenatal;
 run; 
 
-proc export data=stanc_tabs_&geosuf
+proc export data=equity_tabs_&geosuf
 	outfile="L:\Libraries\Equity\Doc\Equityfeaturetabs_&geosuf..csv"
 	dbms=csv replace;
 	run;
