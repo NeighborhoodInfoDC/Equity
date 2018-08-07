@@ -198,6 +198,7 @@ numerator = births_prenat_adeq_2016;
 run;
 
 data equity_tabs_&geosuf;
+retain indicator year &geo numerator denom equityvariable;
 set  unemployment postsecondary homeownership income75k abovepoverty earning75k violentcrime prenatal;
 run; 
 
@@ -215,3 +216,13 @@ proc export data=equity_tabs_&geosuf
 
 %Compile_equity_data (city, city);
 
+
+data equity_tabs_cl17_format;
+set equity_tabs_cl17;
+format cluster2017 $clus17f. ;
+run;
+
+proc export data=equity_tabs_cl17_format
+outfile="L:\Libraries\Equity\Doc\Equityfeaturetabs_cl17_format..csv"
+dbms=csv replace;
+run;
