@@ -45,8 +45,8 @@ indicator = "postsecondary";
 year = "2012-2016";
 PctCol = pop25andoverwcollege_&_years. / pop25andoveryears_&_years.;
 equityvariable = PctCol;
-denom = pop25andoverwcollege_&_years.;
-numerator = pop25andoveryears_&_years.;
+denom = pop25andoveryears_&_years.;
+numerator = pop25andoverwcollege_&_years.;
 run;
 
 data homeownership;
@@ -79,13 +79,13 @@ data abovepoverty;
 length indicator $30;
 set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
-indicator = "Persons above federal poverty rate";
+indicator = "Persons above federal poverty level";
 year = "2012-2016";
 popabovepov= personspovertydefined_&_years. - poppoorpersons_&_years.;
 pctabovepov= popabovepov/personspovertydefined_&_years.;
 equityvariable = pctabovepov;
-denom = poppoorpersons_&_years.;
-numerator = personspovertydefined_&_years.;
+denom = personspovertydefined_&_years.;
+numerator = popabovepov;
 run;
 
 data earning75k;
