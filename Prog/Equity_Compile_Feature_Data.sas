@@ -39,7 +39,7 @@ data create_flags;
     eff_int_rate_2017= 3.69; *2017 not available, using 2016;
 
 
-	month_int_rate= (eff_int_rate_2017/12/100);
+	month_int_rate_2017 = (eff_int_rate_2017*.01)/12;
 
 	loan_multiplier_2017 =  month_int_rate_2017 *	( ( 1 + month_int_rate_2017 )**360	) / ( ( ( 1+ month_int_rate_2017 )**360 )-1 );
 
@@ -58,7 +58,7 @@ data create_flags;
 	end;
 
 	else do;
-			 if PITI_First <= (110300/ 12*.28) then AMI_first_afford=1; else AMI_first_afford=0;
+			 if PITI_First <= (110300/ 12*.28) then AMI50_first_afford=1; else AMI50_first_afford=0;
 
 	end;
 	
