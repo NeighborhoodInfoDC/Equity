@@ -53,12 +53,12 @@ data create_flags;
 
 	if PITI_First in (0,.) then do;
 
-			AMI50_first_afford = .;
+			AMI_first_afford = .;
 			total_sales=0;
 	end;
 
 	else do;
-			 if PITI_First <= (110300/ 12*.28) then AMI50_first_afford=1; else AMI50_first_afford=0;
+			 if PITI_First <= (110300/ 12*.28) then AMI_first_afford=1; else AMI_first_afford=0;
 
 	end;
 	
@@ -73,15 +73,15 @@ proc summary data=create_flags;
  output out=wardafford sum=;
  run;
 
-data wardafford;
+data afford_wd12;
 set wardafford;
-keep indicator year geo numerator denom equityvariable;
+keep indicator year ward2012 numerator denom equityvariable;
 indicator = "Percent homes sold at prices affordable at median income";
 year = "2017";
 numerator = AMI_first_afford;
 denom = total_sales;
 equityvariable = AMI_first_afford/total_sales;
-geo= ward2012;
+ward2012 = ward2012;
 run;
 
 proc sort data=create_flags;
@@ -92,15 +92,14 @@ Run;
  var AMI_first_afford total_sales;
  output out=clusterafford sum=;
  run;
-data clusterafford;
+data afford_cl17;
 set clusterafford;
-keep indicator year geo numerator denom equityvariable;
+keep indicator year cluster2017 numerator denom equityvariable;
 indicator = "Percent homes sold at prices affordable at median income";
 year = "2017";
 numerator = AMI_first_afford;
 denom = total_sales;
 equityvariable = AMI_first_afford/total_sales;
-geo= cluster2017;
 run;
 
  proc summary data=create_flags;
@@ -108,9 +107,9 @@ run;
  var AMI_first_afford total_sales;
  output out=cityafford sum=;
  run;
-data cityafford;
+data afford_city;
 set cityafford;
-keep indicator year geo numerator denom equityvariable;
+keep indicator year city numerator denom equityvariable;
 indicator = "Percent homes sold at prices affordable at median income";
 year = "2017";
 numerator = AMI_first_afford;
@@ -122,7 +121,7 @@ run;
 %macro Compile_equity_data (geo, geosuf);
 
 data unemployment;
-length indicator $30;
+length indicator $80;
 set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
 indicator = "unemployment";
@@ -134,7 +133,7 @@ numerator = popunemployed_&_years.;
 run;
 
 data postsecondary;
-length indicator $30;
+length indicator $80;
 set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
 indicator = "postsecondary";
@@ -146,7 +145,7 @@ numerator = pop25andoverwcollege_&_years.;
 run;
 
 data homeownership;
-length indicator $30;
+length indicator $80;
 set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
 indicator = "homeownership";
@@ -160,7 +159,7 @@ run;
 
 data income75k;
 set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
-length indicator $30;
+length indicator $80;
 keep indicator year &geo numerator denom equityvariable;
 indicator = "Family Income over $75,000";
 year = "2012-2016";
@@ -172,7 +171,7 @@ numerator = famincomemt75k;
 run;
 
 data abovepoverty;
-length indicator $30;
+length indicator $80;
 set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
 indicator = "Persons above federal poverty level";
@@ -185,7 +184,7 @@ numerator = popabovepov;
 run;
 
 data earning75k;
-length indicator $30;
+length indicator $80;
 set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
 indicator = "Persons workers with annual earnings over $75,000";
@@ -197,7 +196,7 @@ numerator = earningover75k_&_years.;
 run;
 
 data childrenabovepoverty;
-length indicator $30;
+length indicator $80;
 set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
 indicator = "Children under 18 above federal poverty level";
@@ -209,7 +208,7 @@ numerator = poppoorchildren_&_years.;
 run;
 
 data costburden;
-length indicator $30;
+length indicator $80;
 set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
 indicator = "Households with housing cost burden (paying 30% or higher)";
@@ -220,20 +219,20 @@ denom = rentcostburdendenom_&_years.;
 numerator = numownercostburden_&_years.;
 run;
 
-data longcommute;
-length indicator $30;
+data commute;
+length indicator $80;
 set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
-indicator = "Households with housing cost burden (paying 30% or higher)";
+indicator = "Workers with Travel time to work less than 45 minutes";
 year = "2012-2016";
-pctcostburden = numownercostburden_&_years./rentcostburdendenom_&_years.;
-equityvariable = pctcostburden;
+commuteunder40 = numownercostburden_&_years./rentcostburdendenom_&_years.;
+equityvariable = commuteunder40;
 denom = popemployedworkers_&_years.;
-numerator = (popemployedtravel_45_59_&_years.+ popemployedtravel_60_89_&_years.+ popemployedtravel_gt90_&_years.);
+numerator = (popemployedtravel_lt5_&_years. + popemployedtravel_10_14_&_years.+ popemployedtravel_15_19_&_years.+ popemployedtravel_20_24_&_years. + popemployedtravel_25_29_&_years. + popemployedtravel_30_34_&_years. + popemployedtravel_35_39_&_years.);
 run;
 
 data violentcrime;
-length indicator $30;
+length indicator $80;
 set police.crimes_sum_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
 indicator = "Violent Crime Rate per 1000 people";
@@ -245,7 +244,7 @@ numerator = crimes_pt1_violent_2017;
 run;
 
 data prenatal;
-length indicator $30;
+length indicator $80;
 set vital.births_sum_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
 indicator = "Births with adequate prenatal care";
@@ -256,9 +255,15 @@ denom = births_w_prenat_2016;
 numerator = births_prenat_adeq_2016;
 run;
 
+data afford;
+keep indicator year &geo numerator denom equityvariable;
+set afford_&geosuf;
+length indicator $80;
+run;
+
 data equity_tabs_&geosuf;
 retain indicator year &geo numerator denom equityvariable;
-set  unemployment postsecondary homeownership income75k abovepoverty costburden longcommute earning75k violentcrime prenatal;
+set  unemployment postsecondary homeownership income75k abovepoverty costburden commute earning75k violentcrime prenatal afford;
 run; 
 
 proc export data=equity_tabs_&geosuf
