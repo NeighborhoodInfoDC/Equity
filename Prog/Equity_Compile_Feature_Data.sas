@@ -31,7 +31,7 @@ run;
 
 data pop;
 set ACS.Acs_2012_16_dc_sum_tr_cl17;
-keep totpop_2012_16;
+keep totpop_2012_16 cluster2017;
 run;
 
 data create_flags;
@@ -285,9 +285,9 @@ proc export data=equity_tabs_&geosuf
 
 data equity_tabs_cl17_suppress;
 set equity_tabs_cl17;
-if cluster2017 = "Cluster 42 " then do;
+if cluster2017 = "Cluster 42" then do;
 numerator="."; denom="."; equityvariable="."; end;
-if cluster2017 = "Cluster 45 " then do;
+if cluster2017 = "Cluster 45" then do;
 numerator="."; denom="."; equityvariable="."; end;
 run;
 
