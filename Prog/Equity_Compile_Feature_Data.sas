@@ -29,6 +29,10 @@ run;
 proc contents data=sales_res_year;
 run;
 
+data pop;
+set ACS.Acs_2012_16_dc_sum_tr_cl17;
+keep totpop_2012_16;
+run;
 
 data create_flags;
   set sales_res_year (where=(saleyear = 2017));
@@ -136,7 +140,7 @@ data postsecondary;
 length indicator $80;
 set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
-indicator = "adults with bachelors degree";
+indicator = "postsecondary";
 year = "2012-2016";
 PctCol = pop25andoverwcollege_&_years. / pop25andoveryears_&_years.;
 equityvariable = PctCol;
@@ -201,10 +205,10 @@ set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
 indicator = "Children under 18 above federal poverty level";
 year = "2012-2016";
-pctchildabovepov = (childrenpovertydefined_&_years.-poppoorchildren_&_years.)/childrenpovertydefined_&_years.;
+pctchildabovepov = poppoorchildren_&_years./childrenpovertydefined_&_years.;
 equityvariable = pctchildabovepov;
 denom = childrenpovertydefined_&_years.;
-numerator = (childrenpovertydefined_&_years.-poppoorchildren_&_years.);
+numerator = poppoorchildren_&_years.;
 run;
 
 data costburden;
@@ -279,9 +283,16 @@ proc export data=equity_tabs_&geosuf
 
 %Compile_equity_data (city, city);
 
+data equity_tabs_cl17_suppress;
+set equity_tabs_cl17;
+if cluster2017 = "Cluster 42 " then do;
+numerator="."; denom="."; equityvariable="."; end;
+if cluster2017 = "Cluster 45 " then do;
+numerator="."; denom="."; equityvariable="."; end;
+run;
 
 data equity_tabs_cl17_format;
-set equity_tabs_cl17;
+set equity_tabs_cl17_suppress;
 format cluster2017 $clus17f. ;
 run;
 
