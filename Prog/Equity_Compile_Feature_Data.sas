@@ -225,10 +225,10 @@ set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
 indicator = "Workers with Travel time to work less than 45 minutes";
 year = "2012-2016";
-commuteunder45 = numownercostburden_&_years./rentcostburdendenom_&_years.;
+commuteunder45 = (popemployedtravel_lt5_&_years. + popemployedtravel_10_14_&_years.+ popemployedtravel_15_19_&_years.+ popemployedtravel_20_24_&_years. + popemployedtravel_25_29_&_years. + popemployedtravel_30_34_&_years. + popemployedtravel_35_39_&_years. + popemployedtravel_40_44_&_years.)/popemployedworkers_&_years. ;
 equityvariable = commuteunder45;
 denom = popemployedworkers_&_years.;
-numerator = (popemployedtravel_lt5_&_years. + popemployedtravel_10_14_&_years.+ popemployedtravel_15_19_&_years.+ popemployedtravel_20_24_&_years. + popemployedtravel_25_29_&_years. + popemployedtravel_30_34_&_years. + popemployedtravel_35_39_&_years. + popemployedtravel_40_44_&_years.);
+numerator = (popemployedtravel_lt5_&_years.+ popemployedtravel_10_14_&_years.+ popemployedtravel_15_19_&_years.+ popemployedtravel_20_24_&_years. + popemployedtravel_25_29_&_years. + popemployedtravel_30_34_&_years. + popemployedtravel_35_39_&_years. + popemployedtravel_40_44_&_years.);
 run;
 
 data violentcrime;
