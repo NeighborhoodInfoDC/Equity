@@ -58,7 +58,7 @@ data create_flags;
 	end;
 
 	else do;
-			 if PITI_First <= (72935/ 12*.28) then AMI_first_afford=1; else AMI_first_afford=0;
+			 if PITI_First <= (72935/ 12*.28) then AMI_first_afford=1; else AMI_first_afford=0; *DC Median income 2016 ACS;
 
 	end;
 	
