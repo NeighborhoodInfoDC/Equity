@@ -6,7 +6,7 @@
  Created:  07/18/18
  Version:  SAS 9.4
  Environment:  Windows
- Last Edited: 24/8/18 by Yipeng Su
+ Last Edited: 8/24/18 by Yipeng Su
  Description:  Compile data for DC Equity Tool
 			   
 **************************************************************************/
@@ -213,10 +213,10 @@ set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
 indicator = "Households with housing cost burden (paying 30% or higher)";
 year = "2012-2016";
-pctcostburden = numownercostburden_&_years./rentcostburdendenom_&_years.;
+pctcostburden = (numownercostburden_&_years.+ numrentercostburden_&_years.)/(rentcostburdendenom_&_years.+ ownercostburdendenom_&_years.);
 equityvariable = pctcostburden;
-denom = rentcostburdendenom_&_years.;
-numerator = numownercostburden_&_years.;
+denom = (rentcostburdendenom_&_years.+ ownercostburdendenom_&_years.);
+numerator = (numownercostburden_&_years.+ numrentercostburden_&_years. );
 run;
 
 data commute;
@@ -225,10 +225,10 @@ set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
 indicator = "Workers with Travel time to work less than 45 minutes";
 year = "2012-2016";
-commuteunder40 = numownercostburden_&_years./rentcostburdendenom_&_years.;
-equityvariable = commuteunder40;
+commuteunder45 = numownercostburden_&_years./rentcostburdendenom_&_years.;
+equityvariable = commuteunder45;
 denom = popemployedworkers_&_years.;
-numerator = (popemployedtravel_lt5_&_years. + popemployedtravel_10_14_&_years.+ popemployedtravel_15_19_&_years.+ popemployedtravel_20_24_&_years. + popemployedtravel_25_29_&_years. + popemployedtravel_30_34_&_years. + popemployedtravel_35_39_&_years.);
+numerator = (popemployedtravel_lt5_&_years. + popemployedtravel_10_14_&_years.+ popemployedtravel_15_19_&_years.+ popemployedtravel_20_24_&_years. + popemployedtravel_25_29_&_years. + popemployedtravel_30_34_&_years. + popemployedtravel_35_39_&_years. + popemployedtravel_40_44_&_years.);
 run;
 
 data violentcrime;
@@ -263,7 +263,7 @@ run;
 
 data equity_tabs_&geosuf;
 retain indicator year &geo numerator denom equityvariable;
-set  unemployment postsecondary homeownership income75k abovepoverty costburden commute earning75k violentcrime prenatal afford;
+set  unemployment postsecondary homeownership income75k abovepoverty childrenabovepoverty costburden commute earning75k violentcrime prenatal afford;
 run; 
 
 proc export data=equity_tabs_&geosuf
