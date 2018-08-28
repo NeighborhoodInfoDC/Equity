@@ -283,20 +283,41 @@ proc export data=equity_tabs_&geosuf
 
 %Compile_equity_data (city, city);
 
+/*suppress clusters with less than 200 people or less than 200 housing units*/
+proc print data=ACS.Acs_2012_16_dc_sum_tr_cl17;
+var cluster2017 totpop_2012_16 numhsgunits_2012_16;
+run;
 data equity_tabs_cl17_suppress;
-set equity_tabs_cl17;
-if cluster2017 = "Cluster 42" then do;
-numerator="."; denom="."; equityvariable="."; end;
-if cluster2017 = "Cluster 45" then do;
-numerator="."; denom="."; equityvariable="."; end;
+	set equity_tabs_cl17;
+
+		if cluster2017 in( "42" "45" "46") then do;
+			numerator=.;
+			denom=.; 
+			equityvariable=.; 
+		end;
+
+		if indicator="Births with adequate prenatal care" and denom <=5 then do; 
+			numerator=.;
+			denom=.; 
+			equityvariable=.; 
+		end;
+
+		if indicator="Percent homes sold at prices affordable at median income" and denom <10 then do;
+			numerator=.;
+			denom=.; 
+			equityvariable=.; 
+		end;
+
+		if cluster2017=" " then delete;
+		
 run;
 
 data equity_tabs_cl17_format;
-set equity_tabs_cl17_suppress;
+	set equity_tabs_cl17_suppress;
 format cluster2017 $clus17f. ;
 run;
 
 proc export data=equity_tabs_cl17_format
-outfile="&_dcdata_default_path.\Equity\Prog\JPMC feature\Equityfeaturetabs_cl17_format..csv"
+outfile="&_dcdata_default_path.\Equity\Prog\JPMC feature\Equityfeaturetabs_cl17_format.csv"
 dbms=csv replace;
 run;
