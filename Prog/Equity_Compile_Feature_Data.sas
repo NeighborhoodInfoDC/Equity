@@ -241,7 +241,7 @@ set police.crimes_sum_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
 indicator = "Violent Crime Rate per 1000 people";
 year = "2017";
-violentcrimerate = crimes_pt1_violent_2017/crime_rate_pop_2017;
+violentcrimerate = crimes_pt1_violent_2017/crime_rate_pop_2017*1000;
 equityvariable = violentcrimerate;
 denom = crime_rate_pop_2017;
 numerator = crimes_pt1_violent_2017;
