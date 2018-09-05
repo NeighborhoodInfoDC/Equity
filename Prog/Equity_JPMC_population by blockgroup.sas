@@ -20,8 +20,10 @@
 %DCDATA_lib (Equity);
 %DCDATA_lib (ACS);
 
- Data DC_pop_block (keep=geobg2010 tract tract_comp b01001e1);
+ Data DC_pop_block; 
+  keep geobg2010 geoid10 tract b01001e1;
   set acs.Acs_sf_2012_16_dc_bg10;
+  geoid10=geobg2010;
   run;
 
 proc export data=DC_pop_block
