@@ -60,3 +60,42 @@ calc_vars=
 calc_vars_labels=
 
 )
+
+%Transform_geo_data(
+keep_nonmatch=n,
+dat_ds_name=Access_to_locations,
+dat_org_geo=GeoBg2010,
+dat_count_vars= Denominator Grocery Retail_banks Check_cashing,
+wgt_ds_name=general.Wt_bg10_city,
+wgt_org_geo=GeoBg2010,
+wgt_new_geo=city, 
+wgt_id_vars=,
+wgt_wgt_var=PopWt,
+out_ds_name=pop_by_city,
+out_ds_label=%str(Population by age group from tract 2010 to ward),
+calc_vars=
+,
+calc_vars_labels=
+
+)
+
+
+data equity_location_by_cl17_format;
+set pop_by_cl17;
+format cluster2017 $clus17f. ;
+run;
+
+proc export data=equity_location_by_cl17_format
+outfile="&_dcdata_default_path.\Equity\Prog\JPMC feature\Equityfeature_locations_cl17_format.csv"
+dbms=csv replace;
+run;
+
+proc export data=pop_by_ward
+outfile="&_dcdata_default_path.\Equity\Prog\JPMC feature\Equityfeature_locations_wd12_format.csv"
+dbms=csv replace;
+run;
+
+proc export data=pop_by_city
+outfile="&_dcdata_default_path.\Equity\Prog\JPMC feature\Equityfeature_locations_city_format.csv"
+dbms=csv replace;
+run;
