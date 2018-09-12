@@ -6,7 +6,7 @@
  Created:  07/18/18
  Version:  SAS 9.4
  Environment:  Windows
- Last Edited: 8/24/18 by Yipeng Su
+ Last Edited: 9/12/18 by Yipeng Su
  Description:  Compile data for DC Equity Tool
 			   
 **************************************************************************/
@@ -161,17 +161,17 @@ denom = Tothousing;
 numerator = numowneroccupiedhsgunits_&_years.;
 run;
 
-data income75k;
+data income35k;
 set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
 length indicator $80;
 keep indicator year &geo numerator denom equityvariable;
-indicator = "Family Income over $75,000";
+indicator = "Full time workers with annual earnings over $35,000";
 year = "2012-2016";
-famincomemt75k= familyhhtot_&_years.- famincomelt75k_&_years.;
-pctmt75K= famincomemt75k/familyhhtot_&_years.;
-equityvariable = pctmt75K;
-denom = familyhhtot_&_years.;
-numerator = famincomemt75k;
+incomemt35k= popworkft_&_years.- popworkftlt35k_&_years.;
+pctmt35K= incomemt35k/popworkft_&_years.;
+equityvariable = pctmt35K;
+denom = popworkft_&_years.;
+numerator = incomemt35k;
 run;
 
 data abovepoverty;
