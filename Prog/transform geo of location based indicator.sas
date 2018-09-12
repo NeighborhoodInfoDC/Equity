@@ -21,7 +21,7 @@
 libname access "L:\Libraries\Equity\Raw" ;
 
 data Access_to_locations;
-	set access.Access_to_locations (rename = (GeoBg2010 = GeoBg2010n));
+	set access.access_to_locations (rename = (GeoBg2010 = GeoBg2010n));
 	GeoBg2010 = put(GeoBg2010n,z12.);
 run;
 
@@ -29,7 +29,7 @@ run;
 keep_nonmatch=n,
 dat_ds_name=Access_to_locations,
 dat_org_geo=GeoBg2010,
-dat_count_vars= Denominator Grocery Retail_banks Check_cashing,
+dat_count_vars= Denominator Grocery Retailbanks Checkcashing,
 wgt_ds_name=general.Wt_bg10_cl17,
 wgt_org_geo=GeoBg2010,
 wgt_new_geo=cluster2017, 
@@ -38,6 +38,9 @@ wgt_wgt_var=PopWt,
 out_ds_name=pop_by_cl17,
 out_ds_label=%str(Population by age group from tract 2010 to ward),
 calc_vars=
+    equity_grocery= Grocery/Denominator;
+	equity_banks= Retailbanks/Denominator;
+	equity_checkcashing= Checkcashing/Denominator;
 ,
 calc_vars_labels=
 
@@ -47,7 +50,7 @@ calc_vars_labels=
 keep_nonmatch=n,
 dat_ds_name=Access_to_locations,
 dat_org_geo=GeoBg2010,
-dat_count_vars= Denominator Grocery Retail_banks Check_cashing,
+dat_count_vars= Denominator Grocery Retailbanks Checkcashing,
 wgt_ds_name=general.Wt_bg10_ward12,
 wgt_org_geo=GeoBg2010,
 wgt_new_geo=Ward2012, 
@@ -56,6 +59,9 @@ wgt_wgt_var=PopWt,
 out_ds_name=pop_by_ward,
 out_ds_label=%str(Population by age group from tract 2010 to ward),
 calc_vars=
+    equity_grocery= Grocery/Denominator;
+	equity_banks= Retailbanks/Denominator;
+	equity_checkcashing= Checkcashing/Denominator;
 ,
 calc_vars_labels=
 
@@ -74,11 +80,13 @@ wgt_wgt_var=PopWt,
 out_ds_name=pop_by_city,
 out_ds_label=%str(Population by age group from tract 2010 to ward),
 calc_vars=
+    equity_grocery= Grocery/Denominator;
+	equity_banks= Retailbanks/Denominator;
+	equity_checkcashing= Checkcashing/Denominator;
 ,
 calc_vars_labels=
 
 )
-
 
 data equity_location_by_cl17_format;
 set pop_by_cl17;
