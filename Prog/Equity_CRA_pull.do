@@ -13,7 +13,7 @@ clear
 set more off
 
 *Change name of global to use your username accessing from Box Sycn*
-global folder D:\Users\ysu\Box Sync\Capital Flows Base Data Pulls\CRA\DataProcessing
+global folder L:\Libraries\Equity\Raw
 global output "L:\Libraries\Equity\Raw"
 
 **********************************************************************************************************
@@ -73,40 +73,27 @@ gen AvgAnnualAmt=TotalAmtSBL/1
 
 
 *Divide by # Emplyoees of Small Biz (1-19 employees)
-rename geoid fips
+rename geoid geo2010
 
-merge 1:1 fips using "D:\Users\ysu\Box Sync\Capital Flows Base Data Pulls\LED\2014LED_Tract.dta" 
+merge 1:1 geo2010 using "L:\Libraries\Equity\Raw\LEHD_business_2015.dta" 
 keep if _merge==3
 drop _merge
-rename fips geoid
+
 
 xtile SBjobs=privatesectorjobs1_20employees, nq(100)
 sort privatesectorjobs1_20employees
 
+gen over49emp=1 if privatesectorjobs1_20employees>49 /*flag for tracts that have less than 50 small business jobs*/
 
-gen over49emp=1 if privatesectorjobs1_20employees>49
+gen CRAperEmp=TotalAmtSBL/privatesectorjobs1_20employees /*if over49emp==1  */
 
-
-gen CRAperEmp=TotalAmtSBL/privatesectorjobs1_20employees if over49emp==1  /*YS: what is this step doing?*/
-
-gen AnnualCRAperEmp=AvgAnnualAmt/privatesectorjobs1_20employees if over49emp==1
 sort CRAperEmp
+rename privatesectorjobs1_20employees SBemployees_total
 
 keep if State== "11"
-keep geoid trct County State AnnualCRAperEmp CRAperEmp
+keep geo2010 CRAperEmp TotalAmtSBL privatesectorjobs1_20employees
 
 export excel using "L:\Libraries\Equity\Raw\CRAbyTract.xlsx", firstrow(variables) replace 
 
 ********************************
-**PULL FOR SPECIFIC GEOGRAPHY***
-**E.G**
-/*
-*Baltimore Pull***
-keep if state=="Maryland"
-keep if County=="510"
-
-keep geoid trct County State AnnualCRAperEmp CRAperEmp
-
-export excel using "D:\Users\BMeixell\Box Sync\Baltimore Investment Flows\Web feature\FINAL analyses\CRAbyTract.xlsx", firstrow(variables) replace 
-*/
 
