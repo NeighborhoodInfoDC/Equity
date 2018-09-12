@@ -14,9 +14,11 @@ set maxvar 32000
 
 import excel "L:\Libraries\Equity\Raw\LEHD_business.xlsx", sheet("LEHD_business") firstrow
 
-collapse (sum) C000 CFS01, by(geo2010)
+gen SB50= CFS01+CFS02
+
+collapse (sum) C000 SB50, by(geo2010)
 
 rename C000 totaljobs_privatesector
-rename CFS01 privatesectorjobs1_20employees
+rename SB50 privatesectorjobs1_50employees
 
 save "L:\Libraries\Equity\Raw\LEHD_business_2015.dta", replace

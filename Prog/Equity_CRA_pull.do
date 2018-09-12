@@ -80,18 +80,18 @@ keep if _merge==3
 drop _merge
 
 
-xtile SBjobs=privatesectorjobs1_20employees, nq(100)
-sort privatesectorjobs1_20employees
+xtile SBjobs=privatesectorjobs1_50employees, nq(100)
+sort privatesectorjobs1_50employees
 
-gen over49emp=1 if privatesectorjobs1_20employees>49 /*flag for tracts that have less than 50 small business jobs*/
+gen over49emp=1 if privatesectorjobs1_50employees>49 /*flag for tracts that have less than 50 small business jobs*/
 
-gen CRAperEmp=TotalAmtSBL/privatesectorjobs1_20employees /*if over49emp==1  */
+gen CRAperEmp=TotalAmtSBL/privatesectorjobs1_50employees /*if over49emp==1  */
 
 sort CRAperEmp
-rename privatesectorjobs1_20employees SBemployees_total
+rename privatesectorjobs1_50employees SBemployees_total
 
 keep if State== "11"
-keep geo2010 CRAperEmp TotalAmtSBL privatesectorjobs1_20employees
+keep geo2010 CRAperEmp TotalAmtSBL privatesectorjobs1_50employees
 
 export excel using "L:\Libraries\Equity\Raw\CRAbyTract.xlsx", firstrow(variables) replace 
 
