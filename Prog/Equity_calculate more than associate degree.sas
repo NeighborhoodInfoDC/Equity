@@ -21,23 +21,23 @@
 
 data associate_higher;
 length indicator $80;
-set ACS.Acs_sf_2012_16_dc_bg10;
-keep indicator year geobg2010 numerator denom;
+set ACS.Acs_sf_2012_16_dc_tr10;
+keep indicator year geo2010 numerator denom;
 indicator = "adults with at least an associate degree";
 year = "2012-2016";
-PctCol = (B15002e8 + B15002e9 + B15002e10 + B15002e17 + B15002e18 + B15002e19) / B15002e1;
+PctCol = (B15002e14 + B15002e15 + B15002e16 + B15002e17 + B15002e18 + B15002e31 + B15002e32 + B15002e33 + B15002e34 + B15002e35) / B15002e1;
 denom = B15002e1;
-numerator = (B15002e8 + B15002e9 + B15002e10 + B15002e17 + B15002e18 + B15002e19) ;
+numerator = (B15002e14 + B15002e15 + B15002e16 + B15002e17 + B15002e18 + B15002e31 + B15002e32 + B15002e33 + B15002e34 + B15002e35) ;
 run;
 
 
 %Transform_geo_data(
 keep_nonmatch=n,
 dat_ds_name=associate_higher,
-dat_org_geo=GeoBg2010,
+dat_org_geo=Geo2010,
 dat_count_vars= numerator denom,
-wgt_ds_name=general.Wt_bg10_cl17,
-wgt_org_geo=GeoBg2010,
+wgt_ds_name=general.Wt_tr10_cl17,
+wgt_org_geo=Geo2010,
 wgt_new_geo=cluster2017, 
 wgt_id_vars=,
 wgt_wgt_var=PopWt,
@@ -54,10 +54,10 @@ calc_vars_labels=
 %Transform_geo_data(
 keep_nonmatch=n,
 dat_ds_name=associate_higher,
-dat_org_geo=GeoBg2010,
+dat_org_geo=Geo2010,
 dat_count_vars= numerator denom,
-wgt_ds_name=general.Wt_bg10_ward12,
-wgt_org_geo=GeoBg2010,
+wgt_ds_name=general.Wt_tr10_ward12,
+wgt_org_geo=Geo2010,
 wgt_new_geo=Ward2012, 
 wgt_id_vars=,
 wgt_wgt_var=PopWt,
@@ -73,10 +73,10 @@ calc_vars_labels=
 %Transform_geo_data(
 keep_nonmatch=n,
 dat_ds_name=associate_higher,
-dat_org_geo=GeoBg2010,
+dat_org_geo=Geo2010,
 dat_count_vars= numerator denom,
-wgt_ds_name=general.Wt_bg10_city,
-wgt_org_geo=GeoBg2010,
+wgt_ds_name=general.Wt_tr10_city,
+wgt_org_geo=Geo2010,
 wgt_new_geo=city, 
 wgt_id_vars=,
 wgt_wgt_var=PopWt,
