@@ -136,6 +136,7 @@ denom = popincivlaborforce_&_years.;
 numerator = popunemployed_&_years.;
 run;
 
+/*  see the other program for calculating associate degree or higher
 data postsecondary;
 length indicator $80;
 set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
@@ -147,6 +148,7 @@ equityvariable = PctCol;
 denom = pop25andoveryears_&_years.;
 numerator = pop25andoverwcollege_&_years.;
 run;
+*/
 
 data homeownership;
 length indicator $80;
@@ -161,17 +163,16 @@ denom = Tothousing;
 numerator = numowneroccupiedhsgunits_&_years.;
 run;
 
-data income35k;
-set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
+data faminc75k;
 length indicator $80;
+set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
-indicator = "Full time workers with annual earnings over $35,000";
+indicator = "Families with income over $75,000";
 year = "2012-2016";
-incomemt35k= popworkft_&_years.- popworkftlt35k_&_years.;
-pctmt35K= incomemt35k/popworkft_&_years.;
-equityvariable = pctmt35K;
-denom = popworkft_&_years.;
-numerator = incomemt35k;
+pctfamover75K= (familyhhtot_&_years.- famincomelt75k_&_years.) /familyhhtot_&_years.; 
+equityvariable = pctfamover75K;
+denom = familyhhtot_&_years.; 
+numerator = familyhhtot_&_years.- famincomelt75k_&_years.;
 run;
 
 data abovepoverty;
@@ -187,16 +188,17 @@ denom = personspovertydefined_&_years.;
 numerator = popabovepov;
 run;
 
-data earning75k;
-length indicator $80;
+data income35k;
 set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
+length indicator $80;
 keep indicator year &geo numerator denom equityvariable;
-indicator = "Persons workers with annual earnings over $75,000";
+indicator = "Full time workers with annual earnings over $35,000";
 year = "2012-2016";
-pctearningover75K=earningover75k_&_years./popemployedworkers_&_years.;
-equityvariable = pctearningover75K;
-denom = popemployedworkers_&_years.;
-numerator = earningover75k_&_years.;
+incomemt35k= popworkft_&_years.- popworkftlt35k_&_years.;
+pctmt35K= incomemt35k/popworkft_&_years.;
+equityvariable = pctmt35K;
+denom = popworkft_&_years.;
+numerator = incomemt35k;
 run;
 
 data childrenabovepoverty;
@@ -267,7 +269,7 @@ run;
 
 data equity_tabs_&geosuf;
 retain indicator year &geo numerator denom equityvariable;
-set  unemployment postsecondary homeownership income75k abovepoverty childrenabovepoverty costburden commute earning75k violentcrime prenatal afford;
+set  abovepoverty childrenabovepoverty faminc75k unemployment income35k homeownership commute costburden violentcrime prenatal afford;
 run; 
 
 proc export data=equity_tabs_&geosuf
