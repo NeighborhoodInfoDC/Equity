@@ -22,7 +22,6 @@ libname CRA "L:\Libraries\Equity\Raw" ;
 
 data CRA_lending;
 	set CRA.CRAbyTract;
-	geo2010 = put(geoid,z12.);
 run;
 
 %Transform_geo_data(
@@ -46,7 +45,7 @@ calc_vars_labels=
 %Transform_geo_data(
 keep_nonmatch=n,
 dat_ds_name=CRA_lending,
-dat_org_geo=GeoBg2010,
+dat_org_geo=Geo2010,
 dat_count_vars= SBemployees_total CRAperEmp AvgAnnualAmt,
 wgt_ds_name=general.Wt_tr10_ward12,
 wgt_org_geo=Geo2010,
@@ -67,11 +66,11 @@ dat_ds_name=CRA_lending,
 dat_org_geo=Geo2010,
 dat_count_vars= SBemployees_total CRAperEmp AvgAnnualAmt,
 wgt_ds_name=general.Wt_tr10_city,
-wgt_org_geo=GeoBg2010,
+wgt_org_geo=Geo2010,
 wgt_new_geo=city, 
 wgt_id_vars=,
 wgt_wgt_var=PopWt,
-out_ds_name=CRA_by_ward,
+out_ds_name=CRA_by_city,
 out_ds_label=%str(Population by age group from tract 2010 to city),
 calc_vars=
 ,
