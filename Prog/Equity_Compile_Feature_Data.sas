@@ -34,6 +34,14 @@ set ACS.Acs_2012_16_dc_sum_tr_cl17;
 keep totpop_2012_16 cluster2017;
 run;
 
+data averageinc_nonwhite;
+set  ACS.Acs_2012_16_dc_sum_tr_city;
+keep averageinc_nonwhite;
+averageinc_nonwhite= (agghshldincome_2012_16 - aggincomew_2012_16)/(numhshlds_2012_16 - numhshldsw_2012_16);
+run;
+*68362 for average hh income for people of color;
+
+
 data create_flags;
   set sales_res_year (where=(saleyear = 2017));
   
@@ -62,7 +70,7 @@ data create_flags;
 	end;
 
 	else do;
-			 if PITI_First <= (72935/ 12*.28) then AMI_first_afford=1; else AMI_first_afford=0; *DC Median income 2016 ACS;
+			 if PITI_First <= (68362/ 12*.28) then AMI_first_afford=1; else AMI_first_afford=0; *DC Median income 2016 ACS for people of color 68362;
 
 	end;
 	
