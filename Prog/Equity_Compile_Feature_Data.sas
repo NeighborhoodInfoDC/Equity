@@ -70,7 +70,7 @@ data create_flags;
 	end;
 
 	else do;
-			 if PITI_First <= (68362/ 12*.28) then AMI_first_afford=1; else AMI_first_afford=0; *DC Median income 2016 ACS for people of color 68362;
+			 if PITI_First <= (68362/ 12*.28) then AMI_first_afford=1; else AMI_first_afford=0; *DC average hh income 2016 ACS for people of color 68362;
 
 	end;
 	
