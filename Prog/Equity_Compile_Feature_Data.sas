@@ -281,7 +281,7 @@ set  abovepoverty childrenabovepoverty faminc75k unemployment income35k homeowne
 run; 
 
 proc export data=equity_tabs_&geosuf
-	outfile="&_dcdata_default_path.\Equity\Prog\JPMC feature\Equityfeaturetabs_&geosuf..csv"
+	outfile="&_dcdata_default_path.\Equity\Prog\JPMC feature\Equityfeaturetabs_updated_&geosuf..csv"
 	dbms=csv replace;
 	run;
 
@@ -328,6 +328,6 @@ format cluster2017 $clus17f. ;
 run;
 
 proc export data=equity_tabs_cl17_format
-outfile="&_dcdata_default_path.\Equity\Prog\JPMC feature\Equityfeaturetabs_cl17_format.csv"
+outfile="&_dcdata_default_path.\Equity\Prog\JPMC feature\Equityfeaturetabs_updated_cl17_format.csv"
 dbms=csv replace;
 run;
