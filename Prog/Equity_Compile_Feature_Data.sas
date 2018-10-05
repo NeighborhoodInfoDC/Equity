@@ -34,6 +34,14 @@ set ACS.Acs_2012_16_dc_sum_tr_cl17;
 keep totpop_2012_16 cluster2017;
 run;
 
+data averageinc_nonwhite;
+set  ACS.Acs_2012_16_dc_sum_tr_city;
+keep averageinc_nonwhite;
+averageinc_nonwhite= (agghshldincome_2012_16 - aggincomew_2012_16)/(numhshlds_2012_16 - numhshldsw_2012_16);
+run;
+*68362 for average hh income for people of color;
+
+
 data create_flags;
   set sales_res_year (where=(saleyear = 2017));
   
@@ -62,7 +70,7 @@ data create_flags;
 	end;
 
 	else do;
-			 if PITI_First <= (72935/ 12*.28) then AMI_first_afford=1; else AMI_first_afford=0; *DC Median income 2016 ACS;
+			 if PITI_First <= (68362/ 12*.28) then AMI_first_afford=1; else AMI_first_afford=0; *DC average hh income 2016 ACS for people of color 68362;
 
 	end;
 	
@@ -80,7 +88,7 @@ proc summary data=create_flags;
 data afford_wd12;
 set wardafford;
 keep indicator year ward2012 numerator denom equityvariable;
-indicator = "Percent homes sold at prices affordable at median income";
+indicator = "Percent homes sold at prices affordable at 2016 DC average hh income for people of color";
 year = "2017";
 numerator = AMI_first_afford;
 denom = total_sales;
@@ -99,7 +107,7 @@ Run;
 data afford_cl17;
 set clusterafford;
 keep indicator year cluster2017 numerator denom equityvariable;
-indicator = "Percent homes sold at prices affordable at median income";
+indicator = "Percent homes sold at prices affordable at 2016 DC average hh income for people of color";
 year = "2017";
 numerator = AMI_first_afford;
 denom = total_sales;
@@ -114,7 +122,7 @@ run;
 data afford_city;
 set cityafford;
 keep indicator year city numerator denom equityvariable;
-indicator = "Percent homes sold at prices affordable at median income";
+indicator = "Percent homes sold at prices affordable at 2016 DC average hh income for people of color";
 year = "2017";
 numerator = AMI_first_afford;
 denom = total_sales;
@@ -273,7 +281,7 @@ set  abovepoverty childrenabovepoverty faminc75k unemployment income35k homeowne
 run; 
 
 proc export data=equity_tabs_&geosuf
-	outfile="&_dcdata_default_path.\Equity\Prog\JPMC feature\Equityfeaturetabs_&geosuf..csv"
+	outfile="&_dcdata_default_path.\Equity\Prog\JPMC feature\Equityfeaturetabs_updated_&geosuf..csv"
 	dbms=csv replace;
 	run;
 
@@ -304,7 +312,7 @@ data equity_tabs_cl17_suppress;
 			equityvariable=.; 
 		end;
 
-		if indicator="Percent homes sold at prices affordable at median income" and denom <10 then do;
+		if indicator="Percent homes sold at prices affordable at 2016 DC average hh income for people of color" and denom <10 then do;
 			numerator=.;
 			denom=.; 
 			equityvariable=.; 
@@ -320,6 +328,6 @@ format cluster2017 $clus17f. ;
 run;
 
 proc export data=equity_tabs_cl17_format
-outfile="&_dcdata_default_path.\Equity\Prog\JPMC feature\Equityfeaturetabs_cl17_format.csv"
+outfile="&_dcdata_default_path.\Equity\Prog\JPMC feature\Equityfeaturetabs_updated_cl17_format.csv"
 dbms=csv replace;
 run;
