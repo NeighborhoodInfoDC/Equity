@@ -158,6 +158,68 @@ numerator = pop25andoverwcollege_&_years.;
 run;
 */
 
+data percentblack;
+length indicator $80;
+set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
+keep indicator year &geo numerator denom equityvariable;
+indicator = "percent black";
+year = "2012-2016";
+pctblack =  popblacknonhispbridge_&_years. / popwithrace_&_years.;
+equityvariable = pctblack;
+denom = popwithrace_&_years.;
+numerator = popblacknonhispbridge_&_years.;
+run;
+
+
+data percentwhite;
+length indicator $80;
+set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
+keep indicator year &geo numerator denom equityvariable;
+indicator = "percent white";
+year = "2012-2016";
+pctwhite =  popwhitenonhispbridge_&_years. / popwithrace_&_years.;
+equityvariable = pctwhite;
+denom = popwithrace_&_years.;
+numerator = popwhitenonhispbridge_&_years.;
+run;
+
+data percentlatino;
+length indicator $80;
+set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
+keep indicator year &geo numerator denom equityvariable;
+indicator = "percent latino";
+year = "2012-2016";
+pctlatino =  pophisp_&_years. / popwithrace_&_years.;
+equityvariable = pctlatino;
+denom = popwithrace_&_years.;
+numerator = pophisp_&_years.;
+run;
+
+data percentaapi;
+length indicator $80;
+set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
+keep indicator year &geo numerator denom equityvariable;
+indicator = "percent Asian and Pacific Islander";
+year = "2012-2016";
+pctaapi =  popasianpinonhispbridge_&_years. / popwithrace_&_years.;
+equityvariable = pctaapi;
+denom = popwithrace_&_years.;
+numerator = popasianpinonhispbridge_&_years.;
+run;
+
+data percentotherrace;
+length indicator $80;
+set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
+keep indicator year &geo numerator denom equityvariable;
+indicator = "percent other or multiple race";
+year = "2012-2016";
+pctother = (popwithrace_&_years. - popblacknonhispbridge_&_years. - popwhitenonhispbridge_&_years. - pophisp_&_years.  - popasianpinonhispbridge_&_years. )/ popwithrace_&_years.;
+equityvariable = pctother;
+denom = popwithrace_&_years.;
+numerator = (popwithrace_&_years. - popblacknonhispbridge_&_years. - popwhitenonhispbridge_&_years. - pophisp_&_years.  - popasianpinonhispbridge_&_years.);
+run;
+
+
 data homeownership;
 length indicator $80;
 set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
@@ -277,7 +339,7 @@ run;
 
 data equity_tabs_&geosuf;
 retain indicator year &geo numerator denom equityvariable;
-set  abovepoverty childrenabovepoverty faminc75k unemployment income35k homeownership commute costburden violentcrime prenatal afford;
+set percentblack percentwhite percentlatino percentaapi percentotherrace abovepoverty childrenabovepoverty faminc75k unemployment income35k homeownership commute costburden violentcrime prenatal afford;
 run; 
 
 proc export data=equity_tabs_&geosuf
