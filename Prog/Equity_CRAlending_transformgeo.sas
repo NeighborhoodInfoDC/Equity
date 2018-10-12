@@ -100,7 +100,7 @@ outfile="&_dcdata_default_path.\Equity\Prog\JPMC feature\CRA_lending_wd12_format
 dbms=csv replace;
 run;
 
-proc export data=CRA_by_ward
+proc export data=CRA_by_city
 outfile="&_dcdata_default_path.\Equity\Prog\JPMC feature\CRA_lending_city_format.csv"
 dbms=csv replace;
 run;
