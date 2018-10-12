@@ -87,8 +87,9 @@ proc summary data=create_flags;
 
 data afford_wd12;
 set wardafford;
+length indicator $80;
 keep indicator year ward2012 numerator denom equityvariable;
-indicator = "Percent homes sold at prices affordable at 2016 DC average hh income for people of color";
+indicator = "Pct homes sold affordable at 2016 DC average hh income for people of color";
 year = "2017";
 numerator = AMI_first_afford;
 denom = total_sales;
@@ -106,8 +107,9 @@ Run;
  run;
 data afford_cl17;
 set clusterafford;
+length indicator $80;
 keep indicator year cluster2017 numerator denom equityvariable;
-indicator = "Percent homes sold at prices affordable at 2016 DC average hh income for people of color";
+indicator = "Pct homes sold affordable at 2016 DC average hh income for people of color";
 year = "2017";
 numerator = AMI_first_afford;
 denom = total_sales;
@@ -121,8 +123,9 @@ run;
  run;
 data afford_city;
 set cityafford;
+length indicator $80;
 keep indicator year city numerator denom equityvariable;
-indicator = "Percent homes sold at prices affordable at 2016 DC average hh income for people of color";
+indicator = "Pct homes sold affordable at 2016 DC average hh income for people of color";
 year = "2017";
 numerator = AMI_first_afford;
 denom = total_sales;
@@ -157,6 +160,18 @@ denom = pop25andoveryears_&_years.;
 numerator = pop25andoverwcollege_&_years.;
 run;
 */
+
+data totalpop;
+length indicator $80;
+set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
+keep indicator year &geo numerator denom equityvariable;
+indicator = "Total Population";
+year = "2012-2016";
+equityvariable = totpop_&_years.;
+denom = totpop_&_years.;
+numerator = totpop_&_years.;
+run;
+
 
 data percentblack;
 length indicator $80;
@@ -334,12 +349,11 @@ run;
 data afford;
 keep indicator year &geo numerator denom equityvariable;
 set afford_&geosuf;
-length indicator $80;
 run;
 
 data equity_tabs_&geosuf;
 retain indicator year &geo numerator denom equityvariable;
-set percentblack percentwhite percentlatino percentaapi percentotherrace abovepoverty childrenabovepoverty faminc75k unemployment income35k homeownership commute costburden violentcrime prenatal afford;
+set totalpop percentblack percentwhite percentlatino percentaapi percentotherrace abovepoverty childrenabovepoverty faminc75k unemployment income35k homeownership commute costburden violentcrime prenatal afford;
 run; 
 
 proc export data=equity_tabs_&geosuf
