@@ -89,8 +89,25 @@ calc_vars_labels=
 
 )
 
+data equity_educ_by_cl17_suppress;
+	set educ_by_cl17;
+
+		if cluster2017 in( "42" "45" "46") then do;
+           delete;
+		end;
+
+		if denom <10 then do;
+			denom=.;
+			numerator=.; 
+			equityvariable=.; 
+		end;
+
+		if cluster2017=" " then delete;
+		
+run;
+
 data equity_educ_by_cl17_format;
-set educ_by_cl17;
+set equity_educ_by_cl17_suppress;
 format cluster2017 $clus17f. ;
 run;
 

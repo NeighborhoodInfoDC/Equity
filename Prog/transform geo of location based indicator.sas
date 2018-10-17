@@ -87,14 +87,33 @@ calc_vars=
 calc_vars_labels=
 
 )
+data equity_location_by_cl17_suppress;
+	set pop_by_cl17;
+
+		if cluster2017 in( "42" "45" "46") then do;
+           delete;
+		end;
+
+		if Denominator <10 then do;
+			Grocery=.;
+			RetailBanks=.; 
+			CheckCashing=.; 
+			equity_grocery=.;
+			equity_banks=.; 
+			equity_checkcashing=.; 
+		end;
+
+		if cluster2017=" " then delete;
+		
+run;
 
 data equity_location_by_cl17_format;
-set pop_by_cl17;
+set equity_location_by_cl17_suppress;
 format cluster2017 $clus17f. ;
 run;
 
 proc export data=equity_location_by_cl17_format
-outfile="&_dcdata_default_path.\Equity\Prog\JPMC feature\Equityfeature_locations_cl17_format.csv"
+outfile="&_dcdata_default_path.\Equity\Prog\JPMC feature\Equityfeature_locations_cl17_format_suppress10.csv"
 dbms=csv replace;
 run;
 

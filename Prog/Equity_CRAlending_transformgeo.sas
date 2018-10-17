@@ -85,13 +85,31 @@ calc_vars_labels=
 
 )
 
+data equity_CRA_by_cl17_suppress;
+	set CRA_by_cl17;
+
+		if cluster2017 in( "42" "45" "46") then do;
+           delete;
+		end;
+
+		if SBemployees_total <10 then do;
+			SBemployees_total=.;
+			AvgAnnualAmt=.; 
+			CRAperEmp=.; 
+		end;
+
+		if cluster2017=" " then delete;
+		
+run;
+
+
 data equity_CRA_by_cl17_format;
-set CRA_by_cl17;
+set equity_CRA_by_cl17_suppress;
 format cluster2017 $clus17f. ;
 run;
 
 proc export data=equity_CRA_by_cl17_format
-outfile="&_dcdata_default_path.\Equity\Prog\JPMC feature\CRA_lending_cl17_format.csv"
+outfile="&_dcdata_default_path.\Equity\Prog\JPMC feature\CRA_lending_cl17_format_supppress10.csv"
 dbms=csv replace;
 run;
 

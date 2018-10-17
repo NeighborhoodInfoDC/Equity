@@ -377,9 +377,7 @@ data equity_tabs_cl17_suppress;
 	set equity_tabs_cl17;
 
 		if cluster2017 in( "42" "45" "46") then do;
-			numerator=.;
-			denom=.; 
-			equityvariable=.; 
+           delete;
 		end;
 
 		if indicator="Births with adequate prenatal care" and denom <=5 then do; 
@@ -388,7 +386,7 @@ data equity_tabs_cl17_suppress;
 			equityvariable=.; 
 		end;
 
-		if indicator="Percent homes sold at prices affordable at 2016 DC average hh income for people of color" and denom <10 then do;
+		if denom <10 then do;
 			numerator=.;
 			denom=.; 
 			equityvariable=.; 
@@ -404,6 +402,6 @@ format cluster2017 $clus17f. ;
 run;
 
 proc export data=equity_tabs_cl17_format
-outfile="&_dcdata_default_path.\Equity\Prog\JPMC feature\Equityfeaturetabs_updated_cl17_format.csv"
+outfile="&_dcdata_default_path.\Equity\Prog\JPMC feature\Equityfeaturetabs_updated_cl17_format_suppress10.csv"
 dbms=csv replace;
 run;
