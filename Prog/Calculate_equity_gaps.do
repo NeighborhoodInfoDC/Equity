@@ -1,15 +1,22 @@
+* Program: Calculate_equity_gaps
+* Created by: Yipeng Su
+* Last modified: 10/22/2018
+
 import excel using "L:\Libraries\Equity\Prog\JPMC feature\For stata.xlsx", firstrow
 
 drop GID
 
+*index is a simplified ID variable I created for each of the equity variables so we can reshape
 reshape wide numerator denom equityvariable, i(index) j(geo) string
 
 save "L:\Libraries\Equity\Prog\JPMC feature\Wide data.dta", replace
 
+*merge the wide file back to long file for calculating gaps
 import excel using "L:\Libraries\Equity\Prog\JPMC feature\For stata.xlsx", firstrow clear
 
 merge m:1 index using "L:\Libraries\Equity\Prog\JPMC feature\Wide data.dta"
 
+*calculate equity gap = (dealta equity var)*denominator of each geography of interest
 local geography DC Ward1 Ward2 Ward3 Ward4 Ward5 Ward6 Ward7 Ward8 Cluster1 Cluster2 Cluster3 Cluster4 Cluster5 Cluster6 ///
                 Cluster7 Cluster8 Cluster9 Cluster10 Cluster11 Cluster12 Cluster13 Cluster14 Cluster15 Cluster16 Cluster17 ///
 				Cluster18 Cluster19 Cluster20 Cluster21	Cluster22 Cluster23 Cluster24 Cluster25 Cluster26 Cluster27 Cluster28 Cluster29 ///
@@ -27,6 +34,8 @@ forvalues i= 1/22 {
 
 sort index GID
 
+
+*export the square shaped dataset
 levelsof index, local(indicatorvar)
 foreach var of local indicatorvar {
     preserve
