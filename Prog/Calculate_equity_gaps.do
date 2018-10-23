@@ -64,15 +64,42 @@ forvalues i= 1/22 {
 
 sort index GID
 
+
+
 **------------------------------------------------------------------------------
 * export the square shaped dataset
 **------------------------------------------------------------------------------
+
+gen nickname= "."
+replace nickname = "Pop" if index ==1
+replace nickname = "Black" if index==2
+replace nickname = "White" if index==3
+replace nickname = "Latino" if index==4
+replace nickname = "Asian" if index==5
+replace nickname = "Otherace" if index==6
+replace nickname = "AbovePov" if index==7
+replace nickname = "ChildAbovePov" if index==8
+replace nickname = "FamInc75K" if index==9
+replace nickname = "Unemployment" if index==10
+replace nickname = "Earning35K" if index==11
+replace nickname = "HomeOwnership" if index==12
+replace nickname = "Travelth45" if index==13
+replace nickname = "HousingBurden" if index==14
+replace nickname = "ViolentCrime" if index==15
+replace nickname = "AdePrenatal" if index==16
+replace nickname = "HomeSaleAffod" if index==17
+replace nickname = "AssociateDegree" if index==18
+replace nickname = "SBLending" if index==19
+replace nickname = "Grocery" if index==20
+replace nickname = "RetailBank" if index==21
+replace nickname = "PrematureDeath" if index==22
 
 levelsof index, local(indicatorvar)
 
 
 foreach var of local indicatorvar {
     preserve
+	levelsof nickname if index == `var', local(tabname)
     export excel indicator geo equityvariable GID DC_index`var' Ward1_index`var' Ward2_index`var' Ward3_index`var' Ward4_index`var' Ward5_index`var' ///
 	Ward6_index`var' Ward7_index`var' Ward8_index`var' Cluster1_index`var' Cluster2_index`var' Cluster3_index`var' Cluster4_index`var' Cluster5_index`var' Cluster6_index`var' ///
 	Cluster7_index`var' Cluster8_index`var' Cluster9_index`var' Cluster10_index`var' Cluster11_index`var' Cluster12_index`var' Cluster13_index`var' Cluster14_index`var' ///
@@ -81,7 +108,7 @@ foreach var of local indicatorvar {
 	Cluster31_index`var' Cluster32_index`var' Cluster33_index`var' Cluster34_index`var' Cluster35_index`var' Cluster36_index`var' Cluster37_index`var' Cluster38_index`var' ///
 	Cluster39_index`var' Cluster40_index`var' Cluster41_index`var' Cluster43_index`var' Cluster44_index`var' ///
 	using "L:\Libraries\Equity\Prog\JPMC feature\EquityGaps.xlsx" if index == `var', firstrow(variables) ///
-    sheet(`var') sheetreplace
+    sheet(`tabname') sheetreplace
 	restore
 }
 
