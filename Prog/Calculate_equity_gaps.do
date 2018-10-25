@@ -5,7 +5,7 @@
 **------------------------------------------------------------------------------
 * Directories & Locals
 **------------------------------------------------------------------------------
-local dodir "L:\Libraries\Equity\Prog\JPMC feature"
+local dodir "L:\Libraries\Equity\Prog"
 local project "JPMC Feature"
 local time : di %tcCCYYNNDD!_HHMMSS clock("`c(current_date)'`c(current_time)'","DMYhms")
 local date: display %td_CCYYNNDD date(c(current_date), "DMY")
@@ -13,25 +13,12 @@ local date: display %td_CCYYNNDD date(c(current_date), "DMY")
 **------------------------------------------------------------------------------
 * Create Log File
 **------------------------------------------------------------------------------
-global logthis "n" 	//change to "no" if no log file is desired
-global makecopy "n"   //change to "no" if copies of do files are desired
-cd "`dodir'"
-if "$makecopy"=="yes"{
-	copy `project'.do "`project'_`time'.do"
-}
-if "$logthis"=="yes"{
-	log using `project'_`time'.log, replace text
-	pwd
-	display "$S_DATE $S_TIME"
-}
-di "-------------------------"
-di "`c(username)' `c(current_date)'"
-di "`c(current_time)'"
-di "-------------------------"
+cd "L:\Libraries\Equity\Prog"
+log using "EquityGap $S_DATE.log", replace
 **------------------------------------------------------------------------------
 
 *this data is consolidated from the JPMC equity indicator data 
-import excel using "L:\Libraries\Equity\Data\Equtiy_data_for_stata.xlsx", firstrow
+import excel using "L:\Libraries\Equity\Prog\JPMC feature\Equity_data_for_stata.xlsx", firstrow
 
 *GID is a simplified ID for each of the geographies of interest, for sorting and manipulating the data the right order we want
 drop GID
@@ -42,7 +29,7 @@ reshape wide numerator denom equityvariable, i(index) j(geo) string
 save "L:\Libraries\Equity\Data\Wide data.dta", replace
 
 *merge the wide file back to long file for calculating gaps
-import excel using "L:\Libraries\Equity\Data\Equtiy_data_for_stata.xlsx", firstrow clear
+import excel using "L:\Libraries\Equity\Prog\JPMC feature\Equity_data_for_stata.xlsx", firstrow clear
 
 merge m:1 index using "L:\Libraries\Equity\Data\Wide data.dta"
 
