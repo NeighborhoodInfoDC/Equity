@@ -49,6 +49,17 @@ forvalues i= 1/22 {
 
 }
 
+foreach geo of local geography {
+	replace `geo'_index22 = (equityvariable`geo' - equityvariable)*denom/1000 
+
+}
+				
+foreach geo of local geography {
+replace `geo'_index15 = (equityvariable`geo' - equityvariable)*denom/1000 
+
+}
+				
+
 sort index GID
 
 
@@ -98,6 +109,7 @@ foreach var of local indicatorvar {
     sheet(`tabname') sheetreplace
 	restore
 }
+
 
 
 **------------------------------------------------------------------------------
