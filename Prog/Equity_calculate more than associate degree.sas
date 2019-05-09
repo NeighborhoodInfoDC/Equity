@@ -9,6 +9,7 @@
  
  Description:  calculate adults with at least an assocaite degree
 
+ Modifications: 05-19-19 YS Use &_years macro variable to replace 2012-16 hard coding and run for 2013-17. 
  **************************************************************************/
 
 %include "L:\SAS\Inc\StdLocal.sas";
@@ -18,13 +19,14 @@
 %DCData_lib( Equity )
 
 %let _years=2013_17;
+%let _years_lbl=2013-2017; 
 
 data associate_higher;
 length indicator $80;
 set ACS.Acs_sf_&_years._dc_tr10;
 keep indicator year geo2010 numerator denom;
 indicator = "adults with at least an associate degree";
-year = "2013-2017";
+year = "&_years_lbl";
 PctCol = (B15002e14 + B15002e15 + B15002e16 + B15002e17 + B15002e18 + B15002e31 + B15002e32 + B15002e33 + B15002e34 + B15002e35) / B15002e1;
 denom = B15002e1;
 numerator = (B15002e14 + B15002e15 + B15002e16 + B15002e17 + B15002e18 + B15002e31 + B15002e32 + B15002e33 + B15002e34 + B15002e35) ;
