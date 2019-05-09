@@ -6,7 +6,7 @@
  Created:  07/18/18
  Version:  SAS 9.4
  Environment:  Windows
- Last Edited: 9/12/18 by Yipeng Su
+ Last Edited: 5/9/19 by Yipeng Su
  Description:  Compile data for DC Equity Tool
 			   
 **************************************************************************/
@@ -20,7 +20,8 @@
 %DCData_lib( Realprop )
 %DCData_lib( Vital )
 
-%let _years=2012_16;
+%let _years=2013_17;
+
 data sales_res_year;
 set realprop.sales_res_clean;
 saleyear=year(saledate);
@@ -30,17 +31,17 @@ proc contents data=sales_res_year;
 run;
 
 data pop;
-set ACS.Acs_2012_16_dc_sum_tr_cl17;
-keep totpop_2012_16 cluster2017;
+set ACS.Acs_&_years._dc_sum_tr_cl17;
+keep totpop_&_years. cluster2017;
 run;
 
 data averageinc_nonwhite;
-set  ACS.Acs_2012_16_dc_sum_tr_city;
+set  ACS.Acs_&_years._dc_sum_tr_city;
 keep averageinc_nonwhite;
-averageinc_nonwhite= (agghshldincome_2012_16 - aggincomew_2012_16)/(numhshlds_2012_16 - numhshldsw_2012_16);
+averageinc_nonwhite= (agghshldincome_&_years. - aggincomew_&_years.)/(numhshlds_&_years. - numhshldsw_&_years.);
 run;
-*68362 for average hh income for people of color;
-
+*68362 for average hh income for people of color in 2016;
+*71224 for average hh income for people of color in 2017;
 
 data create_flags;
   set sales_res_year (where=(saleyear = 2017));
@@ -137,10 +138,10 @@ run;
 
 data unemployment;
 length indicator $80;
-set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
+set ACS.Acs_&_years._dc_sum_tr_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
 indicator = "unemployment";
-year = "2012-2016";
+year = "2013-2017";
 unemploymentrate = popunemployed_&_years./popincivlaborforce_&_years.;
 equityvariable = unemploymentrate;
 denom = popincivlaborforce_&_years.;
@@ -163,10 +164,10 @@ run;
 
 data totalpop;
 length indicator $80;
-set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
+set ACS.Acs_&_years._dc_sum_tr_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
 indicator = "Total Population";
-year = "2012-2016";
+year = "2013-2017";
 equityvariable = totpop_&_years.;
 denom = totpop_&_years.;
 numerator = totpop_&_years.;
@@ -175,10 +176,10 @@ run;
 
 data percentblack;
 length indicator $80;
-set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
+set ACS.Acs_&_years._dc_sum_tr_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
 indicator = "percent black";
-year = "2012-2016";
+year = "2013-2017";
 pctblack =  popblacknonhispbridge_&_years. / popwithrace_&_years.;
 equityvariable = pctblack;
 denom = popwithrace_&_years.;
@@ -188,10 +189,10 @@ run;
 
 data percentwhite;
 length indicator $80;
-set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
+set ACS.Acs_&_years._dc_sum_tr_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
 indicator = "percent white";
-year = "2012-2016";
+year = "2013-2017";
 pctwhite =  popwhitenonhispbridge_&_years. / popwithrace_&_years.;
 equityvariable = pctwhite;
 denom = popwithrace_&_years.;
@@ -200,10 +201,10 @@ run;
 
 data percentlatino;
 length indicator $80;
-set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
+set ACS.Acs_&_years._dc_sum_tr_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
 indicator = "percent latino";
-year = "2012-2016";
+year = "2013-2017";
 pctlatino =  pophisp_&_years. / popwithrace_&_years.;
 equityvariable = pctlatino;
 denom = popwithrace_&_years.;
@@ -212,10 +213,10 @@ run;
 
 data percentaapi;
 length indicator $80;
-set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
+set ACS.Acs_&_years._dc_sum_tr_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
 indicator = "percent Asian and Pacific Islander";
-year = "2012-2016";
+year = "2013-2017";
 pctaapi =  popasianpinonhispbridge_&_years. / popwithrace_&_years.;
 equityvariable = pctaapi;
 denom = popwithrace_&_years.;
@@ -224,10 +225,10 @@ run;
 
 data percentotherrace;
 length indicator $80;
-set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
+set ACS.Acs_&_years._dc_sum_tr_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
 indicator = "percent other or multiple race";
-year = "2012-2016";
+year = "2013-2017";
 pctother = (popwithrace_&_years. - popblacknonhispbridge_&_years. - popwhitenonhispbridge_&_years. - pophisp_&_years.  - popasianpinonhispbridge_&_years. )/ popwithrace_&_years.;
 equityvariable = pctother;
 denom = popwithrace_&_years.;
@@ -237,10 +238,10 @@ run;
 
 data homeownership;
 length indicator $80;
-set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
+set ACS.Acs_&_years._dc_sum_tr_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
 indicator = "homeownership";
-year = "2012-2016";
+year = "2013-2017";
 Tothousing= numowneroccupiedhsgunits_&_years.+ numrenteroccupiedhu_&_years.;
 ownership= numowneroccupiedhsgunits_&_years./ (numowneroccupiedhsgunits_&_years.+ numrenteroccupiedhu_&_years.);
 equityvariable = ownership;
@@ -250,10 +251,10 @@ run;
 
 data faminc75k;
 length indicator $80;
-set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
+set ACS.Acs_&_years._dc_sum_tr_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
 indicator = "Families with income over $75,000";
-year = "2012-2016";
+year = "2013-2017";
 pctfamover75K= (familyhhtot_&_years.- famincomelt75k_&_years.) /familyhhtot_&_years.; 
 equityvariable = pctfamover75K;
 denom = familyhhtot_&_years.; 
@@ -262,10 +263,10 @@ run;
 
 data abovepoverty;
 length indicator $80;
-set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
+set ACS.Acs_&_years._dc_sum_tr_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
 indicator = "Persons above federal poverty level";
-year = "2012-2016";
+year = "2013-2017";
 popabovepov= personspovertydefined_&_years. - poppoorpersons_&_years.;
 pctabovepov= popabovepov/personspovertydefined_&_years.;
 equityvariable = pctabovepov;
@@ -274,11 +275,11 @@ numerator = popabovepov;
 run;
 
 data income35k;
-set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
+set ACS.Acs_&_years._dc_sum_tr_&geosuf;
 length indicator $80;
 keep indicator year &geo numerator denom equityvariable;
 indicator = "Full time workers with annual earnings over $35,000";
-year = "2012-2016";
+year = "2013-2017";
 incomemt35k= popworkft_&_years.- popworkftlt35k_&_years.;
 pctmt35K= incomemt35k/popworkft_&_years.;
 equityvariable = pctmt35K;
@@ -288,10 +289,10 @@ run;
 
 data childrenabovepoverty;
 length indicator $80;
-set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
+set ACS.Acs_&_years._dc_sum_tr_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
 indicator = "Children under 18 above federal poverty level";
-year = "2012-2016";
+year = "2013-2017";
 pctchildabovepov = (childrenpovertydefined_&_years.-poppoorchildren_&_years.)/childrenpovertydefined_&_years.;
 equityvariable = pctchildabovepov;
 denom = childrenpovertydefined_&_years.;
@@ -300,10 +301,10 @@ run;
 
 data costburden;
 length indicator $80;
-set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
+set ACS.Acs_&_years._dc_sum_tr_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
 indicator = "Households with housing cost burden (paying 30% or higher)";
-year = "2012-2016";
+year = "2013-2017";
 pctcostburden = (numownercostburden_&_years.+ numrentercostburden_&_years.)/(rentcostburdendenom_&_years.+ ownercostburdendenom_&_years.);
 equityvariable = pctcostburden;
 denom = (rentcostburdendenom_&_years.+ ownercostburdendenom_&_years.);
@@ -312,10 +313,10 @@ run;
 
 data commute;
 length indicator $80;
-set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
+set ACS.Acs_&_years._dc_sum_tr_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
 indicator = "Workers with Travel time to work less than 45 minutes";
-year = "2012-2016";
+year = "2013-2017";
 commuteunder45 = (popemployedtravel_lt5_&_years. + popemployedtravel_10_14_&_years.+ popemployedtravel_15_19_&_years.+ popemployedtravel_20_24_&_years. + popemployedtravel_25_29_&_years. + popemployedtravel_30_34_&_years. + popemployedtravel_35_39_&_years. + popemployedtravel_40_44_&_years.)/popemployedworkers_&_years. ;
 equityvariable = commuteunder45;
 denom = popemployedworkers_&_years.;
@@ -333,6 +334,19 @@ equityvariable = violentcrimerate;
 denom = crime_rate_pop_2017;
 numerator = crimes_pt1_violent_2017;
 run;
+
+data broadbandaccess;
+length indicator $80;
+set ACS.Acs_&_years._dc_sum_tr_&geosuf;
+keep indicator year &geo numerator denom equityvariable;
+indicator = "Households with broadband internet access";
+year = "2013-2017";
+broadbandaccess = Numbroadband_&_years./Numhhdefined_&_years. ; 
+equityvariable = broadbandaccess;
+denom = Numhhdefined_&_years.;
+numerator = Numbroadband_&_years.;
+run;
+
 
 data prenatal;
 length indicator $80;
@@ -357,7 +371,7 @@ set totalpop percentblack percentwhite percentlatino percentaapi percentotherrac
 run; 
 
 proc export data=equity_tabs_&geosuf
-	outfile="&_dcdata_default_path.\Equity\Prog\JPMC feature\Equityfeaturetabs_updated_&geosuf..csv"
+	outfile="&_dcdata_default_path.\Equity\Prog\JPMC feature\Equityfeaturetabs_2019update_&geosuf..csv"
 	dbms=csv replace;
 	run;
 
@@ -370,8 +384,8 @@ proc export data=equity_tabs_&geosuf
 %Compile_equity_data (city, city);
 
 /*suppress clusters with less than 200 people or less than 200 housing units*/
-proc print data=ACS.Acs_2012_16_dc_sum_tr_cl17;
-var cluster2017 totpop_2012_16 numhsgunits_2012_16;
+proc print data=ACS.Acs_&_years._dc_sum_tr_cl17;
+var cluster2017 totpop_&_years. numhsgunits_&_years.;
 run;
 data equity_tabs_cl17_suppress;
 	set equity_tabs_cl17;
@@ -402,6 +416,6 @@ format cluster2017 $clus17f. ;
 run;
 
 proc export data=equity_tabs_cl17_format
-outfile="&_dcdata_default_path.\Equity\Prog\JPMC feature\Equityfeaturetabs_updated_cl17_format_suppress10.csv"
+outfile="&_dcdata_default_path.\Equity\Prog\JPMC feature\Equityfeaturetabs_2019update_cl17_format_suppress10.csv"
 dbms=csv replace;
 run;
