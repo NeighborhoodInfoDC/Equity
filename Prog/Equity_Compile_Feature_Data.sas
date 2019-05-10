@@ -133,10 +133,90 @@ denom = total_sales;
 equityvariable = AMI_first_afford/total_sales;
 geo= city;
 run;
+/*create base dataset for education attainment*/
+data associate_higher;
+length indicator $80;
+set ACS.Acs_sf_&_years._dc_tr10;
+keep indicator year geo2010 numerator denom;
+indicator = "adults with at least an associate degree";
+year = "&_years_lbl";
+PctCol = (B15002e14 + B15002e15 + B15002e16 + B15002e17 + B15002e18 + B15002e31 + B15002e32 + B15002e33 + B15002e34 + B15002e35) / B15002e1;
+denom = B15002e1;
+numerator = (B15002e14 + B15002e15 + B15002e16 + B15002e17 + B15002e18 + B15002e31 + B15002e32 + B15002e33 + B15002e34 + B15002e35) ;
+run;
+
+/*transform education attainment to different geographies*/
+%Transform_geo_data(
+keep_nonmatch=n,
+dat_ds_name=associate_higher,
+dat_org_geo=Geo2010,
+dat_count_vars= numerator denom,
+wgt_ds_name=general.Wt_tr10_cl17,
+wgt_org_geo=Geo2010,
+wgt_new_geo=cluster2017, 
+wgt_id_vars=,
+wgt_wgt_var=PopWt,
+out_ds_name=educ_cl17,
+out_ds_label=%str(Population by age group from tract 2010 to ward),
+calc_vars=
+      equityvariable=numerator/denom;
+,
+calc_vars_labels= "education attainment"
+
+);
+
+
+%Transform_geo_data(
+keep_nonmatch=n,
+dat_ds_name=associate_higher,
+dat_org_geo=Geo2010,
+dat_count_vars= numerator denom,
+wgt_ds_name=general.Wt_tr10_ward12,
+wgt_org_geo=Geo2010,
+wgt_new_geo=Ward2012, 
+wgt_id_vars=,
+wgt_wgt_var=PopWt,
+out_ds_name=educ_wd12,
+out_ds_label=%str(Population by age group from tract 2010 to ward),
+calc_vars=
+    equityvariable=numerator/denom;
+,
+calc_vars_labels=
+)
+
+%Transform_geo_data(
+keep_nonmatch=n,
+dat_ds_name=associate_higher,
+dat_org_geo=Geo2010,
+dat_count_vars= numerator denom,
+wgt_ds_name=general.Wt_tr10_city,
+wgt_org_geo=Geo2010,
+wgt_new_geo=city, 
+wgt_id_vars=,
+wgt_wgt_var=PopWt,
+out_ds_name=educ_city,
+out_ds_label=%str(Population by age group from tract 2010 to ward),
+calc_vars=
+    equityvariable=numerator/denom;
+,
+calc_vars_labels=
+
+)
+%macro createlabel (geosuf);
+data educ_&geosuf;
+set educ_&geosuf;
+indicator= "Percent population with at least an associate degree";
+year= "&_years_lbl";
+run;
+%mend createlabel;
+
+%createlabel (wd12);
+%createlabel (cl17);
+%createlabel (city);
 
 %macro Compile_equity_data (geo, geosuf);
 
-data unemployment;
+data unemployment_&geosuf;
 length indicator $80;
 set ACS.Acs_&_years._dc_sum_tr_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
@@ -148,21 +228,7 @@ denom = popincivlaborforce_&_years.;
 numerator = popunemployed_&_years.;
 run;
 
-/*  see the other program for calculating associate degree or higher
-data postsecondary;
-length indicator $80;
-set ACS.Acs_2012_16_dc_sum_tr_&geosuf;
-keep indicator year &geo numerator denom equityvariable;
-indicator = "adults with bachelors degree";
-year = "2012-2016";
-PctCol = pop25andoverwcollege_&_years. / pop25andoveryears_&_years.;
-equityvariable = PctCol;
-denom = pop25andoveryears_&_years.;
-numerator = pop25andoverwcollege_&_years.;
-run;
-*/
-
-data totalpop;
+data totalpop_&geosuf;
 length indicator $80;
 set ACS.Acs_&_years._dc_sum_tr_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
@@ -173,8 +239,7 @@ denom = totpop_&_years.;
 numerator = totpop_&_years.;
 run;
 
-
-data percentblack;
+data percentblack_&geosuf;
 length indicator $80;
 set ACS.Acs_&_years._dc_sum_tr_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
@@ -186,8 +251,7 @@ denom = popwithrace_&_years.;
 numerator = popblacknonhispbridge_&_years.;
 run;
 
-
-data percentwhite;
+data percentwhite_&geosuf;
 length indicator $80;
 set ACS.Acs_&_years._dc_sum_tr_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
@@ -199,7 +263,7 @@ denom = popwithrace_&_years.;
 numerator = popwhitenonhispbridge_&_years.;
 run;
 
-data percentlatino;
+data percentlatino_&geosuf;
 length indicator $80;
 set ACS.Acs_&_years._dc_sum_tr_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
@@ -211,7 +275,7 @@ denom = popwithrace_&_years.;
 numerator = pophisp_&_years.;
 run;
 
-data percentaapi;
+data percentaapi_&geosuf;
 length indicator $80;
 set ACS.Acs_&_years._dc_sum_tr_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
@@ -223,7 +287,7 @@ denom = popwithrace_&_years.;
 numerator = popasianpinonhispbridge_&_years.;
 run;
 
-data percentotherrace;
+data percentotherrace_&geosuf;
 length indicator $80;
 set ACS.Acs_&_years._dc_sum_tr_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
@@ -235,8 +299,7 @@ denom = popwithrace_&_years.;
 numerator = (popwithrace_&_years. - popblacknonhispbridge_&_years. - popwhitenonhispbridge_&_years. - pophisp_&_years.  - popasianpinonhispbridge_&_years.);
 run;
 
-
-data homeownership;
+data homeownership_&geosuf;
 length indicator $80;
 set ACS.Acs_&_years._dc_sum_tr_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
@@ -249,7 +312,7 @@ denom = Tothousing;
 numerator = numowneroccupiedhsgunits_&_years.;
 run;
 
-data faminc75k;
+data faminc75k_&geosuf;
 length indicator $80;
 set ACS.Acs_&_years._dc_sum_tr_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
@@ -261,7 +324,7 @@ denom = familyhhtot_&_years.;
 numerator = familyhhtot_&_years.- famincomelt75k_&_years.;
 run;
 
-data abovepoverty;
+data abovepoverty_&geosuf;
 length indicator $80;
 set ACS.Acs_&_years._dc_sum_tr_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
@@ -274,7 +337,7 @@ denom = personspovertydefined_&_years.;
 numerator = popabovepov;
 run;
 
-data income35k;
+data income35k_&geosuf;
 set ACS.Acs_&_years._dc_sum_tr_&geosuf;
 length indicator $80;
 keep indicator year &geo numerator denom equityvariable;
@@ -287,7 +350,7 @@ denom = popworkft_&_years.;
 numerator = incomemt35k;
 run;
 
-data childrenabovepoverty;
+data childrenabovepoverty_&geosuf;
 length indicator $80;
 set ACS.Acs_&_years._dc_sum_tr_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
@@ -299,7 +362,7 @@ denom = childrenpovertydefined_&_years.;
 numerator = (childrenpovertydefined_&_years.-poppoorchildren_&_years.);
 run;
 
-data costburden;
+data costburden_&geosuf;
 length indicator $80;
 set ACS.Acs_&_years._dc_sum_tr_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
@@ -311,7 +374,7 @@ denom = (rentcostburdendenom_&_years.+ ownercostburdendenom_&_years.);
 numerator = (numownercostburden_&_years.+ numrentercostburden_&_years. );
 run;
 
-data commute;
+data commute_&geosuf;
 length indicator $80;
 set ACS.Acs_&_years._dc_sum_tr_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
@@ -323,7 +386,7 @@ denom = popemployedworkers_&_years.;
 numerator = (popemployedtravel_lt5_&_years.+ popemployedtravel_10_14_&_years.+ popemployedtravel_15_19_&_years.+ popemployedtravel_20_24_&_years. + popemployedtravel_25_29_&_years. + popemployedtravel_30_34_&_years. + popemployedtravel_35_39_&_years. + popemployedtravel_40_44_&_years.);
 run;
 
-data violentcrime;
+data violentcrime_&geosuf;
 length indicator $80;
 set police.crimes_sum_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
@@ -335,7 +398,7 @@ denom = crime_rate_pop_2017;
 numerator = crimes_pt1_violent_2017;
 run;
 
-data broadbandaccess;
+data broadbandaccess_&geosuf;
 length indicator $80;
 set ACS.Acs_&_years._dc_sum_tr_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
@@ -347,8 +410,7 @@ denom = Numhhdefined_&_years.;
 numerator = Numbroadband_&_years.;
 run;
 
-
-data prenatal;
+data prenatal_&geosuf;
 length indicator $80;
 set vital.births_sum_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
@@ -360,44 +422,14 @@ denom = births_w_prenat_2016;
 numerator = births_prenat_adeq_2016;
 run;
 
-data afford;
+data afford_&geosuf;
 keep indicator year &geo numerator denom equityvariable;
 set afford_&geosuf;
 run;
 
-data associate_higher;
-length indicator $80;
-set ACS.Acs_sf_&_years._dc_tr10;
-keep indicator year geo2010 numerator denom;
-indicator = "adults with at least an associate degree";
-year = "&_years_lbl";
-PctCol = (B15002e14 + B15002e15 + B15002e16 + B15002e17 + B15002e18 + B15002e31 + B15002e32 + B15002e33 + B15002e34 + B15002e35) / B15002e1;
-denom = B15002e1;
-numerator = (B15002e14 + B15002e15 + B15002e16 + B15002e17 + B15002e18 + B15002e31 + B15002e32 + B15002e33 + B15002e34 + B15002e35) ;
-run;
-
-%Transform_geo_data(
-keep_nonmatch=n,
-dat_ds_name=associate_higher,
-dat_org_geo=Geo2010,
-dat_count_vars= numerator denom,
-wgt_ds_name=general.Wt_tr10_&geosuf,
-wgt_org_geo=Geo2010,
-wgt_new_geo=&geo, 
-wgt_id_vars=,
-wgt_wgt_var=PopWt,
-out_ds_name=educ,
-out_ds_label=%str(Population by age group from tract 2010 to &geo),
-calc_vars=
-      equityvariable=numerator/denom;
-,
-calc_vars_labels=
-
-);
-
 data equity_tabs_&geosuf;
 retain indicator year &geo numerator denom equityvariable;
-set totalpop percentblack percentwhite percentlatino percentaapi percentotherrace abovepoverty childrenabovepoverty faminc75k unemployment income35k homeownership commute  costburden violentcrime prenatal afford broadbandaccess educ;
+set totalpop_&geosuf percentblack_&geosuf percentwhite_&geosuf percentlatino_&geosuf percentaapi_&geosuf percentotherrace_&geosuf abovepoverty_&geosuf childrenabovepoverty_&geosuf faminc75k_&geosuf unemployment_&geosuf income35k_&geosuf homeownership_&geosuf commute_&geosuf costburden_&geosuf violentcrime_&geosuf prenatal_&geosuf afford_&geosuf broadbandaccess_&geosuf educ_&geosuf;
 run; 
 
 proc export data=equity_tabs_&geosuf
