@@ -161,7 +161,7 @@ out_ds_label=%str(Population by age group from tract 2010 to ward),
 calc_vars=
       equityvariable=numerator/denom;
 ,
-calc_vars_labels= "education attainment"
+calc_vars_labels=
 
 );
 
