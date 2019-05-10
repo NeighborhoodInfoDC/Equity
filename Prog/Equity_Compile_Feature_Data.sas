@@ -365,9 +365,39 @@ keep indicator year &geo numerator denom equityvariable;
 set afford_&geosuf;
 run;
 
+data associate_higher;
+length indicator $80;
+set ACS.Acs_sf_&_years._dc_tr10;
+keep indicator year geo2010 numerator denom;
+indicator = "adults with at least an associate degree";
+year = "&_years_lbl";
+PctCol = (B15002e14 + B15002e15 + B15002e16 + B15002e17 + B15002e18 + B15002e31 + B15002e32 + B15002e33 + B15002e34 + B15002e35) / B15002e1;
+denom = B15002e1;
+numerator = (B15002e14 + B15002e15 + B15002e16 + B15002e17 + B15002e18 + B15002e31 + B15002e32 + B15002e33 + B15002e34 + B15002e35) ;
+run;
+
+%Transform_geo_data(
+keep_nonmatch=n,
+dat_ds_name=associate_higher,
+dat_org_geo=Geo2010,
+dat_count_vars= numerator denom,
+wgt_ds_name=general.Wt_tr10_&geosuf,
+wgt_org_geo=Geo2010,
+wgt_new_geo=&geo, 
+wgt_id_vars=,
+wgt_wgt_var=PopWt,
+out_ds_name=educ,
+out_ds_label=%str(Population by age group from tract 2010 to &geo),
+calc_vars=
+      equityvariable=numerator/denom;
+,
+calc_vars_labels=
+
+);
+
 data equity_tabs_&geosuf;
 retain indicator year &geo numerator denom equityvariable;
-set totalpop percentblack percentwhite percentlatino percentaapi percentotherrace abovepoverty childrenabovepoverty faminc75k unemployment income35k homeownership commute  costburden violentcrime prenatal afford broadbandaccess;
+set totalpop percentblack percentwhite percentlatino percentaapi percentotherrace abovepoverty childrenabovepoverty faminc75k unemployment income35k homeownership commute  costburden violentcrime prenatal afford broadbandaccess educ;
 run; 
 
 proc export data=equity_tabs_&geosuf
