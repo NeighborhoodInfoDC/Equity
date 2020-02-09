@@ -12,6 +12,7 @@
  Modifications: 8/8/16 - SD wrote formulas for Equity indicators
  				7/29/17 - RP Updated for 2017 equity study to include indicators for Asian and mobility
 						  indicators. Also macro'd to run for council district and county in DC, MD and VA.
+				02/09/20 LH Update for 2014-18 ACS
 
  Note: MOEs for AIOM average household income and average adjusted are blank because they are suppressed by the Census.
  **************************************************************************/
@@ -23,11 +24,12 @@
 %DCData_lib( ACS )
 %DCData_lib( Equity )
 
-%let inc_dollar_yr=2016;
+%let inc_dollar_yr=2018;
 %let racelist=W B H A AIOM ;
 %let racename= NH-White Black-Alone Hispanic Asian All-Other ;
 
-%let _years=2012_16;
+%let _years=2014_18;
+%let revisions=New file.;
 
 /** Macro Add_Percents- Start Definition **/
 
@@ -710,7 +712,7 @@
 	label="DC Metro Area Equity Indicators by Race/Ethnicity, &_years.,DC &name.",
 	sortby=councildist,
 	restrictions=None,
-	revisions=Updated for revised tr10_regcd weights.
+	revisions=&revisions.
 	)
   %end;
 
@@ -722,7 +724,7 @@
 		label="DC Metro Area Equity Indicators by Race/Ethnicity, &_years., &st. &name.",
 		sortby=&geo.,
 		restrictions=None,
-		revisions=Updated for revised tr10_regcd weights.
+		revisions=&revisions.
 		)
 	%end; 
 
