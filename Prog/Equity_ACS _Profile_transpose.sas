@@ -12,6 +12,7 @@
  Modifications: RP July-2017: Updated to run for DC, Fairfax, Prince George's and
 			    Montgomery counties for 2017 equity study update. Removed AIOM variables
 			    from final transpose.  
+				02-09-2020 update for 2014-18 ACS
 **************************************************************************/
 /*options symbolgen;*/
 
@@ -24,7 +25,7 @@
 %let racelist=W B H A AIOM ;
 %let racename= NH-White Black-Alone Hispanic Asian All-Other ;
 
-%let _years=2012_16;
+%let _years=2014_18;
 
 
 %macro acs_profiles_county (county);
@@ -813,7 +814,7 @@ run;
 
 
 proc export data=profile_tabs_&_years._&ct._ACS
-	outfile="D:\DCDATA\Libraries\Equity\Prog\profile_tabs_&ct._ACS_&_years..csv"
+	outfile="&_dcdata_default_path.\Equity\Prog\profile_tabs_&ct._ACS_&_years..csv"
 	dbms=csv replace;
 	run;
 
