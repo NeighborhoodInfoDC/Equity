@@ -11,6 +11,7 @@
 
  Modifications: 9/23/17 LH Fixed macros that were referring to variables used in the district level analysis
 						   and created new regional ones.
+	 	2/09/20 LH Update for 2014-18 ACS and add &_years to run for various years.
  **************************************************************************/
 
 %include "L:\SAS\Inc\StdLocal.sas";
@@ -20,11 +21,11 @@
 %DCData_lib( Equity )
 
 
-%let inc_dollar_yr=2015;
+%let inc_dollar_yr=2018;
 %let racelist=W B H A AIOM ;
 %let racename= NH-White Black-Alone Hispanic Asian All-Other ;
 
-%let _years=2011_15;
+%let _years=2014_18;
 %let y_lbl = %sysfunc( translate( &_years., '-', '_' ) );
 
 
@@ -49,9 +50,9 @@ run;
 
 ** Combined county data **;
 data allcounty;
-	set equity.Profile_acs_dc_regcnt 
-		equity.Profile_acs_md_regcnt 
-		equity.Profile_acs_va_regcnt;
+	set equity.Profile_acs_&_years._dc_regcnt 
+		equity.Profile_acs_&_years._md_regcnt 
+		equity.Profile_acs_&_years._va_regcnt;
 	if county in ("11001","24031","24033","51510","51013","51610","51059","51600","51107","51153","51683","51685");
 	format county county.;
 
@@ -1013,36 +1014,36 @@ proc sort data = Profile_acs_region; by order; run;
 data donotroundunemp;
 	set Profile_acs_region_rounded (drop=PctUnemployed:);
 
-	%Pct_calc( var=PctUnemployed, label=Unemployment rate (%), num=PopUnemployed, den=PopInCivLaborForce, years=2011_15 )
+	%Pct_calc( var=PctUnemployed, label=Unemployment rate (%), num=PopUnemployed, den=PopInCivLaborForce, years=&_years. )
 
-		%Moe_prop_a( var=PctUnemployed_m_2011_15, mult=100, num=PopUnemployed_2011_15, den=PopInCivLaborForce_2011_15, 
-	                       num_moe=mPopUnemployed_2011_15, den_moe=mPopInCivLaborForce_2011_15, label_moe =Unemployment rate (%) MOE 2011-15);
+		%Moe_prop_a( var=PctUnemployed_m_&_years., mult=100, num=PopUnemployed_&_years., den=PopInCivLaborForce_&_years., 
+	                       num_moe=mPopUnemployed_&_years., den_moe=mPopInCivLaborForce_&_years., label_moe =Unemployment rate (%) MOE &y_lbl.);
 
 
-	%Pct_calc( var=PctUnemployedW, label=NH-White Unemployment rate (%), num=PopUnemployedW, den=PopInCivLaborForceW, years=2011_15 )
+	%Pct_calc( var=PctUnemployedW, label=NH-White Unemployment rate (%), num=PopUnemployedW, den=PopInCivLaborForceW, years=&_years. )
 
-		%Moe_prop_a( var=PctUnemployedW_m_2011_15, mult=100, num=PopUnemployedW_2011_15, den=PopInCivLaborForceW_2011_15, 
-	                       num_moe=mPopUnemployedW_2011_15, den_moe=mPopInCivLaborForceW_2011_15, label_moe =NH-White Unemployment rate (%) MOE 2011-15);
+		%Moe_prop_a( var=PctUnemployedW_m_&_years., mult=100, num=PopUnemployedW_&_years., den=PopInCivLaborForceW_&_years., 
+	                       num_moe=mPopUnemployedW_&_years., den_moe=mPopInCivLaborForceW_&_years., label_moe =NH-White Unemployment rate (%) MOE &y_lbl.);
 
-	%Pct_calc( var=PctUnemployedB, label=Black-Alone Unemployment rate (%), num=PopUnemployedB, den=PopInCivLaborForceB, years=2011_15 )
+	%Pct_calc( var=PctUnemployedB, label=Black-Alone Unemployment rate (%), num=PopUnemployedB, den=PopInCivLaborForceB, years=&_years. )
 
-		%Moe_prop_a( var=PctUnemployedB_m_2011_15, mult=100, num=PopUnemployedB_2011_15, den=PopInCivLaborForceB_2011_15, 
-	                       num_moe=mPopUnemployedB_2011_15, den_moe=mPopInCivLaborForceB_2011_15, label_moe =Black-Alone Unemployment rate (%) MOE 2011-15);
+		%Moe_prop_a( var=PctUnemployedB_m_&_years., mult=100, num=PopUnemployedB_&_years., den=PopInCivLaborForceB_&_years., 
+	                       num_moe=mPopUnemployedB_&_years., den_moe=mPopInCivLaborForceB_&_years., label_moe =Black-Alone Unemployment rate (%) MOE &y_lbl.);
 
-	%Pct_calc( var=PctUnemployedH, label=Hispanic Unemployment rate (%), num=PopUnemployedH, den=PopInCivLaborForceH, years=2011_15 )
+	%Pct_calc( var=PctUnemployedH, label=Hispanic Unemployment rate (%), num=PopUnemployedH, den=PopInCivLaborForceH, years=&_years. )
 
-		%Moe_prop_a( var=PctUnemployedH_m_2011_15, mult=100, num=PopUnemployedH_2011_15, den=PopInCivLaborForceH_2011_15, 
-	                       num_moe=mPopUnemployedH_2011_15, den_moe=mPopInCivLaborForceH_2011_15, label_moe =Hispanic Unemployment rate (%) MOE 2011-15);
+		%Moe_prop_a( var=PctUnemployedH_m_&_years., mult=100, num=PopUnemployedH_&_years., den=PopInCivLaborForceH_&_years., 
+	                       num_moe=mPopUnemployedH_&_years., den_moe=mPopInCivLaborForceH_&_years., label_moe =Hispanic Unemployment rate (%) MOE &y_lbl.);
 
-	%Pct_calc( var=PctUnemployedA, label=Asian Unemployment rate (%), num=PopUnemployedA, den=PopInCivLaborForceA, years=2011_15 )
+	%Pct_calc( var=PctUnemployedA, label=Asian Unemployment rate (%), num=PopUnemployedA, den=PopInCivLaborForceA, years=&_years. )
 
-		%Moe_prop_a( var=PctUnemployedA_m_2011_15, mult=100, num=PopUnemployedA_2011_15, den=PopInCivLaborForceA_2011_15, 
-	                       num_moe=mPopUnemployedA_2011_15, den_moe=mPopInCivLaborForceA_2011_15, label_moe =Asian Unemployment rate (%) MOE 2011-15);
+		%Moe_prop_a( var=PctUnemployedA_m_&_years., mult=100, num=PopUnemployedA_&_years., den=PopInCivLaborForceA_&_years., 
+	                       num_moe=mPopUnemployedA_&_years., den_moe=mPopInCivLaborForceA_&_years., label_moe =Asian Unemployment rate (%) MOE &y_lbl.);
 
-	%Pct_calc( var=PctUnemployedAIOM, label=All-Other Unemployment rate (%), num=PopUnemployedAIOM, den=PopInCivLaborForceAIOM, years=2011_15 )
+	%Pct_calc( var=PctUnemployedAIOM, label=All-Other Unemployment rate (%), num=PopUnemployedAIOM, den=PopInCivLaborForceAIOM, years=&_years. )
 
-		%Moe_prop_a( var=PctUnemployedAIOM_m_2011_15, mult=100, num=PopUnemployedAIOM_2011_15, den=PopInCivLaborForceAIOM_2011_15, 
-	                       num_moe=mPopUnemployedAIOM_2011_15, den_moe=mPopInCivLaborForceAIOM_2011_15, label_moe =All-Other Unemployment rate (%) MOE 2011-15);
+		%Moe_prop_a( var=PctUnemployedAIOM_m_&_years., mult=100, num=PopUnemployedAIOM_&_years., den=PopInCivLaborForceAIOM_&_years., 
+	                       num_moe=mPopUnemployedAIOM_&_years., den_moe=mPopInCivLaborForceAIOM_&_years., label_moe =All-Other Unemployment rate (%) MOE &y_lbl.);
 run;
 
 ** Transpose for final output **;
@@ -1287,7 +1288,7 @@ run;
 
 ** Export final file **;
 proc export data=profile_tabs_region
-	outfile="D:\DCDATA\Libraries\Equity\Prog\profile_tabs_region_acs_2011_15.csv"
+	outfile="&_dcdata_default_path.\Equity\Prog\profile_tabs_region_acs_&_years..csv"
 	dbms=csv replace;
 	run;
 
