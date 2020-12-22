@@ -31,6 +31,9 @@
 
 %macro acs_profiles_county (county);
 
+options mprint=n; 
+
+
 %let cnty = %upcase(&county.);
 
 %if &cnty = DC %then %do;
@@ -813,6 +816,7 @@ proc transpose data=profile_tabs_ACS_rounded_&ct. out=profile_tabs_&_years._&ct.
 	id councildist; 
 run; 
 
+options mprint=y; 
 
 proc export data=profile_tabs_&_years._&ct._ACS
 	outfile="&_dcdata_default_path.\Equity\Prog\profile_tabs_&ct._ACS_&_years..csv"
