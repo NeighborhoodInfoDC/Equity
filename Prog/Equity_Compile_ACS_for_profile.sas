@@ -13,22 +13,23 @@
  				7/29/17 - RP Updated for 2017 equity study to include indicators for Asian and mobility
 						  indicators. Also macro'd to run for council district and county in DC, MD and VA.
 				02/09/20 LH Update for 2014-18 ACS
+				12/22/20 LH Update for 2015-19 ACS and update header to \\sas1\
 
  Note: MOEs for AIOM average household income and average adjusted are blank because they are suppressed by the Census.
  **************************************************************************/
 
 
-%include "L:\SAS\Inc\StdLocal.sas";
+%include "\\sas1\DCDATA\SAS\Inc\StdLocal.sas";
 
 ** Define libraries **;
 %DCData_lib( ACS )
 %DCData_lib( Equity )
 
-%let inc_dollar_yr=2018;
+%let inc_dollar_yr=2019;
 %let racelist=W B H A AIOM ;
 %let racename= NH-White Black-Alone Hispanic Asian All-Other ;
 
-%let _years=2014_18;
+%let _years=2015_19;
 %let revisions=New file.;
 
 /** Macro Add_Percents- Start Definition **/
