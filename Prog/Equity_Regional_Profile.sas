@@ -12,20 +12,21 @@
  Modifications: 9/23/17 LH Fixed macros that were referring to variables used in the district level analysis
 						   and created new regional ones.
 	 	2/09/20 LH Update for 2014-18 ACS and add &_years to run for various years.
+		12/22/20 LH Update for 2015-19 ACS and \\sas1\
  **************************************************************************/
 
-%include "L:\SAS\Inc\StdLocal.sas";
+%include "\\sas1\DCDATA\SAS\Inc\StdLocal.sas";
 
 ** Define libraries **;
 %DCData_lib( ACS )
 %DCData_lib( Equity )
 
 
-%let inc_dollar_yr=2018;
+%let inc_dollar_yr=2019;
 %let racelist=W B H A AIOM ;
 %let racename= NH-White Black-Alone Hispanic Asian All-Other ;
 
-%let _years=2014_18;
+%let _years=2015_19;
 %let y_lbl = %sysfunc( translate( &_years., '-', '_' ) );
 
 

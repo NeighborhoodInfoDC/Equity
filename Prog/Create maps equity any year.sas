@@ -10,15 +10,16 @@
  Description:  Use for equity maps. Creates file for race by tract. 
 
  Modifications: 02/15/2020 LH Update to add &_years. macro var.
+				12/22/2020 LH Update for \\sas1\
 
 **************************************************************************/
-%include "L:\SAS\Inc\StdLocal.sas";
+%include "\\sas1\DCDATA\SAS\Inc\StdLocal.sas";
 
 ** Define libraries **;
 %DCDATA_lib (Equity);
 %DCDATA_lib (ACS);
 
-%let _years=2014_18;
+%let _years=2015_19;
 
 *data by tract prog from L:\Libraries\Equity\Prog\Calculate_assessed_value.sas (%macro acs_precents);
 
