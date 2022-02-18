@@ -14,6 +14,7 @@
 						  indicators. Also macro'd to run for council district and county in DC, MD and VA.
 				02/09/20 LH Update for 2014-18 ACS
 				12/22/20 LH Update for 2015-19 ACS and update header to \\sas1\
+				02/18/22 LH Update to break out IOM for all indicators
 
  Note: MOEs for AIOM average household income and average adjusted are blank because they are suppressed by the Census.
  **************************************************************************/
@@ -26,11 +27,13 @@
 %DCData_lib( Equity )
 
 %let inc_dollar_yr=2019;
-%let racelist=W B H A AIOM ;
-%let racename= NH-White Black-Alone Hispanic Asian All-Other ;
+%let racelist=W B H A IOM AIOM ;
+%let racename= NH-White Black-Alone Hispanic Asian-PI Indigenous-Other-Multi All-Other ; 
+*all-other is all other than NHWhite, Black, Hispanic; 
+*all races except NH white, hispanic, and multiple race are race alone. ;
 
 %let _years=2015_19;
-%let revisions=New file.;
+%let revisions=Add IOM for all indicators and update race labels.;
 
 /** Macro Add_Percents- Start Definition **/
 
@@ -201,7 +204,7 @@
     %Moe_prop_a( var=PctForeignBornW_m_&_years., mult=100, num=PopForeignBornW_&_years., den=PopWhiteNonHispBridge_&_years., 
                        num_moe=mPopForeignBornW_&_years., den_moe=mPopWhiteNonHispBridge_&_years., label_moe = % foreign born NH-White MOE &y_lbl.);
 
-	%do r=2 %to 5;
+	%do r=2 %to 6;
 
 		%let race=%scan(&racelist.,&r.," ");
 		%let rname=%scan(&racename.,&r.," ");
@@ -293,7 +296,7 @@
                        num_moe=mPopAloneM_&_years., den_moe=mPopWithRace_&_years., label_moe =% Multiracial alone MOE &y_lbl.);
 
 	%Moe_prop_a( var=PctAloneIOM_m_&_years., mult=100, num=PopAloneIOM_&_years., den=PopWithRace_&_years., 
-                       num_moe=mPopAloneIOM_&_years., den_moe=mPopWithRace_&_years., label_moe =% Indigienous-other-multi-alone MOE &y_lbl.);
+                       num_moe=mPopAloneIOM_&_years., den_moe=mPopWithRace_&_years., label_moe =% Indigenous-other-multi-alone MOE &y_lbl.);
 
 	%Moe_prop_a( var=PctAloneAIOM_m_&_years., mult=100, num=PopAloneAIOM_&_years., den=PopWithRace_&_years., 
                        num_moe=mPopAloneAIOM_&_years., den_moe=mPopWithRace_&_years., label_moe =% All other than Black-White-Hispanic MOE &y_lbl.);
@@ -310,7 +313,8 @@
 	%Pct_calc( var=PctPoorPersonsB, label=Poverty rate Black-Alone (%), num=PopPoorPersonsB, den=PersonsPovertyDefinedB, years=&_years. )
 	%Pct_calc( var=PctPoorPersonsW, label=Poverty rate NH-White (%), num=PopPoorPersonsW, den=PersonsPovertyDefinedW, years=&_years. )
 	%Pct_calc( var=PctPoorPersonsH, label=Poverty rate Hispanic(%), num=PopPoorPersonsH, den=PersonsPovertyDefinedH, years=&_years. )
-    %Pct_calc( var=PctPoorPersonsA, label=Poverty rate Asian(%), num=PopPoorPersonsA, den=PersonsPovertyDefinedA, years=&_years. )
+    %Pct_calc( var=PctPoorPersonsA, label=Poverty rate Asian-Pacific Islander(%), num=PopPoorPersonsA, den=PersonsPovertyDefinedA, years=&_years. )
+	%Pct_calc( var=PctPoorPersonsIOM, label=Poverty rate Indigenous-Other-Multi race(%), num=PopPoorPersonsIOM, den=PersonsPovertyDefIOM, years=&_years. )
 	%Pct_calc( var=PctPoorPersonsAIOM, label=Poverty rate All-Other(%), num=PopPoorPersonsAIOM, den=PersonsPovertyDefAIOM, years=&_years. )
 	%Pct_calc( var=PctPoorPersonsFB, label=Poverty rate foreign born (%), num=PopPoorPersonsFB, den=PersonsPovertyDefinedFB, years=&_years. )
     
@@ -327,7 +331,10 @@
                        num_moe=mPopPoorPersonsH_&_years., den_moe=mPersonsPovertyDefinedH_&_years., label_moe =Poverty rate Hispanic(%) MOE &y_lbl.);
 
     %Moe_prop_a( var=PctPoorPersonsA_m_&_years., mult=100, num=PopPoorPersonsA_&_years., den=PersonsPovertyDefinedA_&_years., 
-                       num_moe=mPopPoorPersonsA_&_years., den_moe=mPersonsPovertyDefinedA_&_years., label_moe =Poverty rate Asian(%) MOE &y_lbl.);
+                       num_moe=mPopPoorPersonsA_&_years., den_moe=mPersonsPovertyDefinedA_&_years., label_moe =Poverty rate Asian-Pacific Islander(%) MOE &y_lbl.);
+
+	%Moe_prop_a( var=PctPoorPersonsIOM_m_&_years., mult=100, num=PopPoorPersonsIOM_&_years., den=PersonsPovertyDefIOM_&_years., 
+                       num_moe=mPopPoorPersonsIOM_&_years., den_moe=mPersonsPovertyDefIOM_&_years., label_moe =Poverty rate Indigenous-Other-Multi race(%) MOE &y_lbl.);
 
 	%Moe_prop_a( var=PctPoorPersonsAIOM_m_&_years., mult=100, num=PopPoorPersonsAIOM_&_years., den=PersonsPovertyDefAIOM_&_years., 
                        num_moe=mPopPoorPersonsAIOM_&_years., den_moe=mPersonsPovertyDefAIOM_&_years., label_moe =Poverty rate All-Other(%) MOE &y_lbl.);
@@ -395,7 +402,7 @@
 	%Moe_prop_a( var=PctEmployedProd_m_&_years., mult=100, num=PopEmployedProd_&_years., den=PopEmployedByOcc_&_years., 
                        num_moe=mPopEmployedProd_&_years., den_moe=mPopEmployedByOcc_&_years., label_moe =% persons employed in production transportation and material moving occupations MOE &y_lbl.);
 
-	%do r=1 %to 5;
+	%do r=1 %to 6;
 
 		%let race=%scan(&racelist.,&r.," ");
 		%let rname=%scan(&racename.,&r.," ");
@@ -463,7 +470,7 @@
 	%end;
 
 
-	%do r=1 %to 5;
+	%do r=1 %to 6;
 
 		%let race=%scan(&racelist.,&r.," ");
 		%let rname=%scan(&racename.,&r.," ");
@@ -536,9 +543,10 @@
     %Pct_calc( var=PctPoorChildren, label=% children in poverty, num=PopPoorChildren, den=ChildrenPovertyDefined, years=&_years. )
 		%Pct_calc( var=PctPoorChildrenB, label=% children Black-Alone in poverty, num=PopPoorChildrenB, den=ChildrenPovertyDefinedB, years=&_years. )
 		%Pct_calc( var=PctPoorChildrenW, label=% children NH-White in poverty, num=PopPoorChildrenW, den=ChildrenPovertyDefinedW, years=&_years. )
-		%Pct_calc( var=PctPoorChildrenA, label=% children Asian in poverty, num=PopPoorChildrenA, den=ChildrenPovertyDefinedA, years=&_years. )
+		%Pct_calc( var=PctPoorChildrenA, label=% children Asian-Pacific Islander in poverty, num=PopPoorChildrenA, den=ChildrenPovertyDefinedA, years=&_years. )
 		%Pct_calc( var=PctPoorChildrenH, label=% children Hispanic in poverty, num=PopPoorChildrenH, den=ChildrenPovertyDefinedH, years=&_years. )		
-	    %Pct_calc( var=PctPoorChildrenAIOM, label=% children All-Other in poverty, num=PopPoorChildrenAIOM, den=ChildrenPovertyDefAIOM, years=&_years. )
+	    %Pct_calc( var=PctPoorChildrenIOM, label=% children Indigenous-Other-Multi race in poverty, num=PopPoorChildrenIOM, den=ChildrenPovertyDefIOM, years=&_years. )
+		 %Pct_calc( var=PctPoorChildrenAIOM, label=% children All-Other in poverty, num=PopPoorChildrenAIOM, den=ChildrenPovertyDefAIOM, years=&_years. )
 
     %Moe_prop_a( var=PctPoorChildren_m_&_years., mult=100, num=PopPoorChildren_&_years., den=ChildrenPovertyDefined_&_years., 
                        num_moe=mPopPoorChildren_&_years., den_moe=mChildrenPovertyDefined_&_years., label_moe =% children in poverty MOE &y_lbl.);
@@ -550,11 +558,13 @@
 	                       num_moe=mPopPoorChildrenW_&_years., den_moe=mChildrenPovertyDefinedW_&_years., label_moe =% children NH-White in poverty MOE &y_lbl.);
 
 	    %Moe_prop_a( var=PctPoorChildrenH_m_&_years., mult=100, num=PopPoorChildrenH_&_years., den=ChildrenPovertyDefinedH_&_years., 
-	                       num_moe=mPopPoorChildrenH_&_years., den_moe=mChildrenPovertyDefinedH_&_years., label_moe =% children Asian in poverty MOE &y_lbl.);
+	                       num_moe=mPopPoorChildrenH_&_years., den_moe=mChildrenPovertyDefinedH_&_years., label_moe =% children Hispanic in poverty MOE &y_lbl.);
 
 	    %Moe_prop_a( var=PctPoorChildrenA_m_&_years., mult=100, num=PopPoorChildrenA_&_years., den=ChildrenPovertyDefinedA_&_years., 
-	                       num_moe=mPopPoorChildrenA_&_years., den_moe=mChildrenPovertyDefinedA_&_years., label_moe =% children Hispanic in poverty MOE &y_lbl.);
+	                       num_moe=mPopPoorChildrenA_&_years., den_moe=mChildrenPovertyDefinedA_&_years., label_moe =% children Asian-Pacific Islander in poverty MOE &y_lbl.);
 
+		%Moe_prop_a( var=PctPoorChildrenIOM_m_&_years., mult=100, num=PopPoorChildrenIOM_&_years., den=ChildrenPovertyDefIOM_&_years., 
+	                       num_moe=mPopPoorChildrenIOM_&_years., den_moe=mChildrenPovertyDefIOM_&_years., label_moe =% children Indigenous-Other-Multi race in poverty MOE &y_lbl.);
 		%Moe_prop_a( var=PctPoorChildrenAIOM_m_&_years., mult=100, num=PopPoorChildrenAIOM_&_years., den=ChildrenPovertyDefAIOM_&_years., 
 	                       num_moe=mPopPoorChildrenAIOM_&_years., den_moe=mChildrenPovertyDefAIOM_&_years., label_moe =% children All-Other in poverty MOE &y_lbl.);
 
@@ -581,7 +591,7 @@
                         
     %dollar_convert( AvgHshldIncome_m_&_years., AvgHshldIncAdj_m_&_years., 2015, &inc_dollar_yr )
 
-	%do r=1 %to 5;
+	%do r=1 %to 6;
 
 		%let race=%scan(&racelist.,&r.," ");
 		%let rname=%scan(&racename.,&r.," ");
@@ -617,17 +627,19 @@
 	  AvgHshldIncAdjW_m_&_years. = "Average household income (adjusted), Non-Hispanic White MOE, &y_lbl."
 	  AvgHshldIncAdjH_&_years. = "Average household income (adjusted), Hispanic/Latino, &y_lbl."
 	  AvgHshldIncAdjH_m_&_years. = "Average household income (adjusted), Hispanic/Latino MOE, &y_lbl."
-	  AvgHshldIncAdjA_&_years. = "Average household income (adjusted), Asian, &y_lbl."
-	  AvgHshldIncAdjA_m_&_years. = "Average household income (adjusted), Asian MOE, &y_lbl."
-	  AvgHshldIncAdjAIOM_&_years. = "Average household income (adjusted), All remaining groups other than Black, Non-Hispanic White, Asian, Hispanic, &y_lbl."
-	  AvgHshldIncAdjAIOM_m_&_years. = "Average household income (adjusted), All remaining groups other than Black, Non-Hispanic White, Asian MOE, Hispanic, &y_lbl."
+	  AvgHshldIncAdjA_&_years. = "Average household income (adjusted), Asian-Pacific Islander, &y_lbl."
+	  AvgHshldIncAdjA_m_&_years. = "Average household income (adjusted), Asian-Pacific Islander MOE, &y_lbl."
+	  AvgHshldIncAdjIOM_&_years. = "Average household income (adjusted), Indigenous-Other-Multi race MOE, &y_lbl."
+	  AvgHshldIncAdjIOM_m_&_years. = "Average household income (adjusted), Indigenous-Other-Multi race MOE, &y_lbl."
+	  AvgHshldIncAdjAIOM_&_years. = "Average household income (adjusted), All remaining groups other than Black, Non-Hispanic White, Hispanic, &y_lbl."
+	  AvgHshldIncAdjAIOM_m_&_years. = "Average household income (adjusted), All remaining groups other than Black, Non-Hispanic White, Hispanic MOE, &y_lbl."
 	  AvgHshldIncome_m_&_years. = "Average household income, MOE, &y_lbl."
 	  AvgHshldIncomeB_m_&_years. = "Average household income, Black/African American, MOE, &y_lbl."
 	  AvgHshldIncomeW_m_&_years. = "Average household income, Non-Hispanic White, MOE, &y_lbl."
 	  AvgHshldIncomeH_m_&_years. = "Average household income, Hispanic/Latino, MOE, &y_lbl."
-	  AvgHshldIncomeA_m_&_years. = "Average household income, Asian, MOE, &y_lbl."
-	  AvgHshldIncomeAIOM_m_&_years. = "Average household income, All remaining groups other than Black, Non-Hispanic White, Hispanic, MOE, &y_lbl."
-      ;
+	  AvgHshldIncomeA_m_&_years. = "Average household income, Asian-Pacific Islander, MOE, &y_lbl."
+	  AvgHshldIncomeIOM_m_&_years. = "Average household income, Indigenous-Other-Multi race, MOE, &y_lbl."
+      AvgHshldIncomeAIOM_m_&_years. = "Average household income, All remaining groups other than Black, Non-Hispanic White, Hispanic, MOE, &y_lbl.";
 
         
 
@@ -645,7 +657,7 @@
     %Moe_prop_a( var=PctOwnerOccupiedHU_m_&_years., mult=100, num=NumOwnerOccupiedHU_&_years., den=NumOccupiedHsgUnits_&_years., 
                        num_moe=mNumOwnerOccupiedHU_&_years., den_moe=mNumOccupiedHsgUnits_&_years., label_moe =Homeownership rate (%) MOE &y_lbl.);
 
-	%do r=1 %to 5;
+	%do r=1 %to 6;
 
 		%let race=%scan(&racelist.,&r.," ");
 		%let rname=%scan(&racename.,&r.," ");
@@ -670,7 +682,7 @@
 	%Moe_prop_a( var=PctMovedDiffCnty_m_&_years., mult=100, num=PopMovedDiffCnty_&_years., den=PopWithRace_&_years., 
                        num_moe=mPopMovedDiffCnty_&_years., den_moe=mPopWithRace_&_years., label_moe =% persons who moved from a different couny in the last year MOE &y_lbl.);
 
-	%do r=1 %to 5;
+	%do r=1 %to 6;
 
 		%let race=%scan(&racelist.,&r.," ");
 		%let rname=%scan(&racename.,&r.," ");
