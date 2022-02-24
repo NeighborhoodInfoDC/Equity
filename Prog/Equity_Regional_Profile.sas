@@ -13,6 +13,7 @@
 						   and created new regional ones.
 	 	2/09/20 LH Update for 2014-18 ACS and add &_years to run for various years.
 		12/22/20 LH Update for 2015-19 ACS and \\sas1\
+		02/24/22 LH Update to add IOM indicators
  **************************************************************************/
 
 %include "\\sas1\DCDATA\SAS\Inc\StdLocal.sas";
@@ -23,8 +24,10 @@
 
 
 %let inc_dollar_yr=2019;
-%let racelist=W B H A AIOM ;
-%let racename= NH-White Black-Alone Hispanic Asian All-Other ;
+%let racelist=W B H A IOM AIOM ;
+%let racename= NH-White Black-Alone Hispanic Asian-PI Indigenous-Other-Multi All-Other ;
+*all-other is all other than NHWhite, Black, Hispanic; 
+*all races except NH white, hispanic, and multiple race are race alone. ;
 
 %let _years=2015_19;
 %let y_lbl = %sysfunc( translate( &_years., '-', '_' ) );
@@ -66,6 +69,7 @@ data allcounty;
 	Gap25andOverWoutHSW_&_years.=Pct25andOverWoutHSW_&_years./100*Pop25andOverYearsW_&_years.-Pop25andOverWoutHSW_&_years.;
 	Gap25andOverWoutHSH_&_years.=Pct25andOverWoutHSW_&_years./100*Pop25andOverYearsH_&_years.-Pop25andOverWoutHSH_&_years.;
 	Gap25andOverWoutHSA_&_years.=Pct25andOverWoutHSW_&_years./100*Pop25andOverYearsA_&_years.-Pop25andOverWoutHSA_&_years.;
+	Gap25andOverWoutHSIOM_&_years.=Pct25andOverWoutHSW_&_years./100*Pop25andOverYearsIOM_&_years.-Pop25andOverWoutHSIOM_&_years.;
 	Gap25andOverWoutHSAIOM_&_years.=Pct25andOverWoutHSW_&_years./100*Pop25andOverYearsAIOM_&_years.-Pop25andOverWoutHSAIOM_&_years.;
 	Gap25andOverWoutHSFB_&_years.=Pct25andOverWoutHSW_&_years./100*Pop25andOverYearsFB_&_years.-Pop25andOverWoutHSFB_&_years.;
 	Gap25andOverWoutHSNB_&_years.=Pct25andOverWoutHSW_&_years./100*Pop25andOverYearsNB_&_years.-Pop25andOverWoutHSNB_&_years.;
@@ -74,6 +78,7 @@ data allcounty;
 	Gap25andOverWHSW_&_years.=Pct25andOverWHSW_&_years./100*Pop25andOverYearsW_&_years.-Pop25andOverWHSW_&_years.;
 	Gap25andOverWHSH_&_years.=Pct25andOverWHSW_&_years./100*Pop25andOverYearsH_&_years.-Pop25andOverWHSH_&_years.;
 	Gap25andOverWHSA_&_years.=Pct25andOverWHSW_&_years./100*Pop25andOverYearsA_&_years.-Pop25andOverWHSA_&_years.;
+	Gap25andOverWHSIOM_&_years.=Pct25andOverWHSW_&_years./100*Pop25andOverYearsIOM_&_years.-Pop25andOverWHSIOM_&_years.;
 	Gap25andOverWHSAIOM_&_years.=Pct25andOverWHSW_&_years./100*Pop25andOverYearsAIOM_&_years.-Pop25andOverWHSAIOM_&_years.;
 	Gap25andOverWHSFB_&_years.=Pct25andOverWHSW_&_years./100*Pop25andOverYearsFB_&_years.-Pop25andOverWHSFB_&_years.;
 	Gap25andOverWHSNB_&_years.=Pct25andOverWHSW_&_years./100*Pop25andOverYearsNB_&_years.-Pop25andOverWHSNB_&_years.;
@@ -82,6 +87,7 @@ data allcounty;
 	Gap25andOverWSCW_&_years.=Pct25andOverWSCW_&_years./100*Pop25andOverYearsW_&_years.-Pop25andOverWSCW_&_years.;
 	Gap25andOverWSCH_&_years.=Pct25andOverWSCW_&_years./100*Pop25andOverYearsH_&_years.-Pop25andOverWSCH_&_years.;
 	Gap25andOverWSCA_&_years.=Pct25andOverWSCW_&_years./100*Pop25andOverYearsA_&_years.-Pop25andOverWSCA_&_years.;
+	Gap25andOverWSCIOM_&_years.=Pct25andOverWSCW_&_years./100*Pop25andOverYearsIOM_&_years.-Pop25andOverWSCIOM_&_years.;
 	Gap25andOverWSCAIOM_&_years.=Pct25andOverWSCW_&_years./100*Pop25andOverYearsAIOM_&_years.-Pop25andOverWSCAIOM_&_years.;
 	Gap25andOverWSCFB_&_years.=Pct25andOverWSCW_&_years./100*Pop25andOverYearsFB_&_years.-Pop25andOverWSCFB_&_years.;
 	Gap25andOverWSCNB_&_years.=Pct25andOverWSCW_&_years./100*Pop25andOverYearsNB_&_years.-Pop25andOverWSCNB_&_years.;
@@ -90,6 +96,7 @@ data allcounty;
 	GapPoorPersonsW_&_years.=PctPoorPersonsW_&_years./100*PersonsPovertyDefinedW_&_years.-PopPoorPersonsW_&_years.;
 	GapPoorPersonsH_&_years.=PctPoorPersonsW_&_years./100*PersonsPovertyDefinedH_&_years.-PopPoorPersonsH_&_years.;
 	GapPoorPersonsA_&_years.=PctPoorPersonsW_&_years./100*PersonsPovertyDefinedA_&_years.-PopPoorPersonsA_&_years.;
+	GapPoorPersonsIOM_&_years.=PctPoorPersonsW_&_years./100*PersonsPovertyDefIOM_&_years.-PopPoorPersonsIOM_&_years.;
 	GapPoorPersonsAIOM_&_years.=PctPoorPersonsW_&_years./100*PersonsPovertyDefAIOM_&_years.-PopPoorPersonsAIOM_&_years.;
 	GapPoorPersonsFB_&_years.=PctPoorPersonsW_&_years./100*PersonsPovertyDefinedFB_&_years.-PopPoorPersonsFB_&_years.;
 
@@ -98,6 +105,7 @@ data allcounty;
 	GapPoorChildrenW_&_years.=PctPoorChildrenW_&_years./100*ChildrenPovertyDefinedW_&_years.-PopPoorChildrenW_&_years.;
 	GapPoorChildrenH_&_years.=PctPoorChildrenW_&_years./100*ChildrenPovertyDefinedH_&_years.-PopPoorChildrenH_&_years.;
 	GapPoorChildrenA_&_years.=PctPoorChildrenW_&_years./100*ChildrenPovertyDefinedA_&_years.-PopPoorChildrenA_&_years.;
+	GapPoorChildrenIOM_&_years.=PctPoorChildrenW_&_years./100*ChildrenPovertyDefIOM_&_years.-PopPoorChildrenIOM_&_years.;
 	GapPoorChildrenAIOM_&_years.=PctPoorChildrenW_&_years./100*ChildrenPovertyDefAIOM_&_years.-PopPoorChildrenAIOM_&_years.;
 
 
@@ -105,6 +113,7 @@ data allcounty;
 	GapFamilyLT75000W_&_years.=PctFamilyLT75000W_&_years./100*NumFamiliesW_&_years.-FamIncomeLT75kW_&_years.;
 	GapFamilyLT75000H_&_years.=PctFamilyLT75000W_&_years./100*NumFamiliesH_&_years.-FamIncomeLT75kH_&_years.;
 	GapFamilyLT75000A_&_years.=PctFamilyLT75000W_&_years./100*NumFamiliesA_&_years.-FamIncomeLT75kA_&_years.;
+	GapFamilyLT75000IOM_&_years.=PctFamilyLT75000W_&_years./100*NumFamiliesIOM_&_years.-FamIncomeLT75kIOM_&_years.;
 	GapFamilyLT75000AIOM_&_years.=PctFamilyLT75000W_&_years./100*NumFamiliesAIOM_&_years.-FamIncomeLT75kAIOM_&_years.;
 
 
@@ -112,6 +121,7 @@ data allcounty;
 	GapFamilyGT200000W_&_years.=PctFamilyGT200000W_&_years./100*NumFamiliesW_&_years.-FamIncomeGT200kW_&_years.;
 	GapFamilyGT200000H_&_years.=PctFamilyGT200000W_&_years./100*NumFamiliesH_&_years.-FamIncomeGT200kH_&_years.;
 	GapFamilyGT200000A_&_years.=PctFamilyGT200000W_&_years./100*NumFamiliesA_&_years.-FamIncomeGT200kA_&_years.;
+	GapFamilyGT200000IOM_&_years.=PctFamilyGT200000W_&_years./100*NumFamiliesIOM_&_years.-FamIncomeGT200kIOM_&_years.;
 	GapFamilyGT200000AIOM_&_years.=PctFamilyGT200000W_&_years./100*NumFamiliesAIOM_&_years.-FamIncomeGT200kAIOM_&_years.;
 
 
@@ -119,6 +129,7 @@ data allcounty;
 	GapAvgHshldIncAdjW_&_years.=AvgHshldIncAdjW_&_years./100*NumHshldsW_&_years.-AggHshldIncomeW_&_years.;
 	GapAvgHshldIncAdjH_&_years.=AvgHshldIncAdjW_&_years./100*NumHshldsH_&_years.-AggHshldIncomeH_&_years.;
 	GapAvgHshldIncAdjA_&_years.=AvgHshldIncAdjW_&_years./100*NumHshldsA_&_years.-AggHshldIncomeA_&_years.;
+	GapAvgHshldIncAdjIOM_&_years.=AvgHshldIncAdjW_&_years./100*NumHshldsIOM_&_years.-AggHshldIncomeIOM_&_years.;
 	GapAvgHshldIncAdjAIOM_&_years.=AvgHshldIncAdjW_&_years./100*NumHshldsAIOM_&_years.-AggHshldIncomeAIOM_&_years.;
 
 
@@ -126,214 +137,248 @@ data allcounty;
 	GapEmployed16to64W_&_years.=PctEmployed16to64W_&_years./100*Pop16_64yearsW_&_years.-Pop16_64EmployedW_&_years.;
 	GapEmployed16to64H_&_years.=PctEmployed16to64W_&_years./100*Pop16_64yearsH_&_years.-Pop16_64EmployedH_&_years.;
 	GapEmployed16to64A_&_years.=PctEmployed16to64W_&_years./100*Pop16_64yearsA_&_years.-Pop16_64EmployedA_&_years.;
+	GapEmployed16to64IOM_&_years.=PctEmployed16to64W_&_years./100*Pop16_64yearsIOM_&_years.-Pop16_64EmployedIOM_&_years.;
 	GapEmployed16to64AIOM_&_years.=PctEmployed16to64W_&_years./100*Pop16_64yearsAIOM_&_years.-Pop16_64EmployedAIOM_&_years.;
 
 	Gap16andOverEmployB_&_years.=Pct16andOverEmployW_&_years./100*Pop16andOverYearsB_&_years.-Pop16andOverEmployB_&_years.;
 	Gap16andOverEmployW_&_years.=Pct16andOverEmployW_&_years./100*Pop16andOverYearsW_&_years.-Pop16andOverEmployW_&_years.;
 	Gap16andOverEmployH_&_years.=Pct16andOverEmployW_&_years./100*Pop16andOverYearsH_&_years.-Pop16andOverEmployH_&_years.;
 	Gap16andOverEmployA_&_years.=Pct16andOverEmployW_&_years./100*Pop16andOverYearsA_&_years.-Pop16andOverEmployA_&_years.;
+	Gap16andOverEmployIOM_&_years.=Pct16andOverEmployW_&_years./100*Pop16andOverYearsIOM_&_years.-Pop16andOverEmployIOM_&_years.;
 	Gap16andOverEmployAIOM_&_years.=Pct16andOverEmployW_&_years./100*Pop16andOverYearsAIOM_&_years.-Pop16andOverEmployAIOM_&_years.;
 
 	GapUnemployedB_&_years.=PctUnemployedW_&_years./100*PopInCivLaborForceB_&_years.-PopUnemployedB_&_years.;
 	GapUnemployedW_&_years.=PctUnemployedW_&_years./100*PopInCivLaborForceW_&_years.-PopUnemployedW_&_years.;
 	GapUnemployedH_&_years.=PctUnemployedW_&_years./100*PopInCivLaborForceH_&_years.-PopUnemployedH_&_years.;
 	GapUnemployedA_&_years.=PctUnemployedW_&_years./100*PopInCivLaborForceA_&_years.-PopUnemployedA_&_years.;
+	GapUnemployedIOM_&_years.=PctUnemployedW_&_years./100*PopInCivLaborForceIOM_&_years.-PopUnemployedIOM_&_years.;
 	GapUnemployedAIOM_&_years.=PctUnemployedW_&_years./100*PopInCivLaborForceAIOM_&_years.-PopUnemployedAIOM_&_years.;
 
 	Gap16andOverWagesB_&_years.=Pct16andOverWagesW_&_years./100*Pop16andOverYearsB_&_years.-PopWorkEarnB_&_years.;
 	Gap16andOverWagesW_&_years.=Pct16andOverWagesW_&_years./100*Pop16andOverYearsW_&_years.-PopWorkEarnW_&_years.;
 	Gap16andOverWagesH_&_years.=Pct16andOverWagesW_&_years./100*Pop16andOverYearsH_&_years.-PopWorkEarnH_&_years.;
 	Gap16andOverWagesA_&_years.=Pct16andOverWagesW_&_years./100*Pop16andOverYearsA_&_years.-PopWorkEarnA_&_years.;
+	Gap16andOverWagesIOM_&_years.=Pct16andOverWagesW_&_years./100*Pop16andOverYearsIOM_&_years.-PopWorkEarnIOM_&_years.;
 	Gap16andOverWagesAIOM_&_years.=Pct16andOverWagesW_&_years./100*Pop16andOverYearsAIOM_&_years.-PopWorkEarnAIOM_&_years.;
 
 	Gap16andOverWorkFTB_&_years.=Pct16andOverWorkFTW_&_years./100*Pop16andOverYearsB_&_years.-PopWorkFTB_&_years.;
 	Gap16andOverWorkFTW_&_years.=Pct16andOverWorkFTW_&_years./100*Pop16andOverYearsW_&_years.-PopWorkFTW_&_years.;
 	Gap16andOverWorkFTH_&_years.=Pct16andOverWorkFTW_&_years./100*Pop16andOverYearsH_&_years.-PopWorkFTH_&_years.;
 	Gap16andOverWorkFTA_&_years.=Pct16andOverWorkFTW_&_years./100*Pop16andOverYearsA_&_years.-PopWorkFTA_&_years.;
+	Gap16andOverWorkFTIOM_&_years.=Pct16andOverWorkFTW_&_years./100*Pop16andOverYearsIOM_&_years.-PopWorkFTIOM_&_years.;
 	Gap16andOverWorkFTAIOM_&_years.=Pct16andOverWorkFTW_&_years./100*Pop16andOverYearsAIOM_&_years.-PopWorkFTAIOM_&_years.;
 
 	GapWorkFTLT35kB_&_years.=PctWorkFTLT35kW_&_years./100*PopWorkFTB_&_years.-PopWorkFTLT35KB_&_years.;
 	GapWorkFTLT35kW_&_years.=PctWorkFTLT35kW_&_years./100*PopWorkFTW_&_years.-PopWorkFTLT35KW_&_years.;
 	GapWorkFTLT35kH_&_years.=PctWorkFTLT35kW_&_years./100*PopWorkFTH_&_years.-PopWorkFTLT35KH_&_years.;
 	GapWorkFTLT35kA_&_years.=PctWorkFTLT35kW_&_years./100*PopWorkFTA_&_years.-PopWorkFTLT35KA_&_years.;
+	GapWorkFTLT35kIOM_&_years.=PctWorkFTLT35kW_&_years./100*PopWorkFTIOM_&_years.-PopWorkFTLT35KIOM_&_years.;
 	GapWorkFTLT35kAIOM_&_years.=PctWorkFTLT35kW_&_years./100*PopWorkFTAIOM_&_years.-PopWorkFTLT35KAIOM_&_years.;
 
 	GapWorkFTLT75kB_&_years.=PctWorkFTLT75kW_&_years./100*PopWorkFTB_&_years.-PopWorkFTLT75KB_&_years.;
 	GapWorkFTLT75kW_&_years.=PctWorkFTLT75kW_&_years./100*PopWorkFTW_&_years.-PopWorkFTLT75KW_&_years.;
 	GapWorkFTLT75kH_&_years.=PctWorkFTLT75kW_&_years./100*PopWorkFTH_&_years.-PopWorkFTLT75KH_&_years.;
 	GapWorkFTLT75kA_&_years.=PctWorkFTLT75kW_&_years./100*PopWorkFTA_&_years.-PopWorkFTLT75KA_&_years.;
+	GapWorkFTLT75kIOM_&_years.=PctWorkFTLT75kW_&_years./100*PopWorkFTIOM_&_years.-PopWorkFTLT75KIOM_&_years.;
 	GapWorkFTLT75kAIOM_&_years.=PctWorkFTLT75kW_&_years./100*PopWorkFTAIOM_&_years.-PopWorkFTLT75KAIOM_&_years.;
 
 	GapEmployedMngmtB_&_years.=PctEmployedMngmtW_&_years./100*PopEmployedByOccB_&_years.-PopEmployedMngmtB_&_years.;
 	GapEmployedMngmtW_&_years.=PctEmployedMngmtW_&_years./100*PopEmployedByOccW_&_years.-PopEmployedMngmtW_&_years.;
 	GapEmployedMngmtH_&_years.=PctEmployedMngmtW_&_years./100*PopEmployedByOccH_&_years.-PopEmployedMngmtH_&_years.;
 	GapEmployedMngmtA_&_years.=PctEmployedMngmtW_&_years./100*PopEmployedByOccA_&_years.-PopEmployedMngmtA_&_years.;
+	GapEmployedMngmtIOM_&_years.=PctEmployedMngmtW_&_years./100*PopEmployedByOccIOM_&_years.-PopEmployedMngmtIOM_&_years.;
 	GapEmployedMngmtAIOM_&_years.=PctEmployedMngmtW_&_years./100*PopEmployedByOccAIOM_&_years.-PopEmployedMngmtAIOM_&_years.;
 
 	GapEmployedServB_&_years.=PctEmployedServW_&_years./100*PopEmployedByOccB_&_years.-PopEmployedServB_&_years.;
 	GapEmployedServW_&_years.=PctEmployedServW_&_years./100*PopEmployedByOccW_&_years.-PopEmployedServW_&_years.;
 	GapEmployedServH_&_years.=PctEmployedServW_&_years./100*PopEmployedByOccH_&_years.-PopEmployedServH_&_years.;
 	GapEmployedServA_&_years.=PctEmployedServW_&_years./100*PopEmployedByOccA_&_years.-PopEmployedServA_&_years.;
+	GapEmployedServIOM_&_years.=PctEmployedServW_&_years./100*PopEmployedByOccIOM_&_years.-PopEmployedServIOM_&_years.;
 	GapEmployedServAIOM_&_years.=PctEmployedServW_&_years./100*PopEmployedByOccAIOM_&_years.-PopEmployedServAIOM_&_years.;
 
 	GapEmployedSalesB_&_years.=PctEmployedSalesW_&_years./100*PopEmployedByOccB_&_years.-PopEmployedSalesB_&_years.;
 	GapEmployedSalesW_&_years.=PctEmployedSalesW_&_years./100*PopEmployedByOccW_&_years.-PopEmployedSalesW_&_years.;
 	GapEmployedSalesH_&_years.=PctEmployedSalesW_&_years./100*PopEmployedByOccH_&_years.-PopEmployedSalesH_&_years.;
 	GapEmployedSalesA_&_years.=PctEmployedSalesW_&_years./100*PopEmployedByOccA_&_years.-PopEmployedSalesA_&_years.;
+	GapEmployedSalesIOM_&_years.=PctEmployedSalesW_&_years./100*PopEmployedByOccAIOM_&_years.-PopEmployedSalesIOM_&_years.;
 	GapEmployedSalesAIOM_&_years.=PctEmployedSalesW_&_years./100*PopEmployedByOccAIOM_&_years.-PopEmployedSalesAIOM_&_years.;
 
 	GapEmployedNatResB_&_years.=PctEmployedNatResW_&_years./100*PopEmployedByOccB_&_years.-PopEmployedNatResB_&_years.;
 	GapEmployedNatResW_&_years.=PctEmployedNatResW_&_years./100*PopEmployedByOccW_&_years.-PopEmployedNatResW_&_years.;
 	GapEmployedNatResH_&_years.=PctEmployedNatResW_&_years./100*PopEmployedByOccH_&_years.-PopEmployedNatResH_&_years.;
 	GapEmployedNatResA_&_years.=PctEmployedNatResW_&_years./100*PopEmployedByOccA_&_years.-PopEmployedNatResA_&_years.;
+	GapEmployedNatResIOM_&_years.=PctEmployedNatResW_&_years./100*PopEmployedByOccIOM_&_years.-PopEmployedNatResIOM_&_years.;
 	GapEmployedNatResAIOM_&_years.=PctEmployedNatResW_&_years./100*PopEmployedByOccAIOM_&_years.-PopEmployedNatResAIOM_&_years.;
 
 	GapEmployedProdB_&_years.=PctEmployedProdW_&_years./100*PopEmployedByOccB_&_years.-PopEmployedProdB_&_years.;
 	GapEmployedProdW_&_years.=PctEmployedProdW_&_years./100*PopEmployedByOccW_&_years.-PopEmployedProdW_&_years.;
 	GapEmployedProdH_&_years.=PctEmployedProdW_&_years./100*PopEmployedByOccH_&_years.-PopEmployedProdH_&_years.;
 	GapEmployedProdA_&_years.=PctEmployedProdW_&_years./100*PopEmployedByOccA_&_years.-PopEmployedProdA_&_years.;
+	GapEmployedProdIOM_&_years.=PctEmployedProdW_&_years./100*PopEmployedByOccIOM_&_years.-PopEmployedProdIOM_&_years.;
 	GapEmployedProdAIOM_&_years.=PctEmployedProdW_&_years./100*PopEmployedByOccAIOM_&_years.-PopEmployedProdAIOM_&_years.;
 
 	GapOwnerOccupiedHUB_&_years.=PctOwnerOccupiedHUW_&_years./100*NumOccupiedHsgUnitsB_&_years.-NumOwnerOccupiedHUB_&_years.;
 	GapOwnerOccupiedHUW_&_years.=PctOwnerOccupiedHUW_&_years./100*NumOccupiedHsgUnitsW_&_years.-NumOwnerOccupiedHUW_&_years.;
 	GapOwnerOccupiedHUH_&_years.=PctOwnerOccupiedHUW_&_years./100*NumOccupiedHsgUnitsH_&_years.-NumOwnerOccupiedHUH_&_years.;
 	GapOwnerOccupiedHUA_&_years.=PctOwnerOccupiedHUW_&_years./100*NumOccupiedHsgUnitsA_&_years.-NumOwnerOccupiedHUA_&_years.;
+	GapOwnerOccupiedHUIOM_&_years.=PctOwnerOccupiedHUW_&_years./100*NumOccupiedHsgUnitsIOM_&_years.-NumOwnerOccupiedHUIOM_&_years.;
 	GapOwnerOccupiedHUAIOM_&_years.=PctOwnerOccupiedHUW_&_years./100*NumOccupiedHsgUnitsAIOM_&_years.-NumOwnerOccupiedHUAIOM_&_years.;
 
 	label
-	Gap25andOverWoutHSW_&_years. = "Difference in # of NH-White people without HS diploma with equity, &y_lbl. "
-	Gap25andOverWoutHSB_&_years. = "Difference in # of Black-Alone people without HS diploma with equity, &y_lbl. "
-	Gap25andOverWoutHSH_&_years. = "Difference in # of Hispanic people without HS diploma with equity, &y_lbl. "
-	Gap25andOverWoutHSA_&_years. = "Difference in # of Asian people without HS diploma with equity, &y_lbl. "
-	Gap25andOverWoutHSAIOM_&_years. = "Difference in # of All-Other people without HS diploma with equity, &y_lbl. "
-	Gap25andOverWoutHSFB_&_years. = "Difference in # of people foreign-born without HS diploma with equity, &y_lbl. "
-	Gap25andOverWoutHSNB_&_years. = "Difference in # of people native-born without HS diploma with equity, &y_lbl. "
+	Gap25andOverWoutHSW_&_years. = "Difference in # of NH-White people without HS diploma with equity, &y_lbl."
+	Gap25andOverWoutHSB_&_years. = "Difference in # of Black-Alone people without HS diploma with equity, &y_lbl."
+	Gap25andOverWoutHSH_&_years. = "Difference in # of Hispanic people without HS diploma with equity, &y_lbl."
+	Gap25andOverWoutHSA_&_years. = "Difference in # of Asian-PI people without HS diploma with equity, &y_lbl."
+	Gap25andOverWoutHSIOM_&_years. = "Difference in # of Indigenous-Other-Multi people without HS diploma with equity, &y_lbl."
+	Gap25andOverWoutHSAIOM_&_years. = "Difference in # of All-Other people without HS diploma with equity, &y_lbl."
+	Gap25andOverWoutHSFB_&_years. = "Difference in # of people foreign-born without HS diploma with equity, &y_lbl."
+	Gap25andOverWoutHSNB_&_years. = "Difference in # of people native-born without HS diploma with equity, &y_lbl."
 
-	Gap25andOverWHSW_&_years. = "Difference in # of NH-White people with HS diploma with equity, &y_lbl. "
-	Gap25andOverWHSB_&_years. = "Difference in # of Black-Alone people with HS diploma with equity, &y_lbl. "
-	Gap25andOverWHSH_&_years. = "Difference in # of Hispanic people with HS diploma with equity, &y_lbl. "
-	Gap25andOverWHSA_&_years. = "Difference in # of Asian people with HS diploma with equity, &y_lbl. "
-	Gap25andOverWHSAIOM_&_years. = "Difference in # of All-Other people with HS diploma with equity, &y_lbl. "
-	Gap25andOverWHSFB_&_years. = "Difference in # of people foreign-born with HS diploma with equity, &y_lbl. "
-	Gap25andOverWHSNB_&_years. = "Difference in # of people native-born with HS diploma with equity, &y_lbl. "
+	Gap25andOverWHSW_&_years. = "Difference in # of NH-White people with HS diploma with equity, &y_lbl."
+	Gap25andOverWHSB_&_years. = "Difference in # of Black-Alone people with HS diploma with equity, &y_lbl."
+	Gap25andOverWHSH_&_years. = "Difference in # of Hispanic people with HS diploma with equity, &y_lbl."
+	Gap25andOverWHSA_&_years. = "Difference in # of Asian-PI people with HS diploma with equity, &y_lbl."
+	Gap25andOverWHSIOM_&_years. = "Difference in # of Indigenous-Other-Multi people with HS diploma with equity, &y_lbl."
+	Gap25andOverWHSAIOM_&_years. = "Difference in # of All-Other people with HS diploma with equity, &y_lbl."
+	Gap25andOverWHSFB_&_years. = "Difference in # of people foreign-born with HS diploma with equity, &y_lbl."
+	Gap25andOverWHSNB_&_years. = "Difference in # of people native-born with HS diploma with equity, &y_lbl."
 
-	Gap25andOverWSCW_&_years. = "Difference in # of NH-White people with some college with equity, &y_lbl. "
-	Gap25andOverWSCB_&_years. = "Difference in # of Black-Alone people with some college with equity, &y_lbl. "
-	Gap25andOverWSCH_&_years. = "Difference in # of Hispanic people with some college with equity, &y_lbl. "
-	Gap25andOverWSCA_&_years. = "Difference in # of Asian people with some college with equity, &y_lbl. "
-	Gap25andOverWSCAIOM_&_years. = "Difference in # of All-Other people with some college with equity, &y_lbl. "
-	Gap25andOverWSCFB_&_years. = "Difference in # of people foreign-born with some college with equity, &y_lbl. "
-	Gap25andOverWSCNB_&_years. = "Difference in # of people native-born with some college with equity, &y_lbl. "
+	Gap25andOverWSCW_&_years. = "Difference in # of NH-White people with some college with equity, &y_lbl."
+	Gap25andOverWSCB_&_years. = "Difference in # of Black-Alone people with some college with equity, &y_lbl."
+	Gap25andOverWSCH_&_years. = "Difference in # of Hispanic people with some college with equity, &y_lbl."
+	Gap25andOverWSCA_&_years. = "Difference in # of Asian-PI people with some college with equity, &y_lbl."
+	Gap25andOverWSCIOM_&_years. = "Difference in # of Indigenous-Other-Multi people with some college with equity, &y_lbl."
+	Gap25andOverWSCAIOM_&_years. = "Difference in # of All-Other people with some college with equity, &y_lbl."
+	Gap25andOverWSCFB_&_years. = "Difference in # of people foreign-born with some college with equity, &y_lbl."
+	Gap25andOverWSCNB_&_years. = "Difference in # of people native-born with some college with equity, &y_lbl."
 
-	GapAvgHshldIncAdjW_&_years. = "Average household income last year NH-White ($) with equity, &y_lbl. "
-	GapAvgHshldIncAdjB_&_years. = "Average household income last year Black-Alone ($) with equity, &y_lbl. "
-	GapAvgHshldIncAdjH_&_years. = "Average household income last year Hispanic ($) with equity, &y_lbl. "
-	GapAvgHshldIncAdjA_&_years. = "Average household income last year Asian ($) with equity, &y_lbl. "
-	GapAvgHshldIncAdjAIOM_&_years. = "Average household income last year All-Other ($) with equity, &y_lbl. "
+	GapAvgHshldIncAdjW_&_years. = "Average household income last year NH-White ($) with equity, &y_lbl."
+	GapAvgHshldIncAdjB_&_years. = "Average household income last year Black-Alone ($) with equity, &y_lbl."
+	GapAvgHshldIncAdjH_&_years. = "Average household income last year Hispanic ($) with equity, &y_lbl."
+	GapAvgHshldIncAdjA_&_years. = "Average household income last year Asian-PI ($) with equity, &y_lbl."
+	GapAvgHshldIncAdjIOM_&_years. = "Average household income last year Indigenous-Other-Multi ($) with equity, &y_lbl."
+	GapAvgHshldIncAdjAIOM_&_years. = "Average household income last year All-Other ($) with equity, &y_lbl."
 
-	GapFamilyGT200000W_&_years. = "Difference in # of families NH-White with income greater than 200000 with equity, &y_lbl. "
-	GapFamilyGT200000B_&_years. = "Difference in # of families Black-Alone with income greater than 200000 with equity, &y_lbl. "
-	GapFamilyGT200000H_&_years. = "Difference in # of families Hispanic with income greater than 200000 with equity, &y_lbl. "
-	GapFamilyGT200000A_&_years. = "Difference in # of families Asian with income greater than 200000 with equity, &y_lbl. "
-	GapFamilyGT200000AIOM_&_years. = "Difference in # of families All-Other with income greater than 200000 with equity, &y_lbl. "
+	GapFamilyGT200000W_&_years. = "Difference in # of families NH-White with income greater than 200000 with equity, &y_lbl."
+	GapFamilyGT200000B_&_years. = "Difference in # of families Black-Alone with income greater than 200000 with equity, &y_lbl."
+	GapFamilyGT200000H_&_years. = "Difference in # of families Hispanic with income greater than 200000 with equity, &y_lbl."
+	GapFamilyGT200000A_&_years. = "Difference in # of families Asian-PI with income greater than 200000 with equity, &y_lbl."
+	GapFamilyGT200000IOM_&_years. = "Difference in # of families Indigenous-Other-Multi  with income greater than 200000 with equity, &y_lbl."
+	GapFamilyGT200000AIOM_&_years. = "Difference in # of families All-Other with income greater than 200000 with equity, &y_lbl."
 
-	GapFamilyLT75000W_&_years. = "Difference in # of families NH-White with income less than 75000 with equity, &y_lbl. "
-	GapFamilyLT75000B_&_years. = "Difference in # of families Black-Alone with income less than 75000 with equity, &y_lbl. "
-	GapFamilyLT75000H_&_years. = "Difference in # of families Hispanic with income less than 75000 with equity, &y_lbl. "
-	GapFamilyLT75000A_&_years. = "Difference in # of families Asian with income less than 75000 with equity, &y_lbl. "
-	GapFamilyLT75000AIOM_&_years. = "Difference in # of families All-Other with income less than 75000 with equity, &y_lbl. "
+	GapFamilyLT75000W_&_years. = "Difference in # of families NH-White with income less than 75000 with equity, &y_lbl."
+	GapFamilyLT75000B_&_years. = "Difference in # of families Black-Alone with income less than 75000 with equity, &y_lbl."
+	GapFamilyLT75000H_&_years. = "Difference in # of families Hispanic with income less than 75000 with equity, &y_lbl."
+	GapFamilyLT75000A_&_years. = "Difference in # of families Asian-PI with income less than 75000 with equity, &y_lbl."
+	GapFamilyLT75000IOM_&_years. = "Difference in # of families Indigenous-Other-Multi with income less than 75000 with equity, &y_lbl."
+	GapFamilyLT75000AIOM_&_years. = "Difference in # of families All-Other with income less than 75000 with equity, &y_lbl."
 
-	GapPoorPersonsW_&_years. = "Difference in # of NH-White people living below poverty line with equity, &y_lbl. "
-	GapPoorPersonsB_&_years. = "Difference in # of Black-Alone people living below poverty line with equity, &y_lbl. "
-	GapPoorPersonsH_&_years. = "Difference in # of Hispanic people living below poverty line with equity, &y_lbl. "
-	GapPoorPersonsA_&_years. = "Difference in # of Asian people living below poverty line with equity, &y_lbl. "
-	GapPoorPersonsAIOM_&_years. = "Difference in # of All-Other people living below poverty line with equity, &y_lbl. "
-	GapPoorPersonsFB_&_years. = "Difference in # of foreign born people living below poverty line with equity, &y_lbl. "
+	GapPoorPersonsW_&_years. = "Difference in # of NH-White people living below poverty line with equity, &y_lbl."
+	GapPoorPersonsB_&_years. = "Difference in # of Black-Alone people living below poverty line with equity, &y_lbl."
+	GapPoorPersonsH_&_years. = "Difference in # of Hispanic people living below poverty line with equity, &y_lbl."
+	GapPoorPersonsA_&_years. = "Difference in # of Asian-PI people living below poverty line with equity, &y_lbl."
+	GapPoorPersonsIOM_&_years. = "Difference in # of Indigenous-Other-Multi people living below poverty line with equity, &y_lbl."
+	GapPoorPersonsAIOM_&_years. = "Difference in # of All-Other people living below poverty line with equity, &y_lbl."
+	GapPoorPersonsFB_&_years. = "Difference in # of foreign born people living below poverty line with equity, &y_lbl."
 
-	GapPoorChildrenAIOM_&_years. = "Difference in # of All-Other children living below poverty line with equity, &y_lbl. "    
-	GapPoorChildrenA_&_years. = "Difference in # of Asian children living below poverty line with equity, &y_lbl. "
-	GapPoorChildrenB_&_years. = "Difference in # of Black-Alone children living below poverty line with equity, &y_lbl. "    
-	GapPoorChildrenH_&_years. = "Difference in # of Hispanic children living below poverty line with equity, &y_lbl. "
-	GapPoorChildrenW_&_years. = "Difference in # of NH-White children living below poverty line with equity, &y_lbl. "
+	GapPoorChildrenAIOM_&_years. = "Difference in # of All-Other children living below poverty line with equity, &y_lbl."    
+	GapPoorChildrenIOM_&_years. = "Difference in # of Indigenous-Other-Multi children living below poverty line with equity, &y_lbl." 
+	GapPoorChildrenA_&_years. = "Difference in # of Asian-PI children living below poverty line with equity, &y_lbl."
+	GapPoorChildrenB_&_years. = "Difference in # of Black-Alone children living below poverty line with equity, &y_lbl."    
+	GapPoorChildrenH_&_years. = "Difference in # of Hispanic children living below poverty line with equity, &y_lbl."
+	GapPoorChildrenW_&_years. = "Difference in # of NH-White children living below poverty line with equity, &y_lbl."
 
 
-	Gap16andOverEmployW_&_years. = "Difference in # of people 16+ yrs. employed NH-White with equity, &y_lbl. "
-	Gap16andOverEmployB_&_years. = "Difference in # of people 16+ yrs. employed Black-Alone with equity, &y_lbl. "
-	Gap16andOverEmployH_&_years. = "Difference in # of people 16+ yrs. employed Hispanic with equity, &y_lbl. "
-	Gap16andOverEmployA_&_years. = "Difference in # of people 16+ yrs. employed Asian with equity, &y_lbl. "
-	Gap16andOverEmployAIOM_&_years. = "Difference in # of people 16+ yrs. employed All-Other with equity, &y_lbl. "
+	Gap16andOverEmployW_&_years. = "Difference in # of people 16+ yrs. employed NH-White with equity, &y_lbl."
+	Gap16andOverEmployB_&_years. = "Difference in # of people 16+ yrs. employed Black-Alone with equity, &y_lbl."
+	Gap16andOverEmployH_&_years. = "Difference in # of people 16+ yrs. employed Hispanic with equity, &y_lbl."
+	Gap16andOverEmployA_&_years. = "Difference in # of people 16+ yrs. employed Asian-PI with equity, &y_lbl."
+	Gap16andOverEmployIOM_&_years. = "Difference in # of people 16+ yrs. employed Indigenous-Other-Multi with equity, &y_lbl."
+	Gap16andOverEmployAIOM_&_years. = "Difference in # of people 16+ yrs. employed All-Other with equity, &y_lbl."
 
-	GapEmployed16to64W_&_years. = "Difference in # of NH-White people employed between 16 and 64 years old with equity, &y_lbl. "
-	GapEmployed16to64B_&_years. = "Difference in # of Black-Alone people employed between 16 and 64 years old with equity, &y_lbl. "
-	GapEmployed16to64H_&_years. = "Difference in # of Hispanic people employed between 16 and 64 years old with equity, &y_lbl. "
-	GapEmployed16to64A_&_years. = "Difference in # of Asian people employed between 16 and 64 years old with equity, &y_lbl. "
-	GapEmployed16to64AIOM_&_years. = "Difference in # of All-Other people employed between 16 and 64 years old with equity, &y_lbl. "
+	GapEmployed16to64W_&_years. = "Difference in # of NH-White people employed between 16 and 64 years old with equity, &y_lbl."
+	GapEmployed16to64B_&_years. = "Difference in # of Black-Alone people employed between 16 and 64 years old with equity, &y_lbl."
+	GapEmployed16to64H_&_years. = "Difference in # of Hispanic people employed between 16 and 64 years old with equity, &y_lbl."
+	GapEmployed16to64A_&_years. = "Difference in # of Asian-PI people employed between 16 and 64 years old with equity, &y_lbl."
+	GapEmployed16to64IOM_&_years. = "Difference in # of Indigenous-Other-Multi people employed between 16 and 64 years old with equity, &y_lbl."
+	GapEmployed16to64AIOM_&_years. = "Difference in # of All-Other people employed between 16 and 64 years old with equity, &y_lbl."
 
-	GapUnemployedW_&_years. = "Difference in # of NH-White unemployed people with equity, &y_lbl. "
-	GapUnemployedB_&_years. = "Difference in # of Black-Alone unemployed people with equity, &y_lbl. "
-	GapUnemployedH_&_years. = "Difference in # of Hispanic unemployed people with equity, &y_lbl. "
-	GapUnemployedA_&_years. = "Difference in # of Asian unemployed people with equity, &y_lbl. "
-	GapUnemployedAIOM_&_years. = "Difference in # of All-Other unemployed people with equity, &y_lbl. "
+	GapUnemployedW_&_years. = "Difference in # of NH-White unemployed people with equity, &y_lbl."
+	GapUnemployedB_&_years. = "Difference in # of Black-Alone unemployed people with equity, &y_lbl."
+	GapUnemployedH_&_years. = "Difference in # of Hispanic unemployed people with equity, &y_lbl."
+	GapUnemployedA_&_years. = "Difference in # of Asian-PI unemployed people with equity, &y_lbl."
+	GapUnemployedIOM_&_years. = "Difference in # of Indigenous-Other-Multi unemployed people with equity, &y_lbl."
+	GapUnemployedAIOM_&_years. = "Difference in # of All-Other unemployed people with equity, &y_lbl."
 
-	Gap16andOverWagesW_&_years. = "Difference in # of NH-White people employed with earnings with equity, &y_lbl. "
-	Gap16andOverWagesB_&_years. = "Difference in # of Black-Alone people employed with earnings with equity, &y_lbl. "
-	Gap16andOverWagesH_&_years. = "Difference in # of Hispanic people employed with earnings with equity, &y_lbl. "
-	Gap16andOverWagesA_&_years. = "Difference in # of Asian people employed with earnings with equity, &y_lbl. "
-	Gap16andOverWagesAIOM_&_years. = "Difference in # of All-Other people employed with earnings with equity, &y_lbl. "
+	Gap16andOverWagesW_&_years. = "Difference in # of NH-White people employed with earnings with equity, &y_lbl."
+	Gap16andOverWagesB_&_years. = "Difference in # of Black-Alone people employed with earnings with equity, &y_lbl."
+	Gap16andOverWagesH_&_years. = "Difference in # of Hispanic people employed with earnings with equity, &y_lbl."
+	Gap16andOverWagesA_&_years. = "Difference in # of Asian-PI people employed with earnings with equity, &y_lbl."
+	Gap16andOverWagesIOM_&_years. = "Difference in # of Indigenous-Other-Multi people employed with earnings with equity, &y_lbl."
+	Gap16andOverWagesAIOM_&_years. = "Difference in # of All-Other people employed with earnings with equity, &y_lbl."
 
-	Gap16andOverWorkFTW_&_years. = "Difference in # of NH-White people employed full time with equity, &y_lbl. "
-	Gap16andOverWorkFTB_&_years. = "Difference in # of Black-Alone people employed full time with equity, &y_lbl. "
-	Gap16andOverWorkFTH_&_years. = "Difference in # of Hispanic people employed full time with equity, &y_lbl. "
-	Gap16andOverWorkFTA_&_years. = "Difference in # of Asian people employed full time with equity, 2010-1 4"
-	Gap16andOverWorkFTAIOM_&_years. = "Difference in # of All-Other people employed full time with equity, 2010-1 4"
+	Gap16andOverWorkFTW_&_years. = "Difference in # of NH-White people employed full time with equity, &y_lbl."
+	Gap16andOverWorkFTB_&_years. = "Difference in # of Black-Alone people employed full time with equity, &y_lbl."
+	Gap16andOverWorkFTH_&_years. = "Difference in # of Hispanic people employed full time with equity, &y_lbl."
+	Gap16andOverWorkFTA_&_years. = "Difference in # of Asian-PI people employed full time with equity, &y_lbl."
+	Gap16andOverWorkFTIOM_&_years. = "Difference in # of Indigenous-Other-Multi people employed full time with equity, &y_lbl."
+	Gap16andOverWorkFTAIOM_&_years. = "Difference in # of All-Other people employed full time with equity, &y_lbl."
 
-	GapWorkFTLT35kW_&_years. = "Difference in # of NH-White people employed full time with earnings less than 35000 with equity, &y_lbl. "
-	GapWorkFTLT35kB_&_years. = "Difference in # of Black-Alone people employed full time with earnings less than 35000 with equity, &y_lbl. "
-	GapWorkFTLT35kH_&_years. = "Difference in # of Hispanic people employed full time with earnings less than 35000 with equity, &y_lbl. "
-	GapWorkFTLT35kA_&_years. = "Difference in # of Asian people employed full time with earnings less than 35000 with equity, &y_lbl. "
-	GapWorkFTLT35kAIOM_&_years. = "Difference in # of All-Other people employed full time with earnings less than 35000 with equity, &y_lbl. "
+	GapWorkFTLT35kW_&_years. = "Difference in # of NH-White people employed full time with earnings less than 35000 with equity, &y_lbl."
+	GapWorkFTLT35kB_&_years. = "Difference in # of Black-Alone people employed full time with earnings less than 35000 with equity, &y_lbl."
+	GapWorkFTLT35kH_&_years. = "Difference in # of Hispanic people employed full time with earnings less than 35000 with equity, &y_lbl."
+	GapWorkFTLT35kA_&_years. = "Difference in # of Asian-PI people employed full time with earnings less than 35000 with equity, &y_lbl."
+	GapWorkFTLT35kIOM_&_years. = "Difference in # of Indigenous-Other-Multi people employed full time with earnings less than 35000 with equity, &y_lbl."
+	GapWorkFTLT35kAIOM_&_years. = "Difference in # of All-Other people employed full time with earnings less than 35000 with equity, &y_lbl."
 
-	GapWorkFTLT75kW_&_years. = "Difference in # of NH-White people employed full time with earnings less than 75000 with equity, &y_lbl. "
-	GapWorkFTLT75kB_&_years. = "Difference in # of Black-Alone people employed full time with earnings less than 75000 with equity, &y_lbl. "
-	GapWorkFTLT75kH_&_years. = "Difference in # of Hispanic people employed full time with earnings less than 75000 with equity, &y_lbl. "
-	GapWorkFTLT75kA_&_years. = "Difference in # of Asian people employed full time with earnings less than 75000 with equity, &y_lbl. "
-	GapWorkFTLT75kAIOM_&_years. = "Difference in # of All-Other people employed full time with earnings less than 75000 with equity, &y_lbl. "
+	GapWorkFTLT75kW_&_years. = "Difference in # of NH-White people employed full time with earnings less than 75000 with equity, &y_lbl."
+	GapWorkFTLT75kB_&_years. = "Difference in # of Black-Alone people employed full time with earnings less than 75000 with equity, &y_lbl."
+	GapWorkFTLT75kH_&_years. = "Difference in # of Hispanic people employed full time with earnings less than 75000 with equity, &y_lbl."
+	GapWorkFTLT75kA_&_years. = "Difference in # of Asian-PI people employed full time with earnings less than 75000 with equity, &y_lbl."
+	GapWorkFTLT75kIOM_&_years. = "Difference in # of Indigenous-Other-Multi people employed full time with earnings less than 75000 with equity, &y_lbl."
+	GapWorkFTLT75kAIOM_&_years. = "Difference in # of All-Other people employed full time with earnings less than 75000 with equity, &y_lbl."
 
-	GapEmployedMngmtW_&_years. = "Difference in # of NH-White people employed in management business science and arts occupations with equity, &y_lbl. "
-	GapEmployedMngmtB_&_years. = "Difference in # of Black-Alone people employed in management business science and arts occupations with equity, &y_lbl. "
-	GapEmployedMngmtH_&_years. = "Difference in # of Hispanic people employed in management business science and arts occupations with equity, &y_lbl. "
-	GapEmployedMngmtA_&_years. = "Difference in # of Asian people employed in management business science and arts occupations with equity, &y_lbl. "
-	GapEmployedMngmtAIOM_&_years. = "Difference in # of All-Other people employed in management business science and arts occupations with equity, &y_lbl. "
+	GapEmployedMngmtW_&_years. = "Difference in # of NH-White people employed in management business science and arts occupations with equity, &y_lbl."
+	GapEmployedMngmtB_&_years. = "Difference in # of Black-Alone people employed in management business science and arts occupations with equity, &y_lbl."
+	GapEmployedMngmtH_&_years. = "Difference in # of Hispanic people employed in management business science and arts occupations with equity, &y_lbl."
+	GapEmployedMngmtA_&_years. = "Difference in # of Asian-PI people employed in management business science and arts occupations with equity, &y_lbl."
+	GapEmployedMngmtIOM_&_years. = "Difference in # of Indigenous-Other-Multi people employed in management business science and arts occupations with equity, &y_lbl."
+	GapEmployedMngmtAIOM_&_years. = "Difference in # of All-Other people employed in management business science and arts occupations with equity, &y_lbl."
 
-	GapEmployedServW_&_years. = "Difference in # of NH-White people employed in service occupations with equity, &y_lbl. "
-	GapEmployedServB_&_years. = "Difference in # of Black-Alone people employed in service occupations with equity, &y_lbl. "
-	GapEmployedServH_&_years. = "Difference in # of Hispanic people employed in service occupations with equity, &y_lbl. "
-	GapEmployedServA_&_years. = "Difference in # of Asian people employed in service occupations with equity, &y_lbl."
+	GapEmployedServW_&_years. = "Difference in # of NH-White people employed in service occupations with equity, &y_lbl."
+	GapEmployedServB_&_years. = "Difference in # of Black-Alone people employed in service occupations with equity, &y_lbl."
+	GapEmployedServH_&_years. = "Difference in # of Hispanic people employed in service occupations with equity, &y_lbl."
+	GapEmployedServA_&_years. = "Difference in # of Asian-PI people employed in service occupations with equity, &y_lbl."
+	GapEmployedServIOM_&_years. = "Difference in # of Indigenous-Other-Multi people employed in service occupations with equity, &y_lbl."
 	GapEmployedServAIOM_&_years. = "Difference in # of All-Other people employed in service occupations with equity, &y_lbl."
 
-	GapEmployedSalesW_&_years. = "Difference in # of NH-White people employed in sales and office occupations with equity, &y_lbl. "
-	GapEmployedSalesB_&_years. = "Difference in # of Black-Alone people employed in sales and office occupations with equity, &y_lbl. "
-	GapEmployedSalesH_&_years. = "Difference in # of Hispanic people employed in sales and office occupations with equity, &y_lbl. "
-	GapEmployedSalesA_&_years. = "Difference in # of Asian people employed in sales and office occupations with equity, &y_lbl. "
-	GapEmployedSalesAIOM_&_years. = "Difference in # of All-Other people employed in sales and office occupations with equity, &y_lbl. "
+	GapEmployedSalesW_&_years. = "Difference in # of NH-White people employed in sales and office occupations with equity, &y_lbl."
+	GapEmployedSalesB_&_years. = "Difference in # of Black-Alone people employed in sales and office occupations with equity, &y_lbl."
+	GapEmployedSalesH_&_years. = "Difference in # of Hispanic people employed in sales and office occupations with equity, &y_lbl."
+	GapEmployedSalesA_&_years. = "Difference in # of Asian-PI people employed in sales and office occupations with equity, &y_lbl."
+	GapEmployedSalesIOM_&_years. = "Difference in # of Indigenous-Other-Multi people employed in sales and office occupations with equity, &y_lbl."
+	GapEmployedSalesAIOM_&_years. = "Difference in # of All-Other people employed in sales and office occupations with equity, &y_lbl."
 
-	GapEmployedNatResW_&_years. = "Difference in # of NH-White people employed in natural resources construction and maintenance occupations with equity, &y_lbl. "
-	GapEmployedNatResB_&_years. = "Difference in # of Black-Alone people employed in natural resources construction and maintenance occupations with equity, &y_lbl. "
-	GapEmployedNatResH_&_years. = "Difference in # of Hispanic people employed in natural resources construction and maintenance occupations with equity, &y_lbl. "
-	GapEmployedNatResA_&_years. = "Difference in # of Asian people employed in natural resources construction and maintenance occupations with equity, &y_lbl. "
-	GapEmployedNatResAIOM_&_years. = "Difference in # of All-Other people employed in natural resources construction and maintenance occupations with equity, &y_lbl. "
+	GapEmployedNatResW_&_years. = "Difference in # of NH-White people employed in natural resources construction and maintenance occupations with equity, &y_lbl."
+	GapEmployedNatResB_&_years. = "Difference in # of Black-Alone people employed in natural resources construction and maintenance occupations with equity, &y_lbl."
+	GapEmployedNatResH_&_years. = "Difference in # of Hispanic people employed in natural resources construction and maintenance occupations with equity, &y_lbl."
+	GapEmployedNatResA_&_years. = "Difference in # of Asian-PI people employed in natural resources construction and maintenance occupations with equity, &y_lbl."
+	GapEmployedNatResIOM_&_years. = "Difference in # of Indigenous-Other-Multi people employed in natural resources construction and maintenance occupations with equity, &y_lbl."
+	GapEmployedNatResAIOM_&_years. = "Difference in # of All-Other people employed in natural resources construction and maintenance occupations with equity, &y_lbl."
 
-	GapEmployedProdW_&_years. = "Difference in # of NH-White people employed in production transportation and material moving occupations with equity, &y_lbl. "
-	GapEmployedProdB_&_years. = "Difference in # of Black-Alone people employed in production transportation and material moving occupations with equity, &y_lbl. "
-	GapEmployedProdH_&_years. = "Difference in # of Hispanic people employed in production transportation and material moving occupations with equity, &y_lbl. "
-	GapEmployedProdA_&_years. = "Difference in # of Asian people employed in production transportation and material moving occupations with equity, &y_lbl. "
-	GapEmployedProdAIOM_&_years. = "Difference in # of All-Other people employed in production transportation and material moving occupations with equity, &y_lbl. "
+	GapEmployedProdW_&_years. = "Difference in # of NH-White people employed in production transportation and material moving occupations with equity, &y_lbl."
+	GapEmployedProdB_&_years. = "Difference in # of Black-Alone people employed in production transportation and material moving occupations with equity, &y_lbl."
+	GapEmployedProdH_&_years. = "Difference in # of Hispanic people employed in production transportation and material moving occupations with equity, &y_lbl."
+	GapEmployedProdA_&_years. = "Difference in # of Asian-PI people employed in production transportation and material moving occupations with equity, &y_lbl."
+	GapEmployedProdIOM_&_years. = "Difference in # of Indigenous-Other-Multi people employed in production transportation and material moving occupations with equity, &y_lbl."
+	GapEmployedProdAIOM_&_years. = "Difference in # of All-Other people employed in production transportation and material moving occupations with equity, &y_lbl."
 
-	GapOwnerOccupiedHUW_&_years. = "Difference in # of NH-White homeowners with equity, &y_lbl. "
-	GapOwnerOccupiedHUB_&_years. = "Difference in # of Black-Alone homeowners with equity, &y_lbl. "
-	GapOwnerOccupiedHUH_&_years. = "Difference in # of Hispanic homeowners with equity, &y_lbl. "
-	GapOwnerOccupiedHUA_&_years. = "Difference in # of Asian homeowners with equity, &y_lbl. "
-	GapOwnerOccupiedHUAIOM_&_years. = "Difference in # of All-Other homeowners with equity, &y_lbl. "
+	GapOwnerOccupiedHUW_&_years. = "Difference in # of NH-White homeowners with equity, &y_lbl."
+	GapOwnerOccupiedHUB_&_years. = "Difference in # of Black-Alone homeowners with equity, &y_lbl."
+	GapOwnerOccupiedHUH_&_years. = "Difference in # of Hispanic homeowners with equity, &y_lbl."
+	GapOwnerOccupiedHUA_&_years. = "Difference in # of Asian-PI homeowners with equity, &y_lbl."
+	GapOwnerOccupiedHUIOM_&_years. = "Difference in # of Indigenous-Other-Multi homeowners with equity, &y_lbl."
+	GapOwnerOccupiedHUAIOM_&_years. = "Difference in # of All-Other homeowners with equity, &y_lbl."
 		;
 
 	%suppress_gaps_negative;
@@ -482,7 +527,7 @@ data region_agg ;
     %Moe_prop_a( var=PctForeignBornW_m_&_years., mult=100, num=PopForeignBornW_&_years., den=PopWhiteNonHispBridge_&_years., 
                        num_moe=mPopForeignBornW_&_years., den_moe=mPopWhiteNonHispBridge_&_years., label_moe = % foreign born NH-White MOE &y_lbl.);
 
-	%do r=2 %to 5;
+	%do r=2 %to 6;
 
 		%let race=%scan(&racelist.,&r.," ");
 		%let name=%scan(&racename.,&r.," ");
@@ -591,7 +636,8 @@ data region_agg ;
 	%Pct_calc( var=PctPoorPersonsB, label=Poverty rate Black-Alone (%), num=PopPoorPersonsB, den=PersonsPovertyDefinedB, years=&_years. )
 	%Pct_calc( var=PctPoorPersonsW, label=Poverty rate NH-White (%), num=PopPoorPersonsW, den=PersonsPovertyDefinedW, years=&_years. )
 	%Pct_calc( var=PctPoorPersonsH, label=Poverty rate Hispanic(%), num=PopPoorPersonsH, den=PersonsPovertyDefinedH, years=&_years. )
-    %Pct_calc( var=PctPoorPersonsA, label=Poverty rate Asian(%), num=PopPoorPersonsA, den=PersonsPovertyDefinedA, years=&_years. )
+    %Pct_calc( var=PctPoorPersonsA, label=Poverty rate Asian-PI(%), num=PopPoorPersonsA, den=PersonsPovertyDefinedA, years=&_years. )
+	%Pct_calc( var=PctPoorPersonsIOM, label=Poverty rate Indigenous-Other-Multi(%), num=PopPoorPersonsIOM, den=PersonsPovertyDefIOM, years=&_years. )
 	%Pct_calc( var=PctPoorPersonsAIOM, label=Poverty rate All-Other(%), num=PopPoorPersonsAIOM, den=PersonsPovertyDefAIOM, years=&_years. )
 	%Pct_calc( var=PctPoorPersonsFB, label=Poverty rate foreign born (%), num=PopPoorPersonsFB, den=PersonsPovertyDefinedFB, years=&_years. )
     
@@ -608,7 +654,10 @@ data region_agg ;
                        num_moe=mPopPoorPersonsH_&_years., den_moe=mPersonsPovertyDefinedH_&_years., label_moe =Poverty rate Hispanic(%) MOE &y_lbl.);
 
     %Moe_prop_a( var=PctPoorPersonsA_m_&_years., mult=100, num=PopPoorPersonsA_&_years., den=PersonsPovertyDefinedA_&_years., 
-                       num_moe=mPopPoorPersonsA_&_years., den_moe=mPersonsPovertyDefinedA_&_years., label_moe =Poverty rate Asian(%) MOE &y_lbl.);
+                       num_moe=mPopPoorPersonsA_&_years., den_moe=mPersonsPovertyDefinedA_&_years., label_moe =Poverty rate Asian-PI(%) MOE &y_lbl.);
+
+	%Moe_prop_a( var=PctPoorPersonsIOM_m_&_years., mult=100, num=PopPoorPersonsIOM_&_years., den=PersonsPovertyDefIOM_&_years., 
+                       num_moe=mPopPoorPersonsIOM_&_years., den_moe=mPersonsPovertyDefIOM_&_years., label_moe =Poverty rate Indigenous-Other-Multi(%) MOE &y_lbl.);
 
 	%Moe_prop_a( var=PctPoorPersonsAIOM_m_&_years., mult=100, num=PopPoorPersonsAIOM_&_years., den=PersonsPovertyDefAIOM_&_years., 
                        num_moe=mPopPoorPersonsAIOM_&_years., den_moe=mPersonsPovertyDefAIOM_&_years., label_moe =Poverty rate All-Other(%) MOE &y_lbl.);
@@ -676,7 +725,7 @@ data region_agg ;
 	%Moe_prop_a( var=PctEmployedProd_m_&_years., mult=100, num=PopEmployedProd_&_years., den=PopEmployedByOcc_&_years., 
                        num_moe=mPopEmployedProd_&_years., den_moe=mPopEmployedByOcc_&_years., label_moe =% persons employed in production transportation and material moving occupations MOE &y_lbl.);
 
-	%do r=1 %to 5;
+	%do r=1 %to 6;
 
 		%let race=%scan(&racelist.,&r.," ");
 		%let name=%scan(&racename.,&r.," ");
@@ -744,7 +793,7 @@ data region_agg ;
 	%end;
 
 
-	%do r=1 %to 5;
+	%do r=1 %to 6;
 
 		%let race=%scan(&racelist.,&r.," ");
 		%let name=%scan(&racename.,&r.," ");
@@ -817,8 +866,9 @@ data region_agg ;
     %Pct_calc( var=PctPoorChildren, label=% children in poverty, num=PopPoorChildren, den=ChildrenPovertyDefined, years=&_years. )
 		%Pct_calc( var=PctPoorChildrenB, label=% children Black-Alone in poverty, num=PopPoorChildrenB, den=ChildrenPovertyDefinedB, years=&_years. )
 		%Pct_calc( var=PctPoorChildrenW, label=% children NH-White in poverty, num=PopPoorChildrenW, den=ChildrenPovertyDefinedW, years=&_years. )
-		%Pct_calc( var=PctPoorChildrenA, label=% children Asian in poverty, num=PopPoorChildrenA, den=ChildrenPovertyDefinedA, years=&_years. )
-		%Pct_calc( var=PctPoorChildrenH, label=% children Hispanic in poverty, num=PopPoorChildrenH, den=ChildrenPovertyDefinedH, years=&_years. )		
+		%Pct_calc( var=PctPoorChildrenA, label=% children Asian-PI in poverty, num=PopPoorChildrenA, den=ChildrenPovertyDefinedA, years=&_years. )
+		%Pct_calc( var=PctPoorChildrenH, label=% children Hispanic in poverty, num=PopPoorChildrenH, den=ChildrenPovertyDefinedH, years=&_years. )	
+		%Pct_calc( var=PctPoorChildrenIOM, label=% children Indigenous-Other-Multi in poverty, num=PopPoorChildrenIOM, den=ChildrenPovertyDefIOM, years=&_years. )	
 	    %Pct_calc( var=PctPoorChildrenAIOM, label=% children All-Other in poverty, num=PopPoorChildrenAIOM, den=ChildrenPovertyDefAIOM, years=&_years. )
 
     %Moe_prop_a( var=PctPoorChildren_m_&_years., mult=100, num=PopPoorChildren_&_years., den=ChildrenPovertyDefined_&_years., 
@@ -831,10 +881,13 @@ data region_agg ;
 	                       num_moe=mPopPoorChildrenW_&_years., den_moe=mChildrenPovertyDefinedW_&_years., label_moe =% children NH-White in poverty MOE &y_lbl.);
 
 	    %Moe_prop_a( var=PctPoorChildrenH_m_&_years., mult=100, num=PopPoorChildrenH_&_years., den=ChildrenPovertyDefinedH_&_years., 
-	                       num_moe=mPopPoorChildrenH_&_years., den_moe=mChildrenPovertyDefinedH_&_years., label_moe =% children Asian in poverty MOE &y_lbl.);
+	                       num_moe=mPopPoorChildrenH_&_years., den_moe=mChildrenPovertyDefinedH_&_years., label_moe =% children Hispanic in poverty MOE &y_lbl.);
 
 	    %Moe_prop_a( var=PctPoorChildrenA_m_&_years., mult=100, num=PopPoorChildrenA_&_years., den=ChildrenPovertyDefinedA_&_years., 
-	                       num_moe=mPopPoorChildrenA_&_years., den_moe=mChildrenPovertyDefinedA_&_years., label_moe =% children Hispanic in poverty MOE &y_lbl.);
+	                       num_moe=mPopPoorChildrenA_&_years., den_moe=mChildrenPovertyDefinedA_&_years., label_moe =% children Asian-PI in poverty MOE &y_lbl.);
+
+		%Moe_prop_a( var=PctPoorChildrenIOM_m_&_years., mult=100, num=PopPoorChildrenIOM_&_years., den=ChildrenPovertyDefIOM_&_years., 
+	                       num_moe=mPopPoorChildrenIOM_&_years., den_moe=mChildrenPovertyDefIOM_&_years., label_moe =% children Indigenous-Other-Multi in poverty MOE &y_lbl.);
 
 		%Moe_prop_a( var=PctPoorChildrenAIOM_m_&_years., mult=100, num=PopPoorChildrenAIOM_&_years., den=ChildrenPovertyDefAIOM_&_years., 
 	                       num_moe=mPopPoorChildrenAIOM_&_years., den_moe=mChildrenPovertyDefAIOM_&_years., label_moe =% children All-Other in poverty MOE &y_lbl.);
@@ -862,7 +915,7 @@ data region_agg ;
                         
     %dollar_convert( AvgHshldIncome_m_&_years., AvgHshldIncAdj_m_&_years., 2015, &inc_dollar_yr )
 
-	%do r=1 %to 5;
+	%do r=1 %to 6;
 
 		%let race=%scan(&racelist.,&r.," ");
 		%let name=%scan(&racename.,&r.," ");
@@ -898,15 +951,18 @@ data region_agg ;
 	  AvgHshldIncAdjW_m_&_years. = "Average household income (adjusted), Non-Hispanic White MOE, &y_lbl."
 	  AvgHshldIncAdjH_&_years. = "Average household income (adjusted), Hispanic/Latino, &y_lbl."
 	  AvgHshldIncAdjH_m_&_years. = "Average household income (adjusted), Hispanic/Latino MOE, &y_lbl."
-	  AvgHshldIncAdjA_&_years. = "Average household income (adjusted), Asian, &y_lbl."
-	  AvgHshldIncAdjA_m_&_years. = "Average household income (adjusted), Asian MOE, &y_lbl."
-	  AvgHshldIncAdjAIOM_&_years. = "Average household income (adjusted), All remaining groups other than Black, Non-Hispanic White, Asian, Hispanic, &y_lbl."
-	  AvgHshldIncAdjAIOM_m_&_years. = "Average household income (adjusted), All remaining groups other than Black, Non-Hispanic White, Asian MOE, Hispanic, &y_lbl."
+	  AvgHshldIncAdjA_&_years. = "Average household income (adjusted), Asian-PI, &y_lbl."
+	  AvgHshldIncAdjA_m_&_years. = "Average household income (adjusted), Asian-PI MOE, &y_lbl."
+	  AvgHshldIncAdjIOM_&_years. = "Average household income (adjusted), Indigenous, Other or Multiple race, &y_lbl."
+	  AvgHshldIncAdjIOM_m_&_years. = "Average household income (adjusted), Indigenous, Other or Multiple Race MOE, &y_lbl."
+	  AvgHshldIncAdjAIOM_&_years. = "Average household income (adjusted), All remaining groups other than Black, Non-Hispanic White, Hispanic, &y_lbl."
+	  AvgHshldIncAdjAIOM_m_&_years. = "Average household income (adjusted), All remaining groups other than Black, Non-Hispanic White, Hispanic, MOE, &y_lbl."
 	  AvgHshldIncome_m_&_years. = "Average household income, MOE, &y_lbl."
 	  AvgHshldIncomeB_m_&_years. = "Average household income, Black/African American, MOE, &y_lbl."
 	  AvgHshldIncomeW_m_&_years. = "Average household income, Non-Hispanic White, MOE, &y_lbl."
 	  AvgHshldIncomeH_m_&_years. = "Average household income, Hispanic/Latino, MOE, &y_lbl."
-	  AvgHshldIncomeA_m_&_years. = "Average household income, Asian, MOE, &y_lbl."
+	  AvgHshldIncomeA_m_&_years. = "Average household income, Asian-PI, MOE, &y_lbl."
+	  AvgHshldIncomeIOM_m_&_years. = "Average household income, Indigenous, Other or Multiple Race  MOE, &y_lbl."
 	  AvgHshldIncomeAIOM_m_&_years. = "Average household income, All remaining groups other than Black, Non-Hispanic White, Hispanic, MOE, &y_lbl."
       ;
 
@@ -926,7 +982,7 @@ data region_agg ;
     %Moe_prop_a( var=PctOwnerOccupiedHU_m_&_years., mult=100, num=NumOwnerOccupiedHU_&_years., den=NumOccupiedHsgUnits_&_years., 
                        num_moe=mNumOwnerOccupiedHU_&_years., den_moe=mNumOccupiedHsgUnits_&_years., label_moe =Homeownership rate (%) MOE &y_lbl.);
 
-	%do r=1 %to 5;
+	%do r=1 %to 6;
 
 		%let race=%scan(&racelist.,&r.," ");
 		%let name=%scan(&racename.,&r.," ");
@@ -951,7 +1007,7 @@ data region_agg ;
 	%Moe_prop_a( var=PctMovedDiffCnty_m_&_years., mult=100, num=PopMovedDiffCnty_&_years., den=PopWithRace_&_years., 
                        num_moe=mPopMovedDiffCnty_&_years., den_moe=mPopWithRace_&_years., label_moe =% persons who moved from a different couny in the last year MOE &y_lbl.);
 
-	%do r=1 %to 5;
+	%do r=1 %to 6;
 
 		%let race=%scan(&racelist.,&r.," ");
 		%let name=%scan(&racename.,&r.," ");
@@ -1036,10 +1092,15 @@ data donotroundunemp;
 		%Moe_prop_a( var=PctUnemployedH_m_&_years., mult=100, num=PopUnemployedH_&_years., den=PopInCivLaborForceH_&_years., 
 	                       num_moe=mPopUnemployedH_&_years., den_moe=mPopInCivLaborForceH_&_years., label_moe =Hispanic Unemployment rate (%) MOE &y_lbl.);
 
-	%Pct_calc( var=PctUnemployedA, label=Asian Unemployment rate (%), num=PopUnemployedA, den=PopInCivLaborForceA, years=&_years. )
+	%Pct_calc( var=PctUnemployedA, label=Asian-PI Unemployment rate (%), num=PopUnemployedA, den=PopInCivLaborForceA, years=&_years. )
 
 		%Moe_prop_a( var=PctUnemployedA_m_&_years., mult=100, num=PopUnemployedA_&_years., den=PopInCivLaborForceA_&_years., 
-	                       num_moe=mPopUnemployedA_&_years., den_moe=mPopInCivLaborForceA_&_years., label_moe =Asian Unemployment rate (%) MOE &y_lbl.);
+	                       num_moe=mPopUnemployedA_&_years., den_moe=mPopInCivLaborForceA_&_years., label_moe =Asian-PI Unemployment rate (%) MOE &y_lbl.);
+
+	%Pct_calc( var=PctUnemployedIOM, label=Indigenous-Other-Multi Unemployment rate (%), num=PopUnemployedIOM, den=PopInCivLaborForceIOM, years=&_years. )
+
+		%Moe_prop_a( var=PctUnemployedIOM_m_&_years., mult=100, num=PopUnemployedIOM_&_years., den=PopInCivLaborForceIOM_&_years., 
+	                       num_moe=mPopUnemployedIOM_&_years., den_moe=mPopInCivLaborForceIOM_&_years., label_moe =Indigenous-Other-Multi Unemployment rate (%) MOE &y_lbl.);
 
 	%Pct_calc( var=PctUnemployedAIOM, label=All-Other Unemployment rate (%), num=PopUnemployedAIOM, den=PopInCivLaborForceAIOM, years=&_years. )
 
@@ -1057,27 +1118,28 @@ proc transpose data=donotroundunemp out=profile_tabs_region ;/*(label="DC Equity
 
 		PctPopUnder18Years_: PctPopUnder18YearsW_: 
 		PctPopUnder18YearsB_: PctPopUnder18YearsH_:
-		PctPopUnder18YearsA_: 
+		PctPopUnder18YearsA_: PctPopUnder18YearsIOM_: 
 
 		PctPop18_34Years_: PctPop18_34YearsW_: 
 		PctPop18_34YearsB_: PctPop18_34YearsH_:
-		PctPop18_34YearsA_: 
+		PctPop18_34YearsA_: PctPop18_34YearsIOM_:
 
 		PctPop35_64Years_: PctPop35_64YearsW_: 
 		PctPop35_64YearsB_: PctPop35_64YearsH_:
-		PctPop35_64YearsA_: 
+		PctPop35_64YearsA_: PctPop18_34YearsIOM_:
 
 		PctPop65andOverYears_: PctPop65andOverYrs_:
 		PctPop65andOverYearsW_: PctPop65andOverYrsW_:
 		PctPop65andOverYearsB_: PctPop65andOverYrsB_:
 		PctPop65andOverYearsH_: PctPop65andOverYrsH_:
 		PctPop65andOverYearsA_: PctPop65andOverYrsA_:
-
+		PctPop65andOverYearsIOM_: PctPop65andOverYrsIOM_:
 
 		PctForeignBorn_: PctNativeBorn_: 
 
 		PctForeignBornB_: PctForeignBornW_:
 		PctForeignBornH_: PctForeignBornA_: 
+		PctForeignBornIOM_: PctForeignBornIOM_: 
 
 		PctOthLang_:
 
@@ -1086,12 +1148,14 @@ proc transpose data=donotroundunemp out=profile_tabs_region ;/*(label="DC Equity
 		Pct25andOverWoutHSB_:
 		Pct25andOverWoutHSH_:
 		Pct25andOverWoutHSA_:
+		Pct25andOverWoutHSIOM_:
 		Pct25andOverWoutHSFB_:
 		Pct25andOverWoutHSNB_:
 
 		Gap25andOverWoutHSB_:
 		Gap25andOverWoutHSH_:
 		Gap25andOverWoutHSA_:
+		Gap25andOverWoutHSIOM_:
 		Gap25andOverWoutHSFB_:
 
 		Pct25andOverWHS_:
@@ -1099,12 +1163,14 @@ proc transpose data=donotroundunemp out=profile_tabs_region ;/*(label="DC Equity
 		Pct25andOverWHSB_:
 		Pct25andOverWHSH_:
 		Pct25andOverWHSA_:
+		Pct25andOverWHSIOM_:
 		Pct25andOverWHSFB_:
 		Pct25andOverWHSNB_:
 
 		Gap25andOverWHSB_:
 		Gap25andOverWHSH_:
 		Gap25andOverWHSA_:
+		Gap25andOverWHSIOM_:
 		Gap25andOverWHSFB_:
 		
 		Pct25andOverWSC_:
@@ -1112,12 +1178,14 @@ proc transpose data=donotroundunemp out=profile_tabs_region ;/*(label="DC Equity
 		Pct25andOverWSCB_:
 		Pct25andOverWSCH_:
 		Pct25andOverWSCA_:
+		Pct25andOverWSCIOM_:
 		Pct25andOverWSCFB_:
 		Pct25andOverWSCNB_:
 
 		Gap25andOverWSCB_:
 		Gap25andOverWSCH_:
 		Gap25andOverWSCA_:
+		Gap25andOverWSCIOM_:
 		Gap25andOverWSCFB_:
 		
 		PctPoorPersons_:
@@ -1125,11 +1193,13 @@ proc transpose data=donotroundunemp out=profile_tabs_region ;/*(label="DC Equity
 		PctPoorPersonsB_:
 		PctPoorPersonsH_:
 		PctPoorPersonsA_:
+		PctPoorPersonsIOM_:
 		PctPoorPersonsFB_:
 
 		GapPoorPersonsB_:
 		GapPoorPersonsH_:
 		GapPoorPersonsA_:
+		GapPoorPersonsIOM_:
 		GapPoorPersonsFB_:
 
 		PctPoorChildren_:
@@ -1137,150 +1207,179 @@ proc transpose data=donotroundunemp out=profile_tabs_region ;/*(label="DC Equity
 		PctPoorChildrenB_:
 		PctPoorChildrenH_:
 		PctPoorChildrenA_:
+		PctPoorChildrenIOM_:
 
 		PctFamilyLT75000_:
 		PctFamilyLT75000W_:
 		PctFamilyLT75000B_:
 		PctFamilyLT75000H_:
 		PctFamilyLT75000A_:
+		PctFamilyLT75000IOM_:
 
 		GapFamilyLT75000B_:
 		GapFamilyLT75000H_:
 		GapFamilyLT75000A_:
+		GapFamilyLT75000IOM_:
 
 		PctFamilyGT200000_:
 		PctFamilyGT200000W_:
 		PctFamilyGT200000B_:
 		PctFamilyGT200000H_:
 		PctFamilyGT200000A_:
+		PctFamilyGT200000IOM_:
 
 		AvgHshldIncAdj_:
 		AvgHshldIncAdjW_:
 		AvgHshldIncAdjB_:
 		AvgHshldIncAdjH_:
 		AvgHshldIncAdjA_:
+		AvgHshldIncAdjIOM_:
 		
 		Pct16andOverEmploy_:
 		Pct16andOverEmployW_:
 		Pct16andOverEmployB_:
 		Pct16andOverEmployH_:
 		Pct16andOverEmployA_:
+		Pct16andOverEmployIOM_:
 
 		Gap16andOverEmployB_:
 		Gap16andOverEmployH_:
 		Gap16andOverEmployA_:
+		Gap16andOverEmployIOM_:
 
 		PctEmployed16to64_:
 		PctEmployed16to64W_:
 		PctEmployed16to64B_:
 		PctEmployed16to64H_:
 		PctEmployed16to64A_:
+		PctEmployed16to64IOM_:
 
 		GapEmployed16to64B_:
 		GapEmployed16to64H_:
 		GapEmployed16to64A_:
+		GapEmployed16to64IOM_:
 
 		PctUnemployed_:
 		PctUnemployedW_:
 		PctUnemployedB_:
 		PctUnemployedH_:
 		PctUnemployedA_:
+		PctUnemployedIOM_:
 
 		GapUnemployedB_:
 		GapUnemployedH_:
 		GapUnemployedA_:
+		GapUnemployedIOM_:
 
 		Pct16andOverWages_:
 		Pct16andOverWagesW_:
 		Pct16andOverWagesB_:
 		Pct16andOverWagesH_:
 		Pct16andOverWagesA_:
+		Pct16andOverWagesIOM_:
 
 		Gap16andOverWagesB_:
 		Gap16andOverWagesH_:
 		Gap16andOverWagesA_:
+		Gap16andOverWagesIOM_:
 
 		Pct16andOverWorkFT_:
 		Pct16andOverWorkFTW_:
 		Pct16andOverWorkFTB_:
 		Pct16andOverWorkFTH_:
 		Pct16andOverWorkFTA_:
+		Pct16andOverWorkFTIOM_:
 
 		Gap16andOverWorkFTB_:
 		Gap16andOverWorkFTH_:
 		Gap16andOverWorkFTA_:
+		Gap16andOverWorkFTIOM_:
+
 
 		PctWorkFTLT35k_:
 		PctWorkFTLT35kW_:
 		PctWorkFTLT35kB_:
 		PctWorkFTLT35kH_:
 		PctWorkFTLT35kA_:
+		PctWorkFTLT35kIOM_:
 
 		GapWorkFTLT35kB_:
 		GapWorkFTLT35kH_:
 		GapWorkFTLT35kA_:
+		GapWorkFTLT35kIOM_:
 
 		PctWorkFTLT75k_:
 		PctWorkFTLT75kW_:
 		PctWorkFTLT75kB_:
 		PctWorkFTLT75kH_:
 		PctWorkFTLT75kA_:
+		PctWorkFTLT75kIOM_:
 
 		GapWorkFTLT75kB_:
 		GapWorkFTLT75kH_:
 		GapWorkFTLT75kA_:
+		GapWorkFTLT75kIOM_:
 
 		PctEmployedMngmt_:
 		PctEmployedMngmtW_:
 		PctEmployedMngmtB_:
 		PctEmployedMngmtH_:
 		PctEmployedMngmtA_:
+		PctEmployedMngmtIOM_:
 
 		PctEmployedServ_:
 		PctEmployedServW_:
 		PctEmployedServB_:
 		PctEmployedServH_:
 		PctEmployedServA_:
+		PctEmployedServIOM_:
 
 		PctEmployedSales_:
 		PctEmployedSalesW_:
 		PctEmployedSalesB_:
 		PctEmployedSalesH_:
 		PctEmployedSalesA_:
+		PctEmployedSalesIOM_:
 
 		PctEmployedNatRes_:
 		PctEmployedNatResW_:
 		PctEmployedNatResB_:
 		PctEmployedNatResH_:
 		PctEmployedNatResA_:
+		PctEmployedNatResIOM_:
 
 		PctEmployedProd_:
 		PctEmployedProdW_:
 		PctEmployedProdB_:
 		PctEmployedProdH_:
 		PctEmployedProdA_:
+		PctEmployedProdIOM_:
 
 		PctOwnerOccupiedHU_:
 		PctOwnerOccupiedHUW_:
 		PctOwnerOccupiedHUB_:
 		PctOwnerOccupiedHUH_:
 		PctOwnerOccupiedHUA_:
+		PctOwnerOccupiedHUIOM_:
 
 		GapOwnerOccupiedHUB_:
 		GapOwnerOccupiedHUH_:
 		GapOwnerOccupiedHUA_:
+		GapOwnerOccupiedHUIOM_:
 
 		PctMovedLastYear_:
 		PctMovedLastYearW_:
 		PctMovedLastYearB_:
 		PctMovedLastYearH_:
 		PctMovedLastYearA_:
+		PctMovedLastYearIOM_:
 
 		PctMovedDiffCnty_:
 		PctMovedDiffCntyW_:
 		PctMovedDiffCntyB_:
 		PctMovedDiffCntyH_:
 		PctMovedDiffCntyA_:
+		PctMovedDiffCntyIOM_:
 	 	;
 
 	id county; 
