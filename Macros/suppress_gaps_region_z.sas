@@ -11,7 +11,8 @@
 			   and if estimates are suppressed (see suppress_vars.sas).
 
 Modification: 7/31/17 RP - added correct statistical significance testing 
-			  9/23/17 LH - corrected program by creating new macro so it remove vars with "c" which aren't in the region file. 
+		9/23/17 LH - corrected program by creating new macro so it remove vars with "c" which aren't in the region file. 
+		02/24/22 LH - Updated to 6 race categories
 **************************************************************************/
 
 %macro suppress_gaps_region_z;
@@ -68,7 +69,7 @@ Modification: 7/31/17 RP - added correct statistical significance testing
 				PctOwnerOccupiedHUW_m_&_years.
 				;
 
-		%do r=1 %to 5;
+		%do r=1 %to 6;
 
 		%let race=%scan(&racelist.,&r.," ");
 		%let name=%scan(&racename.,&r.," ");

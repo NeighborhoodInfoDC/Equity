@@ -10,11 +10,13 @@
  Description:  Suppresses racial gaps if inverse to equity indicator 
 			   (e.g. for poverty, gaps should be negative to indicate reduction in poverty; 
 			    gaps would be suppressed if values were positive)
+			    
+ Modifications: LH 02/24/22 Update for 6 race categories
 **************************************************************************/
 
 %macro suppress_gaps_negative;
 
-		%do r=1 %to 5;
+		%do r=1 %to 6;
 
 		%let race=%scan(&racelist.,&r.," ");
 		%let name=%scan(&racename.,&r.," ");
