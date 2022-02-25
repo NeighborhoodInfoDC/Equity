@@ -9,12 +9,14 @@
  
  Description:  Suppresses by-race variable estimates and MOEs 
 			   where coefficient of variation is greater than 30%
+			   
+Modifications : LH 02/24/22 Update for 6 race categories
 **************************************************************************/
 
 
 %macro suppress_vars;
 
-%do r=1 %to 5;
+%do r=1 %to 6;
 
 	%let race=%scan(&racelist.,&r.," ");
 	%let name=%scan(&racename.,&r.," ");
