@@ -14,6 +14,7 @@
 	 	2/09/20 LH Update for 2014-18 ACS and add &_years to run for various years.
 		12/22/20 LH Update for 2015-19 ACS and \\sas1\
 		02/24/22 LH Update to add IOM indicators
+		02/28/22 LH Add additional counties - Charles and Frederick, changed output data name, add finalize data set macro
  **************************************************************************/
 
 %include "\\sas1\DCDATA\SAS\Inc\StdLocal.sas";
@@ -31,12 +32,15 @@
 
 %let _years=2015_19;
 %let y_lbl = %sysfunc( translate( &_years., '-', '_' ) );
+%let revisions=New file. Data are rounded to nearest integer (except unemployment);
 
 
 ** County formats **;
 proc format;
 value $county
 	"11001" = "Washington DC"
+	"24017" = "Charles" 
+	"24021" = "Frederick" 
 	"24031" = "Montgomery"
 	"24033" = "Prince Georges"
 	"51510" = "Alexandria"
@@ -57,7 +61,7 @@ data allcounty;
 	set equity.Profile_acs_&_years._dc_regcnt 
 		equity.Profile_acs_&_years._md_regcnt 
 		equity.Profile_acs_&_years._va_regcnt;
-	if county in ("11001","24031","24033","51510","51013","51610","51059","51600","51107","51153","51683","51685");
+	if county in ("11001","24017","24021","24031","24033","51510","51013","51610","51059","51600","51107","51153","51683","51685");
 	format county county.;
 
 	
@@ -1045,17 +1049,19 @@ data Profile_acs_region;
 	order=.;
 	if county=" " then order=1;
 	if county="11001" then order=2;
-	if county="24031" then order=3;
-	if county="24033" then order=4;
-	if county="51510" then order=5;
-	if county="51013" then order=6;
+	if county="24017" then order=3;
+	if county="24021" then order=4; 
+	if county="24031" then order=5;
+	if county="24033" then order=6;
+	if county="51510" then order=7;
+	if county="51013" then order=8;
 	if county="51610" then order=9;
-	if county="51059" then order=7;
-	if county="51600" then order=8;
-	if county="51107" then order=10;
-	if county="51153" then order=11;
-	if county="51683" then order=12; 
-	if county="51685" then order=13; 
+	if county="51059" then order=10;
+	if county="51600" then order=11;
+	if county="51107" then order=12;
+	if county="51153" then order=13;
+	if county="51683" then order=14; 
+	if county="51685" then order=15; 
 	
 
 	drop cv: p n x a_se b_se: uPct: uAvg: z c_se d_se den denA denAIOM denB denH denW f k lAvg: lPct: num numA numAIOM numB numH numW zA zAIOM zB zH zW ;
@@ -1107,8 +1113,17 @@ data donotroundunemp;
 		%Moe_prop_a( var=PctUnemployedAIOM_m_&_years., mult=100, num=PopUnemployedAIOM_&_years., den=PopInCivLaborForceAIOM_&_years., 
 	                       num_moe=mPopUnemployedAIOM_&_years., den_moe=mPopInCivLaborForceAIOM_&_years., label_moe =All-Other Unemployment rate (%) MOE &y_lbl.);
 run;
-
-** Transpose for final output **;
+** save data set for use in other repos;
+%Finalize_data_set( 
+		data=donotroundunemp,
+		out=Regional_equity_gaps_acs_&_years.,
+		outlib=Equity,
+		label="DC Regional ACS Equity Indicators and Gaps by Race/Ethnicity, County  &_years.",
+		sortby=county,
+		restrictions=None,
+		revisions=&revisions.
+		)
+** Transpose for final excel output **;
 proc transpose data=donotroundunemp out=profile_tabs_region ;/*(label="DC Equity Indicators and Gap Calculations for Equity Profile City & Ward, &y_lbl."); */
 	var TotPop_tr:
 
@@ -1388,7 +1403,7 @@ run;
 
 ** Export final file **;
 proc export data=profile_tabs_region
-	outfile="&_dcdata_default_path.\Equity\Prog\profile_tabs_region_acs_&_years..csv"
+	outfile="&_dcdata_default_path.\Equity\Prog\profile_tabs_HITregion_acs_&_years..csv"
 	dbms=csv replace;
 	run;
 
