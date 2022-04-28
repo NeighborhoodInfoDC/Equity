@@ -1143,11 +1143,12 @@ proc transpose data=donotroundunemp out=profile_tabs_region ;/*(label="DC Equity
 		PctPop35_64YearsB_: PctPop35_64YearsH_:
 		PctPop35_64YearsIOM_: PctPop35_64YearsW_:
 
-		PctPop65andOverYears_: 
-		PctPop65andOverYearsA_:
-		PctPop65andOverYearsB_: 
-		PctPop65andOverYearsH_: 
-		PctPop65andOverYearsIOM_: PctPop65andOverYearsW_:
+		PctPop65andOverYears_: PctPop65andOverYrs_:
+		PctPop65andOverYearsA_: PctPop65andOverYrsA_: 
+		PctPop65andOverYearsB_: PctPop65andOverYrsB_:
+		PctPop65andOverYearsH_: PctPop65andOverYrsH_: 
+		PctPop65andOverYearsIOM_: PctPop65andOverYrsIOM_:
+		PctPop65andOverYearsW_: PctPop65andOverYrsW_:
 
 		PctForeignBorn_: PctNativeBorn_: 
 
