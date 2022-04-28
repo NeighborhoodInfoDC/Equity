@@ -1355,7 +1355,7 @@ proc transpose data=donotroundunemp out=profile_tabs_region ;/*(label="DC Equity
 		PctEmployedSalesW_:
 
 		PctEmployedNatRes_:
-		PctEmployedNatResA_
+		PctEmployedNatResA_:
 		PctEmployedNatResB_:
 		PctEmployedNatResH_:
 		PctEmployedNatResIOM_:
