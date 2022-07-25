@@ -15,7 +15,7 @@
 				02/09/20 LH Update for 2014-18 ACS
 				12/22/20 LH Update for 2015-19 ACS and update header to \\sas1\
 				02/18/22 LH Update to break out IOM for all indicators
-
+                07/25/22 YS add gender breakouts for employment vars by race for Sadie
  Note: MOEs for AIOM average household income and average adjusted are blank because they are suppressed by the Census.
  **************************************************************************/
 
@@ -401,6 +401,22 @@
 
 	%Moe_prop_a( var=PctEmployedProd_m_&_years., mult=100, num=PopEmployedProd_&_years., den=PopEmployedByOcc_&_years., 
                        num_moe=mPopEmployedProd_&_years., den_moe=mPopEmployedByOcc_&_years., label_moe =% persons employed in production transportation and material moving occupations MOE &y_lbl.);
+
+/*gender breakout for employment*/
+
+	%Pct_calc( var=PctEmployed16to64_M, label=% Male employed between 16 and 64 years old, num=Pop16_64Employed_M, den=Pop16_64years_M, years=&_years. )
+
+	%Moe_prop_a( var=PctEmployed16to64_M_m_&_years., mult=100, num=Pop16_64Employed_M_&_years., den=Pop16_64years_M_&_years., 
+                       num_moe=mPop16_64Employed_M_&_years., den_moe=mPop16_64years_M_&_years., label_moe =% male employed between 16 and 64 years old MOE &y_lbl.);
+
+	%Pct_calc( var=PctEmployed16to64_F, label=% Female employed between 16 and 64 years old, num=Pop16_64Employed_F, den=Pop16_64years_F, years=&_years. )
+
+	%Moe_prop_a( var=PctEmployed16to64_F_m_&_years., mult=100, num=Pop16_64Employed_F_&_years., den=Pop16_64years_F_&_years., 
+                       num_moe=mPop16_64Employed_F_&_years., den_moe=mPop16_64years_F_&_years., label_moe =% female employed between 16 and 64 years old MOE &y_lbl.);
+
+
+
+
 
 	%do r=1 %to 6;
 
