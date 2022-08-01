@@ -697,9 +697,6 @@
                        num_moe=mPopEmployedProd&race._F_&_years., den_moe=mPopEmployedByOcc&race._F_&_years., label_moe =% female &race. employed in production transportation and material moving occupations MOE &y_lbl.);
 
 
-
-
-
 	%end;
 
 
