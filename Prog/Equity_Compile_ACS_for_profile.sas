@@ -408,7 +408,7 @@
 
 	%Pct_calc( var=PctEmp16to64_ML, label=% Male employed between 16 and 64 years old, num=Pop16_64Employed_M, den=Pop16_64years_M, years=&_years. )
 
-	%Moe_prop_a( var=PctEmp16to64_M_m_&_years., mult=100, num=Pop16_64Employed_M_&_years., den=Pop16_64years_M_&_years., 
+	%Moe_prop_a( var=PctEmp16to64_ML_m_&_years., mult=100, num=Pop16_64Employed_M_&_years., den=Pop16_64years_M_&_years., 
                        num_moe=mPop16_64Employed_M_&_years., den_moe=mPop16_64years_M_&_years., label_moe =% male employed between 16 and 64 years old MOE &y_lbl.);
 
 	%Pct_calc( var=PctEmp16to64_F, label=% Female employed between 16 and 64 years old, num=Pop16_64Employed_F, den=Pop16_64years_F, years=&_years. )
@@ -419,7 +419,7 @@
 
 	%Pct_calc( var=PctWorkFTLT75k_ML, label=% male employed full time with earnings less than 75000, num=PopWorkFTLT75k_M, den=PopWorkFT_M, years=&_years. )
 
-	%Moe_prop_a( var=PctWorkFTLT75k_M_m_&_years., mult=100, num=PopWorkFTLT75k_M_&_years., den=PopWorkFT_M_&_years., 
+	%Moe_prop_a( var=PctWorkFTLT75k_ML_m_&_years., mult=100, num=PopWorkFTLT75k_M_&_years., den=PopWorkFT_M_&_years., 
                        num_moe=mPopWorkFTLT75k_M_&_years., den_moe=mPopWorkFT_M_&_years., label_moe =% male employed full time with earnings less than 75000 MOE &y_lbl.);
 
 	%Pct_calc( var=PctWorkFTLT75k_F, label=% female employed full time with earnings less than 75000, num=PopWorkFTLT75k_F, den=PopWorkFT_F, years=&_years. )
@@ -430,7 +430,7 @@
 
 	%Pct_calc( var=PctWorkFTLT35k_ML, label=% male employed full time with earnings less than 35000, num=PopWorkFTLT35k_M, den=PopWorkFT_M, years=&_years. )
 
-	%Moe_prop_a( var=PctWorkFTLT35k_M_m_&_years., mult=100, num=PopWorkFTLT35k_M_&_years., den=PopWorkFT_M_&_years., 
+	%Moe_prop_a( var=PctWorkFTLT35k_ML_m_&_years., mult=100, num=PopWorkFTLT35k_M_&_years., den=PopWorkFT_M_&_years., 
                        num_moe=mPopWorkFTLT35k_M_&_years., den_moe=mPopWorkFT_M_&_years., label_moe =% male employed full time with earnings less than 35000 MOE &y_lbl.);
 
 	%Pct_calc( var=PctWorkFTLT35k_F, label=% female employed full time with earnings less than 35000, num=PopWorkFTLT35k_F, den=PopWorkFT_F, years=&_years. )
@@ -440,7 +440,7 @@
 
     %Pct_calc( var=Pct16plusWorkFT_ML, label=% male employed full time, num=PopWorkFT_M, den=Pop16andOverYears_M, years=&_years. )
 
-    %Moe_prop_a( var=Pct16plusWorkFT_M_m_&_years., mult=100, num=PopWorkFT_M_&_years., den=Pop16andOverYears_M_&_years., 
+    %Moe_prop_a( var=Pct16plusWorkFT_ML_m_&_years., mult=100, num=PopWorkFT_M_&_years., den=Pop16andOverYears_M_&_years., 
                        num_moe=mPopWorkFT_M_&_years., den_moe=mPop16andOverYears_M_&_years., label_moe =% male employed full time MOE &y_lbl.);
 
    %Pct_calc( var=Pct16plusWorkFT_F, label=% female employed full time, num=PopWorkFT_F, den=Pop16andOverYears_F, years=&_years. )
@@ -450,7 +450,7 @@
 
    %Pct_calc( var=PctWorkEarn_ML, label=% male 16 and Older with Wage Earnings in the Past 12 Months, num=PopWorkEarn_M, den=Pop16andOverYears_M, years=&_years. )
 
-    %Moe_prop_a( var=PctWorkEarn_M_m_&_years., mult=100, num=PopWorkEarn_M_&_years., den=Pop16andOverYears_M_&_years., 
+    %Moe_prop_a( var=PctWorkEarn_ML_m_&_years., mult=100, num=PopWorkEarn_M_&_years., den=Pop16andOverYears_M_&_years., 
                        num_moe=mPopWorkEarn_M_&_years., den_moe=mPop16andOverYears_M_&_years., label_moe =% male 16 and Older with Wage Earnings in the Past 12 Months MOE &y_lbl.);
 
 	%Pct_calc( var=PctWorkEarn_F, label=% female 16 and Older with Wage Earnings in the Past 12 Months, num=PopWorkEarn_F, den=Pop16andOverYears_F, years=&_years. )
@@ -460,7 +460,7 @@
 
 	%Pct_calc( var=PctUnemployed_ML, label=Unemployment rate male (%), num=PopUnemployed_M, den=PopInCivLaborForce_M, years=&_years. )
 
-	%Moe_prop_a( var=PctUnemployed_M_m_&_years., mult=100, num=PopUnemployed_M_&_years., den=PopInCivLaborForce_M_&_years., 
+	%Moe_prop_a( var=PctUnemployed_ML_m_&_years., mult=100, num=PopUnemployed_M_&_years., den=PopInCivLaborForce_M_&_years., 
 	                       num_moe=mPopUnemployed_M_&_years., den_moe=mPopInCivLaborForce_M_&_years., label_moe =Unemployment rate male (%) MOE &y_lbl.);
 
     %Pct_calc( var=PctUnemployed_F, label=Unemployment rate female (%), num=PopUnemployed_F, den=PopInCivLaborForce_F, years=&_years. )
@@ -471,27 +471,27 @@
 
 	%Pct_calc( var=PctEmpMngmt_ML, label=% male 16+ years old employed in management business science and arts occupations, num=PopEmployedMngmt_M, den=PopEmployedByOcc_M, years=&_years. )
 
-	%Moe_prop_a( var=PctEmpMngmt_M_m_&_years., mult=100, num=PopEmployedMngmt_M_&_years., den=PopEmployedByOcc_M_&_years., 
+	%Moe_prop_a( var=PctEmpMngmt_ML_m_&_years., mult=100, num=PopEmployedMngmt_M_&_years., den=PopEmployedByOcc_M_&_years., 
                        num_moe=mPopEmployedMngmt_M_&_years., den_moe=mPopEmployedByOcc_M_&_years., label_moe =% male 16+ years old employed in management business science and arts occupations MOE &y_lbl.);
 
 	%Pct_calc( var=PctEmpServ_ML, label=% male 16+ years old employed in service occupations, num=PopEmployedServ_M, den=PopEmployedByOcc_M, years=&_years. )
 
-	%Moe_prop_a( var=PctEmpServ_M_m_&_years., mult=100, num=PopEmployedServ_M_&_years., den=PopEmployedByOcc_M_&_years., 
+	%Moe_prop_a( var=PctEmpServ_ML_m_&_years., mult=100, num=PopEmployedServ_M_&_years., den=PopEmployedByOcc_M_&_years., 
                        num_moe=mPopEmployedServ_M_&_years., den_moe=mPopEmployedByOcc_M_&_years., label_moe =% male 16+ years old employed in service occupations MOE &y_lbl.);
 
 	%Pct_calc( var=PctEmpSales_ML, label=% male 16+ years old employed in sales and office occupations, num=PopEmployedSales_M, den=PopEmployedByOcc_M, years=&_years. )
 
-	%Moe_prop_a( var=PctEmpSales_M_m_&_years., mult=100, num=PopEmployedSales_M_&_years., den=PopEmployedByOcc_M_&_years., 
+	%Moe_prop_a( var=PctEmpSales_ML_m_&_years., mult=100, num=PopEmployedSales_M_&_years., den=PopEmployedByOcc_M_&_years., 
                        num_moe=mPopEmployedSales_M_&_years., den_moe=mPopEmployedByOcc_M_&_years., label_moe =% male 16+ years old employed in sales and office occupations MOE &y_lbl.);
 
 	%Pct_calc( var=PctEmpNatRes_ML, label=% male 16+ years old employed in natural resources construction and maintenance occupations, num=PopEmployedNatRes_M, den=PopEmployedByOcc_M, years=&_years. )
 
-	%Moe_prop_a( var=PctEmpNatRes_M_m_&_years., mult=100, num=PopEmployedNatRes_M_&_years., den=PopEmployedByOcc_M_&_years., 
+	%Moe_prop_a( var=PctEmpNatRes_ML_m_&_years., mult=100, num=PopEmployedNatRes_M_&_years., den=PopEmployedByOcc_M_&_years., 
                        num_moe=mPopEmployedNatRes_M_&_years., den_moe=mPopEmployedByOcc_M_&_years., label_moe =% male 16+ years old employed in natural resources construction and maintenance occupations MOE &y_lbl.);
 
 	%Pct_calc( var=PctEmpProd_ML, label=% male employed in production transportation and material moving occupations, num=PopEmployedProd_M, den=PopEmployedByOcc_M, years=&_years. )
 
-	%Moe_prop_a( var=PctEmpProd_M_m_&_years., mult=100, num=PopEmployedProd_M_&_years., den=PopEmployedByOcc_M_&_years., 
+	%Moe_prop_a( var=PctEmpProd_ML_m_&_years., mult=100, num=PopEmployedProd_M_&_years., den=PopEmployedByOcc_M_&_years., 
                        num_moe=mPopEmployedProd_M_&_years., den_moe=mPopEmployedByOcc_M_&_years., label_moe =% male employed in production transportation and material moving occupations MOE &y_lbl.);
 
     %Pct_calc( var=PctEmpMngmt_F, label=% female 16+ years old employed in management business science and arts occupations, num=PopEmployedMngmt_F, den=PopEmployedByOcc_F, years=&_years. )
@@ -587,9 +587,9 @@
                        num_moe=mPopEmployedProd&race._&_years., den_moe=mPopEmployedByOcc&race._&_years., label_moe =% persons &rname. employed in production transportation and material moving occupations MOE &y_lbl.);
 
 /*gender breakout for employment*/
-	%Pct_calc( var=PctEmp16to64&race._M, label=% Male &rname. employed between 16 and 64 years old, num=Pop16_64Employed&race._M, den=Pop16_64years&race._M, years=&_years. )
+	%Pct_calc( var=PctEmp16to64&race._ML, label=% Male &rname. employed between 16 and 64 years old, num=Pop16_64Employed&race._M, den=Pop16_64years&race._M, years=&_years. )
 
-	%Moe_prop_a( var=PctEmp16to64&race._M_m_&_years., mult=100, num=Pop16_64Employed&race._M_&_years., den=Pop16_64years&race._M_&_years., 
+	%Moe_prop_a( var=PctEmp16to64&race._ML_m_&_years., mult=100, num=Pop16_64Employed&race._M_&_years., den=Pop16_64years&race._M_&_years., 
                        num_moe=mPop16_64Employed&race._M_&_years., den_moe=mPop16_64years&race._M_&_years., label_moe =% male &rname. employed between 16 and 64 years old MOE &y_lbl.);
 
 	%Pct_calc( var=PctEmp16to64&race._F, label=% Female &rname. employed between 16 and 64 years old, num=Pop16_64Employed_F, den=Pop16_64years_F, years=&_years. )
@@ -597,9 +597,9 @@
 	%Moe_prop_a( var=PctEmp16to64&race._F_m_&_years., mult=100, num=Pop16_64Employed&race._F_&_years., den=Pop16_64years&race._F_&_years., 
                        num_moe=mPop16_64Employed&race._F_&_years., den_moe=mPop16_64years&race._F_&_years., label_moe =% female &rname. employed between 16 and 64 years old MOE &y_lbl.);
 
-	%Pct_calc( var=PctWorkFTLT75k&race._M, label=% male &race. employed full time with earnings less than 75000, num=PopWorkFTLT75k&race._M, den=PopWorkFT&race._M, years=&_years. )
+	%Pct_calc( var=PctWorkFTLT75k&race._ML, label=% male &race. employed full time with earnings less than 75000, num=PopWorkFTLT75k&race._M, den=PopWorkFT&race._M, years=&_years. )
 
-	%Moe_prop_a( var=PctWorkFTLT75k&race._M_m_&_years., mult=100, num=PopWorkFTLT75k&race._M_&_years., den=PopWorkFT&race._M_&_years., 
+	%Moe_prop_a( var=PctWorkFTLT75k&race._ML_m_&_years., mult=100, num=PopWorkFTLT75k&race._M_&_years., den=PopWorkFT&race._M_&_years., 
                        num_moe=mPopWorkFTLT75k&race._M_&_years., den_moe=mPopWorkFT&race._M_&_years., label_moe =% male &race. employed full time with earnings less than 75000 MOE &y_lbl.);
 
 	%Pct_calc( var=PctWorkFTLT75k&race._F, label=% female &race. employed full time with earnings less than 75000, num=PopWorkFTLT75k&race._F, den=PopWorkFT&race._F, years=&_years. )
@@ -607,9 +607,9 @@
 	%Moe_prop_a( var=PctWorkFTLT75k&race._F_m_&_years., mult=100, num=PopWorkFTLT75k&race._F_&_years., den=PopWorkFT&race._F_&_years., 
                        num_moe=mPopWorkFTLT75k&race._F_&_years., den_moe=mPopWorkFT&race._F_&_years., label_moe =% female &race. employed full time with earnings less than 75000 MOE &y_lbl.);
 
-	%Pct_calc( var=PctWorkFTLT35k&race._M, label=% male &race. employed full time with earnings less than 35000, num=PopWorkFTLT35k&race._M, den=PopWorkFT&race._M, years=&_years. )
+	%Pct_calc( var=PctWorkFTLT35k&race._ML, label=% male &race. employed full time with earnings less than 35000, num=PopWorkFTLT35k&race._M, den=PopWorkFT&race._M, years=&_years. )
 
-	%Moe_prop_a( var=PctWorkFTLT35k&race._M_m_&_years., mult=100, num=PopWorkFTLT35k&race._M_&_years., den=PopWorkFT&race._M_&_years., 
+	%Moe_prop_a( var=PctWorkFTLT35k&race._ML_m_&_years., mult=100, num=PopWorkFTLT35k&race._M_&_years., den=PopWorkFT&race._M_&_years., 
                        num_moe=mPopWorkFTLT35k&race._M_&_years., den_moe=mPopWorkFT&race._M_&_years., label_moe =% male &race. employed full time with earnings less than 35000 MOE &y_lbl.);
 
 	%Pct_calc( var=PctWorkFTLT35k&race._F, label=% female &race. employed full time with earnings less than 35000, num=PopWorkFTLT35k&race._F, den=PopWorkFT&race._F, years=&_years. )
@@ -617,9 +617,9 @@
 	%Moe_prop_a( var=PctWorkFTLT35k&race._F_m_&_years., mult=100, num=PopWorkFTLT35k&race._F_&_years., den=PopWorkFT&race._F_&_years., 
                        num_moe=mPopWorkFTLT35k&race._F_&_years., den_moe=mPopWorkFT&race._F_&_years., label_moe =% female &race. employed full time with earnings less than 35000 MOE &y_lbl.);
 
-   %Pct_calc( var=Pct16plusWorkFT&race._M, label=% male &race. employed full time, num=PopWorkFT&race._M, den=Pop16andOverYears&race._M, years=&_years. )
+   %Pct_calc( var=Pct16plusWorkFT&race._ML, label=% male &race. employed full time, num=PopWorkFT&race._M, den=Pop16andOverYears&race._M, years=&_years. )
 
-    %Moe_prop_a( var=Pct16plusWorkFT&race._M_m_&_years., mult=100, num=PopWorkFT&race._M_&_years., den=Pop16andOverYears&race._M_&_years., 
+    %Moe_prop_a( var=Pct16plusWorkFT&race._ML_m_&_years., mult=100, num=PopWorkFT&race._M_&_years., den=Pop16andOverYears&race._M_&_years., 
                        num_moe=mPopWorkFT&race._M_&_years., den_moe=mPop16andOverYears&race._M_&_years., label_moe =% male &race. employed full time MOE &y_lbl.);
 
    %Pct_calc( var=Pct16plusWorkFT&race._F, label=% female &race. employed full time, num=PopWorkFT&race._F, den=Pop16andOverYears&race._F, years=&_years. )
@@ -627,9 +627,9 @@
     %Moe_prop_a( var=Pct16plusWorkFT&race._F_m_&_years., mult=100, num=PopWorkFT&race._F_&_years., den=Pop16andOverYears&race._F_&_years., 
                        num_moe=mPopWorkFT&race._F_&_years., den_moe=mPop16andOverYears&race._F_&_years., label_moe =% female &race. employed full time MOE &y_lbl.);
 
- %Pct_calc( var=PctWorkEarn&race._M, label=% male &race. 16 and Older with Wage Earnings in the Past 12 Months, num=PopWorkEarn&race._M, den=Pop16andOverYears&race._M, years=&_years. )
+ %Pct_calc( var=PctWorkEarn&race._ML, label=% male &race. 16 and Older with Wage Earnings in the Past 12 Months, num=PopWorkEarn&race._M, den=Pop16andOverYears&race._M, years=&_years. )
 
-    %Moe_prop_a( var=PctWorkEarn&race._M_m_&_years., mult=100, num=PopWorkEarn&race._M_&_years., den=Pop16andOverYears&race._M_&_years., 
+    %Moe_prop_a( var=PctWorkEarn&race._ML_m_&_years., mult=100, num=PopWorkEarn&race._M_&_years., den=Pop16andOverYears&race._M_&_years., 
                        num_moe=mPopWorkEarn&race._M_&_years., den_moe=mPop16andOverYears&race._M_&_years., label_moe =% male &race. 16 and Older with Wage Earnings in the Past 12 Months MOE &y_lbl.);
 
 	%Pct_calc( var=PctWorkEarn&race._F, label=% female &race. 16 and Older with Wage Earnings in the Past 12 Months, num=PopWorkEarn&race._F, den=Pop16andOverYears&race._F, years=&_years. )
@@ -637,9 +637,9 @@
     %Moe_prop_a( var=PctWorkEarn&race._F_m_&_years., mult=100, num=PopWorkEarn&race._F_&_years., den=Pop16andOverYears&race._F_&_years., 
                        num_moe=mPopWorkEarn&race._F_&_years., den_moe=mPop16andOverYears&race._F_&_years., label_moe =% female &race. 16 and Older with Wage Earnings in the Past 12 Months MOE &y_lbl.);
 
-	%Pct_calc( var=PctUnemployed&race._M, label=Unemployment rate male &race. (%), num=PopUnemployed&race._M, den=PopInCivLaborFor&race._M, years=&_years. )
+	%Pct_calc( var=PctUnemployed&race._ML, label=Unemployment rate male &race. (%), num=PopUnemployed&race._M, den=PopInCivLaborFor&race._M, years=&_years. )
 
-	%Moe_prop_a( var=PctUnemployed&race._M_m_&_years., mult=100, num=PopUnemployed&race._M_&_years., den=PopInCivLaborFor&race._M_&_years., 
+	%Moe_prop_a( var=PctUnemployed&race._ML_m_&_years., mult=100, num=PopUnemployed&race._M_&_years., den=PopInCivLaborFor&race._M_&_years., 
 	                       num_moe=mPopUnemployed&race._M_&_years., den_moe=mPopInCivLaborFor&race._M_&_years., label_moe =Unemployment rate male &race. (%) MOE &y_lbl.);
 
     %Pct_calc( var=PctUnemployed&race._F, label=Unemployment rate female &race. (%), num=PopUnemployed&race._F, den=PopInCivLaborFor&race._F, years=&_years. )
@@ -648,29 +648,29 @@
 	                       num_moe=mPopUnemployed&race._F_&_years., den_moe=mPopInCivLaborFor&race._F_&_years., label_moe =Unemployment rate female &race. (%) MOE &y_lbl.);
 
 
-	%Pct_calc( var=PctEmpMngmt&race._M, label=% male &race. 16+ years old employed in management business science and arts occupations, num=PopEmployedMngmt&race._M, den=PopEmployedByOcc&race._M, years=&_years. )
+	%Pct_calc( var=PctEmpMngmt&race._ML, label=% male &race. 16+ years old employed in management business science and arts occupations, num=PopEmployedMngmt&race._M, den=PopEmployedByOcc&race._M, years=&_years. )
 
-	%Moe_prop_a( var=PctEmpMngmt&race._M_m_&_years., mult=100, num=PopEmployedMngmt&race._M_&_years., den=PopEmployedByOcc&race._M_&_years., 
+	%Moe_prop_a( var=PctEmpMngmt&race._ML_m_&_years., mult=100, num=PopEmployedMngmt&race._M_&_years., den=PopEmployedByOcc&race._M_&_years., 
                        num_moe=mPopEmployedMngmt&race._M_&_years., den_moe=mPopEmployedByOcc&race._M_&_years., label_moe =% male &race. 16+ years old employed in management business science and arts occupations MOE &y_lbl.);
 
-	%Pct_calc( var=PctEmpServ&race._M, label=% male &race. 16+ years old employed in service occupations, num=PopEmployedServ&race._M, den=PopEmployedByOcc&race._M, years=&_years. )
+	%Pct_calc( var=PctEmpServ&race._ML, label=% male &race. 16+ years old employed in service occupations, num=PopEmployedServ&race._M, den=PopEmployedByOcc&race._M, years=&_years. )
 
-	%Moe_prop_a( var=PctEmpServ&race._M_m_&_years., mult=100, num=PopEmployedServ&race._M_&_years., den=PopEmployedByOcc&race._M_&_years., 
+	%Moe_prop_a( var=PctEmpServ&race._ML_m_&_years., mult=100, num=PopEmployedServ&race._M_&_years., den=PopEmployedByOcc&race._M_&_years., 
                        num_moe=mPopEmployedServ&race._M_&_years., den_moe=mPopEmployedByOcc&race._M_&_years., label_moe =% male &race. 16+ years old employed in service occupations MOE &y_lbl.);
 
-	%Pct_calc( var=PctEmpSales&race._M, label=% male &race. 16+ years old employed in sales and office occupations, num=PopEmployedSales&race._M, den=PopEmployedByOcc&race._M, years=&_years. )
+	%Pct_calc( var=PctEmpSales&race._ML, label=% male &race. 16+ years old employed in sales and office occupations, num=PopEmployedSales&race._M, den=PopEmployedByOcc&race._M, years=&_years. )
 
-	%Moe_prop_a( var=PctEmpSales&race._M_m_&_years., mult=100, num=PopEmployedSales&race._M_&_years., den=PopEmployedByOcc&race._M_&_years., 
+	%Moe_prop_a( var=PctEmpSales&race._ML_m_&_years., mult=100, num=PopEmployedSales&race._M_&_years., den=PopEmployedByOcc&race._M_&_years., 
                        num_moe=mPopEmployedSales&race._M_&_years., den_moe=mPopEmployedByOcc&race._M_&_years., label_moe =% male &race. 16+ years old employed in sales and office occupations MOE &y_lbl.);
 
-	%Pct_calc( var=PctEmpNatRes&race._M, label=% male &race. 16+ years old employed in natural resources construction and maintenance occupations, num=PopEmployedNatRes&race._M, den=PopEmployedByOcc&race._M, years=&_years. )
+	%Pct_calc( var=PctEmpNatRes&race._ML, label=% male &race. 16+ years old employed in natural resources construction and maintenance occupations, num=PopEmployedNatRes&race._M, den=PopEmployedByOcc&race._M, years=&_years. )
 
-	%Moe_prop_a( var=PctEmpNatRes&race._M_m_&_years., mult=100, num=PopEmployedNatRes&race._M_&_years., den=PopEmployedByOcc&race._M_&_years., 
+	%Moe_prop_a( var=PctEmpNatRes&race._ML_m_&_years., mult=100, num=PopEmployedNatRes&race._M_&_years., den=PopEmployedByOcc&race._M_&_years., 
                        num_moe=mPopEmployedNatRes&race._M_&_years., den_moe=mPopEmployedByOcc&race._M_&_years., label_moe =% male &race. 16+ years old employed in natural resources construction and maintenance occupations MOE &y_lbl.);
 
-	%Pct_calc( var=PctEmpProd&race._M, label=% male &race. employed in production transportation and material moving occupations, num=PopEmployedProd&race._M, den=PopEmployedByOcc&race._M, years=&_years. )
+	%Pct_calc( var=PctEmpProd&race._ML, label=% male &race. employed in production transportation and material moving occupations, num=PopEmployedProd&race._M, den=PopEmployedByOcc&race._M, years=&_years. )
 
-	%Moe_prop_a( var=PctEmpProd&race._M_m_&_years., mult=100, num=PopEmployedProd&race._M_&_years., den=PopEmployedByOcc&race._M_&_years., 
+	%Moe_prop_a( var=PctEmpProd&race._ML_m_&_years., mult=100, num=PopEmployedProd&race._M_&_years., den=PopEmployedByOcc&race._M_&_years., 
                        num_moe=mPopEmployedProd&race._M_&_years., den_moe=mPopEmployedByOcc&race._M_&_years., label_moe =% male &race. employed in production transportation and material moving occupations MOE &y_lbl.);
 
     %Pct_calc( var=PctEmpMngmt&race._F, label=% female &race. 16+ years old employed in management business science and arts occupations, num=PopEmployedMngmt&race._M, den=PopEmployedByOcc&race._M, years=&_years. )
