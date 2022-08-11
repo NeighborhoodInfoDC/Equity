@@ -34,7 +34,7 @@
 *all races except NH white, hispanic, and multiple race are race alone. ;
 
 %let _years=2015_19;
-%let revisions=Add IOM for all indicators and update race labels.;
+%let revisions=Add employment by gender.;
 
 /** Macro Add_Percents- Start Definition **/
 
