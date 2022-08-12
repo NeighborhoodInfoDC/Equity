@@ -595,15 +595,15 @@
                        num_moe=mPopEmployedProd&race._&_years., den_moe=mPopEmployedByOcc&race._&_years., label_moe =% persons &rname. employed in production transportation and material moving occupations MOE &y_lbl.);
 
 /*gender breakout for employment*/
-	%Pct_calc( var=Pct16plusEmploy&race._ML, label=% Male &rname. 16+ yrs. employed , num=Pop16andOverEmploy&race._M, den=Pop16andOverYears&race._M, years=&_years. )
+	%Pct_calc( var=Pct16plusEmploy&race._ML, label=% Male &rname. 16+ yrs. employed , num=Pop16andOverEmp&race._M, den=Pop16andOverYears&race._M, years=&_years. )
 
-    	%Moe_prop_a( var=Pct16plusEmploy&race._ML_m_&_years., mult=100, num=Pop16andOverEmploy&race._M_&_years., den=Pop16andOverYears&race._M_&_years., 
-                       num_moe=mPop16andOverEmploy&race._M_&_years., den_moe=mPop16andOverYears&race._M_&_years., label_moe =% Male &rname. 16+ yrs. employed  MOE &y_lbl.);
+    	%Moe_prop_a( var=Pct16plusEmploy&race._ML_m_&_years., mult=100, num=Pop16andOverEmp&race._M_&_years., den=Pop16andOverYears&race._M_&_years., 
+                       num_moe=mPop16andOverEmp&race._M_&_years., den_moe=mPop16andOverYears&race._M_&_years., label_moe =% Male &rname. 16+ yrs. employed  MOE &y_lbl.);
 	
 	%Pct_calc( var=Pct16plusEmploy&race._F, label=% Female &rname. 16+ yrs. employed , num=Pop16andOverEmploy&race._F, den=Pop16andOverYears&race._F, years=&_years. )
 
-    	%Moe_prop_a( var=Pct16plusEmploy&race._F_m_&_years., mult=100, num=Pop16andOverEmploy&race._F_&_years., den=Pop16andOverYears&race._F_&_years., 
-                       num_moe=mPop16andOverEmploy&race._F_&_years., den_moe=mPop16andOverYears&race._F_&_years., label_moe =% Female &rname 16+ yrs. employed . MOE &y_lbl.);
+    	%Moe_prop_a( var=Pct16plusEmploy&race._F_m_&_years., mult=100, num=Pop16andOverEmp&race._F_&_years., den=Pop16andOverYears&race._F_&_years., 
+                       num_moe=mPop16andOverEmp&race._F_&_years., den_moe=mPop16andOverYears&race._F_&_years., label_moe =% Female &rname 16+ yrs. employed . MOE &y_lbl.);
 		
 	%Pct_calc( var=PctEmp16to64&race._ML, label=% Male &rname. employed between 16 and 64 years old, num=Pop16_64Employed&race._M, den=Pop16_64years&race._M, years=&_years. )
 
