@@ -384,7 +384,7 @@
 	%Moe_prop_a( var=PctEmpMngmt_m_&_years., mult=100, num=PopEmployedMngmt_&_years., den=PopEmployedByOcc_&_years., 
                        num_moe=mPopEmployedMngmt_&_years., den_moe=mPopEmployedByOcc_&_years., label_moe =% persons 16+ years old employed in management business science and arts occupations MOE &y_lbl.);
 
-	%Pct_calc( var=PctEmployedServ, label=% persons 16+ years old employed in service occupations, num=PopEmployedServ, den=PopEmployedByOcc, years=&_years. )
+	%Pct_calc( var=PctEmpServ, label=% persons 16+ years old employed in service occupations, num=PopEmployedServ, den=PopEmployedByOcc, years=&_years. )
 
 	%Moe_prop_a( var=PctEmpServ_m_&_years., mult=100, num=PopEmployedServ_&_years., den=PopEmployedByOcc_&_years., 
                        num_moe=mPopEmployedServ_&_years., den_moe=mPopEmployedByOcc_&_years., label_moe =% persons 16+ years old employed in service occupations MOE &y_lbl.);
@@ -394,7 +394,7 @@
 	%Moe_prop_a( var=PctEmpSales_m_&_years., mult=100, num=PopEmployedSales_&_years., den=PopEmployedByOcc_&_years., 
                        num_moe=mPopEmployedSales_&_years., den_moe=mPopEmployedByOcc_&_years., label_moe =% persons 16+ years old employed in sales and office occupations MOE &y_lbl.);
 
-	%Pct_calc( var=PctEmployedNatRes, label=% persons 16+ years old employed in natural resources construction and maintenance occupations, num=PopEmployedNatRes, den=PopEmployedByOcc, years=&_years. )
+	%Pct_calc( var=PctEmpNatRes, label=% persons 16+ years old employed in natural resources construction and maintenance occupations, num=PopEmployedNatRes, den=PopEmployedByOcc, years=&_years. )
 
 	%Moe_prop_a( var=PctEmpNatRes_m_&_years., mult=100, num=PopEmployedNatRes_&_years., den=PopEmployedByOcc_&_years., 
                        num_moe=mPopEmployedNatRes_&_years., den_moe=mPopEmployedByOcc_&_years., label_moe =% persons 16+ years old employed in natural resources construction and maintenance occupations MOE &y_lbl.);
