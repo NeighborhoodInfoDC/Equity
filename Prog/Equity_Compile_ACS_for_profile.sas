@@ -408,12 +408,12 @@
 	%Pct_calc( var=Pct16plusEmploy_ML, label=% Male 16+ yrs. employed , num=Pop16andOverEmp_M, den=Pop16andOverYears_M, years=&_years. )
 
     	%Moe_prop_a( var=Pct16plusEmploy_ML_m_&_years., mult=100, num=Pop16andOverEmp_M_&_years., den=Pop16andOverYears_M_&_years., 
-                       num_moe=mPop16andOverEmploy_M_&_years., den_moe=mPop16andOverYears_M_&_years., label_moe =% Male 16+ yrs. employed  MOE &y_lbl.);
+                       num_moe=mPop16andOverEmp_M_&_years., den_moe=mPop16andOverYears_M_&_years., label_moe =% Male 16+ yrs. employed  MOE &y_lbl.);
 	
 	%Pct_calc( var=Pct16plusEmploy_F, label=% Female 16+ yrs. employed , num=Pop16andOverEmp_F, den=Pop16andOverYears_F, years=&_years. )
 
     	%Moe_prop_a( var=Pct16plusEmploy_F_m_&_years., mult=100, num=Pop16andOverEmp_F_&_years., den=Pop16andOverYears_F_&_years., 
-                       num_moe=mPop16andOverEmploy_F_&_years., den_moe=mPop16andOverYears_F_&_years., label_moe =% Female 16+ yrs. employed . MOE &y_lbl.);
+                       num_moe=mPop16andOverEmp_F_&_years., den_moe=mPop16andOverYears_F_&_years., label_moe =% Female 16+ yrs. employed . MOE &y_lbl.);
 	
 	
 	%Pct_calc( var=PctEmp16to64_ML, label=% Male employed between 16 and 64 years old, num=Pop16_64Employed_M, den=Pop16_64years_M, years=&_years. )
