@@ -12,6 +12,7 @@
 			    gaps would be suppressed if values were positive)
 			    
  Modifications: LH 02/24/22 Update for 6 race categories
+ 		LH 08/11/22 Update for shortened var names
 **************************************************************************/
 
 %macro suppress_gaps_negative;
@@ -24,10 +25,10 @@
 			array p_gap&race. {7} 
 				Gap25andOverWHS&race._&_years.
 				Gap25andOverWSC&race._&_years.
-				Gap16andOverEmploy&race._&_years.
-				GapEmployed16to64&race._&_years.
-				Gap16andOverWages&race._&_years.
-				Gap16andOverWorkFT&race._&_years.
+				Gap16plusEmploy&race._&_years.
+				GapEmp16to64&race._&_years.
+				Gap16plusWages&race._&_years.
+				Gap16plusWorkFT&race._&_years.
 				GapOwnerOccupiedHU&race._&_years.
 				;
 
