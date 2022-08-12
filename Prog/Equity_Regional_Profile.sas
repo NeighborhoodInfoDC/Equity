@@ -967,7 +967,7 @@ data region_agg ;
     %Moe_prop_a( var=Pct16plusWorkFT&race._F_m_&_years., mult=100, num=PopWorkFT&race._F_&_years., den=Pop16andOverYears&race._F_&_years., 
                        num_moe=mPopWorkFT&race._F_&_years., den_moe=mPop16andOverYears&race._F_&_years., label_moe =% female &name. employed full time MOE &y_lbl.);
 
- %Pct_calc( var=Pct16plusWages&race._ML, label=% male &race. 16 and Older with Wage Earnings in the Past 12 Months, num=PopWorkEarn&race._M, den=Pop16andOverYears&race._M, years=&_years. )
+ %Pct_calc( var=Pct16plusWages&race._ML, label=% male &name. 16 and Older with Wage Earnings in the Past 12 Months, num=PopWorkEarn&race._M, den=Pop16andOverYears&race._M, years=&_years. )
 
     %Moe_prop_a( var=Pct16plusWages&race._ML_m_&_years., mult=100, num=PopWorkEarn&race._M_&_years., den=Pop16andOverYears&race._M_&_years., 
                        num_moe=mPopWorkEarn&race._M_&_years., den_moe=mPop16andOverYears&race._M_&_years., label_moe =% male &name. 16 and Older with Wage Earnings in the Past 12 Months MOE &y_lbl.);
