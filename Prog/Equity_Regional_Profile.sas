@@ -442,10 +442,13 @@ proc summary data = allcounty;
            PersonsPovertyDef: mPersonsPovertyDef:
            PopPoorPersons: mPopPoorPersons: 
            PopInCivLaborForce: mPopInCivLaborForce: 
+		   PopInCivLaborFor: mPopInCivLaborFor:
 		   PopCivilianEmployed: mPopCivilianEmployed:
+		   PopCivilEmployed: mPopCivilEmployed:
            PopUnemployed: mPopUnemployed:
            Pop16andOverYears: mPop16andOverYears: 
            Pop16andOverEmploy: mPop16andOverEmploy: 
+		   Pop16andOverEmp: mPop16andOverEmp:
 		   Pop16_64years: mPop16_64years:
 		   Pop25_64years: mPop25_64years:
 		   Pop16_64Employed: mPop16_64Employed:
@@ -1316,7 +1319,7 @@ data Profile_acs_region;
 	if county="51685" then order=15; 
 	
 
-	drop cv: p n x a_se b_se: uPct: uAvg: z c_se d_se den denA denAIOM denB denH denW f k lAvg: lPct: num numA numAIOM numB numH numW zA zAIOM zB zH zW ;
+	drop cv: p n x a_se b_se: uPct: uAvg: z c_se d_se den denA denAIOM denIOM denB denH denW f k lAvg: lPct: num numA numAIOM numIOM numB numH numW zA zAIOM zIOM zB zH zW ;
 run;
 
 proc sort data = Profile_acs_region; by order; run;
@@ -1324,6 +1327,32 @@ proc sort data = Profile_acs_region; by order; run;
 
 ** Round numbers **;
 %round_output (in=Profile_acs_region,out=Profile_acs_region_rounded);
+
+%macro raceunemp;
+
+	%do r=1 %to 6;
+
+		%let race=%scan(&racelist.,&r.," ");
+		%let name=%scan(&racename.,&r.," ");
+
+		
+	%Pct_calc( var=PctUnemployed&race., label=&name. Unemployment rate (%), num=PopUnemployed&race., den=PopInCivLaborForce&race., years=&_years. )
+
+	%Moe_prop_a( var=PctUnemployed&race._m_&_years., mult=100, num=PopUnemployed&race._&_years., den=PopInCivLaborForce&race._&_years., 
+	               num_moe=mPopUnemployed&race._&_years., den_moe=mPopInCivLaborForceW_&_years., label_moe =&name. Unemployment rate (%) MOE &y_lbl.);
+
+	%Pct_calc( var=PctUnemployed&race._ML, label=Unemployment rate male &name. (%), num=PopUnemployed&race._M, den=PopInCivLaborFor&race._M, years=&_years. )
+
+	%Moe_prop_a( var=PctUnemployed&race._ML_m_&_years., mult=100, num=PopUnemployed&race._M_&_years., den=PopInCivLaborFor&race._M_&_years., 
+	                       num_moe=mPopUnemployed&race._M_&_years., den_moe=mPopInCivLaborFor&race._M_&_years., label_moe =Unemployment rate male &name. (%) MOE &y_lbl.);
+
+    %Pct_calc( var=PctUnemployed&race._F, label=Unemployment rate female &name. (%), num=PopUnemployed&race._F, den=PopInCivLaborFor&race._F, years=&_years. )
+
+	%Moe_prop_a( var=PctUnemployed&race._F_m_&_years., mult=100, num=PopUnemployed&race._F_&_years., den=PopInCivLaborFor&race._F_&_years., 
+	                       num_moe=mPopUnemployed&race._F_&_years., den_moe=mPopInCivLaborFor&race._F_&_years., label_moe =Unemployment rate female &name. (%) MOE &y_lbl.);
+
+	%end;
+%mend;
 
 *temporary fix;
 data donotroundunemp;
@@ -1334,36 +1363,19 @@ data donotroundunemp;
 		%Moe_prop_a( var=PctUnemployed_m_&_years., mult=100, num=PopUnemployed_&_years., den=PopInCivLaborForce_&_years., 
 	                       num_moe=mPopUnemployed_&_years., den_moe=mPopInCivLaborForce_&_years., label_moe =Unemployment rate (%) MOE &y_lbl.);
 
+%Pct_calc( var=PctUnemployed_ML, label=Unemployment rate male (%), num=PopUnemployed_M, den=PopInCivLaborForce_M, years=&_years. )
 
-	%Pct_calc( var=PctUnemployedW, label=NH-White Unemployment rate (%), num=PopUnemployedW, den=PopInCivLaborForceW, years=&_years. )
+	%Moe_prop_a( var=PctUnemployed_ML_m_&_years., mult=100, num=PopUnemployed_M_&_years., den=PopInCivLaborForce_M_&_years., 
+	                       num_moe=mPopUnemployed_M_&_years., den_moe=mPopInCivLaborForce_M_&_years., label_moe =Unemployment rate male (%) MOE &y_lbl.);
 
-		%Moe_prop_a( var=PctUnemployedW_m_&_years., mult=100, num=PopUnemployedW_&_years., den=PopInCivLaborForceW_&_years., 
-	                       num_moe=mPopUnemployedW_&_years., den_moe=mPopInCivLaborForceW_&_years., label_moe =NH-White Unemployment rate (%) MOE &y_lbl.);
+    %Pct_calc( var=PctUnemployed_F, label=Unemployment rate female (%), num=PopUnemployed_F, den=PopInCivLaborForce_F, years=&_years. )
 
-	%Pct_calc( var=PctUnemployedB, label=Black-Alone Unemployment rate (%), num=PopUnemployedB, den=PopInCivLaborForceB, years=&_years. )
+	%Moe_prop_a( var=PctUnemployed_F_m_&_years., mult=100, num=PopUnemployed_F_&_years., den=PopInCivLaborForce_F_&_years., 
+	                       num_moe=mPopUnemployed_F_&_years., den_moe=mPopInCivLaborForce_F_&_years., label_moe =Unemployment rate female (%) MOE &y_lbl.);
 
-		%Moe_prop_a( var=PctUnemployedB_m_&_years., mult=100, num=PopUnemployedB_&_years., den=PopInCivLaborForceB_&_years., 
-	                       num_moe=mPopUnemployedB_&_years., den_moe=mPopInCivLaborForceB_&_years., label_moe =Black-Alone Unemployment rate (%) MOE &y_lbl.);
 
-	%Pct_calc( var=PctUnemployedH, label=Hispanic Unemployment rate (%), num=PopUnemployedH, den=PopInCivLaborForceH, years=&_years. )
+	%raceunemp;
 
-		%Moe_prop_a( var=PctUnemployedH_m_&_years., mult=100, num=PopUnemployedH_&_years., den=PopInCivLaborForceH_&_years., 
-	                       num_moe=mPopUnemployedH_&_years., den_moe=mPopInCivLaborForceH_&_years., label_moe =Hispanic Unemployment rate (%) MOE &y_lbl.);
-
-	%Pct_calc( var=PctUnemployedA, label=Asian-PI Unemployment rate (%), num=PopUnemployedA, den=PopInCivLaborForceA, years=&_years. )
-
-		%Moe_prop_a( var=PctUnemployedA_m_&_years., mult=100, num=PopUnemployedA_&_years., den=PopInCivLaborForceA_&_years., 
-	                       num_moe=mPopUnemployedA_&_years., den_moe=mPopInCivLaborForceA_&_years., label_moe =Asian-PI Unemployment rate (%) MOE &y_lbl.);
-
-	%Pct_calc( var=PctUnemployedIOM, label=Indigenous-Other-Multi Unemployment rate (%), num=PopUnemployedIOM, den=PopInCivLaborForceIOM, years=&_years. )
-
-		%Moe_prop_a( var=PctUnemployedIOM_m_&_years., mult=100, num=PopUnemployedIOM_&_years., den=PopInCivLaborForceIOM_&_years., 
-	                       num_moe=mPopUnemployedIOM_&_years., den_moe=mPopInCivLaborForceIOM_&_years., label_moe =Indigenous-Other-Multi Unemployment rate (%) MOE &y_lbl.);
-
-	%Pct_calc( var=PctUnemployedAIOM, label=All-Other Unemployment rate (%), num=PopUnemployedAIOM, den=PopInCivLaborForceAIOM, years=&_years. )
-
-		%Moe_prop_a( var=PctUnemployedAIOM_m_&_years., mult=100, num=PopUnemployedAIOM_&_years., den=PopInCivLaborForceAIOM_&_years., 
-	                       num_moe=mPopUnemployedAIOM_&_years., den_moe=mPopInCivLaborForceAIOM_&_years., label_moe =All-Other Unemployment rate (%) MOE &y_lbl.);
 run;
 ** save data set for use in other repos;
 %Finalize_data_set( 
