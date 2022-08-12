@@ -13,6 +13,7 @@
 Modification: 7/31/17 RP - added correct statistical significance testing 
 		9/23/17 LH - corrected program by creating new macro so it remove vars with "c" which aren't in the region file. 
 		02/24/22 LH - Updated to 6 race categories
+		08/11/22 LH - Updated for shorten var names
 **************************************************************************/
 
 %macro suppress_gaps_region_z;
@@ -28,18 +29,18 @@ Modification: 7/31/17 RP - added correct statistical significance testing
 				PctFamilyLT75000W_&_years.
 				PctPoorPersonsW_&_years. 
 				PctPoorChildrenW_&_years.
-				Pct16andOverEmployW_&_years.
-				PctEmployed16to64W_&_years.
+				Pct16plusEmployW_&_years.
+				PctEmp16to64W_&_years.
 				PctUnemployedW_&_years.
-				Pct16andOverWagesW_&_years.
-				Pct16andOverWorkFTW_&_years.
+				Pct16plusWagesW_&_years.
+				Pct16plusWorkFTW_&_years.
 				PctWorkFTLT35kW_&_years.
 				PctWorkFTLT75kW_&_years.
-				PctEmployedMngmtW_&_years.
-				PctEmployedServW_&_years.
-				PctEmployedSalesW_&_years.
-				PctEmployedNatResW_&_years.
-				PctEmployedProdW_&_years.
+				PctEmpMngmtW_&_years.
+				PctEmpServW_&_years.
+				PctEmpSalesW_&_years.
+				PctEmpNatResW_&_years.
+				PctEmpProdW_&_years.
 				PctOwnerOccupiedHUW_&_years.
 				;
 
@@ -54,18 +55,18 @@ Modification: 7/31/17 RP - added correct statistical significance testing
 				PctFamilyLT75000W_m_&_years.
 				PctPoorPersonsW_m_&_years.
 				PctPoorChildrenW_m_&_years.
-				Pct16andOverEmployW_m_&_years.
-				PctEmployed16to64W_m_&_years.
+				Pct16plusEmployW_m_&_years.
+				PctEmp16to64W_m_&_years.
 				PctUnemployedW_m_&_years.
-				Pct16andOverWagesW_m_&_years.
-				Pct16andOverWorkFTW_m_&_years.
+				Pct16plusWagesW_m_&_years.
+				Pct16plusWorkFTW_m_&_years.
 				PctWorkFTLT35kW_m_&_years.
 				PctWorkFTLT75kW_m_&_years.
-				PctEmployedMngmtW_m_&_years.
-				PctEmployedServW_m_&_years.
-				PctEmployedSalesW_m_&_years.
-				PctEmployedNatResW_m_&_years.
-				PctEmployedProdW_m_&_years.
+				PctEmpMngmtW_m_&_years.
+				PctEmpServW_m_&_years.
+				PctEmpSalesW_m_&_years.
+				PctEmpNatResW_m_&_years.
+				PctEmpProdW_m_&_years.
 				PctOwnerOccupiedHUW_m_&_years.
 				;
 
@@ -85,18 +86,18 @@ Modification: 7/31/17 RP - added correct statistical significance testing
 				PctFamilyLT75000&race._&_years.
 				PctPoorPersons&race._&_years.
 				PctPoorChildren&race._&_years.
-				Pct16andOverEmploy&race._&_years.
-				PctEmployed16to64&race._&_years.
+				Pct16plusEmploy&race._&_years.
+				PctEmp16to64&race._&_years.
 				PctUnemployed&race._&_years.
-				Pct16andOverWages&race._&_years.
-				Pct16andOverWorkFT&race._&_years.
+				Pct16plusWages&race._&_years.
+				Pct16plusWorkFT&race._&_years.
 				PctWorkFTLT35k&race._&_years.
 				PctWorkFTLT75k&race._&_years.
-				PctEmployedMngmt&race._&_years.
-				PctEmployedServ&race._&_years.
-				PctEmployedSales&race._&_years.
-				PctEmployedNatRes&race._&_years.
-				PctEmployedProd&race._&_years.
+				PctEmpMngmt&race._&_years.
+				PctEmpServ&race._&_years.
+				PctEmpSales&race._&_years.
+				PctEmpNatRes&race._&_years.
+				PctEmpProd&race._&_years.
 				PctOwnerOccupiedHU&race._&_years.
 				;
 
@@ -110,18 +111,18 @@ Modification: 7/31/17 RP - added correct statistical significance testing
 				PctFamilyLT75000&race._m_&_years.
 				PctPoorPersons&race._m_&_years.
 				PctPoorChildren&race._m_&_years.
-				Pct16andOverEmploy&race._m_&_years.
-				PctEmployed16to64&race._m_&_years.
+				Pct16plusEmploy&race._m_&_years.
+				PctEmp16to64&race._m_&_years.
 				PctUnemployed&race._m_&_years.
-				Pct16andOverWages&race._m_&_years.
-				Pct16andOverWorkFT&race._m_&_years.
+				Pct16plusWages&race._m_&_years.
+				Pct16plusWorkFT&race._m_&_years.
 				PctWorkFTLT35k&race._m_&_years.
 				PctWorkFTLT75k&race._m_&_years.
-				PctEmployedMngmt&race._m_&_years.
-				PctEmployedServ&race._m_&_years.
-				PctEmployedSales&race._m_&_years.
-				PctEmployedNatRes&race._m_&_years.
-				PctEmployedProd&race._m_&_years.
+				PctEmpMngmt&race._m_&_years.
+				PctEmpServ&race._m_&_years.
+				PctEmpSales&race._m_&_years.
+				PctEmpNatRes&race._m_&_years.
+				PctEmpProd&race._m_&_years.
 				PctOwnerOccupiedHU&race._m_&_years.
 				;
 
@@ -135,18 +136,18 @@ Modification: 7/31/17 RP - added correct statistical significance testing
 				GapFamilyLT75000&race._&_years.
 				GapPoorPersons&race._&_years.
 				GapPoorChildren&race._&_years.
-				Gap16andOverEmploy&race._&_years.
-				GapEmployed16to64&race._&_years.
+				Gap16plusEmploy&race._&_years.
+				GapEmp16to64&race._&_years.
 				GapUnemployed&race._&_years.
-				Gap16andOverWages&race._&_years.
-				Gap16andOverWorkFT&race._&_years.
+				Gap16plusWages&race._&_years.
+				Gap16plusWorkFT&race._&_years.
 				GapWorkFTLT35k&race._&_years.
 				GapWorkFTLT75k&race._&_years.
-				GapEmployedMngmt&race._&_years.
-				GapEmployedServ&race._&_years.
-				GapEmployedSales&race._&_years.
-				GapEmployedNatRes&race._&_years.
-				GapEmployedProd&race._&_years.
+				GapEmpMngmt&race._&_years.
+				GapEmpServ&race._&_years.
+				GapEmpSales&race._&_years.
+				GapEmpNatRes&race._&_years.
+				GapEmpProd&race._&_years.
 				GapOwnerOccupiedHU&race._&_years.
 				;
 
