@@ -679,7 +679,7 @@
 	%Pct_calc( var=PctEmpSales&race._ML, label=% male &rname.  16+ years old employed in sales and office occupations, num=PopEmployedSales&race._M, den=PopEmployedByOcc&race._M, years=&_years. )
 
 	%Moe_prop_a( var=PctEmpSales&race._ML_m_&_years., mult=100, num=PopEmployedSales&race._M_&_years., den=PopEmployedByOcc&race._M_&_years., 
-                       num_moe=mPopEmployedSales&race._M_&_years., den_moe=mPopEmployedByOcc&race._M_&_years., label_moe =% male &race. 16+ years old employed in sales and office occupations MOE &y_lbl.);
+                       num_moe=mPopEmployedSales&race._M_&_years., den_moe=mPopEmployedByOcc&race._M_&_years., label_moe =% male &rname. 16+ years old employed in sales and office occupations MOE &y_lbl.);
 
 	%Pct_calc( var=PctEmpNatRes&race._ML, label=% male &rname. 16+ years old employed in natural resources construction and maintenance occupations, num=PopEmployedNatRes&race._M, den=PopEmployedByOcc&race._M, years=&_years. )
 
