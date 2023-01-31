@@ -17,6 +17,7 @@
 				02/18/22 LH Update to break out IOM for all indicators
                 07/25/22 YS add gender breakouts for employment vars by race for Sadie
 		08/11/22 LH minor fixes for var names that were shortened. 
+		01/31/23 LH Update for 2016-20 ACS & comment out councildist geo (not yet updated for 2020 based geos)
  Note: MOEs for AIOM average household income and average adjusted are blank because they are suppressed by the Census.
  **************************************************************************/
 
@@ -27,14 +28,14 @@
 %DCData_lib( ACS )
 %DCData_lib( Equity )
 
-%let inc_dollar_yr=2019;
+%let inc_dollar_yr=2020;
 %let racelist=W B H A IOM AIOM ;
 %let racename= NH-White Black-Alone Hispanic Asian-PI Indigenous-Other-Multi All-Other ; 
 *all-other is all other than NHWhite, Black, Hispanic; 
 *all races except NH white, hispanic, and multiple race are race alone. ;
 
-%let _years=2015_19;
-%let revisions=Add employment by gender.;
+%let _years=2016_20;
+%let revisions=Update for 2016-20.;
 
 /** Macro Add_Percents- Start Definition **/
 
@@ -997,11 +998,11 @@
 /** End Macro Definition **/
 
 %add_percents(MD,county,regcnt); 
-%add_percents(MD,councildist,regcd); 
+/*%add_percents(MD,councildist,regcd); Commenting out as we need new crosswalks for 2020 tracts and new council districts)*/
 
 %add_percents(VA,county,regcnt); 
-%add_percents(VA,councildist,regcd); 
+/*%add_percents(VA,councildist,regcd); */
 
 %add_percents(dc,county,regcnt); 
-%add_percents(dc,ward2012,wd12);     
+%add_percents(dc,ward2022,wd22);   
 
