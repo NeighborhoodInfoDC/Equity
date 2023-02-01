@@ -16,6 +16,7 @@
 		02/24/22 LH Update to add IOM indicators
 		02/28/22 LH Add additional counties - Charles and Frederick, changed output data name, add finalize data set macro
 		08/11/22 LH Add employment by gender variables
+	 	01/31/23 LH Update for 2016-20 and add Baltimore & Richmond regions. Removed fixed start year on income adjustment.
  **************************************************************************/
 
 %include "\\sas1\DCDATA\SAS\Inc\StdLocal.sas";
@@ -24,21 +25,22 @@
 %DCData_lib( ACS )
 %DCData_lib( Equity )
 
-
-%let inc_dollar_yr=2019;
+%let inc_from_yr=2020;
+%let inc_dollar_yr=2020;
 %let racelist=W B H A IOM AIOM ;
 %let racename= NH-White Black-Alone Hispanic Asian-PI Indigenous-Other-Multi All-Other ;
 *all-other is all other than NHWhite, Black, Hispanic; 
 *all races except NH white, hispanic, and multiple race are race alone. ;
 
-%let _years=2015_19;
+%let _years=2016_20;
 %let y_lbl = %sysfunc( translate( &_years., '-', '_' ) );
-%let revisions=Add employment by gender variables;
+%let revisions=Run 2016-10 data and add Baltimore & Richmond regions.;
 
 
 ** County formats **;
 proc format;
 value $county
+	"11XXX" = "Greater Washington Region"
 	"11001" = "Washington DC"
 	"24017" = "Charles" 
 	"24021" = "Frederick" 
@@ -53,6 +55,18 @@ value $county
 	"51153" = "Prince William"
 	"51683" = "Manassas City"
 	"51685" = "Manassas Park City"
+	"24XXX" = "Greater Baltimore Region"
+	"24510" = "Baltimore City"
+	"24005" = "Baltimore County"
+	"24003" = "Anne Arundel"
+	"24027" = "Howard"
+	"24013" = "Carroll"
+	"24025" = "Harford"
+	"24035" = "Queen Annes" 
+	"51XXX" = "Greater Richmond Region"
+	"51159" = "Richmond"
+	"51041" = "Chesterfield"
+	"51087" = "Henrico"
 	;
 run;
 
@@ -62,9 +76,15 @@ data allcounty;
 	set equity.Profile_acs_&_years._dc_regcnt 
 		equity.Profile_acs_&_years._md_regcnt 
 		equity.Profile_acs_&_years._va_regcnt;
-	if county in ("11001","24017","24021","24031","24033","51510","51013","51610","51059","51600","51107","51153","51683","51685");
+	*if county in ("11001","24017","24021","24031","24033","51510","51013","51610","51059","51600","51107","51153","51683","51685");
 	format county county.;
+	length region $10.;
 
+/*1/31/23 adding new regions */
+if county in ("24003","24005","24013","24025","24027", "24035", "24510" ) then region="Baltimore";
+if county in ("11001","24017","24021","24031","24033","51510","51013","51610","51059","51600","51107","51153","51683","51685")
+	then region="Washington";
+if county in ("51159", "51087", "51041" ) then region="Richmond"; 
 	
 	%suppress_vars;
 	%suppress_vars_fb;
@@ -392,9 +412,11 @@ data allcounty;
 
 run;
 
-
+proc sort data=allcounty;
+by region;
 ** Aggregate numerators and denominators to the region-level **;
 proc summary data = allcounty;
+by region;
 	var    TotPop: mTotPop: 
 		   PopUnder5Years: mPopUnder5Years:
 		   Pop5andOverYears: mPop5andOverYears:
@@ -474,7 +496,7 @@ run;
 %macro region_pct;
 data region_agg ; 
   
-    set region_agg_a;
+    set region_agg_a (where=(region~=" "));
     
     ** Population **;
     
@@ -1166,13 +1188,13 @@ data region_agg ;
 
 	%Pct_calc( var=AvgHshldIncome, label=Average household income last year ($), num=AggHshldIncome, den=NumHshlds, mult=1, years=&_years. )
 
-	%dollar_convert( AvgHshldIncome_&_years., AvgHshldIncAdj_&_years., 2015, &inc_dollar_yr )
+	%dollar_convert( AvgHshldIncome_&_years., AvgHshldIncAdj_&_years., &inc_from_yr, &inc_dollar_yr )
 
     AvgHshldIncome_m_&_years. = 
       %Moe_ratio( num=AggHshldIncome_&_years., den=NumHshlds_&_years., 
                   num_moe=mAggHshldIncome_&_years., den_moe=mNumHshlds_&_years.);
                         
-    %dollar_convert( AvgHshldIncome_m_&_years., AvgHshldIncAdj_m_&_years., 2015, &inc_dollar_yr )
+    %dollar_convert( AvgHshldIncome_m_&_years., AvgHshldIncAdj_m_&_years., &inc_from_yr, &inc_dollar_yr )
 
 	%do r=1 %to 6;
 
@@ -1191,13 +1213,13 @@ data region_agg ;
 
 	%Pct_calc( var=AvgHshldIncome&race., label=Average household income last year &name. ($), num=AggHshldIncome&race., den=NumHshlds&race., mult=1, years=&_years. )
 
-	%dollar_convert( AvgHshldIncome&race._&_years., AvgHshldIncAdj&race._&_years., 2015, &inc_dollar_yr )
+	%dollar_convert( AvgHshldIncome&race._&_years., AvgHshldIncAdj&race._&_years., &inc_from_yr, &inc_dollar_yr )
 
     AvgHshldIncome&race._m_&_years. = 
       %Moe_ratio( num=AggHshldIncome&race._&_years., den=NumHshlds&race._&_years., 
                   num_moe=mAggHshldIncome&race._&_years., den_moe=mNumHshlds&race._&_years.);
                         
-    %dollar_convert( AvgHshldIncome&race._m_&_years., AvgHshldIncAdj&race._m_&_years., 2015, &inc_dollar_yr )
+    %dollar_convert( AvgHshldIncome&race._m_&_years., AvgHshldIncAdj&race._m_&_years., &inc_from_yr, &inc_dollar_yr )
 
 	%end;
 
@@ -1300,9 +1322,13 @@ data region_agg ;
 ** Stack county and region data **;
 data Profile_acs_region;
 	set allcounty region_agg (drop = _type_ _freq_);
+
+	if county="0" and region="Washington" then county="11XXX";
+	if county="0" and region="Baltimore" then county="24XXX";
+	if county="0" and region="Richmond" then county="51XXX";
 	
 	order=.;
-	if county=" " then order=1;
+	if region="Washington" then order=1;
 	if county="11001" then order=2;
 	if county="24017" then order=3;
 	if county="24021" then order=4; 
@@ -1317,6 +1343,20 @@ data Profile_acs_region;
 	if county="51153" then order=13;
 	if county="51683" then order=14; 
 	if county="51685" then order=15; 
+
+	if region="Baltimore" then order=16;
+	if county="24510" then order=17;
+	if county="24005" then order=18;
+	if county="24003" then order=19;
+	if county="24027" then order=20;
+	if county="24013" then order=21;
+	if county="24025" then order=22;
+	if county="24035" then order=23;
+
+	if region="Richmond" then order=24;
+	if county="51159" then order=25;
+	if county="51041" then order=26;
+	if county="51087" then order=27;
 	
 
 	drop cv: p n x a_se b_se: uPct: uAvg: z c_se d_se den denA denAIOM denIOM denB denH denW f k lAvg: lPct: num numA numAIOM numIOM numB numH numW zA zAIOM zIOM zB zH zW ;
@@ -1382,13 +1422,15 @@ run;
 		data=donotroundunemp,
 		out=Regional_equity_gaps_acs_&_years.,
 		outlib=Equity,
-		label="DC Regional ACS Equity Indicators and Gaps by Race/Ethnicity, County  &_years.",
+		label="DC-MD-VA Regional ACS Equity Indicators and Gaps by Race/Ethnicity, County  &_years.",
 		sortby=county,
 		restrictions=None,
 		revisions=&revisions.
 		)
 ** Transpose for final excel output **;
-proc transpose data=donotroundunemp out=profile_tabs_region ;/*(label="DC Equity Indicators and Gap Calculations for Equity Profile City & Ward, &y_lbl."); */
+proc transpose data=donotroundunemp (where=(order~=.))
+
+out=profile_tabs_region ;/*(label="DC Equity Indicators and Gap Calculations for Equity Profile City & Ward, &y_lbl."); */
 	var TotPop_tr:
 
 		PctAloneA_: PctAloneB_: PctHisp_:
@@ -1663,10 +1705,10 @@ proc transpose data=donotroundunemp out=profile_tabs_region ;/*(label="DC Equity
 	id county; 
 run; 
 
-
+*jurisdictions are out of order;
 ** Export final file **;
-proc export data=profile_tabs_region
-	outfile="&_dcdata_default_path.\Equity\Prog\profile_tabs_HITregion_acs_&_years..csv"
+proc export data=profile_tabs_region 
+	outfile="&_dcdata_default_path.\Equity\Prog\profile_tabs_HITregions_acs_&_years..csv"
 	dbms=csv replace;
 	run;
 
