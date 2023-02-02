@@ -64,7 +64,7 @@ value $county
 	"24025" = "Harford"
 	"24035" = "Queen Annes" 
 	"51XXX" = "Greater Richmond Region"
-	"51159" = "Richmond"
+	"51760" = "Richmond"
 	"51041" = "Chesterfield"
 	"51087" = "Henrico"
 	;
@@ -84,7 +84,7 @@ data allcounty;
 if county in ("24003","24005","24013","24025","24027", "24035", "24510" ) then region="Baltimore";
 if county in ("11001","24017","24021","24031","24033","51510","51013","51610","51059","51600","51107","51153","51683","51685")
 	then region="Washington";
-if county in ("51159", "51087", "51041" ) then region="Richmond"; 
+if county in ("51760", "51087", "51041" ) then region="Richmond"; 
 	
 	%suppress_vars;
 	%suppress_vars_fb;
@@ -1354,7 +1354,7 @@ data Profile_acs_region;
 	if county="24035" then order=23;
 
 	if region="Richmond" then order=24;
-	if county="51159" then order=25;
+	if county="51760" then order=25;
 	if county="51041" then order=26;
 	if county="51087" then order=27;
 	
