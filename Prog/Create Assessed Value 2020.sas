@@ -34,80 +34,73 @@ set RealPr_r.parcel_base_ownerpt_2020_05 (where=(ui_proptype in ('10','11')));
 
 length ssl_new $17.; 
 ssl_new=ssl;
-Leah 
+
+assess_val20=assess_val;
+all=1;
 run;
 
-*merge 2016 and 2020 data by ssl;
-proc sort data=y2020_realprop; by ssl;run;
-proc sort data=y2016_realprop; by ssl;run;
-data assessed_val (where=( in_both=1));
-merge y2010_realprop(in=a keep=ssl assess_val rename=(assess_val=assess_val10a)) 
-	y2016_realprop(in=b keep=ssl assess_val rename=(assess_val=assess_val16a))
-	realprop.parcel_geo(keep=ssl geo2010);
-by ssl;
-/*if a=0 and b=1 then in_2016=1;
-else if a=1 and b=0 then in_2010=1;*/
-if a=1 and b=1 then in_both=1;
-label /*in_2016 ="Only in 2016 data" in_2010="Only in 2010 data"*/ in_both="In both years of data";
 
-run; 
 
-proc means data=assessed_val  p99 p1;
-var assess_val10a assess_val16a;
-output out=assessed_val_extreme p99=assess_val10p99 assess_val16p99 p1=assess_val10p1 assess_val16p1 ;
+proc means data=y2020_realprop  p99 p1;
+var assess_val20;
+output out=assessed_val_extreme p99=assess_val20p99 p1=assess_val20p1 ;
 run;
 data assessed_val_extreme2;
 	set assessed_val_extreme;
-	in_both=1;
-
-run;
+	all=1;
 data assessed_val_cutoff;
-	merge assessed_val assessed_val_extreme2; 
-	by in_both;
+	merge y2020_realprop assessed_val_extreme2; 
+	by all;
+	assess_val20a=.;
+	assess_val20a=assess_val20;  
 
-	assess_val10=.; assess_val16=.;
-	assess_val10=assess_val10a; 
-	assess_val16=assess_val16a; 
-
-	if assess_val10a < assess_val10p1 then assess_val10=.;
-	if assess_val10a > assess_val10p99 then assess_val10=.; 
-	if assess_val16a < assess_val16p1 then assess_val16=.;
-	if assess_val16a > assess_val16p99 then assess_val16=.; 
+	if assess_val20 < assess_val20p1 then assess_val20a=.;
+	if assess_val20 > assess_val20p99 then assess_val20a=.; 
 
 	extreme=.;
-	if assess_val10 ~=. and assess_val16 ~=. then extreme=0;  *have both years;
-	else if assess_val10 =. and assess_val16 =. then extreme=1; *missing both years;
-	else if assess_val10 =. or assess_val16 =. then extreme=2; *missing one year;
+	if assess_val20a ~=.  then extreme=0; 
+	else if assess_val20a =.  then extreme=1; 
 
-%dollar_convert(assess_val10, assess_val10r, 2010, 2016);
 
-label assess_val10="Property Assessed Value 2010 extreme obs removed"
-	   assess_val16="Property Assessed Value 2016 extreme obs removed"
-	   assess_val10r="Property Assessed Value 2010 in $2016 extreme obs removed";
+
+label assess_val20a="Property Assessed Value 2020 extreme obs removed";
 
 run;
-
-proc sort data=assessed_val_cutoff; by geo2010;
+proc freq data=assessed_val_cutoff;
+tables extreme;
 run;
+proc sort data=assessed_val_cutoff; by ssl;
+proc sort data=realpr_r.parcel_geo out=parcel_geo; by ssl;
+
+data with2020tract;
+merge assessed_val_cutoff (in=a) parcel_geo (keep=ssl ward2022 geo2020 geo2010 ward2012);
+by ssl; 
+if a;
+run;
+proc sort data=with2020tract; by geo2020;
+run;
+
 *For tract level summary;
-proc summary data=assessed_val_cutoff; 
+proc summary data=with2020tract; 
 where extreme=0; 
-by geo2010; 
-var assess_val10 assess_val16 assess_val10r; 
+by geo2020; 
+var assess_val20a ; 
 output out=tract_assessed_val (drop=_type_) sum=; 
 run;
-*	Note: There are 654 parcels with no tract assigned?
+*	Note: There are 32 parcels with no tract assigned?
 	Also, tracts 2.01, 73.01, 62.02 with residential units but no data ;
 
 data tract_assessed_val_change;
 	set tract_assessed_val (rename=(_freq_=NumSFCondo)) ;
 
 
-	*setting to missing because only 3 properties;
-
-	if geo2010="11001010900" then do; dollar_change=.; avg_dollar_change=.; percent_change=.; assess_val16=.; assess_val10=.; 
-		assess_val10r=.;end;
+	*set to missing if under 10 properties;
 	
+	 if NumSFCondo < 10 then assess_val20a=.; 	
+	 if geo2020 = " " then delete;
+	 
+
+/* from old code	
 		dollar_change= (assess_val16-assess_val10)/1000;
 		avg_dollar_change=(assess_val16-assess_val10)/NumSFCondo;
 		percent_change= ((assess_val16-assess_val10) / assess_val10) * 100;
@@ -122,56 +115,71 @@ data tract_assessed_val_change;
 	 			dollar_changeR="Real Change in Assessed Value, Single Family Homes and Condos ($000) $2016, 2010-16"
 			  avg_dollar_changeR="Avg. Real Change in Assessed Value, Single Family Homes and Condos $2016, 2010-16"
 			  percent_changeR="Pct. Change in Real Assessed Value, Single Family Homes and Condos $2016, 2010-16"
-;
+;*/
 
 run;
 
 /*Select tract-based Race Vars*/
+data census_base (where=(state="11"));
 
-proc sort data=ncdb.Ncdb_sum_2010_tr10 (keep=geo2010 PopWithRace: PopBlackNonHispBridge:
+	set ncdb.Ncdb_sum_2020_tr20 (keep=geo2020 PopWithRace: PopBlackNonHispBridge:
 PopWhiteNonHispBridge: PopHisp:  PopAsianPINonHispBridge:
-PopNativeAmNonHispBridge: PopOtherNonHispBridge:)
-out=census_base;
-by geo2010;
+PopNativeAmNonHispBridge: PopOtherNonHispBridge:);
+
+length state $2.;
+
+state=substr(geo2020,1,2);
+
+
 run;
 
 /*Test that all Census race values are collected correctly*/
 data census_test;
 set census_base;
-sumrace=sum(popblacknonhispbridge_2010, popwhitenonhispbridge_2010, popasianpinonhispbridge_2010,
-popnativeamnonhispbridge_2010, popothernonhispbridge_2010, pophisp_2010);
+sumrace=sum(popblacknonhispbridge_2020, popwhitenonhispbridge_2020, popasianpinonhispbridge_2020,
+popnativeamnonhispbridge_2020, popothernonhispbridge_2020, pophisp_2020);
 run;
 
 data census_race;
-	set census_base;
-	whiterate=(PopWhiteNonHispBridge_2010/PopWithRace_2010)*100;
-	blackrate=(PopBlackNonHispBridge_2010/PopWithRace_2010)*100;
-	hisprate=(PopHisp_2010/PopWithRace_2010)*100;
-	aiomrate=(sum(PopAsianPINonHispBridge_2010, PopNativeAMNonHispBridge_2010, PopOtherNonHispBridge_2010)/PopWithRace_2010)*100;
-	if 	whiterate =>75 then majwhite_10=1; /*Non-Hispanic White by Total Population*/
-		else majwhite_10=0;
-	if  blackrate=>75 then majblack_10=1; /*Non-Hispanic Black*/
-		else majblack_10=0;
-	if  hisprate=>75 then majhisp_10=1;
-		else majhisp_10=0;
-	if aiomrate=>75 then majaiom_10=1; /*Non-Hispanic AmIn, Asian, Pacific Islander, Other, Multi*/
-		else majaiom_10=0;
-	if majwhite_10=0 and majblack_10=0 and majhisp_10=0 and majaiom_10=0 then mixedngh_10=1;
-		else mixedngh_10 =0;
+	set census_base ;
+	whiterate=(PopWhiteNonHispBridge_2020/PopWithRace_2020)*100;
+	blackrate=(PopBlackNonHispBridge_2020/PopWithRace_2020)*100;
+	hisprate=(PopHisp_2020/PopWithRace_2020)*100;
+	aiomrate=(sum(PopAsianPINonHispBridge_2020, PopNativeAMNonHispBridge_2020, PopOtherNonHispBridge_2020)/PopWithRace_2020)*100;
+	if 	whiterate =>75 then majwhite_20=1; /*Non-Hispanic White by Total Population*/
+		else majwhite_20=0;
+	if  blackrate=>75 then majblack_20=1; /*Non-Hispanic Black*/
+		else majblack_20=0;
+	if  hisprate=>75 then majhisp_20=1;
+		else majhisp_20=0;
+	if aiomrate=>75 then majaiom_20=1; /*Non-Hispanic AmIn, Asian, Pacific Islander, Other, Multi*/
+		else majaiom_20=0;
+	if majwhite_20=0 and majblack_20=0 and majhisp_20=0 and majaiom_20=0 then mixedngh_20=1;
+		else mixedngh_20 =0;
+
+
+		tract_comp20=.;
+	if majwhite_20=1 then tract_comp20=1;
+	if majblack_20=1 then tract_comp20=2;
+	if mixedngh_20=1 then tract_comp20=3;
+ 
 	run;
 
 proc freq data=census_race;
-	tables whiterate*majwhite_10/list missing;
-	tables blackrate*majblack_10/list missing;
-	tables hisprate*majhisp_10/list missing;
-	tables aiomrate*majaiom_10/list missing;
-	tables majblack_10*majwhite_10*majhisp_10*majaiom_10*mixedngh_10/list missing;
+	tables whiterate*majwhite_20/list missing;
+	tables blackrate*majblack_20/list missing;
+	tables hisprate*majhisp_20/list missing;
+	tables aiomrate*majaiom_20/list missing;
+	tables majblack_20*majwhite_20*majhisp_20*majaiom_20*mixedngh_20/list missing;
+	tables tract_comp20;
 	run;
 
+
+	/*old code using ACS/
 %let geo=geo2010;
 %let _years=2010_14;
 
-/** Macro ACS_Percents- Start Definition **/
+/** Macro ACS_Percents- Start Definition **
 
 %macro acs_percents;
 
@@ -201,13 +209,13 @@ proc freq data=census_race;
     %Moe_prop_a( var=hisprate_m_14, mult=100, num=PopHisp_2010_14, den=PopWithRace_2010_14, 
                        num_moe=mPopHisp_2010_14, den_moe=mPopWithRace_2010_14 );
 
-	if 	whiterate_2010_14 =>75 then majwhite_14=1; /*Non-Hispanic White by Total Population*/
+	if 	whiterate_2010_14 =>75 then majwhite_14=1; *Non-Hispanic White by Total Population;
 		else if whiterate_2010_14 + whiterate_m_14 =>75 then majwhite_14=1;
 		else majwhite_14=0;
-	if 	blackrate_2010_14 =>75 then majblack_14=1; /*Non-Hispanic black by Total Population*/
+	if 	blackrate_2010_14 =>75 then majblack_14=1; *Non-Hispanic black by Total Population;
 		else if blackrate_2010_14 + blackrate_m_14 =>75 then majblack_14=1;
 		else majblack_14=0;
- 	if 	hisprate_2010_14 =>75 then majhisp_14=1; /*Hispanic by Total Population*/
+ 	if 	hisprate_2010_14 =>75 then majhisp_14=1; *Hispanic by Total Population;
 		else if hisprate_2010_14 + hisprate_m_14 =>75 then majhisp_14=1;
 		else majhisp_14=0;
 	if majwhite_14=0 and majblack_14=0 and majhisp_14=0 then mixedngh_14=1;
@@ -228,11 +236,11 @@ proc freq data=census_race;
   
 %mend acs_percents;
 
-%acs_percents;
+%acs_percents;**/
 
 /*Tract 62.02 has no people in it??*/
 
-
+/*
 data racecomp;
 	merge acs_race (keep=geo2010 whiterate_2010_14 whiterate_m_14 blackrate_2010_14 blackrate_m_14 majwhite_14 majblack_14 mixedngh_14 tract_comp) census_race (keep= geo2010 whiterate blackrate majwhite_10 majblack_10 mixedngh_10);
 	by geo2010;
@@ -244,38 +252,46 @@ run;
   proc freq data=racecomp;
   tables tract_comp majwhite*tract_comp;
   run;
-data equity.assessedval_race (label="Assessed Value for Single Family Homes and Condos by Tract Racial Composition, 2010-16");
-	merge racecomp (keep=geo2010 mixedngh majblack majwhite tract_comp) tract_assessed_val_change ;
-	by geo2010;
+	*/
+data assessedval_race (label="Assessed Value for Single Family Homes and Condos by Tract Racial Composition, 2020");
+	merge census_race (keep=geo2020 mixedngh_20 majblack_20 majwhite_20 tract_comp20 PopWithRace_2020) tract_assessed_val_change ;
+	by geo2020;
 
-	format geo2010;
+	format geo2020;
 	
-	label majblack="Tract Population in 2010-14 is at least 75% Black"
-	      majwhite="Tract Popuation in 2010-14 is at least 75% White" 
-	      mixedngh="Tract Population is not 75% white or 75% Black" 
+	label majblack_20="Tract Population in 2020 is at least 75% Black"
+	      majwhite_20="Tract Popuation in 2020 is at least 75% White" 
+	      mixedngh_20="Tract Population is not 75% white or 75% Black" 
 	      NumSFCondo ="Number of Single Family Homes and Condominium Units"
-	      tract_comp="Tract Racial Composition 1=White 2=Black 3=Mixed";
+	      tract_comp20="Tract Racial Composition 1=White 2=Black 3=Mixed";
 	run;
 
-proc univariate data=equity.assessedval_race;
-CLASS tract_comp;
-var dollar_changeR avg_dollar_changeR percent_changeR;
-id geo2010; 
+proc univariate data=assessedval_race;
+CLASS tract_comp20;
+var assess_val20a;
+id geo2020; 
 run;
 proc freq data=equity.assessedval_race;
 tables dollar_change avg_dollar_change percent_change;
 run;
 
+/*
 proc export data=equity.assessedval_race
 	outfile="D:\DCDATA\Libraries\Equity\Prog\assessedval_race.csv"
 	dbms=csv replace;
 	run;
+*/
 
-proc means data=equity.assessedval_race mean n sum ;
-class tract_comp;
-var numsfcondo assess_val16 assess_val10r;
+
+proc means data=assessedval_race mean n sum ;
+where assess_val20a ~=.;
+class tract_comp20;
+var numsfcondo assess_val20a;
+title output for testimoney 6-8-2023;
 run;
 
+
+/*
 ** Register metadata **;
 
 %Dc_update_meta_file(
