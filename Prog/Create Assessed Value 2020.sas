@@ -30,7 +30,7 @@
 set RealPr_l.ownerpt_2016_04 (where=(year=2016 & ui_proptype in ('10','11')));
 run;*/
 data y2020_realprop (drop=ssl rename=(ssl_new=ssl));
-set RealPr_r.parcel_base_ownerpt_2020_05 (where=(ui_proptype in ('10','11')));
+set RealPr_r.ownerpt_2020_05 (where=(ui_proptype in ('10','11')));
 
 length ssl_new $17.; 
 ssl_new=ssl;
@@ -292,7 +292,7 @@ run;
 
 
 /*
-** Register metadata **;
+** Register metadata **;	
 
 %Dc_update_meta_file(
       ds_lib=Equity,
