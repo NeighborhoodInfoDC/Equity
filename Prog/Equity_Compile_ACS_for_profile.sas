@@ -18,6 +18,7 @@
                 07/25/22 YS add gender breakouts for employment vars by race for Sadie
 		08/11/22 LH minor fixes for var names that were shortened. 
 		01/31/23 LH Update for 2016-20 ACS & comment out councildist geo (not yet updated for 2020 based geos)
+        12/22/23 RG Update for 2017-21
  Note: MOEs for AIOM average household income and average adjusted are blank because they are suppressed by the Census.
  **************************************************************************/
 
@@ -28,14 +29,14 @@
 %DCData_lib( ACS )
 %DCData_lib( Equity )
 
-%let inc_dollar_yr=2020;
+%let inc_dollar_yr=2021;
 %let racelist=W B H A IOM AIOM ;
 %let racename= NH-White Black-Alone Hispanic Asian-PI Indigenous-Other-Multi All-Other ; 
 *all-other is all other than NHWhite, Black, Hispanic; 
 *all races except NH white, hispanic, and multiple race are race alone. ;
 
-%let _years=2016_20;
-%let revisions=Update for 2016-20.;
+%let _years=2017_21;
+%let revisions=Update for 2017-21.;
 
 /** Macro Add_Percents- Start Definition **/
 
