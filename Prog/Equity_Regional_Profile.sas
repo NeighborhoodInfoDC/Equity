@@ -17,6 +17,7 @@
 		02/28/22 LH Add additional counties - Charles and Frederick, changed output data name, add finalize data set macro
 		08/11/22 LH Add employment by gender variables
 	 	01/31/23 LH Update for 2016-20 and add Baltimore & Richmond regions. Removed fixed start year on income adjustment.
+        01/04/24 RG Update for 2017-21
  **************************************************************************/
 
 %include "\\sas1\DCDATA\SAS\Inc\StdLocal.sas";
@@ -25,16 +26,16 @@
 %DCData_lib( ACS )
 %DCData_lib( Equity )
 
-%let inc_from_yr=2020;
-%let inc_dollar_yr=2020;
+%let inc_from_yr=2021;
+%let inc_dollar_yr=2021;
 %let racelist=W B H A IOM AIOM ;
 %let racename= NH-White Black-Alone Hispanic Asian-PI Indigenous-Other-Multi All-Other ;
 *all-other is all other than NHWhite, Black, Hispanic; 
 *all races except NH white, hispanic, and multiple race are race alone. ;
 
-%let _years=2016_20;
+%let _years=2017_21;
 %let y_lbl = %sysfunc( translate( &_years., '-', '_' ) );
-%let revisions=Run 2016-10 data and add Baltimore & Richmond regions.;
+%let revisions=Run 2017-21 data and add Baltimore & Richmond regions.;
 
 
 ** County formats **;
