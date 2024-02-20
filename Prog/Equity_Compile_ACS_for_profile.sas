@@ -19,6 +19,7 @@
 		08/11/22 LH minor fixes for var names that were shortened. 
 		01/31/23 LH Update for 2016-20 ACS & comment out councildist geo (not yet updated for 2020 based geos)
         12/22/23 RG Update for 2017-21
+		02/22/24 LH Update for 2018-22 ACS and change in county file name
  Note: MOEs for AIOM average household income and average adjusted are blank because they are suppressed by the Census.
  **************************************************************************/
 
@@ -29,14 +30,14 @@
 %DCData_lib( ACS )
 %DCData_lib( Equity )
 
-%let inc_dollar_yr=2021;
+%let inc_dollar_yr=2022;
 %let racelist=W B H A IOM AIOM ;
 %let racename= NH-White Black-Alone Hispanic Asian-PI Indigenous-Other-Multi All-Other ; 
 *all-other is all other than NHWhite, Black, Hispanic; 
 *all races except NH white, hispanic, and multiple race are race alone. ;
 
-%let _years=2017_21;
-%let revisions=Update for 2017-21.;
+%let _years=2018_22;
+%let revisions=New File - Update for 2018-22.;
 
 /** Macro Add_Percents- Start Definition **/
 
@@ -45,8 +46,8 @@
   %let st = %upcase( &state );
   %let geodo = %upcase( &geo2 );
 
-  %if &geodo = REGCNT %then %do;
-  	%let t = regcnt;
+  %if &geodo = cnty %then %do;
+  	%let t = cnty;
 	%let name = County;
   %end;
   %else %do;
@@ -969,13 +970,13 @@
   
   ** Finalize data **;
 
-  %if &st = DC and &geodo = WD12 %then %do;
+  %if &st = DC and &geodo = WD22 %then %do;
 	%Finalize_data_set( 
-	data=profile_acs_&_years._dc_regcd,
-	out=profile_acs_&_years._dc_regcd,
+	data=profile_acs_&_years._dc_&geo2.,
+	out=profile_acs_&_years._dc_&geo2.,
 	outlib=Equity,
-	label="DC Metro Area Equity Indicators by Race/Ethnicity, &_years.,DC &name.",
-	sortby=councildist,
+	label="DC Equity Indicators by Race/Ethnicity, &_years., &name.",
+	sortby=ward2022,
 	restrictions=None,
 	revisions=&revisions.
 	)
@@ -986,7 +987,7 @@
 		data=profile_acs_&_years._&state._&geo2.,
 		out=profile_acs_&_years._&state._&geo2.,
 		outlib=Equity,
-		label="DC Metro Area Equity Indicators by Race/Ethnicity, &_years., &st. &name.",
+		label="&st. &name. Level Equity Indicators by Race/Ethnicity, &_years.",
 		sortby=&geo.,
 		restrictions=None,
 		revisions=&revisions.
@@ -998,12 +999,12 @@
 
 /** End Macro Definition **/
 
-%add_percents(MD,county,regcnt); 
+%add_percents(MD,County,cnty); 
 /*%add_percents(MD,councildist,regcd); Commenting out as we need new crosswalks for 2020 tracts and new council districts)*/
 
-%add_percents(VA,county,regcnt); 
+%add_percents(VA,County,cnty); 
 /*%add_percents(VA,councildist,regcd); */
 
-%add_percents(dc,county,regcnt); 
-%add_percents(dc,ward2022,wd22);   
+%add_percents(DC,County,cnty); 
+%add_percents(DC,Ward2022,wd22);   
 
