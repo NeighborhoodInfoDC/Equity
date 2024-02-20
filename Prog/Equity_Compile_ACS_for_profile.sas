@@ -46,7 +46,7 @@
   %let st = %upcase( &state );
   %let geodo = %upcase( &geo2 );
 
-  %if &geodo = cnty %then %do;
+  %if &geodo = CNTY %then %do;
   	%let t = cnty;
 	%let name = County;
   %end;
@@ -146,7 +146,7 @@
 
   run;*/
 
-  data profile_acs_&_years._&state.&geosuf (compress=no label="DC Equity Indicators by Race/Ethnicity, &_years., &geo."); 
+  data profile_acs_&_years._&state.&geosuf (compress=no label="&state. Equity Indicators by Race/Ethnicity, &_years., &geo."); 
   
     set profile_acs_&_years._&state._&geosuf._A;
     
@@ -999,12 +999,12 @@
 
 /** End Macro Definition **/
 
-%add_percents(MD,County,cnty); 
+%add_percents(MD,ucounty,cnty); 
 /*%add_percents(MD,councildist,regcd); Commenting out as we need new crosswalks for 2020 tracts and new council districts)*/
 
-%add_percents(VA,County,cnty); 
+%add_percents(VA,ucounty,cnty); 
 /*%add_percents(VA,councildist,regcd); */
 
-%add_percents(DC,County,cnty); 
+%add_percents(DC,ucounty,cnty); 
 %add_percents(DC,Ward2022,wd22);   
 
