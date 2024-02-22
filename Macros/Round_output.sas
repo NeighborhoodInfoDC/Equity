@@ -17,7 +17,7 @@ run;
 
 data contents;
 	set cont;
-	if name in("councildist", "county") then delete;
+	if name in("councildist", "county", "ucounty") then delete;
 	mflag = index(name,'_m_');
 	keep name mflag; 
 run;
