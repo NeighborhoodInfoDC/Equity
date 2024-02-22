@@ -18,6 +18,7 @@
 		08/11/22 LH Add employment by gender variables
 	 	01/31/23 LH Update for 2016-20 and add Baltimore & Richmond regions. Removed fixed start year on income adjustment.
         01/04/24 RG Update for 2017-21
+		02/20/24 LH Update for 2018-22 and for change to cnty files with ucounty as id.
  **************************************************************************/
 
 %include "\\sas1\DCDATA\SAS\Inc\StdLocal.sas";
@@ -26,16 +27,16 @@
 %DCData_lib( ACS )
 %DCData_lib( Equity )
 
-%let inc_from_yr=2021;
-%let inc_dollar_yr=2021;
+%let inc_from_yr=2022;
+%let inc_dollar_yr=2022;
 %let racelist=W B H A IOM AIOM ;
 %let racename= NH-White Black-Alone Hispanic Asian-PI Indigenous-Other-Multi All-Other ;
 *all-other is all other than NHWhite, Black, Hispanic; 
 *all races except NH white, hispanic, and multiple race are race alone. ;
 
-%let _years=2017_21;
+%let _years=2018_22;
 %let y_lbl = %sysfunc( translate( &_years., '-', '_' ) );
-%let revisions=Run 2017-21 data and add Baltimore & Richmond regions.;
+%let revisions=Run 2018-22 data.;
 
 
 ** County formats **;
@@ -74,18 +75,18 @@ run;
 
 ** Combined county data **;
 data allcounty;
-	set equity.Profile_acs_&_years._dc_regcnt 
-		equity.Profile_acs_&_years._md_regcnt 
-		equity.Profile_acs_&_years._va_regcnt;
+	set equity.Profile_acs_&_years._dc_cnty 
+		equity.Profile_acs_&_years._md_cnty 
+		equity.Profile_acs_&_years._va_cnty;
 	*if county in ("11001","24017","24021","24031","24033","51510","51013","51610","51059","51600","51107","51153","51683","51685");
-	format county county.;
+	format ucounty county.;
 	length region $10.;
 
 /*1/31/23 adding new regions */
-if county in ("24003","24005","24013","24025","24027", "24035", "24510" ) then region="Baltimore";
-if county in ("11001","24017","24021","24031","24033","51510","51013","51610","51059","51600","51107","51153","51683","51685")
+if ucounty in ("24003","24005","24013","24025","24027", "24035", "24510" ) then region="Baltimore";
+if ucounty in ("11001","24017","24021","24031","24033","51510","51013","51610","51059","51600","51107","51153","51683","51685")
 	then region="Washington";
-if county in ("51760", "51087", "51041" ) then region="Richmond"; 
+if ucounty in ("51760", "51087", "51041" ) then region="Richmond"; 
 	
 	%suppress_vars;
 	%suppress_vars_fb;
@@ -1311,7 +1312,7 @@ data region_agg ;
     if TotPop_tr_&_years. >= 100 then _make_profile = 1;
     else _make_profile = 0;
 
-	county = "0";
+	ucounty = "0";
     
  
   run;
@@ -1324,40 +1325,40 @@ data region_agg ;
 data Profile_acs_region;
 	set allcounty region_agg (drop = _type_ _freq_);
 
-	if county="0" and region="Washington" then county="11XXX";
-	if county="0" and region="Baltimore" then county="24XXX";
-	if county="0" and region="Richmond" then county="51XXX";
+	if ucounty="0" and region="Washington" then ucounty="11XXX";
+	if ucounty="0" and region="Baltimore" then ucounty="24XXX";
+	if ucounty="0" and region="Richmond" then ucounty="51XXX";
 	
 	order=.;
 	if region="Washington" then order=1;
-	if county="11001" then order=2;
-	if county="24017" then order=3;
-	if county="24021" then order=4; 
-	if county="24031" then order=5;
-	if county="24033" then order=6;
-	if county="51510" then order=7;
-	if county="51013" then order=8;
-	if county="51610" then order=9;
-	if county="51059" then order=10;
-	if county="51600" then order=11;
-	if county="51107" then order=12;
-	if county="51153" then order=13;
-	if county="51683" then order=14; 
-	if county="51685" then order=15; 
+	if ucounty="11001" then order=2;
+	if ucounty="24017" then order=3;
+	if ucounty="24021" then order=4; 
+	if ucounty="24031" then order=5;
+	if ucounty="24033" then order=6;
+	if ucounty="51510" then order=7;
+	if ucounty="51013" then order=8;
+	if ucounty="51610" then order=9;
+	if ucounty="51059" then order=10;
+	if ucounty="51600" then order=11;
+	if ucounty="51107" then order=12;
+	if ucounty="51153" then order=13;
+	if ucounty="51683" then order=14; 
+	if ucounty="51685" then order=15; 
 
 	if region="Baltimore" then order=16;
-	if county="24510" then order=17;
-	if county="24005" then order=18;
-	if county="24003" then order=19;
-	if county="24027" then order=20;
-	if county="24013" then order=21;
-	if county="24025" then order=22;
-	if county="24035" then order=23;
+	if ucounty="24510" then order=17;
+	if ucounty="24005" then order=18;
+	if ucounty="24003" then order=19;
+	if ucounty="24027" then order=20;
+	if ucounty="24013" then order=21;
+	if ucounty="24025" then order=22;
+	if ucounty="24035" then order=23;
 
 	if region="Richmond" then order=24;
-	if county="51760" then order=25;
-	if county="51041" then order=26;
-	if county="51087" then order=27;
+	if ucounty="51760" then order=25;
+	if ucounty="51041" then order=26;
+	if ucounty="51087" then order=27;
 	
 
 	drop cv: p n x a_se b_se: uPct: uAvg: z c_se d_se den denA denAIOM denIOM denB denH denW f k lAvg: lPct: num numA numAIOM numIOM numB numH numW zA zAIOM zIOM zB zH zW ;
@@ -1424,7 +1425,7 @@ run;
 		out=Regional_equity_gaps_acs_&_years.,
 		outlib=Equity,
 		label="DC-MD-VA Regional ACS Equity Indicators and Gaps by Race/Ethnicity, County  &_years.",
-		sortby=county,
+		sortby=ucounty,
 		restrictions=None,
 		revisions=&revisions.
 		)
@@ -1703,7 +1704,7 @@ out=profile_tabs_region ;/*(label="DC Equity Indicators and Gap Calculations for
 		PctMovedDiffCntyW_:
 	 	;
 
-	id county; 
+	id ucounty; 
 run; 
 
 *jurisdictions are out of order;
