@@ -19,6 +19,7 @@
 	 	01/31/23 LH Update for 2016-20 and add Baltimore & Richmond regions. Removed fixed start year on income adjustment.
         01/04/24 RG Update for 2017-21
 		02/20/24 LH Update for 2018-22 and for change to cnty files with ucounty as id.
+		02/27/24 LH update for ACS recode on special values.
  **************************************************************************/
 
 %include "\\sas1\DCDATA\SAS\Inc\StdLocal.sas";
@@ -36,7 +37,7 @@
 
 %let _years=2018_22;
 %let y_lbl = %sysfunc( translate( &_years., '-', '_' ) );
-%let revisions=Run 2018-22 data.;
+%let revisions=Update for recoded ACS special values.;
 
 
 ** County formats **;
