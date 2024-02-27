@@ -20,6 +20,7 @@
 		01/31/23 LH Update for 2016-20 ACS & comment out councildist geo (not yet updated for 2020 based geos)
         12/22/23 RG Update for 2017-21
 		02/22/24 LH Update for 2018-22 ACS and change in county file name
+		02/27/24 LH Update for recode of special values and fix start year for dollar convert.
  Note: MOEs for AIOM average household income and average adjusted are blank because they are suppressed by the Census.
  **************************************************************************/
 
@@ -30,6 +31,7 @@
 %DCData_lib( ACS )
 %DCData_lib( Equity )
 
+%let inc_from_yr=2022;
 %let inc_dollar_yr=2022;
 %let racelist=W B H A IOM AIOM ;
 %let racename= NH-White Black-Alone Hispanic Asian-PI Indigenous-Other-Multi All-Other ; 
@@ -37,7 +39,7 @@
 *all races except NH white, hispanic, and multiple race are race alone. ;
 
 %let _years=2018_22;
-%let revisions=New File - Update for 2018-22.;
+%let revisions=Update for recode of special values and fix start year for dollar convert.;
 
 /** Macro Add_Percents- Start Definition **/
 
@@ -836,13 +838,13 @@
 
 	%Pct_calc( var=AvgHshldIncome, label=Average household income last year ($), num=AggHshldIncome, den=NumHshlds, mult=1, years=&_years. )
 
-	%dollar_convert( AvgHshldIncome_&_years., AvgHshldIncAdj_&_years., 2015, &inc_dollar_yr )
+	%dollar_convert( AvgHshldIncome_&_years., AvgHshldIncAdj_&_years., &inc_from_yr, &inc_dollar_yr )
 
     AvgHshldIncome_m_&_years. = 
       %Moe_ratio( num=AggHshldIncome_&_years., den=NumHshlds_&_years., 
                   num_moe=mAggHshldIncome_&_years., den_moe=mNumHshlds_&_years.);
                         
-    %dollar_convert( AvgHshldIncome_m_&_years., AvgHshldIncAdj_m_&_years., 2015, &inc_dollar_yr )
+    %dollar_convert( AvgHshldIncome_m_&_years., AvgHshldIncAdj_m_&_years., &inc_from_yr, &inc_dollar_yr )
 
 	%do r=1 %to 6;
 
@@ -861,13 +863,13 @@
 
 	%Pct_calc( var=AvgHshldIncome&race., label=Average household income last year &rname. ($), num=AggHshldIncome&race., den=NumHshlds&race., mult=1, years=&_years. )
 
-	%dollar_convert( AvgHshldIncome&race._&_years., AvgHshldIncAdj&race._&_years., 2015, &inc_dollar_yr )
+	%dollar_convert( AvgHshldIncome&race._&_years., AvgHshldIncAdj&race._&_years., &inc_from_yr, &inc_dollar_yr )
 
     AvgHshldIncome&race._m_&_years. = 
       %Moe_ratio( num=AggHshldIncome&race._&_years., den=NumHshlds&race._&_years., 
                   num_moe=mAggHshldIncome&race._&_years., den_moe=mNumHshlds&race._&_years.);
                         
-    %dollar_convert( AvgHshldIncome&race._m_&_years., AvgHshldIncAdj&race._m_&_years., 2015, &inc_dollar_yr )
+    %dollar_convert( AvgHshldIncome&race._m_&_years., AvgHshldIncAdj&race._m_&_years., &inc_from_yr, &inc_dollar_yr )
 
 	%end;
 
