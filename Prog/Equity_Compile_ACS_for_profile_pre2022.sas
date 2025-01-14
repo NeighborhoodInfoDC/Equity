@@ -1003,10 +1003,10 @@
 /** End Macro Definition **/
 
 %add_percents(MD,county,regcnt); 
-/*%add_percents(MD,councildist,regcd); Commenting out as we need new crosswalks for 2020 tracts and new council districts)*/
+%add_percents(MD,councildist,regcd); /*Commenting out as we need new crosswalks for 2020 tracts and new council districts)*/
 
 %add_percents(VA,county,regcnt); 
-/*%add_percents(VA,councildist,regcd); */
+%add_percents(VA,councildist,regcd); 
 
 %add_percents(DC,county,regcnt); 
 %add_percents(DC,Ward2022,wd22);   
