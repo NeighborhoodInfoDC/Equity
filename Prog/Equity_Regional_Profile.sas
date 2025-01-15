@@ -20,6 +20,7 @@
         01/04/24 RG Update for 2017-21
 		02/20/24 LH Update for 2018-22 and for change to cnty files with ucounty as id.
 		02/27/24 LH update for ACS recode on special values.
+		01/15/25 LH Update to be able to use older years with regcnt or 2022+ with cnty
  **************************************************************************/
 
 %include "\\sas1\DCDATA\SAS\Inc\StdLocal.sas";
@@ -28,14 +29,14 @@
 %DCData_lib( ACS )
 %DCData_lib( Equity )
 
-%let inc_from_yr=2022;
+%let inc_from_yr=2015;
 %let inc_dollar_yr=2022;
 %let racelist=W B H A IOM AIOM ;
 %let racename= NH-White Black-Alone Hispanic Asian-PI Indigenous-Other-Multi All-Other ;
 *all-other is all other than NHWhite, Black, Hispanic; 
 *all races except NH white, hispanic, and multiple race are race alone. ;
 
-%let _years=2018_22;
+%let _years=2011_15;
 %let y_lbl = %sysfunc( translate( &_years., '-', '_' ) );
 %let revisions=Update for recoded ACS special values.;
 
@@ -73,12 +74,28 @@ value $county
 	;
 run;
 
+%macro allcounty; 
+
+%if &inc_from_yr. < 2022 %then %do;
+
+		** Combined county data **;
+	data allcounty;
+		set equity.Profile_acs_&_years._dc_regcnt (rename=(county=ucounty))
+			equity.Profile_acs_&_years._md_regcnt (rename=(county=ucounty))
+			equity.Profile_acs_&_years._va_regcnt (rename=(county=ucounty));
+
+%end;
+
+%else %do; 
+	
 
 ** Combined county data **;
-data allcounty;
-	set equity.Profile_acs_&_years._dc_cnty 
-		equity.Profile_acs_&_years._md_cnty 
-		equity.Profile_acs_&_years._va_cnty;
+	data allcounty;
+		set equity.Profile_acs_&_years._dc_cnty 
+			equity.Profile_acs_&_years._md_cnty 
+			equity.Profile_acs_&_years._va_cnty;
+
+%end; 
 	*if county in ("11001","24017","24021","24031","24033","51510","51013","51610","51059","51600","51107","51153","51683","51685");
 	format ucounty county.;
 	length region $10.;
@@ -414,6 +431,8 @@ if ucounty in ("51760", "51087", "51041" ) then region="Richmond";
 	%suppress_gaps_region_fb;
 
 run;
+%mend; 
+%allcounty; 
 
 proc sort data=allcounty;
 by region;
@@ -1227,27 +1246,27 @@ data region_agg ;
 	%end;
 
 	label
-	  AvgHshldIncAdj_&_years. = "Average household income (adjusted), &y_lbl."
-	  AvgHshldIncAdj_m_&_years. = "Average household income (adjusted) MOE, &y_lbl."
-	  AvgHshldIncAdjB_&_years. = "Average household income (adjusted), Black/African American, &y_lbl."
-	  AvgHshldIncAdjB_m_&_years. = "Average household income (adjusted), Black/African American MOE, &y_lbl."
-	  AvgHshldIncAdjW_&_years. = "Average household income (adjusted), Non-Hispanic White, &y_lbl."
-	  AvgHshldIncAdjW_m_&_years. = "Average household income (adjusted), Non-Hispanic White MOE, &y_lbl."
-	  AvgHshldIncAdjH_&_years. = "Average household income (adjusted), Hispanic/Latino, &y_lbl."
-	  AvgHshldIncAdjH_m_&_years. = "Average household income (adjusted), Hispanic/Latino MOE, &y_lbl."
-	  AvgHshldIncAdjA_&_years. = "Average household income (adjusted), Asian-PI, &y_lbl."
-	  AvgHshldIncAdjA_m_&_years. = "Average household income (adjusted), Asian-PI MOE, &y_lbl."
-	  AvgHshldIncAdjIOM_&_years. = "Average household income (adjusted), Indigenous, Other or Multiple race, &y_lbl."
-	  AvgHshldIncAdjIOM_m_&_years. = "Average household income (adjusted), Indigenous, Other or Multiple Race MOE, &y_lbl."
-	  AvgHshldIncAdjAIOM_&_years. = "Average household income (adjusted), All remaining groups other than Black, Non-Hispanic White, Hispanic, &y_lbl."
-	  AvgHshldIncAdjAIOM_m_&_years. = "Average household income (adjusted), All remaining groups other than Black, Non-Hispanic White, Hispanic, MOE, &y_lbl."
-	  AvgHshldIncome_m_&_years. = "Average household income, MOE, &y_lbl."
-	  AvgHshldIncomeB_m_&_years. = "Average household income, Black/African American, MOE, &y_lbl."
-	  AvgHshldIncomeW_m_&_years. = "Average household income, Non-Hispanic White, MOE, &y_lbl."
-	  AvgHshldIncomeH_m_&_years. = "Average household income, Hispanic/Latino, MOE, &y_lbl."
-	  AvgHshldIncomeA_m_&_years. = "Average household income, Asian-PI, MOE, &y_lbl."
-	  AvgHshldIncomeIOM_m_&_years. = "Average household income, Indigenous, Other or Multiple Race  MOE, &y_lbl."
-	  AvgHshldIncomeAIOM_m_&_years. = "Average household income, All remaining groups other than Black, Non-Hispanic White, Hispanic, MOE, &y_lbl."
+	  AvgHshldIncAdj_&_years. = "Average household income (adjusted) $&inc_from_yr., &y_lbl."
+	  AvgHshldIncAdj_m_&_years. = "Average household income (adjusted) $&inc_from_yr. MOE, &y_lbl."
+	  AvgHshldIncAdjB_&_years. = "Average household income (adjusted) $&inc_from_yr., Black/African American, &y_lbl."
+	  AvgHshldIncAdjB_m_&_years. = "Average household income (adjusted) $&inc_from_yr., Black/African American MOE, &y_lbl."
+	  AvgHshldIncAdjW_&_years. = "Average household income (adjusted) $&inc_from_yr., Non-Hispanic White, &y_lbl."
+	  AvgHshldIncAdjW_m_&_years. = "Average household income (adjusted) $&inc_from_yr., Non-Hispanic White MOE, &y_lbl."
+	  AvgHshldIncAdjH_&_years. = "Average household income (adjusted) $&inc_from_yr., Hispanic/Latino, &y_lbl."
+	  AvgHshldIncAdjH_m_&_years. = "Average household income (adjusted) $&inc_from_yr., Hispanic/Latino MOE, &y_lbl."
+	  AvgHshldIncAdjA_&_years. = "Average household income (adjusted) $&inc_from_yr., Asian-PI, &y_lbl."
+	  AvgHshldIncAdjA_m_&_years. = "Average household income (adjusted) $&inc_from_yr., Asian-PI MOE, &y_lbl."
+	  AvgHshldIncAdjIOM_&_years. = "Average household income (adjusted) $&inc_from_yr., Indigenous, Other or Multiple race, &y_lbl."
+	  AvgHshldIncAdjIOM_m_&_years. = "Average household income (adjusted) $&inc_from_yr., Indigenous, Other or Multiple Race MOE, &y_lbl."
+	  AvgHshldIncAdjAIOM_&_years. = "Average household income (adjusted) $&inc_from_yr., All remaining groups other than Black, Non-Hispanic White, Hispanic, &y_lbl."
+	  AvgHshldIncAdjAIOM_m_&_years. = "Average household income (adjusted) $&inc_from_yr., All remaining groups other than Black, Non-Hispanic White, Hispanic, MOE, &y_lbl."
+	  AvgHshldIncome_m_&_years. = "Average household income $&inc_from_yr., MOE, &y_lbl."
+	  AvgHshldIncomeB_m_&_years. = "Average household income $&inc_from_yr., Black/African American, MOE, &y_lbl."
+	  AvgHshldIncomeW_m_&_years. = "Average household income $&inc_from_yr., Non-Hispanic White, MOE, &y_lbl."
+	  AvgHshldIncomeH_m_&_years. = "Average household income $&inc_from_yr., Hispanic/Latino, MOE, &y_lbl."
+	  AvgHshldIncomeA_m_&_years. = "Average household income $&inc_from_yr., Asian-PI, MOE, &y_lbl."
+	  AvgHshldIncomeIOM_m_&_years. = "Average household income $&inc_from_yr., Indigenous, Other or Multiple Race  MOE, &y_lbl."
+	  AvgHshldIncomeAIOM_m_&_years. = "Average household income $&inc_from_yr., All remaining groups other than Black, Non-Hispanic White, Hispanic, MOE, &y_lbl."
       ;
 
         
@@ -1430,8 +1449,12 @@ run;
 		restrictions=None,
 		revisions=&revisions.
 		)
+
+proc sort data=donotroundunemp out=sortedbyorder;
+by order;
+run;
 ** Transpose for final excel output **;
-proc transpose data=donotroundunemp (where=(order~=.))
+proc transpose data=sortedbyorder (where=(order~=.))
 
 out=profile_tabs_region ;/*(label="DC Equity Indicators and Gap Calculations for Equity Profile City & Ward, &y_lbl."); */
 	var TotPop_tr:
@@ -1708,7 +1731,6 @@ out=profile_tabs_region ;/*(label="DC Equity Indicators and Gap Calculations for
 	id ucounty; 
 run; 
 
-*jurisdictions are out of order;
 ** Export final file **;
 proc export data=profile_tabs_region 
 	outfile="&_dcdata_default_path.\Equity\Prog\profile_tabs_HITregions_acs_&_years..csv"
