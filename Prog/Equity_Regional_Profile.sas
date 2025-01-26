@@ -21,6 +21,7 @@
 		02/20/24 LH Update for 2018-22 and for change to cnty files with ucounty as id.
 		02/27/24 LH update for ACS recode on special values.
 		01/15/25 LH Update to be able to use older years with regcnt or 2022+ with cnty
+		01/26/25 LH Update to run alternate Washington region definitions. 
  **************************************************************************/
 
 %include "\\sas1\DCDATA\SAS\Inc\StdLocal.sas";
@@ -29,17 +30,23 @@
 %DCData_lib( ACS )
 %DCData_lib( Equity )
 
-%let inc_from_yr=2015;
+%let _years=2018_22;
+%let y_lbl = %sysfunc( translate( &_years., '-', '_' ) );
+
+%let inc_from_yr=2022;
 %let inc_dollar_yr=2022;
+
 %let racelist=W B H A IOM AIOM ;
 %let racename= NH-White Black-Alone Hispanic Asian-PI Indigenous-Other-Multi All-Other ;
 *all-other is all other than NHWhite, Black, Hispanic; 
 *all races except NH white, hispanic, and multiple race are race alone. ;
 
-%let _years=2011_15;
-%let y_lbl = %sysfunc( translate( &_years., '-', '_' ) );
-%let revisions=Update for recoded ACS special values.;
+%let revisions=Update to run alternate region definitions.;
+%let dcregionlist="11001","24031","24033","51510","51013","51610","51059","51600","51107","51153","51683","51685";
+%let dcregionlabel=PDMVregion; 
 
+*HIT region: "11001","24017","24021","24031","24033","51510","51013","51610","51059","51600","51107","51153","51683","51685";
+*PDMV region: "11001","24031","24033","51510","51013","51610","51059","51600","51107","51153","51683","51685";
 
 ** County formats **;
 proc format;
@@ -96,14 +103,12 @@ run;
 			equity.Profile_acs_&_years._va_cnty;
 
 %end; 
-	*if county in ("11001","24017","24021","24031","24033","51510","51013","51610","51059","51600","51107","51153","51683","51685");
 	format ucounty county.;
 	length region $10.;
 
 /*1/31/23 adding new regions */
 if ucounty in ("24003","24005","24013","24025","24027", "24035", "24510" ) then region="Baltimore";
-if ucounty in ("11001","24017","24021","24031","24033","51510","51013","51610","51059","51600","51107","51153","51683","51685")
-	then region="Washington";
+if ucounty in (&dcregionlist.) then region="Washington";
 if ucounty in ("51760", "51087", "51041" ) then region="Richmond"; 
 	
 	%suppress_vars;
@@ -1442,9 +1447,9 @@ run;
 ** save data set for use in other repos;
 %Finalize_data_set( 
 		data=donotroundunemp,
-		out=Regional_equity_gaps_acs_&_years.,
+		out=Regional_equity_gaps_acs_&dcregionlabel._&_years.,
 		outlib=Equity,
-		label="DC-MD-VA Regional ACS Equity Indicators and Gaps by Race/Ethnicity, County  &_years.",
+		label="DC-MD-VA Regional (ACS Equity Indicators and Gaps by Race/Ethnicity, &dcregionlabel., County  &_years.",
 		sortby=ucounty,
 		restrictions=None,
 		revisions=&revisions.
@@ -1454,7 +1459,7 @@ proc sort data=donotroundunemp out=sortedbyorder;
 by order;
 run;
 ** Transpose for final excel output **;
-proc transpose data=sortedbyorder (where=(order~=.))
+proc transpose data=sortedbyorder (where=(region~=" " & order~=.))
 
 out=profile_tabs_region ;/*(label="DC Equity Indicators and Gap Calculations for Equity Profile City & Ward, &y_lbl."); */
 	var TotPop_tr:
@@ -1733,7 +1738,7 @@ run;
 
 ** Export final file **;
 proc export data=profile_tabs_region 
-	outfile="&_dcdata_default_path.\Equity\Prog\profile_tabs_HITregions_acs_&_years..csv"
+	outfile="&_dcdata_default_path.\Equity\Prog\profile_tabs_&dcregionlabel._acs_&_years..csv"
 	dbms=csv replace;
 	run;
 
