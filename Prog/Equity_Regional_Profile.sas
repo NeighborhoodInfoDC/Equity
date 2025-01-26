@@ -1447,7 +1447,7 @@ run;
 ** save data set for use in other repos;
 %Finalize_data_set( 
 		data=donotroundunemp,
-		out=Regional_equity_gaps_acs_&dcregionlabel._&_years.,
+		out=Reg_equity_gaps_acs_&dcregionlabel._&_years.,
 		outlib=Equity,
 		label="DC-MD-VA Regional (ACS Equity Indicators and Gaps by Race/Ethnicity, &dcregionlabel., County  &_years.",
 		sortby=ucounty,
