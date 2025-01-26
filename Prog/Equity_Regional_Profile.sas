@@ -43,7 +43,7 @@
 
 %let revisions=Update to run alternate region definitions.;
 %let dcregionlist="11001","24031","24033","51510","51013","51610","51059","51600","51107","51153","51683","51685";
-%let dcregionlabel=PDMVregion; 
+%let dcregionlabel=PDMV; *keep short; 
 
 *HIT region: "11001","24017","24021","24031","24033","51510","51013","51610","51059","51600","51107","51153","51683","51685";
 *PDMV region: "11001","24031","24033","51510","51013","51610","51059","51600","51107","51153","51683","51685";
@@ -1447,7 +1447,7 @@ run;
 ** save data set for use in other repos;
 %Finalize_data_set( 
 		data=donotroundunemp,
-		out=Reg_equity_gaps_acs_&dcregionlabel._&_years.,
+		out=Reg_equity_acs_&dcregionlabel._&_years.,
 		outlib=Equity,
 		label="DC-MD-VA Regional (ACS Equity Indicators and Gaps by Race/Ethnicity, &dcregionlabel., County  &_years.",
 		sortby=ucounty,
