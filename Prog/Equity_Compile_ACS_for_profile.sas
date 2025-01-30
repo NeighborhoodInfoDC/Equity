@@ -33,6 +33,7 @@
 %DCData_lib( Equity )
 
 %let _years=2019_23;
+%let inc_from_yr=2023; 
 %let inc_dollar_yr=2023;
 %let lastyear=2023; 
 %let racelist=W B H A IOM AIOM ;
