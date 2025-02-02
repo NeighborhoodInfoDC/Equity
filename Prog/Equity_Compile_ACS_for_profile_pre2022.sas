@@ -33,14 +33,14 @@
 %DCData_lib( Equity )
 
 %let inc_from_yr=2015;
-%let inc_dollar_yr=2022;
+%let inc_dollar_yr=2023;
 %let racelist=W B H A IOM AIOM ;
 %let racename= NH-White Black-Alone Hispanic Asian-PI Indigenous-Other-Multi All-Other ; 
 *all-other is all other than NHWhite, Black, Hispanic; 
 *all races except NH white, hispanic, and multiple race are race alone. ;
 
 %let _years=2011_15;
-%let revisions=Run 2011-15 data.;
+%let revisions=Run 2011-15 data in 2023;
 
 /** Macro Add_Percents- Start Definition **/
 
