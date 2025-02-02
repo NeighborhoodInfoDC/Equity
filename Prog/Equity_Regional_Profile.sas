@@ -22,6 +22,7 @@
 		02/27/24 LH update for ACS recode on special values.
 		01/15/25 LH Update to be able to use older years with regcnt or 2022+ with cnty
 		01/26/25 LH Update to run alternate Washington region definitions. 
+		01/31/25 LH Update for new cost burden indicators and 2019-23
  **************************************************************************/
 
 %include "\\sas1\DCDATA\SAS\Inc\StdLocal.sas";
@@ -30,20 +31,19 @@
 %DCData_lib( ACS )
 %DCData_lib( Equity )
 
-%let _years=2018_22;
+%let _years=2019_23;
 %let y_lbl = %sysfunc( translate( &_years., '-', '_' ) );
 
-%let inc_from_yr=2022;
-%let inc_dollar_yr=2022;
+%let inc_from_yr=2023;
+%let inc_dollar_yr=2023;
+%let lastyr=2023;
 
 %let racelist=W B H A IOM AIOM ;
 %let racename= NH-White Black-Alone Hispanic Asian-PI Indigenous-Other-Multi All-Other ;
 *all-other is all other than NHWhite, Black, Hispanic; 
 *all races except NH white, hispanic, and multiple race are race alone. ;
 
-%let revisions=Update to run alternate region definitions.;
-%let dcregionlist="11001","24031","24033","51510","51013","51610","51059","51600","51107","51153","51683","51685";
-%let dcregionlabel=PDMV; *keep short; 
+%let revisions=Update for new cost burden indicators & 2019-23.;
 
 *HIT region: "11001","24017","24021","24031","24033","51510","51013","51610","51059","51600","51107","51153","51683","51685";
 *PDMV region: "11001","24031","24033","51510","51013","51610","51059","51600","51107","51153","51683","51685";
@@ -80,8 +80,20 @@ value $county
 	"51087" = "Henrico"
 	;
 run;
+%macro pickregion(dcregion); 
+	%if &dcregion=PDMV %then %do; 
+
+		%let dcregionlist="11001","24031","24033","51510","51013","51610","51059","51600","51107","51153","51683","51685";
+
+	%end; 
+
+	%if &dcregion=HIT %then %do; 
+		%let dcregionlist="11001","24017","24021","24031","24033","51510","51013","51610","51059","51600","51107","51153","51683","51685";
+
+	%end; 
 
 %macro allcounty; 
+
 
 %if &inc_from_yr. < 2022 %then %do;
 
@@ -110,9 +122,18 @@ run;
 if ucounty in ("24003","24005","24013","24025","24027", "24035", "24510" ) then region="Baltimore";
 if ucounty in (&dcregionlist.) then region="Washington";
 if ucounty in ("51760", "51087", "51041" ) then region="Richmond"; 
+
+	%if &lastyr >= 2023 %then %do; 
 	
-	%suppress_vars;
+		%suppress_vars_2023plus;
+	%End; 
+	
+	%else %do; 
+		%suppress_vars;
+
+	%end; 
 	%suppress_vars_fb;
+
 
 	** Calculate and label gaps **;
 	Gap25andOverWoutHSB_&_years.=Pct25andOverWoutHSW_&_years./100*Pop25andOverYearsB_&_years.-Pop25andOverWoutHSB_&_years.;
@@ -513,6 +534,14 @@ by region;
 		   PopPoorElderly: mPopPoorElderly:
 		   ElderlyPovertyDefined: mElderlyPovertyDefined: 
 		   PopMoved: mPopMoved:
+
+		   %if &lastyr >= 2023 %then %do;
+		   Mortcstbrden:  Mortsvrecstbrden:   mMortcstbrden: mMortsvrecstbrden: 
+		   Nomortcstbrden: Nomortsvrecstbrden:  mNomortcstbrden: mNomortsvrecstbrden:
+		   Allowncstbrden: Allownsvrecstbrden:  mAllowncstbrden: mAllownsvrecstbrden:
+		   Rentcstbrden: Rentsvrecstbrden:  mRentcstbrden: mRentsvrecstbrden: 
+		   %end;
+
 		   Gap:
 		   ;
 	output out = region_agg_a sum=;
@@ -1290,6 +1319,40 @@ data region_agg ;
     %Moe_prop_a( var=PctOwnerOccupiedHU_m_&_years., mult=100, num=NumOwnerOccupiedHU_&_years., den=NumOccupiedHsgUnits_&_years., 
                        num_moe=mNumOwnerOccupiedHU_&_years., den_moe=mNumOccupiedHsgUnits_&_years., label_moe =Homeownership rate (%) MOE &y_lbl.);
 
+
+		*new vars beginning in 2019-23 data; 
+		%if &lastyr. >= 2023 %then %do; 
+
+		%Pct_calc( var=PctMortcstbrden, label=% Owners with Mortgage who are cost-burdened, num=Mortcstbrden, den=mortcstbrdencalc, years=&_years. )
+			%Moe_prop_a( var=PctMortcstbrden_m_&_years., mult=100, num=Mortcstbrden_&_years., den=mortcstbrdencalc_&_years., 
+	                       num_moe=mMortcstbrden_&_years., den_moe=mMortcstbrdencalc_&_years., label_moe =% Owners with Mortgage who are cost-burdened MOE &y_lbl.);
+		%Pct_calc( var=PctMortSCstbrden, label=% Owners with Mortgage who are severely cost-burdened, num=Mortsvrecstbrden, den=mortcstbrdencalc, years=&_years. )
+			%Moe_prop_a( var=PctMortSCstbrden_m_&_years., mult=100, num=Mortsvrecstbrden_&_years., den=mortcstbrdencalc_&_years., 
+	                       num_moe=mMortSvrecstbrden_&_years., den_moe=mMortcstbrdencalc_&_years., label_moe =% Owners with Mortgage who are severely cost-burdened MOE &y_lbl.);
+
+		%Pct_calc( var=PctNomortcstbrden, label=% Owners without Mortgage who are cost-burdened, num=NoMortcstbrden, den=mortcstbrdencalc, years=&_years. )
+			%Moe_prop_a( var=PctNomortcstbrden_m_&_years., mult=100, num=Nomortcstbrden_&_years., den=mortcstbrdencalc_&_years., 
+	                       num_moe=mNomortcstbrden_&_years., den_moe=mMortcstbrdencalc_&_years., label_moe =% Owners without Mortgage who are cost-burdened MOE &y_lbl.);
+		%Pct_calc( var=PctNoMortSCstbrden, label=% Owners without Mortgage who are severely cost-burdened, num=NoMortsvrecstbrden, den=mortcstbrdencalc, years=&_years. )
+			%Moe_prop_a( var=PctNoMortSCstbrden_m_&_years., mult=100, num=NoMortsvrecstbrden_&_years., den=mortcstbrdencalc_&_years., 
+	                       num_moe=mNoMortSvrecstbrden_&_years., den_moe=mMortcstbrdencalc_&_years., label_moe =% Owners without Mortgage who are severely cost-burdened MOE &y_lbl.);
+
+		%Pct_calc( var=PctAllOwnCstbrden, label=% All Owners who are cost-burdened, num=AllOwnCstbrden, den=AllOwnCstbrdencalc, years=&_years. )
+			%Moe_prop_a( var=PctAllOwnCstbrden_m_&_years., mult=100, num=AllOwnCstbrden_&_years., den=AllOwnCstbrdencalc_&_years., 
+	                       num_moe=mAllOwnCstbrden_&_years., den_moe=mAllOwnCstbrdencalc_&_years., label_moe =% All Owners who are cost-burdened MOE &y_lbl.);
+		%Pct_calc( var=PctAllOwnSCstbrden, label=% All Owners who are severely cost-burdened, num=AllOwnSvrecstbrden, den=AllOwnCstbrdencalc, years=&_years. )
+			%Moe_prop_a( var=PctAllOwnSCstbrden_m_&_years., mult=100, num=AllOwnSvrecstbrden_&_years., den=AllOwnCstbrdencalc_&_years., 
+	                       num_moe=mAllOwnSvrecstbrden_&_years., den_moe=mAllOwnCstbrdencalc_&_years., label_moe =% All Owners who are severely cost-burdened MOE &y_lbl.);
+
+		%Pct_calc( var=PctRentCstbrden, label=% Renters who are cost-burdened, num=RentCstbrden, den=RentCstbrdencalc, years=&_years. )
+			%Moe_prop_a( var=PctRentCstbrden_m_&_years., mult=100, num=RentCstbrden_&_years., den=RentCstbrdencalc_&_years., 
+	                       num_moe=mRentCstbrden_&_years., den_moe=mRentCstbrdencalc_&_years., label_moe =% Renters who are cost-burdened MOE &y_lbl.);
+		%Pct_calc( var=PctRentSCstbrden, label=% Renters who are severely cost-burdened, num=RentSvrecstbrden, den=RentCstbrdencalc, years=&_years. )
+			%Moe_prop_a( var=PctRentSCstbrden_m_&_years., mult=100, num=RentSvrecstbrden_&_years., den=RentCstbrdencalc_&_years., 
+	                       num_moe=mRentSvrecstbrden_&_years., den_moe=mRentCstbrdencalc_&_years., label_moe =% Renters who are severely cost-burdened MOE &y_lbl.);
+
+		%end; 
+
 	%do r=1 %to 6;
 
 		%let race=%scan(&racelist.,&r.," ");
@@ -1301,6 +1364,39 @@ data region_agg ;
     %Moe_prop_a( var=PctOwnerOccupiedHU&race._m_&_years., mult=100, num=NumOwnerOccupiedHU&race._&_years., den=NumOccupiedHsgUnits&race._&_years., 
                        num_moe=mNumOwnerOccupiedHU&race._&_years., den_moe=mNumOccupiedHsgUnits&race._&_years., label_moe =Homeownership rate &name.(%) MOE &y_lbl.);
     
+
+					%if &lastyr. >= 2023 %then %do; 
+
+		%Pct_calc( var=PctMortcstbrden&race., label=% Owners with Mortgage who are cost-burdened &name., num=Mortcstbrden&race., den=mortcstbrdencalc&race., years=&_years. )
+			%Moe_prop_a( var=PctMortcstbrden&race._m_&_years., mult=100, num=Mortcstbrden&race._&_years., den=mortcstbrdencalc&race._&_years., 
+	                       num_moe=mMortcstbrden&race._&_years., den_moe=mMortcstbrdencalc&race._&_years., label_moe =% Owners with Mortgage who are cost-burdened &name. MOE &y_lbl.);
+		%Pct_calc( var=PctMortSCstbrden&race., label=% Owners with Mortgage who are severely cost-burdened &name., num=Mortsvrecstbrden&race., den=mortcstbrdencalc&race., years=&_years. )
+			%Moe_prop_a( var=PctMortSCstbrden&race._m_&_years., mult=100, num=Mortsvrecstbrden&race._&_years., den=mortcstbrdencalc&race._&_years., 
+	                       num_moe=mMortSvrecstbrden&race._&_years., den_moe=mMortcstbrdencalc&race._&_years., label_moe =% Owners with Mortgage who are severely cost-burdened &name.  MOE &y_lbl.);
+
+		%Pct_calc( var=PctNomortcstbrden&race., label=% Owners without Mortgage who are cost-burdened &name., num=NoMortcstbrden&race., den=mortcstbrdencalc&race., years=&_years. )
+			%Moe_prop_a( var=PctNomortcstbrden&race._m_&_years., mult=100, num=Nomortcstbrden&race._&_years., den=mortcstbrdencalc&race._&_years., 
+	                       num_moe=mNomortcstbrden&race._&_years., den_moe=mMortcstbrdencalc&race._&_years., label_moe =% Owners without Mortgage who are cost-burdened &name. MOE &y_lbl.);
+		%Pct_calc( var=PctNoMortSCstbrden&race., label=% Owners without Mortgage who are severely cost-burdened &name., num=NoMortsvrecstbrden&race., den=mortcstbrdencalc&race., years=&_years. )
+			%Moe_prop_a( var=PctNoMortSCstbrden&race._m_&_years., mult=100, num=NoMortsvrecstbrden&race._&_years., den=mortcstbrdencalc&race._&_years., 
+	                       num_moe=mNoMortSvrecstbrden&race._&_years., den_moe=mMortcstbrdencalc&race._&_years., label_moe =% Owners without Mortgage who are severely cost-burdened &name.  MOE &y_lbl.);
+
+		%Pct_calc( var=PctAllOwnCstbrden&race., label=% All Owners who are cost-burdened &name., num=AllOwnCstbrden&race., den=AllOwnCstbrdencalc&race., years=&_years. )
+			%Moe_prop_a( var=PctAllOwnCstbrden&race._m_&_years., mult=100, num=AllOwnCstbrden&race._&_years., den=AllOwnCstbrdencalc&race._&_years., 
+	                       num_moe=mAllOwnCstbrden&race._&_years., den_moe=mAllOwnCstbrdencalc&race._&_years., label_moe =% All Owners who are cost-burdened &name.  MOE &y_lbl.);
+		%Pct_calc( var=PctAllOwnSCstbrden&race., label=% All Owners who are severely cost-burdened &name., num=AllOwnSvrecstbrden&race., den=AllOwnCstbrdencalc&race., years=&_years. )
+			%Moe_prop_a( var=PctAllOwnSCstbrden&race._m_&_years., mult=100, num=AllOwnSvrecstbrden&race._&_years., den=AllOwnCstbrdencalc&race._&_years., 
+	                       num_moe=mAllOwnSvrecstbrden&race._&_years., den_moe=mAllOwnCstbrdencalc&race._&_years., label_moe =% All Owners who are severely cost-burdened &name. MOE &y_lbl.);
+
+		%Pct_calc( var=PctRentCstbrden&race., label=% Renters who are cost-burdened &name., num=RentCstbrden&race., den=RentCstbrdencalc&race., years=&_years. )
+			%Moe_prop_a( var=PctRentCstbrden&race._m_&_years., mult=100, num=RentCstbrden&race._&_years., den=RentCstbrdencalc&race._&_years., 
+	                       num_moe=mRentCstbrden&race._&_years., den_moe=mRentCstbrdencalc&race._&_years., label_moe =% Renters who are cost-burdened &name.  MOE &y_lbl.);
+		%Pct_calc( var=PctRentSCstbrden&race., label=% Renters who are severely cost-burdened &name., num=RentSvrecstbrden&race., den=RentCstbrdencalc&race., years=&_years. )
+			%Moe_prop_a( var=PctRentSCstbrden&race._m_&_years., mult=100, num=RentSvrecstbrden&race._&_years., den=RentCstbrdencalc&race._&_years., 
+	                       num_moe=mRentSvrecstbrden&race._&_years., den_moe=mRentCstbrdencalc&race._&_years., label_moe =% Renters who are severely cost-burdened &name. MOE &y_lbl.);
+
+		%end; 
+
    	%end;
 
 
@@ -1447,9 +1543,9 @@ run;
 ** save data set for use in other repos;
 %Finalize_data_set( 
 		data=donotroundunemp,
-		out=Reg_equity_acs_&dcregionlabel._&_years.,
+		out=Reg_equity_acs_&dcregion._&_years.,
 		outlib=Equity,
-		label="DC-MD-VA Regional (ACS Equity Indicators and Gaps by Race/Ethnicity, &dcregionlabel., County  &_years.",
+		label="DC-MD-VA Regional (ACS Equity Indicators and Gaps by Race/Ethnicity, &dcregion., County  &_years.",
 		sortby=ucounty,
 		restrictions=None,
 		revisions=&revisions.
@@ -1718,6 +1814,65 @@ out=profile_tabs_region ;/*(label="DC Equity Indicators and Gap Calculations for
 		GapOwnerOccupiedHUH_:
 		GapOwnerOccupiedHUIOM_:
 
+		%if &lastyr. >= 2023 %then; %do;
+		PctMortCstBrden_:
+		PctMortCstBrdenA_:
+		PctMortCstBrdenB_:
+		PctMortCstBrdenH_:
+		PctMortCstBrdenIOM_:
+		PctMortCstBrdenW_:
+
+		PctMortSCstBrden_:
+		PctMortSCstBrdenA_:
+		PctMortSCstBrdenB_:
+		PctMortSCstBrdenH_:
+		PctMortSCstBrdenIOM_:
+		PctMortSCstBrdenW_:
+
+		PctNoMortCstBrden_:
+		PctNoMortCstBrdenA_:
+		PctNoMortCstBrdenB_:
+		PctNoMortCstBrdenH_:
+		PctNoMortCstBrdenIOM_:
+		PctNoMortCstBrdenW_:
+
+		PctNoMortSCstBrden_:
+		PctNoMortSCstBrdenA_:
+		PctNoMortSCstBrdenB_:
+		PctNoMortSCstBrdenH_:
+		PctNoMortSCstBrdenIOM_:
+		PctNoMortSCstBrdenW_:
+
+		PctAllOwnCstBrden_:
+		PctAllOwnCstBrdenA_:
+		PctAllOwnCstBrdenB_:
+		PctAllOwnCstBrdenH_:
+		PctAllOwnCstBrdenIOM_:
+		PctAllOwnCstBrdenW_:
+
+		PctAllOwnSCstBrden_:
+		PctAllOwnSCstBrdenA_:
+		PctAllOwnSCstBrdenB_:
+		PctAllOwnSCstBrdenH_:
+		PctAllOwnSCstBrdenIOM_:
+		PctAllOwnSCstBrdenW_:
+
+		PctRentCstBrden_:
+		PctRentCstBrdenA_:
+		PctRentCstBrdenB_:
+		PctRentCstBrdenH_:
+		PctRentCstBrdenIOM_:
+		PctRentCstBrdenW_:
+
+		PctRentSCstBrden_:
+		PctRentSCstBrdenA_:
+		PctRentSCstBrdenB_:
+		PctRentSCstBrdenH_:
+		PctRentSCstBrdenIOM_:
+		PctRentSCstBrdenW_:
+
+		%end; 
+
 		PctMovedLastYear_:
 		PctMovedLastYearA_:
 		PctMovedLastYearB_:
@@ -1738,9 +1893,11 @@ run;
 
 ** Export final file **;
 proc export data=profile_tabs_region 
-	outfile="&_dcdata_default_path.\Equity\Prog\profile_tabs_&dcregionlabel._acs_&_years..csv"
+	outfile="&_dcdata_default_path.\Equity\Prog\profile_tabs_&dcregion._acs_&_years..csv"
 	dbms=csv replace;
 	run;
 
-
+%mend; 
+%pickregion(PDMV);
+%pickregion(HIT); 
 /* End of program */
