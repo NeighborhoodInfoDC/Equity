@@ -42,7 +42,7 @@
 *all races except NH white, hispanic, and multiple race are race alone. ;
 
 
-%let revisions=Update for 2019-23 and add new cost burden indicators.;
+%let revisions=Fix denom for No Mortgage Cost Burden vars.;
 
 /** Macro Add_Percents- Start Definition **/
 
@@ -933,12 +933,12 @@
 		%Moe_prop_a( var=PctMortSCstbrden_m_&_years., mult=100, num=Mortsvrecstbrden_&_years., den=mortcstbrdencalc_&_years., 
                        num_moe=mMortSvrecstbrden_&_years., den_moe=mMortcstbrdencalc_&_years., label_moe =% Owners with Mortgage who are severely cost-burdened MOE &y_lbl.);
 
-	%Pct_calc( var=PctNomortcstbrden, label=% Owners without Mortgage who are cost-burdened, num=NoMortcstbrden, den=mortcstbrdencalc, years=&_years. )
-		%Moe_prop_a( var=PctNomortcstbrden_m_&_years., mult=100, num=Nomortcstbrden_&_years., den=mortcstbrdencalc_&_years., 
-                       num_moe=mNomortcstbrden_&_years., den_moe=mMortcstbrdencalc_&_years., label_moe =% Owners without Mortgage who are cost-burdened MOE &y_lbl.);
-	%Pct_calc( var=PctNoMortSCstbrden, label=% Owners without Mortgage who are severely cost-burdened, num=NoMortsvrecstbrden, den=mortcstbrdencalc, years=&_years. )
-		%Moe_prop_a( var=PctNoMortSCstbrden_m_&_years., mult=100, num=NoMortsvrecstbrden_&_years., den=mortcstbrdencalc_&_years., 
-                       num_moe=mNoMortSvrecstbrden_&_years., den_moe=mMortcstbrdencalc_&_years., label_moe =% Owners without Mortgage who are severely cost-burdened MOE &y_lbl.);
+	%Pct_calc( var=PctNomortcstbrden, label=% Owners without Mortgage who are cost-burdened, num=NoMortcstbrden, den=Nomortcstbrdencalc, years=&_years. )
+		%Moe_prop_a( var=PctNomortcstbrden_m_&_years., mult=100, num=Nomortcstbrden_&_years., den=Nomortcstbrdencalc_&_years., 
+                       num_moe=mNomortcstbrden_&_years., den_moe=mNoMortcstbrdencalc_&_years., label_moe =% Owners without Mortgage who are cost-burdened MOE &y_lbl.);
+	%Pct_calc( var=PctNoMortSCstbrden, label=% Owners without Mortgage who are severely cost-burdened, num=NoMortsvrecstbrden, den=Nomortcstbrdencalc, years=&_years. )
+		%Moe_prop_a( var=PctNoMortSCstbrden_m_&_years., mult=100, num=NoMortsvrecstbrden_&_years., den=Nomortcstbrdencalc_&_years., 
+                       num_moe=mNoMortSvrecstbrden_&_years., den_moe=mNoMortcstbrdencalc_&_years., label_moe =% Owners without Mortgage who are severely cost-burdened MOE &y_lbl.);
 
 	%Pct_calc( var=PctAllOwnCstbrden, label=% All Owners who are cost-burdened, num=AllOwnCstbrden, den=AllOwnCstbrdencalc, years=&_years. )
 		%Moe_prop_a( var=PctAllOwnCstbrden_m_&_years., mult=100, num=AllOwnCstbrden_&_years., den=AllOwnCstbrdencalc_&_years., 
@@ -976,12 +976,12 @@
 			%Moe_prop_a( var=PctMortSCstbrden&race._m_&_years., mult=100, num=Mortsvrecstbrden&race._&_years., den=mortcstbrdencalc&race._&_years., 
 	                       num_moe=mMortSvrecstbrden&race._&_years., den_moe=mMortcstbrdencalc&race._&_years., label_moe =% Owners with Mortgage who are severely cost-burdened &rname.  MOE &y_lbl.);
 
-		%Pct_calc( var=PctNomortcstbrden&race., label=% Owners without Mortgage who are cost-burdened &rname., num=NoMortcstbrden&race., den=mortcstbrdencalc&race., years=&_years. )
-			%Moe_prop_a( var=PctNomortcstbrden&race._m_&_years., mult=100, num=Nomortcstbrden&race._&_years., den=mortcstbrdencalc&race._&_years., 
-	                       num_moe=mNomortcstbrden&race._&_years., den_moe=mMortcstbrdencalc&race._&_years., label_moe =% Owners without Mortgage who are cost-burdened &rname. MOE &y_lbl.);
-		%Pct_calc( var=PctNoMortSCstbrden&race., label=% Owners without Mortgage who are severely cost-burdened &rname., num=NoMortsvrecstbrden&race., den=mortcstbrdencalc&race., years=&_years. )
-			%Moe_prop_a( var=PctNoMortSCstbrden&race._m_&_years., mult=100, num=NoMortsvrecstbrden&race._&_years., den=mortcstbrdencalc&race._&_years., 
-	                       num_moe=mNoMortSvrecstbrden&race._&_years., den_moe=mMortcstbrdencalc&race._&_years., label_moe =% Owners without Mortgage who are severely cost-burdened &rname.  MOE &y_lbl.);
+		%Pct_calc( var=PctNomortcstbrden&race., label=% Owners without Mortgage who are cost-burdened &rname., num=NoMortcstbrden&race., den=Nomortcstbrdencalc&race., years=&_years. )
+			%Moe_prop_a( var=PctNomortcstbrden&race._m_&_years., mult=100, num=Nomortcstbrden&race._&_years., den=Nomortcstbrdencalc&race._&_years., 
+	                       num_moe=mNomortcstbrden&race._&_years., den_moe=mNoMortcstbrdencalc&race._&_years., label_moe =% Owners without Mortgage who are cost-burdened &rname. MOE &y_lbl.);
+		%Pct_calc( var=PctNoMortSCstbrden&race., label=% Owners without Mortgage who are severely cost-burdened &rname., num=NoMortsvrecstbrden&race., den=Nomortcstbrdencalc&race., years=&_years. )
+			%Moe_prop_a( var=PctNoMortSCstbrden&race._m_&_years., mult=100, num=NoMortsvrecstbrden&race._&_years., den=Nomortcstbrdencalc&race._&_years., 
+	                       num_moe=mNoMortSvrecstbrden&race._&_years., den_moe=mNoMortcstbrdencalc&race._&_years., label_moe =% Owners without Mortgage who are severely cost-burdened &rname.  MOE &y_lbl.);
 
 		%Pct_calc( var=PctAllOwnCstbrden&race., label=% All Owners who are cost-burdened &rname., num=AllOwnCstbrden&race., den=AllOwnCstbrdencalc&race., years=&_years. )
 			%Moe_prop_a( var=PctAllOwnCstbrden&race._m_&_years., mult=100, num=AllOwnCstbrden&race._&_years., den=AllOwnCstbrdencalc&race._&_years., 
