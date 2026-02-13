@@ -22,6 +22,7 @@
 		02/22/24 LH Update for 2018-22 ACS and change in county file name
 		02/27/24 LH Update for recode of special values and fix start year for dollar convert.
 		01/30/25 LH Update for 2019-23 and add new cost burden indicators
+		02/13/26 LH Update for 2020-24
  Note: MOEs for AIOM average household income and average adjusted are blank because they are suppressed by the Census.
  **************************************************************************/
 
@@ -32,17 +33,17 @@
 %DCData_lib( ACS )
 %DCData_lib( Equity )
 
-%let _years=2019_23;
-%let inc_from_yr=2023; 
-%let inc_dollar_yr=2023;
-%let lastyear=2023; 
+%let _years=2020_24;
+%let inc_from_yr=2024; 
+%let inc_dollar_yr=2024;
+%let lastyear=2024; 
 %let racelist=W B H A IOM AIOM ;
 %let racename= NH-White Black-Alone Hispanic Asian-PI Indigenous-Other-Multi All-Other ; 
 *all-other is all other than NHWhite, Black, Hispanic; 
 *all races except NH white, hispanic, and multiple race are race alone. ;
 
 
-%let revisions=Fix denom for No Mortgage Cost Burden vars.;
+%let revisions=New file.;
 
 /** Macro Add_Percents- Start Definition **/
 
