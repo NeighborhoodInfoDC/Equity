@@ -335,6 +335,4 @@ Modifications : LH 02/24/22 Update for 6 race categories
 		end;
 
 %end;
-%mend suppress_vars;
-
-
+%mend suppress_vars_2023plus;

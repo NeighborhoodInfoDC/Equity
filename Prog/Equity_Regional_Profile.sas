@@ -126,7 +126,7 @@ run;
 	if ucounty in (&dcregionlist.) then region="Washington";
 	if ucounty in ("51760", "51087", "51041" ) then region="Richmond"; 
 
-	/*2/13/26 add state summary*/
+	/*2/13/26 add state assignment for summary purposes only including jurisdictions in region*/
 	if ucounty in("24017" "24021" "24031" "24033" "24510" "24005" "24003"  "24027" "24013" "24025" "24035") then state="Maryland";
 	if ucounty in ("11001") then state="District of Columbia"; 
 	if ucounty in ("51510" "51013" "51610" 	"51059" "51600" "51107" "51153" "51683" "51685" "51760") then state="Virginia" ;
@@ -465,7 +465,7 @@ run;
 		%suppress_gaps_region_fb;
 
 	run;
-	%mend; 
+	%mend allcounty; 
 	%allcounty; 
 
 		%macro multisummary(reg);
@@ -1533,7 +1533,7 @@ run;
 				                       num_moe=mPopUnemployed&race._F_&_years., den_moe=mPopInCivLaborFor&race._F_&_years., label_moe =Unemployment rate female &name. (%) MOE &y_lbl.);
 
 				%end;
-			%mend;
+			%mend raceunemp;
 
 	*temporary fix;
 	data donotroundunemp;
@@ -1544,7 +1544,7 @@ run;
 			%Moe_prop_a( var=PctUnemployed_m_&_years., mult=100, num=PopUnemployed_&_years., den=PopInCivLaborForce_&_years., 
 		                       num_moe=mPopUnemployed_&_years., den_moe=mPopInCivLaborForce_&_years., label_moe =Unemployment rate (%) MOE &y_lbl.);
 
-	%Pct_calc( var=PctUnemployed_ML, label=Unemployment rate male (%), num=PopUnemployed_M, den=PopInCivLaborForce_M, years=&_years. )
+		%Pct_calc( var=PctUnemployed_ML, label=Unemployment rate male (%), num=PopUnemployed_M, den=PopInCivLaborForce_M, years=&_years. )
 
 		%Moe_prop_a( var=PctUnemployed_ML_m_&_years., mult=100, num=PopUnemployed_M_&_years., den=PopInCivLaborForce_M_&_years., 
 		                       num_moe=mPopUnemployed_M_&_years., den_moe=mPopInCivLaborForce_M_&_years., label_moe =Unemployment rate male (%) MOE &y_lbl.);
@@ -1920,7 +1920,7 @@ proc export data=profile_tabs_region
 	dbms=csv replace;
 	run;
 
-%mend; 
+%mend pickregion; 
 %pickregion(PDMV);
 %pickregion(HIT); 
 /* End of program */
