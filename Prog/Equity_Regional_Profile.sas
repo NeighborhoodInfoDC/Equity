@@ -44,7 +44,7 @@
 *all-other is all other than NHWhite, Black, Hispanic; 
 *all races except NH white, hispanic, and multiple race are race alone. ;
 
-%let revisions=Update for 2020-24 and add MD-VA summaries for HIT;
+%let revisions=Add Chesterfield and Henrico to VA summary;
 
 *HIT region: "11001","24017","24021","24031","24033","51510","51013","51610","51059","51600","51107","51153","51683","51685";
 *PDMV region: "11001","24031","24033","51510","51013","51610","51059","51600","51107","51153","51683","51685";
@@ -129,7 +129,7 @@ run;
 	/*2/13/26 add state assignment for summary purposes only including jurisdictions in region*/
 	if ucounty in("24017" "24021" "24031" "24033" "24510" "24005" "24003"  "24027" "24013" "24025" "24035") then state="Maryland";
 	if ucounty in ("11001") then state="District of Columbia"; 
-	if ucounty in ("51510" "51013" "51610" 	"51059" "51600" "51107" "51153" "51683" "51685" "51760") then state="Virginia" ;
+	if ucounty in ("51510" "51013" "51610" 	"51059" "51600" "51107" "51153" "51683" "51685" "51760" "51041" "51087") then state="Virginia" ;
 
 		%if &lastyr >= 2023 %then %do; 
 		
